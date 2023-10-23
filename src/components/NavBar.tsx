@@ -1,12 +1,9 @@
 "use client";
-import { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Fragment, useState } from "react";
+import { BsSearch } from "react-icons/bs";
+import { GrClose } from "react-icons/gr";
+import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
 
 const navigation = {
   categories: [
@@ -146,7 +143,7 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-white">
+    <header className="bg-white">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -181,7 +178,7 @@ export default function NavBar() {
                   >
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    <GrClose className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
 
@@ -323,7 +320,7 @@ export default function NavBar() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white">
+      <div className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           Get free delivery on orders over $100
         </p>
@@ -341,7 +338,7 @@ export default function NavBar() {
               >
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                <HiBars3 className="h-6 w-6" aria-hidden="true" />
               </button>
 
               {/* Logo */}
@@ -516,17 +513,14 @@ export default function NavBar() {
                 <div className="flex lg:ml-6">
                   <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
+                    <BsSearch className="h-6 w-6" aria-hidden="true" />
                   </a>
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
                   <a href="#" className="group -m-2 flex items-center p-2">
-                    <ShoppingBagIcon
+                    <HiOutlineShoppingBag
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
@@ -540,7 +534,7 @@ export default function NavBar() {
             </div>
           </div>
         </nav>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }

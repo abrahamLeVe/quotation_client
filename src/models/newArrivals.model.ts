@@ -1,8 +1,36 @@
-export interface SliderInterface {
-  data: Datum[];
+export interface NewArrivalInterface {
+  data: ProductNAInterface[];
 }
 
-interface Datum {
+export interface ProductNAInterface {
+  id: number;
+  attributes: Attributes3;
+}
+
+export interface Attributes3 {
+  name: string;
+  slug: string;
+  price: number;
+  discount: number;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  rating: number;
+  image: Image;
+  categories: Categories;
+  thumbnail: Thumbnail2;
+}
+
+interface Thumbnail2 {
+  data: Datum;
+}
+
+interface Categories {
+  data: Datum2[];
+}
+
+interface Datum2 {
   id: number;
   attributes: Attributes2;
 }
@@ -12,14 +40,14 @@ interface Attributes2 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  image: Image;
+  slug: string;
 }
 
 interface Image {
-  data: Data;
+  data: Datum[];
 }
 
-interface Data {
+interface Datum {
   id: number;
   attributes: Attributes;
 }
@@ -44,13 +72,10 @@ interface Attributes {
 }
 
 interface Formats {
-  large: Large;
-  small: Large;
-  medium: Large;
-  thumbnail: Large;
+  thumbnail: Thumbnail;
 }
 
-interface Large {
+interface Thumbnail {
   ext: string;
   url: string;
   hash: string;

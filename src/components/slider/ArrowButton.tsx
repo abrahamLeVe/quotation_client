@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 type ArrowButtonProps = {
   onClick: () => void;
@@ -20,9 +20,9 @@ export function ArrowButton({ onClick, direction }: ArrowButtonProps) {
       onClick={onClick}
     >
       {isLeft ? (
-        <ArrowLeftIcon className="h-6 w-6" aria-hidden="true" />
+        <BsChevronLeft className="h-6 w-6" aria-hidden="true" />
       ) : (
-        <ArrowRightIcon className="h-6 w-6" aria-hidden="true" />
+        <BsChevronRight className="h-6 w-6" aria-hidden="true" />
       )}
     </div>
   );

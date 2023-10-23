@@ -11,16 +11,24 @@ const config: Config = {
       sm: "480px",
       md: "768px",
       lg: "976px",
+      l: "1220px",
       xl: "1440px",
+      "2xl": "1536px",
     },
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      blue: "#1fb6ff",
+      blue: {
+        600: "#2563eb",
+        700: "#1d4ed8",
+      },
       purple: "#7e5bef",
       pink: "#ff49db",
       orange: "#ff7849",
-      green: "#13ce66",
+      green: {
+        500: "#84cc16",
+        600: "#65a30d",
+      },
       yellow: "#ffc82c",
       "gray-dark": "#273444",
       "gray-light": "#d3dce6",
@@ -58,6 +66,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/typography"),
+  ],
 };
 export default config;
