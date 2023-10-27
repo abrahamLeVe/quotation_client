@@ -1,3 +1,4 @@
+"use client";
 interface TruncatedTextProps {
   text: string;
   maxLength: number;
@@ -5,8 +6,10 @@ interface TruncatedTextProps {
 
 export function TruncatedText({ text, maxLength }: TruncatedTextProps) {
   return (
-    <div title={text}>
-      {text.length > maxLength ? `${text.slice(0, maxLength)}...` : text}
+    <div>
+      <p title={text}>
+        {text.length > maxLength ? `${text.slice(0, maxLength)}...` : text}
+      </p>
     </div>
   );
 }

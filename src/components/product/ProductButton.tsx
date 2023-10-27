@@ -1,4 +1,5 @@
-import { useShoppingCart } from "@/context/cart.context";
+"use client";
+import { useCart } from "@/hooks/useCart";
 import { ProductNAInterface } from "@/models/newArrivals.model";
 import { useState } from "react";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
@@ -14,48 +15,68 @@ interface ProductButtonProps {
 
 export function ButtonAddToCart({ product, isModal }: ProductButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const {
-    getItemQuantity,
-    increaseCartQuantity,
-    decreaseCartQuantity,
-    removeFromCart,
-  } = useShoppingCart();
-
+  const { getItemQuantity, addToCart, removeFromCart, decreaseQuantity } =
+    useCart();
   const id = product.id;
-  const quantity = getItemQuantity(id);
+
+  const itemQuantity = getItemQuantity(id);
+
+  const showAddButton = itemQuantity === 0;
+  const showCounterButtons = itemQuantity !== undefined && itemQuantity > 0;
+
+  const buttons = [
+    {
+      icon: <FaEye />,
+      text: "Detalles",
+      onClick: () => setIsModalOpen(true),
+      visible: !isModal,
+    },
+    {
+      icon: <HiOutlineShoppingBag />,
+      text: "Añadir",
+      onClick: () => addToCart(id),
+      visible: showAddButton,
+    },
+    {
+      icon: <MdDeleteOutline />,
+      text: "Quitar",
+      onClick: () => removeFromCart(id),
+      visible: showCounterButtons,
+    },
+    {
+      icon: <BsCartDash />,
+      onClick: () => decreaseQuantity(id),
+      visible: showCounterButtons,
+    },
+    {
+      icon: <BsCartPlus />,
+      onClick: () => addToCart(id),
+      visible: showCounterButtons,
+    },
+  ];
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
-      {isModal ? null : (
-        <CustomButton
-          onClick={() => setIsModalOpen(true)}
-          icon={<FaEye />}
-          text="Detalles"
-        />
+    <div className="flex flex-wrap items-center justify-end gap-3">
+      {buttons.map(
+        (button, index) =>
+          button.visible !== false && (
+            <div
+              className={`${
+                button.text == "Detalles" && "absolute top-0 end-0"
+              }`}
+              key={index}
+            >
+              <CustomButton
+                icon={button.icon}
+                text={button.text}
+                onClick={button.onClick}
+              />
+            </div>
+          )
       )}
-      {quantity === 0 ? (
-        <CustomButton
-          icon={<HiOutlineShoppingBag />}
-          onClick={() => increaseCartQuantity(id)}
-          text="Añadir"
-        />
-      ) : (
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <CustomButton
-            icon={<MdDeleteOutline />}
-            onClick={() => removeFromCart(id)}
-            text="Quitar"
-          />
-          <CustomButton
-            icon={<BsCartDash />}
-            onClick={() => decreaseCartQuantity(id)}
-          />
-          <span>{quantity}</span>
-          <CustomButton
-            icon={<BsCartPlus />}
-            onClick={() => increaseCartQuantity(id)}
-          />
+      {showCounterButtons && (
+        <div className="font-medium">
+          Cantidad: {itemQuantity !== null ? itemQuantity : "N/A"}
         </div>
       )}
       <ProductModal
@@ -74,15 +95,17 @@ interface CustomButtonProps {
 }
 
 function CustomButton({ icon, onClick, text }: CustomButtonProps) {
+  const isDetails = text != "Detalles" || undefined;
   return (
     <button
-      className="flex flex-wrap border rounded-lg p-2 justify-center hover:bg-gray-200 transition-all gap-2 items-center"
+      className="flex flex-wrap border rounded-lg p-2 hover:bg-gray-200 transition-all items-center"
       onClick={onClick}
+      title={text}
     >
       <span className="text-2xl" aria-hidden="true">
         {icon}
       </span>
-      {text ? <span>{text}</span> : null}
+      {isDetails && <span>{text}</span>}
     </button>
   );
 }

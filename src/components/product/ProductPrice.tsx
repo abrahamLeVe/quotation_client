@@ -1,3 +1,4 @@
+"use client";
 import { formatCurrency } from "@/utilities/utils";
 
 interface ProductPriceProps {
@@ -6,11 +7,11 @@ interface ProductPriceProps {
 }
 
 export default function ProductPrice({ price, discount }: ProductPriceProps) {
-  const hasDiscount = price > 0;
+  const hasDiscount = discount > 0;
   const formattedPrice = formatCurrency(price);
   const formattedDiscount = formatCurrency(price - discount);
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-2">
       {hasDiscount && (
         <>
           <div>

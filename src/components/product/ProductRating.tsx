@@ -1,4 +1,5 @@
-import { BsStarHalf, BsStar, BsStarFill } from "react-icons/bs";
+"use client";
+import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 
 interface ProductRatingProps {
   rating: number;
@@ -19,9 +20,8 @@ export default function ProductRating({ rating }: ProductRatingProps) {
   return (
     <div className="flex gap-1">
       {starIcons.map((icon, index) => (
-        <span  key={index}>{icon}</span>
+        <span key={index}>{icon}</span>
       ))}
     </div>
   );
 }
-    

@@ -1,3 +1,4 @@
+"use client";
 import { ProductNAInterface } from "@/models/newArrivals.model";
 import { Dialog } from "@headlessui/react";
 import ImageGallery from "react-image-gallery";
@@ -18,6 +19,7 @@ export default function ProductModal({
   setIsOpen,
   product,
 }: ProductModalProps) {
+  
   const images = product.attributes.image.data.map((item) => ({
     original: item.attributes.url,
     thumbnail: item.attributes.formats.thumbnail.url,
@@ -25,11 +27,7 @@ export default function ProductModal({
   }));
 
   const { attributes } = product;
-  const hasDiscount = attributes.discount;
-  const hasPrice = attributes.price;
-  const name = attributes.name;
-  const rating = attributes.rating;
-  const categories = attributes.categories;
+  const { discount, price, name, rating, categories } = attributes;
 
   const imageGalleryOptions = {
     showPlayButton: false,
@@ -45,7 +43,7 @@ export default function ProductModal({
         child={
           <>
             <div className="flex flex-col lg:flex-row max-w-screen-l overflow-y-auto max-h-[80vh] p-3 mx-3 text-left align-middle bg-white rounded-2xl gap-4">
-              <div>
+              <div className="aspect-w-3">
                 <ImageGallery
                   items={images}
                   {...imageGalleryOptions}
@@ -61,22 +59,22 @@ export default function ProductModal({
                   {name.toUpperCase()}
                 </Dialog.Title>
                 <ProductRating rating={rating} />
-                <ProductPrice discount={hasDiscount} price={hasPrice} />
+                <ProductPrice discount={discount} price={price} />
                 <div>
                   <ul className="flex flex-col gap-3">
                     <li>
                       <span className="font-semibold"> Disponibilidad: </span>
                       En stock
                     </li>
-                    <li>
+                    <li className="flex flex-wrap gap-2">
                       <span className="font-semibold"> Categorías: </span>
-                      {categories.data.map((item) => (
+                      {categories.data.map((category) => (
                         <a
                           href="#"
                           className="underline hover:text-indigo-600"
-                          key={item.id}
+                          key={category.id}
                         >
-                          {item.attributes.name}
+                          {category.attributes.name.toLocaleLowerCase()}
                         </a>
                       ))}
                     </li>

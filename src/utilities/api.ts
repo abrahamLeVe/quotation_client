@@ -1,3 +1,4 @@
+
 export const fetchDataFromApi = async (endpoint: string): Promise<any> => {
   try {
     const options = {
@@ -5,7 +6,6 @@ export const fetchDataFromApi = async (endpoint: string): Promise<any> => {
       headers: {
         Authorization: "Bearer " + process.env.NEXT_STRAPI_API_TOKEN,
       },
-      next: { revalidate: 5 },
     };
 
     const res = await fetch(

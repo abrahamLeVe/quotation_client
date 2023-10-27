@@ -1,11 +1,12 @@
+"use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, ReactNode } from "react";
+import { Fragment } from "react";
 import { GrClose } from "react-icons/gr";
 
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  child: ReactNode;
+  child: React.ReactNode;
 }
 
 export default function Modal({ isOpen, setIsOpen, child }: ModalProps) {
@@ -37,7 +38,7 @@ export default function Modal({ isOpen, setIsOpen, child }: ModalProps) {
   );
 }
 
-function transitionChild(child: ReactNode) {
+function transitionChild(child: React.ReactNode) {
   return (
     <Transition.Child
       as={Fragment}

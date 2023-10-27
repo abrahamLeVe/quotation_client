@@ -1,3 +1,4 @@
+"use client";
 import { ProductNAInterface } from "@/models/newArrivals.model";
 import { ButtonAddToCart } from "./ProductButton";
 import { TruncatedText } from "./ProductName";
@@ -9,29 +10,25 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { attributes } = product;
-  const hasDiscount = attributes.discount;
-  const hasPrice = attributes.price;
-  const name = attributes.name;
-  const rating = attributes.rating;
+  const { discount, price, name, rating, thumbnail } = product.attributes;
+  const url = thumbnail.data.attributes.url;
 
   return (
-    <div className="border rounded-lg relative">
+    <div className="flex flex-col border rounded-lg h-full relative bg-green-500">
       <div className="aspect-h-1 aspect-w-1">
-        <img
-          src={attributes.thumbnail.data.attributes.url}
-          alt={attributes.name}
-          className="rounded-t-lg"
-        />
+        <img src={url} alt={name} className="rounded-t-lg" />
       </div>
-      <div className="flex flex-col justify-around text-sm rounded-b-lg p-3 bg-white gap-3">
-        <TruncatedText text={name} maxLength={80} />
+      <div className="flex flex-col  text-sm rounded-b-lg p-3 bg-white h-full justify-start gap-3 ">
+        <div className="flex flex-col gap-3">
+          <TruncatedText text={name} maxLength={70} />
 
-        <ProductRating rating={rating} />
+          <ProductRating rating={rating} />
 
-        <ProductPrice discount={hasDiscount} price={hasPrice} />
-
-        <ButtonAddToCart product={product} />
+          <ProductPrice discount={discount} price={price} />
+        </div>
+        <div>
+          <ButtonAddToCart product={product} />
+        </div>
       </div>
     </div>
   );

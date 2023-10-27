@@ -1,10 +1,16 @@
 "use client";
 import { NewArrivalInterface } from "@/models/newArrivals.model";
+import productStorage from "@/store/product.store";
+import { useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ProductCard from "./ProductCard";
 
-export default function ProductCarousel({ data }: NewArrivalInterface) {
+export default function ProductCarousel(data: NewArrivalInterface) {
+  const addProductToStore = productStorage((state) => state.addProduct);
+  useEffect(() => {
+    addProductToStore(data);
+  }, []);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -21,7 +27,7 @@ export default function ProductCarousel({ data }: NewArrivalInterface) {
   };
 
   return (
-    <div className="flex flex-col px-4 py-5 sm:px-6 lg:px-8 justify-center">
+    <div className="flex flex-col h-full px-4 py-5 sm:px-6 lg:px-8 justify-center">
       <h2 className="text-2xl font-bold tracking-tight text-gray-900 pb-5">
         New Arrivals
       </h2>
@@ -32,9 +38,9 @@ export default function ProductCarousel({ data }: NewArrivalInterface) {
         draggable={false}
         autoPlay={false}
         infinite
-        className="z-30"
+        className="z-30 py-3  h-full"
       >
-        {data.map((product) => (
+        {data.data.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}
       </Carousel>

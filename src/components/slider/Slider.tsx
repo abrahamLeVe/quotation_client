@@ -8,6 +8,7 @@ export default function Slider({ data }: SliderInterface) {
   const slides = data.map((item) => ({
     url: item.attributes.image.data.attributes.url,
     alt: item.attributes.name,
+    key: item.id,
   }));
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,6 +44,7 @@ export default function Slider({ data }: SliderInterface) {
           src={slides[currentIndex].url}
           className="h-full w-full md:rounded-2xl"
           alt={slides[currentIndex].alt}
+          key={slides[currentIndex].key}
         />
       </div>
       <ArrowButton onClick={prevSlide} direction="left" />

@@ -1,8 +1,10 @@
+"use client";
+import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { AiFillYoutube, AiFillInstagram } from "react-icons/ai";
 
 export default function Footer() {
+  
   const socialLinks = [
     { icon: <BsFacebook />, label: "Facebook" },
     { icon: <FaSquareXTwitter />, label: "Twitter" },
@@ -32,8 +34,8 @@ export default function Footer() {
   ];
 
   return (
-    <div className="max-w-screen-xl m-auto">
-      <div className="bg-gray-50 h-1/2 w-full flex md:flex-row flex-col justify-around items-start p-20">
+    <footer className="max-w-screen-xl m-auto">
+      <div className="bg-gray-50 h-1/2 w-full flex md:flex-row flex-col justify-around p-5 sm:p-20">
         <div className="p-5">
           <ul>
             <p className="text-gray-800 font-bold text-3xl pb-6">
@@ -78,6 +80,6 @@ export default function Footer() {
           </span>
         </h1>
       </div>
-    </div>
+    </footer>
   );
 }

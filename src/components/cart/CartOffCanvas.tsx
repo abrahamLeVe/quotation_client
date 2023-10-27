@@ -1,14 +1,23 @@
-import { useShoppingCart } from "@/context/cart.context";
+"use client";
+import { useCart } from "@/hooks/useCart";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { FaMarker } from "react-icons/fa";
+import { GrClose } from "react-icons/gr";
+import CartCheckout from "./CartCheckout";
+import CartItem from "./CartItem";
 
 type CartOffCanvasProps = {
   isOpen: boolean;
+  closeCart: () => void;
 };
 
-export default function CartOffCanvas({ isOpen }: CartOffCanvasProps) {
-  const { closeCart, cartItems } = useShoppingCart();
+export default function CartOffCanvas({
+  isOpen,
+  closeCart,
+}: CartOffCanvasProps) {
+  const { getCartItems, calculateTotal } = useCart();
+  const products = getCartItems();
+  const { subTotal } = calculateTotal();
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -37,36 +46,42 @@ export default function CartOffCanvas({ isOpen }: CartOffCanvasProps) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-500"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-500"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
-                      <button
-                        type="button"
-                        className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={closeCart}
-                      >
-                        <span className="absolute -inset-2.5" />
-                        <span className="sr-only">Close panel</span>
-                        <FaMarker className="h-6 w-6" aria-hidden="true" />
-                      </button>
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                    <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <div className="flex items-start justify-between">
+                        <Dialog.Title className="text-lg font-medium text-gray-900">
+                          Shopping cart
+                        </Dialog.Title>
+                        <div className="ml-3 flex h-7 items-center">
+                          <button
+                            type="button"
+                            className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                            onClick={closeCart}
+                          >
+                            <span className="absolute -inset-0.5" />
+                            <span className="sr-only">Close panel</span>
+                            <GrClose className="h-6 w-6" aria-hidden="true" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="mt-8">
+                        <div className="flow-root">
+                          <ul
+                            role="list"
+                            className="-my-6 divide-y divide-gray-200"
+                          >
+                            {products.map((product) => (
+                              <CartItem product={product} key={product.id} />
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                  </Transition.Child>
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
-                    <div className="px-4 sm:px-6">
-                      <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        Panel title
-                      </Dialog.Title>
-                    </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                      {/* Your content */}
+
+                    <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                      <CartCheckout subTotal={subTotal} closeCart={closeCart} />
                     </div>
                   </div>
                 </Dialog.Panel>
