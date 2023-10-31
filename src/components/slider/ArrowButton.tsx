@@ -1,3 +1,4 @@
+"use client";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 type ArrowButtonProps = {

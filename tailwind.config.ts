@@ -18,22 +18,11 @@ const config: Config = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
+      black: "#000",
       blue: {
         600: "#2563eb",
         700: "#1d4ed8",
       },
-      purple: "#7e5bef",
-      pink: "#ff49db",
-      orange: "#ff7849",
-      green: {
-        500: "#84cc16",
-        600: "#65a30d",
-      },
-      yellow: "#ffc82c",
-      "gray-dark": "#273444",
-      "gray-light": "#d3dce6",
-      black: "#000",
-      white: "#fff",
       gray: {
         100: "#f7fafc",
         200: "#e5e7eb",
@@ -43,9 +32,24 @@ const config: Config = {
         800: "#1f2937",
         900: "#1a202c",
       },
+      green: {
+        500: "#84cc16",
+        600: "#65a30d",
+      },
       indigo: {
         600: "#4f46e5",
       },
+      orange: "#ff7849",
+      purple: "#7e5bef",
+      pink: "#ff49db",
+      red: {
+        500: "#ef4444",
+        600: "#dc2626",
+      },
+      yellow: "#ffc82c",
+      "gray-dark": "#273444",
+      "gray-light": "#d3dce6",
+      white: "#fff",
     },
     fontFamily: {
       sans: ["Graphik", "sans-serif"],
@@ -69,6 +73,7 @@ const config: Config = {
   plugins: [
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
   ],
 };
 export default config;

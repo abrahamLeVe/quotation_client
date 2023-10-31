@@ -1,3 +1,4 @@
+"use client";
 import { create } from "zustand";
 import { CartItem } from "./cart.store";
 import {

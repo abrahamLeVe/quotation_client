@@ -1,5 +1,5 @@
 import { NewArrivalInterface } from "@/models/newArrivals.model";
-import { fetchDataFromApi } from "@/utilities/api";
+import { fetchDataFromApi } from "@/lib/api";
 
 export async function getDataNewArrival(): Promise<NewArrivalInterface> {
   const res = fetchDataFromApi(

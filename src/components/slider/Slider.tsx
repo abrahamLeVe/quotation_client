@@ -35,7 +35,7 @@ export default function Slider({ data }: SliderInterface) {
     return () => {
       clearInterval(autoSlideInterval);
     };
-  }, [currentIndex]);
+  })
 
   return (
     <div className="relative z-30">

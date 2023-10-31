@@ -10,7 +10,7 @@ export default function ProductCarousel(data: NewArrivalInterface) {
   const addProductToStore = productStorage((state) => state.addProduct);
   useEffect(() => {
     addProductToStore(data);
-  }, []);
+  });
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },

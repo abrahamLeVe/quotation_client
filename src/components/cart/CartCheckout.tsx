@@ -1,12 +1,13 @@
+"use client";
 import { formatCurrency } from "@/utilities/utils";
 
 interface CartCheckoutProps {
   subTotal: number;
-  closeCart: () => void;
+  setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CartCheckout({
-  closeCart,
+  setOpenCart,
   subTotal,
 }: CartCheckoutProps) {
   return (
@@ -32,7 +33,7 @@ export default function CartCheckout({
           <button
             type="button"
             className="font-medium text-indigo-600 hover:text-indigo-500"
-            onClick={closeCart}
+            onClick={() => setOpenCart(false)}
           >
             Continue Shopping
             <span aria-hidden="true"> &rarr;</span>

@@ -14,7 +14,7 @@ interface ProductButtonProps {
 }
 
 export function ButtonAddToCart({ product, isModal }: ProductButtonProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openModalRoot, setOpenModalRoot] = useState(false);
   const { getItemQuantity, addToCart, removeFromCart, decreaseQuantity } =
     useCart();
   const id = product.id;
@@ -28,7 +28,7 @@ export function ButtonAddToCart({ product, isModal }: ProductButtonProps) {
     {
       icon: <FaEye />,
       text: "Detalles",
-      onClick: () => setIsModalOpen(true),
+      onClick: () => setOpenModalRoot(true),
       visible: !isModal,
     },
     {
@@ -80,8 +80,8 @@ export function ButtonAddToCart({ product, isModal }: ProductButtonProps) {
         </div>
       )}
       <ProductModal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
+        openModalRoot={openModalRoot}
+        setOpenModalRoot={setOpenModalRoot}
         product={product}
       />
     </div>

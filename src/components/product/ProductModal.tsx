@@ -3,23 +3,22 @@ import { ProductNAInterface } from "@/models/newArrivals.model";
 import { Dialog } from "@headlessui/react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import Modal from "../Modal";
+import ModalRoot from "../ModalRoot";
 import { ButtonAddToCart } from "./ProductButton";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
 interface ProductModalProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalRoot: boolean;
+  setOpenModalRoot: React.Dispatch<React.SetStateAction<boolean>>;
   product: ProductNAInterface;
 }
 
 export default function ProductModal({
-  isOpen,
-  setIsOpen,
+  openModalRoot,
+  setOpenModalRoot,
   product,
 }: ProductModalProps) {
-  
   const images = product.attributes.image.data.map((item) => ({
     original: item.attributes.url,
     thumbnail: item.attributes.formats.thumbnail.url,
@@ -37,9 +36,9 @@ export default function ProductModal({
   };
   return (
     <div>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+      <ModalRoot
+        openModalRoot={openModalRoot}
+        setOpenModalRoot={setOpenModalRoot}
         child={
           <>
             <div className="flex flex-col lg:flex-row max-w-screen-l overflow-y-auto max-h-[80vh] p-3 mx-3 text-left align-middle bg-white rounded-2xl gap-4">

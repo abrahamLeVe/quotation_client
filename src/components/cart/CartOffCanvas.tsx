@@ -7,21 +7,18 @@ import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
 
 type CartOffCanvasProps = {
-  isOpen: boolean;
-  closeCart: () => void;
+  openCart: boolean;
+  setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function CartOffCanvas({
-  isOpen,
-  closeCart,
-}: CartOffCanvasProps) {
+export default function CartOffCanvas({ openCart, setOpenCart }: CartOffCanvasProps) {
   const { getCartItems, calculateTotal } = useCart();
   const products = getCartItems();
   const { subTotal } = calculateTotal();
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={closeCart}>
+    <Transition.Root show={openCart} as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={setOpenCart}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -57,7 +54,7 @@ export default function CartOffCanvas({
                           <button
                             type="button"
                             className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={closeCart}
+                            onClick={() => setOpenCart(false)}
                           >
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Close panel</span>
@@ -81,7 +78,10 @@ export default function CartOffCanvas({
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <CartCheckout subTotal={subTotal} closeCart={closeCart} />
+                      <CartCheckout
+                        subTotal={subTotal}
+                        setOpenCart={setOpenCart}
+                      />
                     </div>
                   </div>
                 </Dialog.Panel>

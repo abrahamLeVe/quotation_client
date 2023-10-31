@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  experimental: {
+    typedRoutes: true,
+    serverActions: true,
+    optimizeServerReact: true,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

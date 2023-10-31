@@ -1,3 +1,4 @@
+"use client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -14,7 +15,7 @@ interface cartStateProps {
   removeCartItem: (id: number) => void;
 }
 
-export const cartStore = create<cartStateProps>()(
+export  const  cartStore = create<cartStateProps>()(
   persist(
     (set, get) => ({
       cartItemState: [],
@@ -62,7 +63,7 @@ export const cartStore = create<cartStateProps>()(
           const updatedCart = state.cartItemState.filter(
             (item) => item.id !== id
           );
-          return { cartItemState: updatedCart } ;
+          return { cartItemState: updatedCart };
         });
       },
       itemCartQuantity: (id) => {

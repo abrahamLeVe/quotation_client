@@ -1,7 +1,7 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Footer from "./footer/Footer";
-import NavBar from "./navbar/NavBar";
+
+import { SessionProvider } from "next-auth/react";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -13,11 +13,7 @@ export default function Providers({ children }: ProvidersProps) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <>
-          <NavBar />
-          {children}
-          <Footer />
-        </>
+        <SessionProvider>{children}</SessionProvider>
       </QueryClientProvider>
     </>
   );
