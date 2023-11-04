@@ -1,32 +1,19 @@
 "use client";
-import { ProductNAInterface } from "@/models/newArrivals.model";
-import { Dialog } from "@headlessui/react";
+import { useProduct } from "@/context/productModal";
+import { cartStore } from "@/store/cart.store";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { BsCartDash, BsCartPlus } from "react-icons/bs";
+import { MdDeleteOutline } from "react-icons/md";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import ModalRoot from "../ModalRoot";
-import { ButtonAddToCart } from "./ProductButton";
+import { CartButton } from "./ProductCarousel";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
-interface ProductModalProps {
-  openModalRoot: boolean;
-  setOpenModalRoot: React.Dispatch<React.SetStateAction<boolean>>;
-  product: ProductNAInterface;
-}
-
-export default function ProductModal({
-  openModalRoot,
-  setOpenModalRoot,
-  product,
-}: ProductModalProps) {
-  const images = product.attributes.image.data.map((item) => ({
-    original: item.attributes.url,
-    thumbnail: item.attributes.formats.thumbnail.url,
-    key: item.id,
-  }));
-
-  const { attributes } = product;
-  const { discount, price, name, rating, categories } = attributes;
+export default function ProductModal() {
+  const { product, setIsOpen, isOpen, getItemQuantity } = useProduct();
+  const cart = cartStore((state) => state);
 
   const imageGalleryOptions = {
     showPlayButton: false,
@@ -34,59 +21,136 @@ export default function ProductModal({
     showIndex: true,
     autoPlay: true,
   };
-  return (
-    <div>
-      <ModalRoot
-        openModalRoot={openModalRoot}
-        setOpenModalRoot={setOpenModalRoot}
-        child={
-          <>
-            <div className="flex flex-col lg:flex-row max-w-screen-l overflow-y-auto max-h-[80vh] p-3 mx-3 text-left align-middle bg-white rounded-2xl gap-4">
-              <div className="aspect-w-3">
-                <ImageGallery
-                  items={images}
-                  {...imageGalleryOptions}
-                  thumbnailPosition="left"
-                />
-              </div>
 
-              <div className="flex flex-col lg:w-[50%] gap-3 p-3">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  {name.toUpperCase()}
-                </Dialog.Title>
-                <ProductRating rating={rating} />
-                <ProductPrice discount={discount} price={price} />
-                <div>
-                  <ul className="flex flex-col gap-3">
-                    <li>
-                      <span className="font-semibold"> Disponibilidad: </span>
-                      En stock
-                    </li>
-                    <li className="flex flex-wrap gap-2">
-                      <span className="font-semibold"> Categorías: </span>
-                      {categories.data.map((category) => (
-                        <a
-                          href="#"
-                          className="underline hover:text-indigo-600"
-                          key={category.id}
-                        >
-                          {category.attributes.name.toLocaleLowerCase()}
-                        </a>
-                      ))}
-                    </li>
-                  </ul>
-                </div>
-                <div className="flex justify-start">
-                  <ButtonAddToCart product={product} isModal={true} />
-                </div>
-              </div>
+  return (
+    <>
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-40"
+          onClose={() => setIsOpen(false)}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <div className="flex flex-col gap-5">
+                    <div className="w-full">
+                      <ImageGallery
+                        items={product!.attributes.image.data.map((item) => ({
+                          original: item.attributes.url,
+                          thumbnail: item.attributes.formats.thumbnail.url,
+                          slideToIndex: item.id,
+                        }))}
+                        {...imageGalleryOptions}
+                        thumbnailPosition="left"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-3 ">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-gray-900"
+                      >
+                        {product!.attributes.name.toUpperCase()}
+                      </Dialog.Title>
+                      <ProductRating rating={product!.attributes.rating} />
+                      <div className="flex flex-row gap-5">
+                        <ProductPrice
+                          discount={product!.attributes.discount}
+                          price={product!.attributes.price}
+                        />
+                        {getItemQuantity(product!.id) > 0 && (
+                          <p>x{getItemQuantity(product!.id)}</p>
+                        )}
+                      </div>
+
+                      <ul>
+                        <li>
+                          <span className="font-semibold">
+                            Disponibilidad:{" "}
+                          </span>
+                          En stock
+                        </li>
+                        <li className="flex flex-wrap gap-2">
+                          <span className="font-semibold"> Categorías: </span>
+                          {product!.attributes.categories.data.map(
+                            (category) => (
+                              <a
+                                href="#"
+                                className="underline hover:text-indigo-600"
+                                key={category.id}
+                              >
+                                {category.attributes.name.toLocaleLowerCase()}
+                              </a>
+                            )
+                          )}
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="flex flex-wrap justify-end gap-2">
+                      {getItemQuantity(product!.id) > 0 ? (
+                        <>
+                          <CartButton
+                            onClick={() => cart.removeCartItem(product!.id)}
+                            title="Eliminar"
+                            icon={<MdDeleteOutline />}
+                          />
+
+                          <CartButton
+                            onClick={() =>
+                              cart.decreaseCartQuantity(product!.id)
+                            }
+                            title="Quitar"
+                            icon={<BsCartDash />}
+                          />
+
+                          <CartButton
+                            onClick={() =>
+                              cart.increaseCartQuantity(product!.id)
+                            }
+                            title="Añadir"
+                            icon={<BsCartPlus />}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <CartButton
+                            onClick={() =>
+                              cart.increaseCartQuantity(product!.id)
+                            }
+                            title="Añadir"
+                            icon={<BsCartPlus />}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
-          </>
-        }
-      />
-    </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
   );
 }

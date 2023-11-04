@@ -1,4 +1,6 @@
 "use client";
+import { CartProvider } from "@/context/cartModal";
+import { ProductProvider } from "@/context/productModal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { SessionProvider } from "next-auth/react";
@@ -13,7 +15,11 @@ export default function Providers({ children }: ProvidersProps) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <ProductProvider>
+            <CartProvider>{children}</CartProvider>
+          </ProductProvider>
+        </SessionProvider>
       </QueryClientProvider>
     </>
   );

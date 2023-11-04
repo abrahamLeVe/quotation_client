@@ -1,15 +1,17 @@
 "use client";
-import { useCart } from "@/hooks/useCart";
+import { useCart } from "@/context/cartModal";
+import { useMounted } from "@/hooks/useMounted";
 import Link from "next/link";
 import { BsSearch } from "react-icons/bs";
 import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
-import CartOffCanvas from "../cart/CartOffCanvas";
 import ButtonAcount from "./ButtonAcount";
 import FlyoutMenu from "./FlyoutMenu";
 import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
-  const { cartItems, openCart, setOpenCart, openMenu, setOpenMenu } = useCart();
+  const { cartQuantity, setOpenCart, openMenu, setOpenMenu } = useCart();
+  const mounted = useMounted();
+  console.log(mounted && cartQuantity);
   return (
     <>
       <header className="bg-white">
@@ -73,7 +75,7 @@ export default function NavBar() {
                         aria-hidden="true"
                       />
                       <div className="border rounded-full w-6 h-6 absolute top-0 -right-1">
-                        <span>{cartItems.length}</span>
+                        {mounted ? cartQuantity : 0}
                       </div>
                     </button>
                   </div>
@@ -84,8 +86,6 @@ export default function NavBar() {
         </div>
         {/* Mobile menu */}
         <MenuMobile openMenu={openMenu} setOpenMenu={setOpenMenu} />
-        {/* cart */}
-        <CartOffCanvas openCart={openCart} setOpenCart={setOpenCart} />
       </header>
     </>
   );

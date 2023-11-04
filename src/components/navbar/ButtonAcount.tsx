@@ -2,8 +2,6 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
-import ModalRoot from "../ModalRoot";
-import ModalForm from "../form/ModalForm";
 
 export default function ButtonAcount() {
   const [isLogin, setIsLogin] = useState(true);
@@ -43,11 +41,11 @@ export default function ButtonAcount() {
       <button onClick={() => handleModalRootOpen(false)} className="flow-root">
         Create account
       </button>
-      <ModalRoot
+      {/* <ModalRoot
         openModalRoot={openModalRoot}
         setOpenModalRoot={setOpenModalRoot}
         child={<ModalForm isLogin={isLogin} setIsLogin={setIsLogin} />}
-      ></ModalRoot>
+      ></ModalRoot> */}
     </>
   );
 }

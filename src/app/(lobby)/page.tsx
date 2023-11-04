@@ -8,13 +8,13 @@ export default async function Home() {
   const { data: dataArrival } = await getDataNewArrival();
 
   return (
-    <div className="flex flex-col max-w-screen-xl mx-auto items-center">
+    <>
       <section className="w-full">
         <Slider data={dataSlider} />
       </section>
-      <section className="w-full h-full aspect-[16/7] ">
+      <section className="w-full h-full aspect-[16/8] ">
         <ProductCarousel data={dataArrival} />
       </section>
-    </div>
+    </>
   );
 }

@@ -1,24 +1,21 @@
 "use client";
-import { useCart } from "@/hooks/useCart";
+import { useCart } from "@/context/cartModal";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { GrClose } from "react-icons/gr";
 import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
 
-type CartOffCanvasProps = {
-  openCart: boolean;
-  setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export default function CartOffCanvas({ openCart, setOpenCart }: CartOffCanvasProps) {
-  const { getCartItems, calculateTotal } = useCart();
-  const products = getCartItems();
-  const { subTotal } = calculateTotal();
+export default function CartOffCanvas() {
+  const { openCart, setOpenCart } = useCart();
 
   return (
     <Transition.Root show={openCart} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={setOpenCart}>
+      <Dialog
+        as="div"
+        className="relative z-50"
+        onClose={() => setOpenCart(false)}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -62,26 +59,11 @@ export default function CartOffCanvas({ openCart, setOpenCart }: CartOffCanvasPr
                           </button>
                         </div>
                       </div>
-
-                      <div className="mt-8">
-                        <div className="flow-root">
-                          <ul
-                            role="list"
-                            className="-my-6 divide-y divide-gray-200"
-                          >
-                            {products.map((product) => (
-                              <CartItem product={product} key={product.id} />
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
+                      <CartItem />
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <CartCheckout
-                        subTotal={subTotal}
-                        setOpenCart={setOpenCart}
-                      />
+                      <CartCheckout />
                     </div>
                   </div>
                 </Dialog.Panel>

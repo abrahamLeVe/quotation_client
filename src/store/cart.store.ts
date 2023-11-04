@@ -11,16 +11,15 @@ interface cartStateProps {
   cartItemState: CartItem[];
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
-  itemCartQuantity: (id: number) => number;
   removeCartItem: (id: number) => void;
 }
 
-export  const  cartStore = create<cartStateProps>()(
+export const cartStore = create<cartStateProps>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       cartItemState: [],
-      increaseCartQuantity: (id) => {
-        set((state) => {
+      increaseCartQuantity: (id: number) => {
+        set((state: cartStateProps) => {
           const existingItem = state.cartItemState.find(
             (item) => item.id === id
           );
@@ -41,9 +40,9 @@ export  const  cartStore = create<cartStateProps>()(
           }
         });
       },
-      decreaseCartQuantity: (id) => {
-        set((state) => {
-          const updatedCart = state.cartItemState.map((item) => {
+      decreaseCartQuantity: (id: number) => {
+        set((state: cartStateProps) => {
+          const updatedCart = state.cartItemState.map((item: CartItem) => {
             if (item.id === id) {
               const newQuantity = item.quantity - 1;
               if (newQuantity <= 0) {
@@ -54,25 +53,23 @@ export  const  cartStore = create<cartStateProps>()(
             }
             return item;
           });
-          const filteredCart = updatedCart.filter((item) => item !== null);
+          const filteredCart = updatedCart.filter(
+            (item: CartItem | null) => item !== null
+          );
           return { cartItemState: filteredCart } as cartStateProps;
         });
       },
-      removeCartItem: (id) => {
-        set((state) => {
+      removeCartItem: (id: number) => {
+        set((state: cartStateProps) => {
           const updatedCart = state.cartItemState.filter(
             (item) => item.id !== id
           );
           return { cartItemState: updatedCart };
         });
       },
-      itemCartQuantity: (id) => {
-        const item = get().cartItemState.find((item) => item.id === id);
-        return item ? item.quantity : 0;
-      },
     }),
     {
       name: "cart",
     }
-  )
+  ) as () => cartStateProps
 );

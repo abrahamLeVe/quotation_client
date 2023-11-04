@@ -1,10 +1,10 @@
 "use client";
-import { create } from "zustand";
-import { CartItem } from "./cart.store";
 import {
   NewArrivalInterface,
   ProductNAInterface,
 } from "@/models/newArrivals.model";
+import { create } from "zustand";
+import { CartItem } from "./cart.store";
 
 interface productStorageProps {
   productState: NewArrivalInterface;

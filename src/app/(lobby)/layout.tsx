@@ -1,13 +1,14 @@
-"use client";
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
 
 export default function LobbyLayout({ children }: React.PropsWithChildren) {
   return (
-    <div className="relative flex min-h-screen flex-col">
-      <NavBar  />
-      <main className="flex-1">{children}</main>
+    <>
+      <NavBar />
+      <main className="flex flex-col max-w-screen-xl mx-auto items-center">
+        {children}
+      </main>
       <Footer />
-    </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { Transition, Dialog, Tab } from "@headlessui/react";
+import { Dialog, Tab, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import { GrClose } from "react-icons/gr";
 import ButtonLoginForm from "./ButtonAcount";
