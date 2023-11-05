@@ -41,94 +41,96 @@ export default function ProductCarousel(data: NewArrivalInterface) {
   };
 
   return (
-    <>
+    <section className="w-full">
       <div className="flex flex-col h-full px-4 py-5 sm:px-6 lg:px-8 justify-center">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 pb-5">
           New Arrivals
         </h2>
-        <Carousel
-          responsive={responsive}
-          containerClass="-mx-[10px]"
-          itemClass="px-[10px]"
-          draggable={false}
-          autoPlay={false}
-          infinite
-          className="z-30 py-3"
-        >
-          {products.map((product) => (
-            <div
-              className="flex flex-col border rounded-lg h-full w-full relative"
-              key={product.id}
-            >
-              <div className="aspect-h-1 aspect-w-1">
-                <img
-                  src={product.attributes.thumbnail.data.attributes.url}
-                  alt={product.attributes.name}
-                  className="rounded-t-lg"
-                />
-              </div>
-              <div className="flex flex-col text-sm rounded-b-lg p-3 bg-white h-full justify-between gap-3">
-                <div className="flex flex-col gap-3">
-                  <p title={product.attributes.name}>
-                    {truncate(product.attributes.name, 70)}
-                  </p>
+        <div className="aspect-[16/7]">
+          <Carousel
+            responsive={responsive}
+            containerClass="-mx-[10px]"
+            itemClass="px-[10px]"
+            draggable={false}
+            autoPlay={false}
+            infinite
+            className="z-30 py-3"
+          >
+            {products.map((product) => (
+              <div
+                className="flex flex-col border rounded-lg h-full w-full relative"
+                key={product.id}
+              >
+                <div className="aspect-h-1 aspect-w-1 bg-gray-100">
+                  <img
+                    src={product.attributes.thumbnail.data.attributes.url}
+                    alt={product.attributes.name}
+                    className="rounded-t-lg"
+                  />
+                </div>
+                <div className="flex flex-col text-sm rounded-b-lg p-3 bg-white h-full justify-between gap-3">
+                  <div className="flex flex-col gap-3">
+                    <p title={product.attributes.name}>
+                      {truncate(product.attributes.name, 70)}
+                    </p>
 
-                  <ProductRating rating={product.attributes.rating} />
-                  <div className="flex flex-row gap-5">
-                    <ProductPrice
-                      discount={product.attributes.discount}
-                      price={product.attributes.price}
+                    <ProductRating rating={product.attributes.rating} />
+                    <div className="flex flex-row gap-5">
+                      <ProductPrice
+                        discount={product.attributes.discount}
+                        price={product.attributes.price}
+                      />
+                      {getItemQuantity(product.id) > 0 && (
+                        <p>x{getItemQuantity(product.id)}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div title="Ver detalles">
+                    <CartButton
+                      onClick={() => getProduct(product.id)}
+                      icon={<FaEye />}
+                      className="absolute top-0 end-0 max-w-[42px]"
                     />
-                    {getItemQuantity(product.id) > 0 && (
-                      <p>x{getItemQuantity(product.id)}</p>
+                  </div>
+                  <div
+                    className="flex flex-wrap justify-end gap-3"
+                    onClick={cleanModal}
+                  >
+                    {getItemQuantity(product.id) > 0 ? (
+                      <>
+                        <CartButton
+                          onClick={() => cart.removeCartItem(product.id)}
+                          title="Eliminar"
+                          icon={<MdDeleteOutline />}
+                        />
+                        <CartButton
+                          onClick={() => cart.decreaseCartQuantity(product.id)}
+                          title="Quitar"
+                          icon={<BsCartDash />}
+                        />
+                        <CartButton
+                          onClick={() => cart.increaseCartQuantity(product.id)}
+                          title="Añadir"
+                          icon={<BsCartPlus />}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <CartButton
+                          onClick={() => cart.increaseCartQuantity(product.id)}
+                          title="Añadir"
+                          icon={<BsCartPlus />}
+                        />
+                      </>
                     )}
                   </div>
                 </div>
-                <div title="Ver detalles">
-                  <CartButton
-                    onClick={() => getProduct(product.id)}
-                    icon={<FaEye />}
-                    className="absolute top-0 end-0 max-w-[42px]"
-                  />
-                </div>
-                <div
-                  className="flex flex-wrap justify-end gap-3"
-                  onClick={cleanModal}
-                >
-                  {getItemQuantity(product.id) > 0 ? (
-                    <>
-                      <CartButton
-                        onClick={() => cart.removeCartItem(product.id)}
-                        title="Eliminar"
-                        icon={<MdDeleteOutline />}
-                      />
-                      <CartButton
-                        onClick={() => cart.decreaseCartQuantity(product.id)}
-                        title="Quitar"
-                        icon={<BsCartDash />}
-                      />
-                      <CartButton
-                        onClick={() => cart.increaseCartQuantity(product.id)}
-                        title="Añadir"
-                        icon={<BsCartPlus />}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <CartButton
-                        onClick={() => cart.increaseCartQuantity(product.id)}
-                        title="Añadir"
-                        icon={<BsCartPlus />}
-                      />
-                    </>
-                  )}
-                </div>
               </div>
-            </div>
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+        </div>
       </div>
-    </>
+    </section>
   );
 }
 

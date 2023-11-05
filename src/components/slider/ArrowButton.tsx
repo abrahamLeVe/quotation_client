@@ -1,10 +1,10 @@
 "use client";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
-type ArrowButtonProps = {
+interface ArrowButtonProps {
   onClick: () => void;
   direction: "left" | "right";
-};
+}
 
 export function ArrowButton({ onClick, direction }: ArrowButtonProps) {
   const isLeft = direction === "left";
@@ -16,7 +16,7 @@ export function ArrowButton({ onClick, direction }: ArrowButtonProps) {
 
   return (
     <div
-      className="group-hover:block absolute top-[50%]  -translate-x-0 translate-y-[-50%] text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer"
+      className="group-hover:block absolute top-[50%]  -translate-x-0 translate-y-[-50%] text-2xl rounded-full p-2 bg-black/40 text-white cursor-pointer hover:bg-black/70 duration-500 "
       style={buttonStyle}
       onClick={onClick}
     >

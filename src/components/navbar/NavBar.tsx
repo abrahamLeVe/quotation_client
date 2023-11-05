@@ -11,7 +11,7 @@ import MenuMobile from "./MenuMobile";
 export default function NavBar() {
   const { cartQuantity, setOpenCart, openMenu, setOpenMenu } = useCart();
   const mounted = useMounted();
-  console.log(mounted && cartQuantity);
+
   return (
     <>
       <header className="bg-white">
@@ -67,7 +67,9 @@ export default function NavBar() {
                   {/* Cart */}
                   <div className="ml-4 flow-root lg:ml-6">
                     <button
-                      onClick={() => setOpenCart(true)}
+                      onClick={() => {
+                        cartQuantity > 0 && setOpenCart(true);
+                      }}
                       className="group -m-2 flex items-center p-2 relative"
                     >
                       <HiOutlineShoppingBag
@@ -75,7 +77,7 @@ export default function NavBar() {
                         aria-hidden="true"
                       />
                       <div className="border rounded-full w-6 h-6 absolute top-0 -right-1">
-                        {mounted ? cartQuantity : 0}
+                        <p className="text-sm">{mounted ? cartQuantity : 0}</p>
                       </div>
                     </button>
                   </div>

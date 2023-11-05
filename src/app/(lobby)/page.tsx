@@ -9,12 +9,8 @@ export default async function Home() {
 
   return (
     <>
-      <section className="w-full">
-        <Slider data={dataSlider} />
-      </section>
-      <section className="w-full h-full aspect-[16/8] ">
-        <ProductCarousel data={dataArrival} />
-      </section>
+      <Slider data={dataSlider} />
+      <ProductCarousel data={dataArrival} />
     </>
   );
 }

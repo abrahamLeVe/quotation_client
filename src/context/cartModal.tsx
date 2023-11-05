@@ -37,7 +37,7 @@ export function CartProvider({ children }: CartProviderProps) {
     (quantity, item) => item.quantity + quantity,
     0
   );
-
+  
   function getItemQuantity(id: number) {
     return cart.find((item) => item.id === id)?.quantity || 0;
   }

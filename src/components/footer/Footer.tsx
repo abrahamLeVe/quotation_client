@@ -4,24 +4,26 @@ import { BsFacebook } from "react-icons/bs";
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
-  
   const socialLinks = [
-    { icon: <BsFacebook />, label: "Facebook" },
-    { icon: <FaSquareXTwitter />, label: "Twitter" },
-    { icon: <AiFillYoutube />, label: "YouTube" },
-    { icon: <AiFillInstagram />, label: "Instagram" },
+    { id: 1, icon: <BsFacebook />, label: "Facebook" },
+    { id: 2, icon: <FaSquareXTwitter />, label: "Twitter" },
+    { id: 3, icon: <AiFillYoutube />, label: "YouTube" },
+    { id: 4, icon: <AiFillInstagram />, label: "Instagram" },
   ];
 
   const sections = [
     {
+      id: 1,
       title: "Product",
       links: ["Stocks", "Futures & Options", "Mutual Funds", "Fixed deposits"],
     },
     {
+      id: 2,
       title: "Company",
       links: ["About", "Products", "Pricing", "Careers", "Press & Media"],
     },
     {
+      id: 3,
       title: "Support",
       links: [
         "Contact",
@@ -45,7 +47,7 @@ export default function Footer() {
               {socialLinks.map((link, index) => (
                 <a
                   href="#"
-                  key={index}
+                  key={link.id}
                   className="text-2xl cursor-pointer hover:text-indigo-600"
                 >
                   {link.icon}
@@ -55,14 +57,14 @@ export default function Footer() {
           </ul>
         </div>
         {sections.map((section, index) => (
-          <div className="p-5" key={index}>
+          <div className="p-5" key={section.id}>
             <ul>
               <p className="text-gray-800 font-bold text-2xl pb-4">
                 {section.title}
               </p>
               {section.links.map((link, linkIndex) => (
                 <li
-                  key={linkIndex}
+                  key={linkIndex + link}
                   className="text-gray-500 text-md pb-2 font-semibold hover:text-indigo-600 cursor-pointer"
                 >
                   {link}

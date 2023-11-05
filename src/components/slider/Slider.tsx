@@ -3,6 +3,7 @@ import { SliderInterface } from "@/models/slider.model";
 import { useEffect, useState } from "react";
 import { TiMinus } from "react-icons/ti";
 import { ArrowButton } from "./ArrowButton";
+import Image from "next/image";
 
 export default function Slider({ data }: SliderInterface) {
   const slides = data.map((item) => ({
@@ -35,17 +36,28 @@ export default function Slider({ data }: SliderInterface) {
     return () => {
       clearInterval(autoSlideInterval);
     };
-  })
+  });
 
   return (
-    <div className="relative z-30">
+    <section className="w-full relative z-30">
       <div className="aspect-[16/6]">
-        <img
-          src={slides[currentIndex].url}
-          className="h-full w-full md:rounded-2xl"
-          alt={slides[currentIndex].alt}
-          key={slides[currentIndex].key}
-        />
+        {slides.map((slide, slideIndex) => (
+          <div
+            key={slide.key}
+            className={`slide ${
+              slideIndex === currentIndex ? "opacity-100" : "opacity-0"
+            } transition-opacity duration-700 ease-in-out absolute inset-0`}
+          >
+            <Image
+              src={slide.url}
+              className="h-full w-full md:rounded-2xl"
+              alt={slide.alt}
+              width={1440}
+              height={580}
+              priority
+            />
+          </div>
+        ))}
       </div>
       <ArrowButton onClick={prevSlide} direction="left" />
       <ArrowButton onClick={nextSlide} direction="right" />
@@ -54,7 +66,7 @@ export default function Slider({ data }: SliderInterface) {
           <div
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
-            className="cursor-pointer"
+            className="cursor-pointer z-40"
           >
             <TiMinus
               className={`h-6 w-6  ${
@@ -65,6 +77,6 @@ export default function Slider({ data }: SliderInterface) {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
