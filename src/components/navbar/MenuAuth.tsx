@@ -1,19 +1,9 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function ButtonAcount() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [openModalRoot, setOpenModalRoot] = useState(false);
   const { data: session, status } = useSession();
-
-  const handleModalRootOpen = (
-    loginState: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setOpenModalRoot(true);
-    setIsLogin(loginState);
-  };
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -34,18 +24,13 @@ export default function ButtonAcount() {
     </>
   ) : (
     <>
-      <button onClick={() => handleModalRootOpen(true)} className="flow-root">
+      <Link href="/signin" className="flow-root">
         Ingresar
-      </button>
+      </Link>
       <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-      <button onClick={() => handleModalRootOpen(false)} className="flow-root">
-        Create account
-      </button>
-      {/* <ModalRoot
-        openModalRoot={openModalRoot}
-        setOpenModalRoot={setOpenModalRoot}
-        child={<ModalForm isLogin={isLogin} setIsLogin={setIsLogin} />}
-      ></ModalRoot> */}
+      <Link href="/register" className="flow-root">
+        Registrarse
+      </Link>
     </>
   );
 }

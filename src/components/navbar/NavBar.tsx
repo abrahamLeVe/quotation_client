@@ -4,8 +4,8 @@ import { useMounted } from "@/hooks/useMounted";
 import Link from "next/link";
 import { BsSearch } from "react-icons/bs";
 import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
-import ButtonAcount from "./ButtonAcount";
-import FlyoutMenu from "./FlyoutMenu";
+import ButtonAcount from "./MenuAuth";
+import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {

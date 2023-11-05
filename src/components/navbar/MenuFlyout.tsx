@@ -132,7 +132,6 @@ export const navigation = {
   ],
 };
 
-
 export default function FlyoutMenu() {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");

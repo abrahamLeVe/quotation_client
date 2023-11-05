@@ -17,12 +17,10 @@ export const options: NextAuthOptions = {
       async authorize(credentials, req) {
         try {
           const data = {
-            identifier: credentials?.email,
-            password: credentials?.password,
+            identifier: credentials!.email,
+            password: credentials!.password,
           };
           const res = await loginUser(data);
-
-          console.log("loginUserNextAuth: ", res);
 
           if (res.jwt) {
             const user = {

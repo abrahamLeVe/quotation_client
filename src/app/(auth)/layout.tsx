@@ -1,13 +1,19 @@
 "use client";
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
+import { signOut, useSession } from "next-auth/react";
 
 export default function AuthLayout({ children }: React.PropsWithChildren) {
+  const { data: session } = useSession();
+
+  if (session) {
+    signOut({ redirect: false });
+  }
   return (
-    <div className="relative flex min-h-screen flex-col">
+    <>
       <NavBar />
-      <main className="flex-1">{children}</main>
+      <main className="relative  min-h-screen">{children}</main>
       <Footer />
-    </div>
+    </>
   );
 }

@@ -1,9 +1,10 @@
-import ModalAcount from "@/components/form/ModalForm";
+"use client";
+import SigninForm from "@/components/form/signin/SigninForm";
 
-export default async  function RegisterPage() {
+export default function RegisterPage() {
   return (
     <>
-      <ModalAcount isLogin={true} isPageLogin={true} />
+      <SigninForm />
     </>
   );
 }

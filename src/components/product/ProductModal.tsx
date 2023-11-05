@@ -33,14 +33,14 @@ export default function ProductModal() {
         >
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
+            enter="ease-in-out duration-500"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-200"
+            leave="ease-in-out duration-500"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/25" />
+            <div className="fixed inset-0 bg-black/25 transition-opacity" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -153,7 +153,7 @@ export default function ProductModal() {
                       onClick={() => setIsOpen(false)}
                       title="Cerrar"
                     >
-                      <GrClose className="h-4 w-4" aria-hidden="true"/>
+                      <GrClose className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </div>
                 </Dialog.Panel>

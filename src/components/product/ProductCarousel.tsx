@@ -89,7 +89,7 @@ export default function ProductCarousel(data: NewArrivalInterface) {
                     <CartButton
                       onClick={() => getProduct(product.id)}
                       icon={<FaEye />}
-                      className="absolute top-0 end-0 max-w-[42px]"
+                      className="absolute top-0 end-0 max-w-[42px] backdrop-blur-md"
                     />
                   </div>
                   <div
@@ -153,7 +153,7 @@ export function CartButton({
   return (
     <button
       className={classNames(
-        "flex flex-wrap w-[110px] border rounded-lg p-2 hover:bg-gray-200 transition-all items-center justify-center gap-2",
+        "flex flex-wrap w-[110px] border rounded-lg p-2 hover:bg-gray-100 transition-all items-center justify-center gap-2",
         className as string
       )}
       onClick={onClick}
