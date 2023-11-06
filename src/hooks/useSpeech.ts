@@ -39,9 +39,17 @@ export function useSpeechRecognition() {
   });
 
   function startListening() {
-    setText("");
+    if (isListening) return;
     setIsListening(true);
-    recognition.start();
+
+    readText(
+      "¡Búsqueda por voz activada! Por favor, hable para buscar un producto o categoría."
+    );
+
+    setTimeout(() => {
+      setText("");
+      recognition.start();
+    }, 5000);
   }
 
   function stopListening() {
@@ -50,16 +58,30 @@ export function useSpeechRecognition() {
   }
 
   function filterProducts(query: string) {
-    const keywords = query.toLowerCase().split(" ");
+    const keywords = query
+      .toLowerCase()
+      .split(" ")
+      .filter((word) => !wordsExclude.has(word));
+    console.log("excludekeywords", keywords);
+    const everyMatch = products.data.filter((product) => {
+      const productName = product.attributes.name.toLowerCase();
+      return keywords.every((keyword) => productName.includes(keyword));
+    });
 
-    const filteredProducts = products.data.filter((product) => {
+    if (everyMatch.length > 0) {
+      console.log("Resultados con every: ", everyMatch);
+      setFilterProduct(everyMatch);
+      return;
+    }
+
+    const someMatch = products.data.filter((product) => {
       const productName = product.attributes.name.toLowerCase();
       return keywords.some((keyword) => productName.includes(keyword));
     });
-    setFilterProduct(filteredProducts);
-    console.log("filteredProducts ", filteredProducts);
+
+    console.log("Resultados con some: ", someMatch);
+    setFilterProduct(someMatch);
   }
-  // console.log("filterProduct ", filterProduct);
 
   return {
     text,
@@ -79,3 +101,29 @@ export function readText(text: string) {
   speech.lang = "es-ES";
   window.speechSynthesis.speak(speech);
 }
+
+export const wordsExclude = new Set([
+  "o",
+  "de",
+  "la",
+  "para",
+  "y",
+  "con",
+  "no",
+  "al",
+  "el",
+  "del",
+  "en",
+  "un",
+  "una",
+  "los",
+  "las",
+  "a",
+  "por",
+  "es",
+  "lo",
+  "como",
+  "mi",
+  "se",
+  "pero",
+]); // Add wordsExclude
