@@ -17,7 +17,7 @@ export function useSpeechRecognition() {
     recognition =
       new window.webkitSpeechRecognition() || window.SpeechRecognition;
     recognition.continuous = false;
-    recognition.lang = "es-ES";
+    recognition.lang = "es-PE";
   }
 
   useEffect(() => {
@@ -32,9 +32,26 @@ export function useSpeechRecognition() {
         .replace(/[.,]/g, "");
       setText(speechResult);
       readText("Estos son los resultados de: " + speechResult);
-      filterProducts(speechResult);
-      setIsListening(false);
-      recognition.stop();
+      filterProductDescription(speechResult);
+    };
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      let errorMessage =
+        "Se ha producido un error en el reconocimiento de voz.";
+
+      if (event.error === "no-speech") {
+        errorMessage = "No se detectó ningún habla.";
+      } else if (event.error === "not-allowed") {
+        errorMessage =
+          "No se permitió el acceso al micrófono. Asegúrese de habilitar los permisos.";
+      } else if (event.error === "audio-capture") {
+        errorMessage =
+          "No se encontró ningún micrófono. Asegúrese de que haya un micrófono instalado";
+      }
+
+      readText(errorMessage);
+    };
+    recognition.onend = () => {
+      stopListening();
     };
   });
 
@@ -42,14 +59,12 @@ export function useSpeechRecognition() {
     if (isListening) return;
     setIsListening(true);
 
-    readText(
-      "¡Búsqueda por voz activada! Por favor, hable para buscar un producto o categoría."
-    );
+    readText("¡Por favor!, hable para buscar un producto o categoría.");
 
     setTimeout(() => {
       setText("");
       recognition.start();
-    }, 5000);
+    }, 3000);
   }
 
   function stopListening() {
@@ -57,14 +72,14 @@ export function useSpeechRecognition() {
     recognition.stop();
   }
 
-  function filterProducts(query: string) {
+  function filterProductDescription(query: string) {
     const keywords = query
       .toLowerCase()
       .split(" ")
       .filter((word) => !wordsExclude.has(word));
     console.log("excludekeywords", keywords);
     const everyMatch = products.data.filter((product) => {
-      const productName = product.attributes.name.toLowerCase();
+      const productName = product.attributes.description.toLowerCase();
       return keywords.every((keyword) => productName.includes(keyword));
     });
 
@@ -75,7 +90,7 @@ export function useSpeechRecognition() {
     }
 
     const someMatch = products.data.filter((product) => {
-      const productName = product.attributes.name.toLowerCase();
+      const productName = product.attributes.description.toLowerCase();
       return keywords.some((keyword) => productName.includes(keyword));
     });
 
@@ -95,10 +110,9 @@ export function useSpeechRecognition() {
 
 export function readText(text: string) {
   const speech = new SpeechSynthesisUtterance(text);
-  speech.volume = 1;
-  speech.rate = 1;
+  speech.rate = 1.2;
   speech.pitch = 0.9;
-  speech.lang = "es-ES";
+  speech.lang = "es-PE";
   window.speechSynthesis.speak(speech);
 }
 
@@ -125,5 +139,9 @@ export const wordsExclude = new Set([
   "como",
   "mi",
   "se",
-  "pero",
+  "están",
+  "productos",
+  "producto",
+  "categoría",
+  "categorías",
 ]); // Add wordsExclude
