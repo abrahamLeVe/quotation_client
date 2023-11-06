@@ -5,18 +5,18 @@ import { cartStore } from "@/store/cart.store";
 import productStorage from "@/store/product.store";
 import { createContext, ReactNode, useContext, useState } from "react";
 
-interface ProductProviderProps  {
+interface ProductProviderProps {
   children: ReactNode;
-};
+}
 
-interface ProductContext  {
+interface ProductContext {
   isOpen: boolean;
   product: ProductNAInterface | undefined;
   cleanModal: () => void;
   getProduct: (id: number) => void;
   getItemQuantity: (id: number) => number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
 const ProductContext = createContext({} as ProductContext);
 

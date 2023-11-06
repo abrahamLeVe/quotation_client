@@ -1,23 +1,38 @@
 "use client";
 import { useCart } from "@/context/cartModal";
-import { useSpeechRecognition } from "@/hooks/useSpeech";
+import { ProductNAInterface } from "@/models/newArrivals.model";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import { CartButton } from "../product/ProductCarousel";
 import ProductPrice from "../product/ProductPrice";
+import { useProduct } from "@/context/productModal";
+import { FaEye } from "react-icons/fa6";
 
-export default function ResultSpeech() {
+interface ResultSpeechPromps {
+  products: ProductNAInterface[];
+  query: string[];
+}
+
+export default function ResultSpeech({ products, query }: ResultSpeechPromps) {
   const cart = cartStore((state) => state);
-  const { filterProduct } = useSpeechRecognition();
-  const { getItemQuantity, setOpenCart } = useCart();
-  console.log(filterProduct);
+  const { getItemQuantity } = useCart();
+  const { getProduct, cleanModal } = useProduct();
+
+  console.log(products);
   return (
     <div className="mt-8">
       <div className="flow-root">
+        <div className="flex w-full h-20 gap-4">
+          <h2>RESULTADOS:</h2>
+          {query.map((item, index) => (
+            <h3 key={item + index}>{item}</h3>
+          ))}
+        </div>
+
         <ul role="list" className="-my-6 divide-y divide-gray-200">
-          {filterProduct.map((product) => (
+          {products.map((product) => (
             <li className="flex py-6 relative" key={product.id}>
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img
@@ -49,35 +64,35 @@ export default function ResultSpeech() {
                     )}
                   </div>
                 </div>
-                <div className="flex flex-1 items-end justify-end text-sm gap-3">
-                  <div title="Eliminar">
-                    <CartButton
-                      onClick={() => {
-                        cart.removeCartItem(product.id);
-                        cart.cartItemState[0].id === product.id &&
-                          cart.cartItemState.length === 1 &&
-                          setOpenCart(false);
-                      }}
-                      icon={<MdDeleteOutline />}
-                      className="max-w-[42px]"
-                    />
-                  </div>
-                  {getItemQuantity(product.id) > 1 && (
-                    <div title="Restar">
+                <div className="flex gap-3">
+                  <div
+                    onClick={cleanModal}
+                    className="flex flex-1 items-end justify-end text-sm gap-3"
+                  >
+                    {getItemQuantity(product.id) > 0 && (
+                      <div title="Restar">
+                        <CartButton
+                          onClick={() => {
+                            cart.decreaseCartQuantity(product.id);
+                          }}
+                          icon={<BsCartDash />}
+                          className="max-w-[42px]"
+                        />
+                      </div>
+                    )}
+                    <div title="Aumentar">
                       <CartButton
-                        onClick={() => {
-                          cart.decreaseCartQuantity(product.id);
-                        }}
-                        icon={<BsCartDash />}
+                        onClick={() => cart.increaseCartQuantity(product.id)}
+                        icon={<BsCartPlus />}
                         className="max-w-[42px]"
                       />
                     </div>
-                  )}
-                  <div title="Aumentar">
+                  </div>
+                  <div title="Ver detalles">
                     <CartButton
-                      onClick={() => cart.increaseCartQuantity(product.id)}
-                      icon={<BsCartPlus />}
-                      className="max-w-[42px]"
+                      onClick={() => getProduct(product.id)}
+                      icon={<FaEye />}
+                      className="max-w-[42px] "
                     />
                   </div>
                 </div>

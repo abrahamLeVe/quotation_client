@@ -6,10 +6,11 @@ import { BsMic, BsSearch } from "react-icons/bs";
 import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
 import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
+import { Icons } from "../Icons";
 
 export default function NavBar() {
   const { cartQuantity, setOpenCart, setOpenMenu } = useCart();
-  const { startListening } = useSpeechRecognition();
+  const { startListening, isListening } = useSpeechRecognition();
 
   return (
     <>
@@ -62,16 +63,27 @@ export default function NavBar() {
                       <BsSearch className="h-6 w-6" aria-hidden="true" />
                     </a>
                   </div>
+
                   {/* Speech */}
                   <div className="flex lg:ml-6">
-                    <button
-                      onClick={startListening}
-                      className="p-2 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">Speech</span>
-                      <BsMic className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    {isListening ? (
+                      <div className="p-2">
+                        <Icons.bars
+                          className="h-6 w-6 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    ) : (
+                      <button
+                        onClick={startListening}
+                        className="p-2 text-gray-400 hover:text-gray-500"
+                      >
+                        <span className="sr-only">Speech</span>
+                        <BsMic className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    )}
                   </div>
+
                   {/* Cart */}
                   <div className="ml-4 flow-root lg:ml-6">
                     <button

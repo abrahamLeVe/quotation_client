@@ -1,13 +1,10 @@
-import { ProductNAInterface } from "@/models/newArrivals.model";
-import productStorage from "@/store/product.store";
+import { useSpeechFilter } from "@/context/speechFilter";
 import { useEffect, useState } from "react";
 import { useMounted } from "./useMounted";
 
 export function useSpeechRecognition() {
-  const products = productStorage((state) => state.productState);
-  const [text, setText] = useState("");
   const [isListening, setIsListening] = useState(false);
-  const [filterProduct, setFilterProduct] = useState<ProductNAInterface[]>([]);
+  const { filterProducts } = useSpeechFilter();
 
   let recognition: any = null;
 
@@ -19,21 +16,17 @@ export function useSpeechRecognition() {
     recognition.continuous = false;
     recognition.lang = "es-PE";
   }
-
+  
   useEffect(() => {
     if (!recognition) return;
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      console.log("onresult event ", event);
-      console.log("products  ", products.data);
-
       const speechResult = event.results[0][0].transcript
         .toLowerCase()
         .replace(/[.,]/g, "");
-      setText(speechResult);
-      readText("Estos son los resultados de: " + speechResult);
-      filterProductDescription(speechResult);
+      filterProducts(speechResult);
     };
+
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       let errorMessage =
         "Se ha producido un error en el reconocimiento de voz.";
@@ -50,6 +43,7 @@ export function useSpeechRecognition() {
 
       readText(errorMessage);
     };
+
     recognition.onend = () => {
       stopListening();
     };
@@ -59,10 +53,10 @@ export function useSpeechRecognition() {
     if (isListening) return;
     setIsListening(true);
 
-    readText("¡Por favor!, hable para buscar un producto o categoría.");
+    const randomMessage = getRandomMessage();
+    readText(randomMessage);
 
     setTimeout(() => {
-      setText("");
       recognition.start();
     }, 3000);
   }
@@ -72,37 +66,9 @@ export function useSpeechRecognition() {
     recognition.stop();
   }
 
-  function filterProductDescription(query: string) {
-    const keywords = query
-      .toLowerCase()
-      .split(" ")
-      .filter((word) => !wordsExclude.has(word));
-    console.log("excludekeywords", keywords);
-    const everyMatch = products.data.filter((product) => {
-      const productName = product.attributes.description.toLowerCase();
-      return keywords.every((keyword) => productName.includes(keyword));
-    });
-
-    if (everyMatch.length > 0) {
-      console.log("Resultados con every: ", everyMatch);
-      setFilterProduct(everyMatch);
-      return;
-    }
-
-    const someMatch = products.data.filter((product) => {
-      const productName = product.attributes.description.toLowerCase();
-      return keywords.some((keyword) => productName.includes(keyword));
-    });
-
-    console.log("Resultados con some: ", someMatch);
-    setFilterProduct(someMatch);
-  }
-
   return {
-    text,
     isListening,
     hasRecognitionSupport: !!recognition,
-    filterProduct,
     stopListening,
     startListening,
   };
@@ -145,3 +111,28 @@ export const wordsExclude = new Set([
   "categoría",
   "categorías",
 ]); // Add wordsExclude
+
+const randomMessages = [
+  "¡Estoy aquí para ayudarte!",
+  "¿En qué puedo asistirte hoy?",
+  "Hable conmigo, estoy escuchando.",
+  "¡Vamos a encontrar lo que necesitas!",
+  "¿Cómo puedo ser de servicio?",
+  "Estoy listo para responder tus preguntas.",
+  "No dudes en hablarme, estoy para ayudarte.",
+  "Explícame en qué puedo colaborar contigo.",
+  "¿Tienes alguna solicitud en particular?",
+  "Estoy a tu disposición, ¿en qué puedo hacerlo mejor?",
+  "Puedo ayudarte a encontrar información o productos.",
+  "¡Hola! ¿En qué puedo servirte hoy?",
+  "Estoy aquí para facilitarte la búsqueda.",
+  "Tu satisfacción es mi prioridad. ¿En qué puedo ayudarte?",
+  "¿Necesitas algo en específico? Cuéntame.",
+  "Juntos, encontraremos la respuesta a tu consulta.",
+  "Hablemos, ¿qué necesitas encontrar?",
+];
+
+export function getRandomMessage() {
+  const randomIndex = Math.floor(Math.random() * randomMessages.length);
+  return randomMessages[randomIndex];
+}

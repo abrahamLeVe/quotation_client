@@ -1,6 +1,7 @@
 "use client";
 import { CartProvider } from "@/context/cartModal";
 import { ProductProvider } from "@/context/productModal";
+import { SpeechFilterProvider } from "@/context/speechFilter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { SessionProvider } from "next-auth/react";
@@ -17,7 +18,9 @@ export default function Providers({ children }: ProvidersProps) {
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
           <ProductProvider>
-            <CartProvider>{children}</CartProvider>
+            <CartProvider>
+              <SpeechFilterProvider>{children}</SpeechFilterProvider>
+            </CartProvider>
           </ProductProvider>
         </SessionProvider>
       </QueryClientProvider>
