@@ -8,7 +8,7 @@ export async function loginUser(data: loginUserPromps) {
 }
 
 export async function registerUser(data: registerUserPromps) {
-  const res = await postDataFromApi("/api/auth/local/register", {...data,});
+  const res = await postDataFromApi("/api/auth/local/register", { ...data });
   console.log("llego al service ", res);
   return res;
 }

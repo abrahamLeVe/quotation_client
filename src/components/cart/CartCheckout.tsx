@@ -3,7 +3,7 @@ import { useCart } from "@/context/cartModal";
 import { formatCurrency } from "@/utilities/utils";
 
 export default function CartCheckout() {
-  const { calculateTotal } = useCart();
+  const { calculateTotal, setOpenCart } = useCart();
   const subTotal = calculateTotal().subTotal;
   return (
     <>
@@ -28,7 +28,7 @@ export default function CartCheckout() {
           <button
             type="button"
             className="font-medium text-indigo-600 hover:text-indigo-500"
-            // onClick={() => setOpenCart(false)}
+            onClick={() => setOpenCart(false)}
           >
             Continue Shopping
             <span aria-hidden="true"> &rarr;</span>

@@ -1,23 +1,22 @@
 "use client";
 import { useCart } from "@/context/cartModal";
-import { useMounted } from "@/hooks/useMounted";
+import { useSpeechRecognition } from "@/hooks/useSpeech";
 import Link from "next/link";
-import { BsSearch } from "react-icons/bs";
+import { BsMic, BsSearch } from "react-icons/bs";
 import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
 import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
-import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
-  const { cartQuantity, setOpenCart, openMenu, setOpenMenu } = useCart();
-  const mounted = useMounted();
+  const { cartQuantity, setOpenCart, setOpenMenu } = useCart();
+  const { startListening } = useSpeechRecognition();
 
   return (
     <>
       <header className="bg-white">
         <div className="relative bg-white">
           <div className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-            <p>Get free delivery on orders over $100</p>
+            <p>Obtenga entrega gratuita en pedidos superiores a $100</p>
           </div>
 
           <nav
@@ -53,16 +52,25 @@ export default function NavBar() {
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     <ButtonAcount />
                   </div>
-
                   {/* Search */}
                   <div className="flex lg:ml-6">
                     <a
                       href="#"
                       className="p-2 text-gray-400 hover:text-gray-500"
                     >
-                      <span className="sr-only">Search</span>
+                      <span className="sr-only">Escuchar</span>
                       <BsSearch className="h-6 w-6" aria-hidden="true" />
                     </a>
+                  </div>
+                  {/* Speech */}
+                  <div className="flex lg:ml-6">
+                    <button
+                      onClick={startListening}
+                      className="p-2 text-gray-400 hover:text-gray-500"
+                    >
+                      <span className="sr-only">Speech</span>
+                      <BsMic className="h-6 w-6" aria-hidden="true" />
+                    </button>
                   </div>
                   {/* Cart */}
                   <div className="ml-4 flow-root lg:ml-6">
@@ -77,7 +85,7 @@ export default function NavBar() {
                         aria-hidden="true"
                       />
                       <div className="border rounded-full w-6 h-6 absolute top-0 -right-1">
-                        <p className="text-sm">{mounted ? cartQuantity : 0}</p>
+                        <p className="text-sm">{cartQuantity}</p>
                       </div>
                     </button>
                   </div>
@@ -86,8 +94,6 @@ export default function NavBar() {
             </div>
           </nav>
         </div>
-        {/* Mobile menu */}
-        <MenuMobile openMenu={openMenu} setOpenMenu={setOpenMenu} />
       </header>
     </>
   );

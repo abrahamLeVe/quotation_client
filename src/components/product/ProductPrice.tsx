@@ -18,7 +18,7 @@ export default function ProductPrice({ price, discount }: ProductPriceProps) {
             <p className="text-gray-500 line-through">{formattedDiscount}</p>
           </div>
           <div className="absolute top-2 left-2 rounded-2xl px-3 py-[5px] bg-white shadow-lg">
-            Sale!
+            Oferta!
           </div>
         </>
       )}

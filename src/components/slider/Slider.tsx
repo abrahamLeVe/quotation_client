@@ -1,9 +1,9 @@
 "use client";
 import { SliderInterface } from "@/models/slider.model";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { TiMinus } from "react-icons/ti";
 import { ArrowButton } from "./ArrowButton";
-import Image from "next/image";
 
 export default function Slider({ data }: SliderInterface) {
   const slides = data.map((item) => ({

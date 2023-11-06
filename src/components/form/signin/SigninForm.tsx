@@ -24,7 +24,7 @@ export default function SigninForm() {
     event.preventDefault();
     setIsPending(true);
 
-    const { email, password, name } = formData;
+    const { email, password } = formData;
     const credentials = {
       email,
       password,

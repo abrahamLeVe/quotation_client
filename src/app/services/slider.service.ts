@@ -1,3 +1,4 @@
+"use server";
 import { SliderInterface } from "@/models/slider.model";
 import { fetchDataFromApi } from "@/lib/api";
 

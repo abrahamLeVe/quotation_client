@@ -5,17 +5,17 @@ import { cartStore } from "@/store/cart.store";
 import productStorage from "@/store/product.store";
 import { createContext, ReactNode, useContext, useState } from "react";
 
-type ProductProviderProps = {
+interface ProductProviderProps  {
   children: ReactNode;
 };
 
-type ProductContext = {
+interface ProductContext  {
+  isOpen: boolean;
+  product: ProductNAInterface | undefined;
   cleanModal: () => void;
   getProduct: (id: number) => void;
-  product: ProductNAInterface | undefined;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   getItemQuantity: (id: number) => number;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ProductContext = createContext({} as ProductContext);
@@ -49,10 +49,10 @@ export function ProductProvider({ children }: ProductProviderProps) {
   return (
     <ProductContext.Provider
       value={{
-        cleanModal,
-        getProduct,
         product,
         isOpen,
+        cleanModal,
+        getProduct,
         setIsOpen,
         getItemQuantity,
       }}

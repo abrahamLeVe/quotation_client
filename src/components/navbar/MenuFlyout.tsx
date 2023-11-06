@@ -1,6 +1,6 @@
 "use client";
 import { Popover, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 export const navigation = {
   categories: [

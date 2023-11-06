@@ -1,3 +1,4 @@
+"use server";
 import { NewArrivalInterface } from "@/models/newArrivals.model";
 import { fetchDataFromApi } from "@/lib/api";
 
