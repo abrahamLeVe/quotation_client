@@ -12,10 +12,13 @@ interface ProductProviderProps {
 interface ProductContext {
   isOpen: boolean;
   product: ProductNAInterface | undefined;
-  cleanModal: () => void;
   getProduct: (id: number) => void;
   getItemQuantity: (id: number) => number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setProduct: React.Dispatch<
+    React.SetStateAction<ProductNAInterface | undefined>
+  >;
+  cleanProductModal: () => void;
 }
 
 const ProductContext = createContext({} as ProductContext);
@@ -26,24 +29,26 @@ export function useProduct() {
 
 export function ProductProvider({ children }: ProductProviderProps) {
   const products = productStorage((state) => state.productState);
-  const [product, setProdut] = useState<ProductNAInterface>();
+  const [product, setProduct] = useState<ProductNAInterface>();
   const [isOpen, setIsOpen] = useState(false);
   const cart = cartStore((state) => state);
-
-  const cleanModal = () => {
-    setProdut(undefined);
-  };
 
   function getProduct(id: number) {
     const item = products.data.find(
       (item: ProductNAInterface) => item.id === id
     );
     setIsOpen(true);
-    return setProdut(item);
+    return setProduct(item);
   }
 
   function getItemQuantity(id: number) {
     return cart.cartItemState.find((item) => item.id === id)?.quantity || 0;
+  }
+
+  function cleanProductModal() {
+    setProduct(undefined);
+    setIsOpen(false);
+    return;
   }
 
   return (
@@ -51,10 +56,11 @@ export function ProductProvider({ children }: ProductProviderProps) {
       value={{
         product,
         isOpen,
-        cleanModal,
         getProduct,
         setIsOpen,
         getItemQuantity,
+        setProduct,
+        cleanProductModal,
       }}
     >
       {children}

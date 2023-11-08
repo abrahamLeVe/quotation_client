@@ -1,16 +1,15 @@
 "use client";
 import { useCart } from "@/context/cartModal";
-import { useSpeechRecognition } from "@/hooks/useSpeech";
+import { useProduct } from "@/context/productModal";
 import Link from "next/link";
-import { BsMic, BsSearch } from "react-icons/bs";
 import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
+import ButtonSpeech from "../filter/ButtonSpeech";
 import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
-import { Icons } from "../Icons";
 
 export default function NavBar() {
   const { cartQuantity, setOpenCart, setOpenMenu } = useCart();
-  const { startListening, isListening } = useSpeechRecognition();
+  const { cleanProductModal } = useProduct();
 
   return (
     <>
@@ -53,44 +52,18 @@ export default function NavBar() {
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     <ButtonAcount />
                   </div>
-                  {/* Search */}
-                  <div className="flex lg:ml-6">
-                    <a
-                      href="#"
-                      className="p-2 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">Escuchar</span>
-                      <BsSearch className="h-6 w-6" aria-hidden="true" />
-                    </a>
-                  </div>
 
-                  {/* Speech */}
-                  <div className="flex lg:ml-6">
-                    {isListening ? (
-                      <div className="p-2">
-                        <Icons.bars
-                          className="h-6 w-6 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    ) : (
-                      <button
-                        onClick={startListening}
-                        className="p-2 text-gray-400 hover:text-gray-500"
-                      >
-                        <span className="sr-only">Speech</span>
-                        <BsMic className="h-6 w-6" aria-hidden="true" />
-                      </button>
-                    )}
-                  </div>
+                  {/* Filter */}
+                  <ButtonSpeech />
 
                   {/* Cart */}
                   <div className="ml-4 flow-root lg:ml-6">
                     <button
                       onClick={() => {
-                        cartQuantity > 0 && setOpenCart(true);
+                        cartQuantity > 0 &&
+                          (setOpenCart(true), cleanProductModal());
                       }}
-                      className="group -m-2 flex items-center p-2 relative"
+                      className="p-2 text-gray-400 hover:text-gray-500 relative"
                     >
                       <HiOutlineShoppingBag
                         className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-gray-500"

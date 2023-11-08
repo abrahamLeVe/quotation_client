@@ -10,6 +10,7 @@ import ProductPrice from "../product/ProductPrice";
 export default function CartItem() {
   const cart = cartStore((state) => state);
   const { getItemQuantity, itemsOfCart, setOpenCart } = useCart();
+
   return (
     <div className="mt-8">
       <div className="flow-root">

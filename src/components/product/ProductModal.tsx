@@ -2,7 +2,7 @@
 import { useProduct } from "@/context/productModal";
 import { cartStore } from "@/store/cart.store";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
@@ -15,6 +15,7 @@ import ProductRating from "./ProductRating";
 export default function ProductModal() {
   const { product, setIsOpen, isOpen, getItemQuantity } = useProduct();
   const cart = cartStore((state) => state);
+  let btnModalProductRef = useRef(null);
 
   const imageGalleryOptions = {
     showPlayButton: false,
@@ -22,14 +23,15 @@ export default function ProductModal() {
     showIndex: true,
     autoPlay: true,
   };
-
+  console.log(product);
   return (
     <>
       <Transition.Root appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-40"
-          onClose={() => setIsOpen(false)}
+          className="relative z-50"
+          onClose={setIsOpen}
+          initialFocus={btnModalProductRef}
         >
           <Transition.Child
             as={Fragment}
@@ -110,7 +112,7 @@ export default function ProductModal() {
                         </ul>
                       </div>
                       <div className="flex flex-wrap justify-end gap-2">
-                        {getItemQuantity(product!.id) > 0 ? (
+                        {getItemQuantity(product!.id) > 0 && (
                           <>
                             <CartButton
                               onClick={() => cart.removeCartItem(product!.id)}
@@ -125,26 +127,14 @@ export default function ProductModal() {
                               title="Quitar"
                               icon={<BsCartDash />}
                             />
-
-                            <CartButton
-                              onClick={() =>
-                                cart.increaseCartQuantity(product!.id)
-                              }
-                              title="Añadir"
-                              icon={<BsCartPlus />}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <CartButton
-                              onClick={() =>
-                                cart.increaseCartQuantity(product!.id)
-                              }
-                              title="Añadir"
-                              icon={<BsCartPlus />}
-                            />
                           </>
                         )}
+
+                        <CartButton
+                          onClick={() => cart.increaseCartQuantity(product!.id)}
+                          title="Añadir"
+                          icon={<BsCartPlus />}
+                        />
                       </div>
                     </div>
                     <button
@@ -152,6 +142,7 @@ export default function ProductModal() {
                       className="flex absolute h-8 w-8 top-0 right-0 border rounded-full bg-white hover:bg-gray-200 justify-center items-center z-50"
                       onClick={() => setIsOpen(false)}
                       title="Cerrar"
+                      ref={btnModalProductRef}
                     >
                       <GrClose className="h-4 w-4" aria-hidden="true" />
                     </button>

@@ -8,7 +8,6 @@ import CartItem from "./CartItem";
 
 export default function CartOffCanvas() {
   const { openCart, setOpenCart } = useCart();
-
   return (
     <Transition.Root show={openCart} as={Fragment}>
       <Dialog

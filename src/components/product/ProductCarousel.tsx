@@ -3,9 +3,7 @@ import { useCart } from "@/context/cartModal";
 import { useProduct } from "@/context/productModal";
 import { NewArrivalInterface } from "@/models/newArrivals.model";
 import { cartStore } from "@/store/cart.store";
-import productStorage from "@/store/product.store";
 import { truncate } from "@/utilities/utils";
-import { useEffect } from "react";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { FaEye } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
@@ -15,15 +13,10 @@ import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
 export default function ProductCarousel(data: NewArrivalInterface) {
-  const addProductToStore = productStorage((state) => state.addProduct);
   const cart = cartStore((state) => state);
   const { getItemQuantity } = useCart();
-  const { getProduct, cleanModal } = useProduct();
+  const { getProduct, cleanProductModal } = useProduct();
   const { data: products } = data;
-
-  useEffect(() => {
-    addProductToStore(data);
-  });
 
   const responsive = {
     desktop: {
@@ -68,7 +61,7 @@ export default function ProductCarousel(data: NewArrivalInterface) {
                     className="rounded-t-lg"
                   />
                 </div>
-                <div className="flex flex-col text-sm rounded-b-lg p-3 bg-white h-full justify-between gap-3">
+                <div className="flex flex-col text-sm rounded-b-lg p-3 bg-white h-full justify-top gap-3">
                   <div className="flex flex-col gap-3">
                     <p title={product.attributes.name}>
                       {truncate(product.attributes.name, 70)}
@@ -94,9 +87,9 @@ export default function ProductCarousel(data: NewArrivalInterface) {
                   </div>
                   <div
                     className="flex flex-wrap justify-end gap-3"
-                    onClick={cleanModal}
+                    onClick={cleanProductModal}
                   >
-                    {getItemQuantity(product.id) > 0 ? (
+                    {getItemQuantity(product.id) > 0 && (
                       <>
                         <CartButton
                           onClick={() => cart.removeCartItem(product.id)}
@@ -108,21 +101,13 @@ export default function ProductCarousel(data: NewArrivalInterface) {
                           title="Quitar"
                           icon={<BsCartDash />}
                         />
-                        <CartButton
-                          onClick={() => cart.increaseCartQuantity(product.id)}
-                          title="Añadir"
-                          icon={<BsCartPlus />}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <CartButton
-                          onClick={() => cart.increaseCartQuantity(product.id)}
-                          title="Añadir"
-                          icon={<BsCartPlus />}
-                        />
                       </>
                     )}
+                    <CartButton
+                      onClick={() => cart.increaseCartQuantity(product.id)}
+                      title="Añadir"
+                      icon={<BsCartPlus />}
+                    />
                   </div>
                 </div>
               </div>

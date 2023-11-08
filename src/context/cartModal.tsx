@@ -49,6 +49,11 @@ export function CartProvider({ children }: CartProviderProps) {
     return items;
   }
 
+  function removeItemsOfCart() {
+    const items = products(cart);
+    return items;
+  }
+
   function calculateTotal() {
     const subTotal = productStorage((state) => state.calculateSubtotal)(cart);
     const igv = productStorage((state) => state.calculateIGV)(subTotal);

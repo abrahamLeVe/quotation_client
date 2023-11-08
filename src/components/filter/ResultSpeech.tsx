@@ -1,24 +1,20 @@
 "use client";
 import { useCart } from "@/context/cartModal";
-import { ProductNAInterface } from "@/models/newArrivals.model";
+import { useProduct } from "@/context/productModal";
+import { useSpeechFilter } from "@/context/speechFilter";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
-import { MdDeleteOutline } from "react-icons/md";
+import { FaEye } from "react-icons/fa6";
 import { CartButton } from "../product/ProductCarousel";
 import ProductPrice from "../product/ProductPrice";
-import { useProduct } from "@/context/productModal";
-import { FaEye } from "react-icons/fa6";
 
-interface ResultSpeechPromps {
-  products: ProductNAInterface[];
-  query: string[];
-}
 
-export default function ResultSpeech({ products, query }: ResultSpeechPromps) {
+export default function ResultSpeech() {
   const cart = cartStore((state) => state);
+  const { products, query } = useSpeechFilter();
   const { getItemQuantity } = useCart();
-  const { getProduct, cleanModal } = useProduct();
+  const { getProduct } = useProduct();
 
   console.log(products);
   return (
@@ -65,10 +61,7 @@ export default function ResultSpeech({ products, query }: ResultSpeechPromps) {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <div
-                    onClick={cleanModal}
-                    className="flex flex-1 items-end justify-end text-sm gap-3"
-                  >
+                  <div className="flex flex-1 items-end justify-end text-sm gap-3">
                     {getItemQuantity(product.id) > 0 && (
                       <div title="Restar">
                         <CartButton
@@ -88,11 +81,13 @@ export default function ResultSpeech({ products, query }: ResultSpeechPromps) {
                       />
                     </div>
                   </div>
-                  <div title="Ver detalles">
+                  <div title="Ver detalles overflow-hidden">
                     <CartButton
-                      onClick={() => getProduct(product.id)}
+                      onClick={() => {
+                        getProduct(product.id);
+                      }}
                       icon={<FaEye />}
-                      className="max-w-[42px] "
+                      className="max-w-[42px]"
                     />
                   </div>
                 </div>

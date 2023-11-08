@@ -1,10 +1,9 @@
 import { useSpeechFilter } from "@/context/speechFilter";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMounted } from "./useMounted";
 
 export function useSpeechRecognition() {
-  const [isListening, setIsListening] = useState(false);
-  const { filterProducts } = useSpeechFilter();
+  const { filterProducts, isListening, setIsListening } = useSpeechFilter();
 
   let recognition: any = null;
 
@@ -14,9 +13,9 @@ export function useSpeechRecognition() {
     recognition =
       new window.webkitSpeechRecognition() || window.SpeechRecognition;
     recognition.continuous = false;
-    recognition.lang = "es-PE";
+    recognition.lang = "es-ES";
   }
-  
+
   useEffect(() => {
     if (!recognition) return;
 
@@ -28,18 +27,24 @@ export function useSpeechRecognition() {
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      let errorMessage =
-        "Se ha producido un error en el reconocimiento de voz.";
+      const errorMessages = {
+        aborted: "La operación de reconocimiento de voz fue abortada.",
+        "audio-capture":
+          "No se encontró ningún micrófono. Asegúrese de que haya un micrófono instalado",
+        "bad-grammar": "Error de gramática en el reconocimiento de voz.",
+        "language-not-supported":
+          "Idioma no compatible para el reconocimiento de voz.",
+        network: "Error de red en el reconocimiento de voz.",
+        "no-speech": "No se detectó ningún habla.",
+        "not-allowed":
+          "No se permitió el acceso al micrófono. Asegúrese de habilitar los permisos.",
+        "service-not-allowed":
+          "El servicio de reconocimiento de voz no está permitido.",
+      };
 
-      if (event.error === "no-speech") {
-        errorMessage = "No se detectó ningún habla.";
-      } else if (event.error === "not-allowed") {
-        errorMessage =
-          "No se permitió el acceso al micrófono. Asegúrese de habilitar los permisos.";
-      } else if (event.error === "audio-capture") {
-        errorMessage =
-          "No se encontró ningún micrófono. Asegúrese de que haya un micrófono instalado";
-      }
+      const errorMessage =
+        errorMessages[event.error] ||
+        "Se ha producido un error en el reconocimiento de voz.";
 
       readText(errorMessage);
     };
@@ -58,7 +63,7 @@ export function useSpeechRecognition() {
 
     setTimeout(() => {
       recognition.start();
-    }, 3000);
+    }, 2000);
   }
 
   function stopListening() {
@@ -67,7 +72,6 @@ export function useSpeechRecognition() {
   }
 
   return {
-    isListening,
     hasRecognitionSupport: !!recognition,
     stopListening,
     startListening,
@@ -78,39 +82,11 @@ export function readText(text: string) {
   const speech = new SpeechSynthesisUtterance(text);
   speech.rate = 1.2;
   speech.pitch = 0.9;
-  speech.lang = "es-PE";
+  speech.lang = "es-ES";
   window.speechSynthesis.speak(speech);
 }
 
-export const wordsExclude = new Set([
-  "o",
-  "de",
-  "la",
-  "para",
-  "y",
-  "con",
-  "no",
-  "al",
-  "el",
-  "del",
-  "en",
-  "un",
-  "una",
-  "los",
-  "las",
-  "a",
-  "por",
-  "es",
-  "lo",
-  "como",
-  "mi",
-  "se",
-  "están",
-  "productos",
-  "producto",
-  "categoría",
-  "categorías",
-]); // Add wordsExclude
+
 
 const randomMessages = [
   "¡Estoy aquí para ayudarte!",
