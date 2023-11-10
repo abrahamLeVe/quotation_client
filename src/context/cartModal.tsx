@@ -1,5 +1,5 @@
 "use client";
-import CartOffCanvas from "@/components/cart/CartOffCanvas";
+import CartOffCanvas from "@/components/cart/CartSliderOver";
 import MenuMobile from "@/components/navbar/MenuMobile";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductNAInterface } from "@/models/newArrivals.model";
@@ -79,7 +79,6 @@ export function CartProvider({ children }: CartProviderProps) {
     >
       {children}
       <CartOffCanvas />
-      <MenuMobile openMenu={openMenu} setOpenMenu={setOpenMenu} />
     </CartContext.Provider>
   );
 }

@@ -20,9 +20,7 @@ export function useSpeechRecognition() {
     if (!recognition) return;
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const speechResult = event.results[0][0].transcript
-        .toLowerCase()
-        .replace(/[.,]/g, "");
+      const speechResult = event.results[0][0].transcript;
       filterProducts(speechResult);
     };
 
@@ -85,8 +83,6 @@ export function readText(text: string) {
   speech.lang = "es-ES";
   window.speechSynthesis.speak(speech);
 }
-
-
 
 const randomMessages = [
   "¡Estoy aquí para ayudarte!",

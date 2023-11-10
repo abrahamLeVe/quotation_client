@@ -26,6 +26,7 @@ const config: Config = {
       gray: {
         100: "#f7fafc",
         200: "#e5e7eb",
+        300: "#d1d5db",
         400: "#9ca3af",
         500: "#6b7280",
         700: "#374151",
@@ -74,6 +75,7 @@ const config: Config = {
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
+    require("tailwind-scrollbar"),
   ],
 };
 export default config;

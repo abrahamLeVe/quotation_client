@@ -14,6 +14,11 @@ interface SpeechFilterContext {
   query: string[];
   isListening: boolean;
   setIsListening: React.Dispatch<React.SetStateAction<boolean>>;
+  filterByPrice: (price: string) => void;
+  minPrice: number;
+  setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+  maxPrice: number;
+  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SpeechFilterContext = createContext({} as SpeechFilterContext);
@@ -27,40 +32,44 @@ export function SpeechFilterProvider({ children }: SpeechFilterProviderProps) {
   const [products, setProducts] = useState<ProductNAInterface[]>([]);
   const [query, setQuery] = useState<string[]>([]);
   const [isListening, setIsListening] = useState(false);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
 
   function filterProducts(speechResult: string) {
-    if (speechResult.length < 4) {
-      setProducts([]);
+    const keywords = speechResult
+      .replace(/[.,]/g, "")
+      .slice(0, 50)
+      .toLowerCase()
+      .split(" ")
+      .filter((word) => !wordsExclude.has(word));
+
+    const cleanedQuery = keywords.filter(
+      (element) => element.trim() !== "" && element.trim().length >= 3
+    );
+
+    if (cleanedQuery.length === 0) {
+      cleanFilter();
       return;
     }
 
-    const trimmedSpeechResult = speechResult.trim();
+    console.log(cleanedQuery);
 
-    if (trimmedSpeechResult !== "") {
-      const keywords = trimmedSpeechResult
-        .toLowerCase()
-        .split(" ")
-        .filter((word) => !wordsExclude.has(word));
+    const everyMatch = productsStare.data.filter((product) => {
+      const productName = product.attributes.name.toLowerCase();
+      return cleanedQuery.every((keyword) => productName.includes(keyword));
+    });
 
-      const everyMatch = productsStare.data.filter((product) => {
-        const productName = product.attributes.name.toLowerCase();
-        return keywords.every((keyword) => productName.includes(keyword));
-      });
-
-      if (everyMatch.length > 0) {
-        redirectFilter(everyMatch, keywords);
-        return;
-      }
-
-      const someMatch = productsStare.data.filter((product) => {
-        const productName = product.attributes.name.toLowerCase();
-        return keywords.some((keyword) => productName.includes(keyword));
-      });
-
-      redirectFilter(someMatch, keywords);
-    } else {
-      // Aquí puedes manejar el caso de entrada vacía (puedes mostrar un mensaje o simplemente no hacer nada)
+    if (everyMatch.length > 0) {
+      redirectFilter(everyMatch, cleanedQuery);
+      return;
     }
+
+    const someMatch = productsStare.data.filter((product) => {
+      const productName = product.attributes.name.toLowerCase();
+      return cleanedQuery.some((keyword) => productName.includes(keyword));
+    });
+
+    redirectFilter(someMatch, cleanedQuery);
   }
 
   function redirectFilter(filterMach: ProductNAInterface[], query: string[]) {
@@ -74,6 +83,31 @@ export function SpeechFilterProvider({ children }: SpeechFilterProviderProps) {
     return;
   }
 
+  function filterByPrice(price: string) {
+    const minPrice = parseFloat(price);
+
+    const filteredProducts = productsStare.data
+      .filter((product) => product.attributes.price >= minPrice)
+      .sort((a, b) => a.attributes.price - b.attributes.price);
+
+    // Calcula el valor máximo de precio
+    const maxPrice = filteredProducts.reduce(
+      (max, product) => Math.max(max, product.attributes.price),
+      0
+    );
+
+    // Actualiza el estado
+    setProducts(filteredProducts);
+    setMinPrice(minPrice);
+    setMaxPrice(maxPrice);
+
+    // Actualiza la query
+    setQuery([
+      "Precio: min-$" + minPrice.toFixed(),
+      "max-$" + maxPrice.toFixed(),
+    ]);
+  }
+
   return (
     <SpeechFilterContext.Provider
       value={{
@@ -83,6 +117,11 @@ export function SpeechFilterProvider({ children }: SpeechFilterProviderProps) {
         isListening,
         setIsListening,
         cleanFilter,
+        filterByPrice,
+        maxPrice,
+        minPrice,
+        setMaxPrice,
+        setMinPrice,
       }}
     >
       {children}
@@ -94,6 +133,7 @@ export const wordsExclude = new Set([
   "a",
   "b",
   "búscame",
+  "busca",
   "buscar",
   "c",
   "categoría",
@@ -131,6 +171,7 @@ export const wordsExclude = new Set([
   "productos",
   "por",
   "q",
+  "quien eres",
   "r",
   "s",
   "se",
@@ -140,8 +181,68 @@ export const wordsExclude = new Set([
   "un",
   "v",
   "vende",
+  "vendes",
   "w",
   "x",
   "y",
   "z",
+  "aquel",
+  "aquella",
+  "aquellas",
+  "aquellos",
+  "aqui",
+  "bien",
+  "como",
+  "cuál",
+  "cuáles",
+  "cuándo",
+  "cuánto",
+  "desde",
+  "donde",
+  "dos",
+  "este",
+  "esto",
+  "estos",
+  "hasta",
+  "hoy",
+  "mas",
+  "menos",
+  "mismo",
+  "nada",
+  "nadie",
+  "ni",
+  "ningún",
+  "ninguna",
+  "ningunas",
+  "ningunos",
+  "nunca",
+  "otra",
+  "otras",
+  "otros",
+  "pero",
+  "puede",
+  "pueden",
+  "pues",
+  "que",
+  "quien",
+  "saber",
+  "si",
+  "sí",
+  "sobre",
+  "solo",
+  "son",
+  "su",
+  "sus",
+  "tal",
+  "también",
+  "tanto",
+  "tiene",
+  "tiempo",
+  "todo",
+  "trabaja",
+  "trabajar",
+  "trabajo",
+  "tu",
+  "tus",
+  "vez",
 ]);

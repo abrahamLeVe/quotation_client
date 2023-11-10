@@ -2,13 +2,14 @@
 import { useCart } from "@/context/cartModal";
 import { useProduct } from "@/context/productModal";
 import Link from "next/link";
-import { HiBars3, HiOutlineShoppingBag } from "react-icons/hi2";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 import ButtonSpeech from "../filter/ButtonSpeech";
 import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
+import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
-  const { cartQuantity, setOpenCart, setOpenMenu } = useCart();
+  const { cartQuantity, setOpenCart } = useCart();
   const { cleanProductModal } = useProduct();
 
   return (
@@ -21,20 +22,11 @@ export default function NavBar() {
 
           <nav
             aria-label="Top"
-            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+            className="mx-auto  max-w-screen-xl px-4 sm:px-6 lg:px-8"
           >
             <div className="border-b border-gray-200">
               <div className="flex h-16 items-center">
-                <button
-                  type="button"
-                  className="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
-                  onClick={() => setOpenMenu(true)}
-                >
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open menu</span>
-                  <HiBars3 className="h-6 w-6" aria-hidden="true" />
-                </button>
-
+                <MenuMobile />
                 {/* Logo */}
                 <div className="ml-4 flex lg:ml-0 relative w-[50px]">
                   <img

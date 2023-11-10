@@ -6,7 +6,7 @@ import { GrClose } from "react-icons/gr";
 import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
 
-export default function CartOffCanvas() {
+export default function CartSliderOver() {
   const { openCart, setOpenCart } = useCart();
   return (
     <Transition.Root show={openCart} as={Fragment}>
@@ -41,7 +41,7 @@ export default function CartOffCanvas() {
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                    <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                    <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">
                           Carrito de compras
