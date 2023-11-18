@@ -1,7 +1,8 @@
 "use client";
 
 import { useProductContext } from "@/context/product.context";
-import { ProductInterface } from "@/models/product.model";
+import { useMounted } from "@/hooks/useMounted";
+import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
@@ -9,7 +10,6 @@ import { FaEye } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-import { useMounted } from "@/hooks/useMounted";
 
 export default function ProductCard({
   product,
@@ -17,7 +17,8 @@ export default function ProductCard({
   product: ProductInterface;
 }) {
   const cart = cartStore((state) => state);
-  const { getItemQuantity, getProduct, cleanProductModal } = useProductContext();
+  const { getItemQuantity, getProduct, cleanProductModal } =
+    useProductContext();
   const mounted = useMounted();
 
   return (
@@ -51,7 +52,8 @@ export default function ProductCard({
             <CartButton
               onClick={() => getProduct(product.id)}
               icon={<FaEye />}
-              className="absolute top-0 end-0 max-w-[42px] backdrop-blur-md"
+              title="Detalles"
+              className="absolute top-0 end-0 bg-white/30 backdrop-blur-md"
             />
           </div>
 
@@ -109,7 +111,7 @@ export function CartButton({
     <>
       <button
         className={classNames(
-          "flex flex-wrap w-[110px] border rounded-lg p-1.5 text-gray-400 hover:text-gray-500 transition-all items-center justify-center gap-2 ",
+          "flex flex-wrap w-[110px] border rounded-lg p-1.5 text-gray-700 hover:text-gray-900 transition-all items-center justify-center gap-2 ",
           className as string
         )}
         onClick={onClick}
@@ -118,7 +120,7 @@ export function CartButton({
         <span className="text-2xl" aria-hidden="true">
           {icon}
         </span>
-        <p className={`${!title && "hidden"} text-sm text-gray-900`}>{title}</p>
+        <p className={`${!title && "hidden"} text-sm`}>{title}</p>
       </button>
     </>
   );

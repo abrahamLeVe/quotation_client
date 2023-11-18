@@ -1,6 +1,6 @@
 "use client";
 import ProductModal from "@/components/product/ProductModal";
-import { ProductInterface } from "@/models/product.model";
+import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import productStorage from "@/store/product.store";
 import { createContext, useContext, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 import { FilterActions } from "@/components/filter/FilterSelect";
-import { ProductInterface } from "@/models/product.model";
+import { ProductInterface } from "@/models/products.model";
 import productStorage from "@/store/product.store";
 import { removeDiacritics } from "@/utilities/utils";
 import { createContext, useContext, useState } from "react";
@@ -79,7 +79,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function processQuery(speechResult: string): string[] {
     setResultText(speechResult);
-        cleanFilter();
+    cleanFilter();
 
     const firstFilter = removeDiacritics(speechResult.toLowerCase());
     const keywords = firstFilter

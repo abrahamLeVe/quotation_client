@@ -14,6 +14,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
+import Link from "next/link";
 
 export default function ProductModal() {
   const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
@@ -77,7 +78,7 @@ export default function ProductModal() {
                       <div className="flex flex-col gap-3 ">
                         <Dialog.Title
                           as="h3"
-                          className="text-lg font-medium leading-6 text-gray-900"
+                          className="text-lg font-medium leading-6"
                         >
                           {product!.attributes.name}
                         </Dialog.Title>
@@ -99,13 +100,13 @@ export default function ProductModal() {
                             </span>
                             En stock
                           </li>
-                          <li className="flex flex-wrap gap-2">
+                          <li className="flex flex-wrap">
                             <span className="font-semibold"> Categorías: </span>
                             {product!.attributes.categories.data.map(
                               (category) => (
                                 <div
                                   key={category.id}
-                                  className="relative hover:underline"
+                                  className="relative hover:underline mx-2"
                                 >
                                   <p className="font-medium text-gray-900 ">
                                     {capitalizeFirstLetter(
@@ -124,6 +125,22 @@ export default function ProductModal() {
                                 </div>
                               )
                             )}
+                          </li>
+                          <li className="flex gap-1">
+                            <span className="font-semibold">
+                              Descripción completa:
+                            </span>
+                            <button
+                              onClick={() => {
+                                router.push(
+                                  `/product/${product!.attributes.slug}`,
+                                );
+                                setIsOpen(false);
+                              }}
+                              className="hover:underline"
+                            >
+                              Click aquí
+                            </button>
                           </li>
                         </ul>
                       </div>

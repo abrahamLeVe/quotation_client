@@ -1,5 +1,5 @@
 "use client";
-import { ProductsInterface, ProductInterface } from "@/models/product.model";
+import { ProductsInterface, ProductInterface } from "@/models/products.model";
 import { create } from "zustand";
 import { CartItem } from "./cart.store";
 

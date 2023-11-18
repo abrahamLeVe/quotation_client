@@ -78,7 +78,7 @@ export default function FilterSection({ data }: CategoriesInterface) {
             min="0"
             max={maxPrice}
             onChange={(event) => filterByPrice(event.target.value)}
-            className="block w-full appearance-none bg-gray-400 h-3 rounded-lg overflow-hidden outline-none"
+            className="block w-full appearance-none bg-gray-400 h-4 rounded-lg overflow-hidden outline-none"
           />
           <div className="flex justify-between text-gray-600">
             <span>${minPrice}</span>
