@@ -1,29 +1,27 @@
 "use client";
-import { Tab } from "@headlessui/react";
+import { CategoriesInterface } from "@/models/category.model";
 import { useState } from "react";
-import { HiBars3 } from "react-icons/hi2";
-import SlideOver from "../slide-over/SlideOver";
+import { IoFilter } from "react-icons/io5";
+import { CartButton } from "../product/ProductCard";
+import SlideOver from "../ui/SlideOver";
 import FilterSection from "./FilterSection";
-import { CartButton } from "../product/ProductCarousel";
 
-export default function FilterSliderOver() {
+export default function FilterSliderOver({ data }: CategoriesInterface) {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <div className="lg:hidden">
-        <CartButton
-          onClick={() => setOpen(true)}
-          title="Filtro"
-          icon={<HiBars3 />}
-        />
-      </div>
-
+    <div className="lg:hidden">
+      <CartButton
+        onClick={() => setOpen(true)}
+        title="Filtro"
+        icon={<IoFilter />}
+        className="shadow-md border-none"
+      />
       <SlideOver openMenu={open} setOpenMenu={setOpen}>
-        <Tab.Group as="div" className="mt-2">
-          <FilterSection />
-        </Tab.Group>
+        <div className="mt-2">
+          <FilterSection data={data} />
+        </div>
       </SlideOver>
-    </>
+    </div>
   );
 }

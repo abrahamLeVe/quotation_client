@@ -1,9 +1,10 @@
-import { useSpeechFilter } from "@/context/speechFilter";
+import { useFilterContext } from "@/context/filter.context";
 import { useEffect } from "react";
 import { useMounted } from "./useMounted";
 
 export function useSpeechRecognition() {
-  const { filterProducts, isListening, setIsListening } = useSpeechFilter();
+  const { filterProducts, isListening, setIsListening, setResultText } =
+    useFilterContext();
 
   let recognition: any = null;
 
@@ -21,6 +22,7 @@ export function useSpeechRecognition() {
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const speechResult = event.results[0][0].transcript;
+      setResultText(speechResult);
       filterProducts(speechResult);
     };
 

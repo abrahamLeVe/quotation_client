@@ -1,17 +1,15 @@
 "use client";
-import { SliderInterface } from "@/models/slider.model";
-import Image from "next/image";
+import { SlideInterface } from "@/models/slide.model";
 import { useEffect, useState } from "react";
 import { TiMinus } from "react-icons/ti";
 import { ArrowButton } from "./ArrowButton";
 
-export default function Slider({ data }: SliderInterface) {
+export default function Slide({ data }: SlideInterface) {
   const slides = data.map((item) => ({
-    url: item.attributes.image.data.attributes.url,
+    url: item.attributes.image.data?.attributes.url,
     alt: item.attributes.name,
     key: item.id,
   }));
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {
@@ -44,17 +42,14 @@ export default function Slider({ data }: SliderInterface) {
         {slides.map((slide, slideIndex) => (
           <div
             key={slide.key}
-            className={`slide ${
+            className={`aspect-[16/6] slide ${
               slideIndex === currentIndex ? "opacity-100" : "opacity-0"
             } transition-opacity duration-700 ease-in-out absolute inset-0`}
           >
-            <Image
+            <img
               src={slide.url}
-              className="h-full w-full md:rounded-2xl"
+              className="w-full md:rounded-2xl"
               alt={slide.alt}
-              width={1440}
-              height={580}
-              priority
             />
           </div>
         ))}

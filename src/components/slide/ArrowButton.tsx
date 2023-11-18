@@ -2,7 +2,7 @@
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 interface ArrowButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   direction: "left" | "right";
 }
 
@@ -16,7 +16,7 @@ export function ArrowButton({ onClick, direction }: ArrowButtonProps) {
 
   return (
     <div
-      className="group-hover:block absolute top-[50%]  -translate-x-0 translate-y-[-50%] text-2xl rounded-full p-2 bg-black/40 text-white cursor-pointer hover:bg-black/70 duration-500 "
+      className="group-hover:block absolute top-[50%]  -translate-x-0 translate-y-[-50%] text-2xl rounded-full p-2 bg-black/40 text-white cursor-pointer hover:bg-black/70 duration-500 z-10"
       style={buttonStyle}
       onClick={onClick}
     >

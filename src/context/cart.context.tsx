@@ -2,13 +2,13 @@
 import CartOffCanvas from "@/components/cart/CartSliderOver";
 import MenuMobile from "@/components/navbar/MenuMobile";
 import { useMounted } from "@/hooks/useMounted";
-import { ProductNAInterface } from "@/models/newArrivals.model";
+import { ProductInterface } from "@/models/product.model";
 import { cartStore } from "@/store/cart.store";
 import productStorage from "@/store/product.store";
-import { ReactNode, createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface CartProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 interface CartContext {
@@ -17,14 +17,14 @@ interface CartContext {
   openCart: boolean;
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  itemsOfCart: () => ProductNAInterface[];
+  itemsOfCart: () => ProductInterface[];
   getItemQuantity: (id: number) => number;
   calculateTotal: () => { subTotal: number; igv: number; total: number };
 }
 
 const CartContext = createContext({} as CartContext);
 
-export function useCart() {
+export function useCartContext() {
   return useContext(CartContext);
 }
 

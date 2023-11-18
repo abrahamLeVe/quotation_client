@@ -1,5 +1,5 @@
 "use server";
-import { API_URL, API_TOKEN } from "../utilities/urls";
+import { API_URL, API_TOKEN} from "../utilities/urls";
 
 export async function fetchDataFromApi(endpoint: string): Promise<any> {
   try {
@@ -8,6 +8,7 @@ export async function fetchDataFromApi(endpoint: string): Promise<any> {
       headers: {
         Authorization: "Bearer " + API_TOKEN,
       },
+      // next: { revalidate: 5 },
     };
 
     const res = await fetch(`${API_URL}${endpoint}`, options);

@@ -1,5 +1,5 @@
 "use client";
-import { useProduct } from "@/context/productModal";
+import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef } from "react";
@@ -8,12 +8,12 @@ import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { CartButton } from "./ProductCarousel";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
+import { CartButton } from "./ProductCard";
 
 export default function ProductModal() {
-  const { product, setIsOpen, isOpen, getItemQuantity } = useProduct();
+  const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
   let btnModalProductRef = useRef(null);
 
@@ -23,7 +23,6 @@ export default function ProductModal() {
     showIndex: true,
     autoPlay: true,
   };
-  console.log(product);
   return (
     <>
       <Transition.Root appear show={isOpen} as={Fragment}>

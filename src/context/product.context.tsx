@@ -1,44 +1,42 @@
 "use client";
 import ProductModal from "@/components/product/ProductModal";
-import { ProductNAInterface } from "@/models/newArrivals.model";
+import { ProductInterface } from "@/models/product.model";
 import { cartStore } from "@/store/cart.store";
 import productStorage from "@/store/product.store";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface ProductProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 interface ProductContext {
   isOpen: boolean;
-  product: ProductNAInterface | undefined;
+  product: ProductInterface | undefined;
   getProduct: (id: number) => void;
   getItemQuantity: (id: number) => number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setProduct: React.Dispatch<
-    React.SetStateAction<ProductNAInterface | undefined>
+    React.SetStateAction<ProductInterface | undefined>
   >;
   cleanProductModal: () => void;
 }
 
 const ProductContext = createContext({} as ProductContext);
 
-export function useProduct() {
+export function useProductContext() {
   return useContext(ProductContext);
 }
 
 export function ProductProvider({ children }: ProductProviderProps) {
   const products = productStorage((state) => state.productState);
-  const [product, setProduct] = useState<ProductNAInterface>();
+  const [product, setProduct] = useState<ProductInterface>();
   const [isOpen, setIsOpen] = useState(false);
   const cart = cartStore((state) => state);
 
   function getProduct(id: number) {
-    const item = products.data.find(
-      (item: ProductNAInterface) => item.id === id
-    );
+    const item = products.data.find((item: ProductInterface) => item.id === id);
     setIsOpen(true);
-    return setProduct(item);
+    setProduct(item);
   }
 
   function getItemQuantity(id: number) {
@@ -48,7 +46,6 @@ export function ProductProvider({ children }: ProductProviderProps) {
   function cleanProductModal() {
     setProduct(undefined);
     setIsOpen(false);
-    return;
   }
 
   return (

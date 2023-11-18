@@ -1,33 +1,46 @@
-export interface NewArrivalInterface {
-  data: ProductNAInterface[];
+export interface ProductsInterface {
+  data: ProductInterface[];
 }
 
-export interface ProductNAInterface {
+export interface ProductInterface {
   id: number;
-  attributes: Attributes3;
+  attributes: Attributes4;
 }
 
-export interface Attributes3 {
+interface Attributes4 {
   name: string;
-  slug: string;
   price: number;
   discount: number;
   description: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  slug: string;
   rating: number;
   image: Image;
+  thumbnail: Thumbnail;
   categories: Categories;
-  thumbnail: Thumbnail2;
-}
-
-interface Thumbnail2 {
-  data: Datum;
 }
 
 interface Categories {
-  data: Datum2[];
+  data: Datum3[];
+}
+
+interface Datum3 {
+  id: number;
+  attributes: Attributes3;
+}
+
+interface Attributes3 {
+  name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface Thumbnail {
+  data?: Datum2;
 }
 
 interface Datum2 {
@@ -37,10 +50,26 @@ interface Datum2 {
 
 interface Attributes2 {
   name: string;
+  alternativeText?: any;
+  caption?: any;
+  width: number;
+  height: number;
+  formats: Formats2;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl?: any;
+  provider: string;
+  provider_metadata: Providermetadata;
   createdAt: string;
   updatedAt: string;
-  publishedAt: string;
-  slug: string;
+}
+
+interface Formats2 {
+  small: Small;
+  thumbnail: Small;
 }
 
 interface Image {
@@ -72,10 +101,13 @@ interface Attributes {
 }
 
 interface Formats {
-  thumbnail: Thumbnail;
+  small: Small;
+  thumbnail: Small;
+  large?: Small;
+  medium?: Small;
 }
 
-interface Thumbnail {
+interface Small {
   ext: string;
   url: string;
   hash: string;

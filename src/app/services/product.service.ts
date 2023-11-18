@@ -1,10 +1,8 @@
 "use server";
-import { NewArrivalInterface } from "@/models/newArrivals.model";
+import { ProductsInterface } from "@/models/product.model";
 import { fetchDataFromApi } from "@/lib/api";
 
-export async function getDataNewArrival(): Promise<NewArrivalInterface> {
-  const res = fetchDataFromApi(
-    `/api/products?populate=*&[filters][categories][slug][$eq]=new-arrivals`
-  );
+export async function getDataProducts(): Promise<ProductsInterface> {
+  const res = fetchDataFromApi(`/api/products?populate=*`);
   return res;
 }

@@ -1,4 +1,23 @@
-export interface SliderInterface {
+export interface CategoriesInterface {
+  data: Datum2[];
+}
+
+interface Datum2 {
+  id: number;
+  attributes: Attributes3;
+}
+
+interface Attributes3 {
+  name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: Image;
+  products: Products;
+}
+
+interface Products {
   data: Datum[];
 }
 
@@ -9,10 +28,14 @@ interface Datum {
 
 interface Attributes2 {
   name: string;
+  price: number;
+  discount: number;
+  description: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  image: Image;
+  slug: string;
+  rating: number;
 }
 
 interface Image {
@@ -44,13 +67,13 @@ interface Attributes {
 }
 
 interface Formats {
-  large: Large;
-  small: Large;
-  medium: Large;
-  thumbnail: Large;
+  small: Small;
+  thumbnail: Small;
+  large?: Small;
+  medium?: Small;
 }
 
-interface Large {
+interface Small {
   ext: string;
   url: string;
   hash: string;

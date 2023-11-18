@@ -1,5 +1,5 @@
 "use client";
-import { useCart } from "@/context/cartModal";
+import { useCartContext } from "@/context/cart.context";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { GrClose } from "react-icons/gr";
@@ -7,7 +7,7 @@ import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
 
 export default function CartSliderOver() {
-  const { openCart, setOpenCart } = useCart();
+  const { openCart, setOpenCart } = useCartContext();
   return (
     <Transition.Root show={openCart} as={Fragment}>
       <Dialog

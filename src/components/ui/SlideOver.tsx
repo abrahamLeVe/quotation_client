@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useRef } from "react";
+import { Fragment, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 
 interface SlideOverProps {

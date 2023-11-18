@@ -1,15 +1,12 @@
 "use client";
-import {
-  NewArrivalInterface,
-  ProductNAInterface,
-} from "@/models/newArrivals.model";
+import { ProductsInterface, ProductInterface } from "@/models/product.model";
 import { create } from "zustand";
 import { CartItem } from "./cart.store";
 
 interface productStorageProps {
-  productState: NewArrivalInterface;
-  addProduct: (data: NewArrivalInterface) => void;
-  productsOfCart: (cartItems: CartItem[]) => ProductNAInterface[];
+  productState: ProductsInterface;
+  addProduct: (data: ProductsInterface) => void;
+  productsOfCart: (cartItems: CartItem[]) => ProductInterface[];
   calculateSubtotal: (cartItems: CartItem[]) => number;
   calculateIGV: (subtotal: number) => number;
   calculateTotal: (subtotal: number, igv: number) => number;

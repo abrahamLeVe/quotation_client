@@ -1,8 +1,8 @@
 "use server";
-import { SliderInterface } from "@/models/slider.model";
+import { SlideInterface } from "@/models/slide.model";
 import { fetchDataFromApi } from "@/lib/api";
 
-export async function getDataSlider(): Promise<SliderInterface> {
+export async function getDataSlide(): Promise<SlideInterface> {
   const res = fetchDataFromApi(`/api/sliders?populate=*`);
   return res;
 }

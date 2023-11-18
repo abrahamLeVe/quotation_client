@@ -1,6 +1,6 @@
 "use client";
-import { useCart } from "@/context/cartModal";
-import { useProduct } from "@/context/productModal";
+import { useCartContext } from "@/context/cart.context";
+import { useProductContext } from "@/context/product.context";
 import Link from "next/link";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import ButtonSpeech from "../filter/ButtonSpeech";
@@ -9,15 +9,15 @@ import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
-  const { cartQuantity, setOpenCart } = useCart();
-  const { cleanProductModal } = useProduct();
+  const { cartQuantity, setOpenCart } = useCartContext();
+  const { cleanProductModal } = useProductContext();
 
   return (
     <>
       <header className="bg-white">
         <div className="relative bg-white">
           <div className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-            <p>Obtenga entrega gratuita en pedidos superiores a $100</p>
+            <p>Entrega gratuita en pedidos superiores a $100</p>
           </div>
 
           <nav
@@ -58,7 +58,7 @@ export default function NavBar() {
                       className="p-2 text-gray-400 hover:text-gray-500 relative"
                     >
                       <HiOutlineShoppingBag
-                        className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        className="h-7 w-7 flex-shrink-0"
                         aria-hidden="true"
                       />
                       <div className="border rounded-full w-6 h-6 absolute top-0 -right-1">

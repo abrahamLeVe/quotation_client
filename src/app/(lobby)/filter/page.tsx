@@ -1,11 +1,11 @@
-"use client";
-import FilterSliderOver from "@/components/filter/FilterSliderOver";
+import { getDataCategory } from "@/app/services/category.service";
 import ResultSpeech from "@/components/filter/ResultSpeech";
 
-export default function FilterPage() {
+export default async function FilterPage() {
+  const { data: dataCategory } = await getDataCategory();
   return (
     <>
-      <ResultSpeech />
+      <ResultSpeech data={dataCategory} />
     </>
   );
 }

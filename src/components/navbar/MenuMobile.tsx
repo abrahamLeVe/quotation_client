@@ -2,7 +2,7 @@
 import { Tab } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { HiBars3 } from "react-icons/hi2";
-import SlideOver from "../slide-over/SlideOver";
+import SlideOver from "../ui/SlideOver";
 import ButtonLoginForm from "./MenuAuth";
 import { navigation } from "./MenuFlyout";
 

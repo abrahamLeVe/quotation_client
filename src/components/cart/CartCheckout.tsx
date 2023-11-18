@@ -1,9 +1,9 @@
 "use client";
-import { useCart } from "@/context/cartModal";
+import { useCartContext } from "@/context/cart.context";
 import { formatCurrency } from "@/utilities/utils";
 
 export default function CartCheckout() {
-  const { calculateTotal, setOpenCart } = useCart();
+  const { calculateTotal, setOpenCart } = useCartContext();
   const subTotal = calculateTotal().subTotal;
   return (
     <>

@@ -38,9 +38,14 @@ const config: Config = {
         600: "#65a30d",
       },
       indigo: {
+        100: "#E0E7FF",
+        500: "#6366F1",
         600: "#4f46e5",
+        900: "#312E81",
       },
-      orange: "#ff7849",
+      orange: {
+        300: "#FDBA74",
+      },
       purple: "#7e5bef",
       pink: "#ff49db",
       red: {

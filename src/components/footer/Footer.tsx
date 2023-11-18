@@ -1,5 +1,5 @@
 "use client";
-import { getDataNewArrival } from "@/app/services/product.service";
+import { getDataProducts } from "@/app/services/product.service";
 import productStorage from "@/store/product.store";
 import { useEffect } from "react";
 import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
@@ -12,7 +12,7 @@ export default function Footer() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await getDataNewArrival();
+        const data = await getDataProducts();
         if (data) {
           addProductToStore(data);
         }

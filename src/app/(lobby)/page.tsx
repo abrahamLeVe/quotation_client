@@ -1,16 +1,16 @@
 import ProductCarousel from "@/components/product/ProductCarousel";
-import Slider from "@/components/slider/Slider";
-import { getDataNewArrival } from "../services/product.service";
-import { getDataSlider } from "../services/slider.service";
+import Slide from "@/components/slide/Slide";
+import { getDataProducts } from "../services/product.service";
+import { getDataSlide } from "../services/slide.service";
 
 export default async function Home() {
-  const { data: dataSlider } = await getDataSlider();
-  const { data: dataArrival } = await getDataNewArrival();
+  const { data: slides } = await getDataSlide();
 
   return (
     <>
-      <Slider data={dataSlider} />
-      <ProductCarousel data={dataArrival} />
+      <Slide data={slides} />
+
+      <ProductCarousel />
     </>
   );
 }

@@ -1,15 +1,15 @@
 "use client";
-import { useCart } from "@/context/cartModal";
+import { useCartContext } from "@/context/cart.context";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
-import { CartButton } from "../product/ProductCarousel";
 import ProductPrice from "../product/ProductPrice";
+import { CartButton } from "../product/ProductCard";
 
 export default function CartItem() {
   const cart = cartStore((state) => state);
-  const { getItemQuantity, itemsOfCart, setOpenCart } = useCart();
+  const { getItemQuantity, itemsOfCart, setOpenCart } = useCartContext();
 
   return (
     <div className="mt-8">
@@ -20,7 +20,7 @@ export default function CartItem() {
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img
                   src={
-                    product.attributes.thumbnail.data.attributes.formats
+                    product.attributes.thumbnail.data?.attributes.formats
                       .thumbnail.url
                   }
                   alt={product.attributes.name}
