@@ -3,7 +3,7 @@ import { useCartContext } from "@/context/cart.context";
 import { useProductContext } from "@/context/product.context";
 import Link from "next/link";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import ButtonSpeech from "../filter/ButtonSpeech";
+import FilterButton from "../filter/FilterButton";
 import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
@@ -46,7 +46,7 @@ export default function NavBar() {
                   </div>
 
                   {/* Filter */}
-                  <ButtonSpeech />
+                  <FilterButton />
 
                   {/* Cart */}
                   <div className="ml-4 flow-root lg:ml-6">

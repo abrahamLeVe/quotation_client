@@ -16,11 +16,11 @@ export default function Providers({ children }: ProvidersProps) {
     <>
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
-          <ProductProvider>
-            <CartProvider>
-              <FilterProvider>{children}</FilterProvider>
-            </CartProvider>
-          </ProductProvider>
+          <FilterProvider>
+            <ProductProvider>
+              <CartProvider>{children}</CartProvider>
+            </ProductProvider>
+          </FilterProvider>
         </SessionProvider>
       </QueryClientProvider>
     </>

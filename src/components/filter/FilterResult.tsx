@@ -14,7 +14,7 @@ import FilterSection from "./FilterSection";
 import FilterSelect from "./FilterSelect";
 import FilterSliderOver from "./FilterSliderOver";
 
-export default function ResultSpeech({ data }: CategoriesInterface) {
+export default function FilterResult({ data }: CategoriesInterface) {
   const cart = cartStore((state) => state);
   const { products, resultText } = useFilterContext();
   const { getItemQuantity } = useCartContext();

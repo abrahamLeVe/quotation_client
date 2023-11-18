@@ -1,20 +1,25 @@
 "use client";
+import { useFilterContext } from "@/context/filter.context";
 import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
+import { capitalizeFirstLetter } from "@/utilities/utils";
 import { Dialog, Transition } from "@headlessui/react";
+import { useRouter } from "next/navigation";
 import { Fragment, useRef } from "react";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-import { CartButton } from "./ProductCard";
 
 export default function ProductModal() {
   const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
+  const { filterProductsByCategoryId, setResultText } = useFilterContext();
+  const router = useRouter();
   let btnModalProductRef = useRef(null);
 
   const imageGalleryOptions = {
@@ -98,13 +103,25 @@ export default function ProductModal() {
                             <span className="font-semibold"> Categorías: </span>
                             {product!.attributes.categories.data.map(
                               (category) => (
-                                <a
-                                  href="#"
-                                  className="underline hover:text-indigo-600"
+                                <div
                                   key={category.id}
+                                  className="relative hover:underline"
                                 >
-                                  {category.attributes.name.toLocaleLowerCase()}
-                                </a>
+                                  <p className="font-medium text-gray-900 ">
+                                    {capitalizeFirstLetter(
+                                      category.attributes.name
+                                    )}
+                                  </p>
+                                  <button
+                                    onClick={() => {
+                                      filterProductsByCategoryId(category.id);
+                                      setResultText(category.attributes.name);
+                                      router.push("/filter");
+                                      setIsOpen(false);
+                                    }}
+                                    className="absolute inset-0 w-full"
+                                  ></button>
+                                </div>
                               )
                             )}
                           </li>

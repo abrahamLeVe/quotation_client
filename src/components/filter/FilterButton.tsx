@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BsMic, BsSearch } from "react-icons/bs";
 import { Icons } from "../Icons";
 
-export default function ButtonSpeech() {
+export default function FilterButton() {
   const { products, isListening } = useFilterContext();
   const { startListening } = useSpeechRecognition();
 
