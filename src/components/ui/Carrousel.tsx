@@ -1,9 +1,9 @@
 "use client";
+import { ProductsInterface } from "@/models/products.model";
+import { useState } from "react";
+import Carousel from "react-simply-carousel";
 import ProductCard from "../product/ProductCard";
 import { ArrowButton } from "../slide/ArrowButton";
-import Carousel from "react-simply-carousel";
-import React, { useState } from "react";
-import { ProductsInterface } from "@/models/products.model";
 
 export default function Carrousel({ data: products }: ProductsInterface) {
   const [activeSlide, setActiveSlide] = useState(0);

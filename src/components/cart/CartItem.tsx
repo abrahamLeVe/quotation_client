@@ -6,11 +6,12 @@ import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
 import { CartButton } from "../product/ProductCard";
+import { useRouter } from "next/navigation";
 
 export default function CartItem() {
   const cart = cartStore((state) => state);
   const { getItemQuantity, itemsOfCart, setOpenCart } = useCartContext();
-
+  const router = useRouter();
   return (
     <div className="mt-8">
       <div className="flow-root">
@@ -30,11 +31,17 @@ export default function CartItem() {
 
               <div className="ml-4 flex flex-1 flex-col gap-5">
                 <div>
-                  <div className="flex justify-between text-base font-medium text-gray-900">
+                  <div className="flex text-base  hover:underline font-medium text-gray-900 relative">
                     <h3 title={product.attributes.name}>
-                      <a href={"#"} className="hover:underline">
-                        <p>{truncate(product.attributes.name, 70)}</p>
-                      </a>
+                      {truncate(product.attributes.name, 70)}
+
+                      <button
+                        onClick={() => {
+                          router.push(`/product/${product!.attributes.slug}`);
+                          setOpenCart(false);
+                        }}
+                        className="absolute inset-0"
+                      ></button>
                     </h3>
                   </div>
                   <div className="flex flex-row gap-5">

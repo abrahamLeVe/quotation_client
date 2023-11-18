@@ -1,0 +1,26 @@
+"use client";
+import { ProductInterface } from "@/models/products.model";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+
+export default function ImageGalleryIndex(product: ProductInterface) {
+  const imageGalleryOptions = {
+    showPlayButton: false,
+    showBullets: true,
+    showIndex: true,
+    autoPlay: true,
+  };
+  return (
+    <div>
+      <ImageGallery
+        items={product.attributes.image.data?.map((item) => ({
+          original: item.attributes.url,
+          thumbnail: item.attributes.formats.thumbnail.url,
+          slideToIndex: item.id,
+        }))}
+        {...imageGalleryOptions}
+        thumbnailPosition="left"
+      />
+    </div>
+  );
+}

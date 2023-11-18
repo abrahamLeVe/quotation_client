@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { GrClose } from "react-icons/gr";
 import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
+import TransitionChild from "../ui/TransitionChild";
 
 export default function CartSliderOver() {
   const { openCart, setOpenCart } = useCartContext();
@@ -15,17 +16,7 @@ export default function CartSliderOver() {
         className="relative z-50"
         onClose={() => setOpenCart(false)}
       >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-in-out duration-500"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in-out duration-500"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black/25 transition-opacity" />
-        </Transition.Child>
+        <TransitionChild />
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">

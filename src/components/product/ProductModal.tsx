@@ -9,12 +9,11 @@ import { Fragment, useRef } from "react";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
+import ImageGalleryIndex from "../ui/ImageGallery";
 import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-import Link from "next/link";
+import TransitionChild from "../ui/TransitionChild";
 
 export default function ProductModal() {
   const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
@@ -23,12 +22,6 @@ export default function ProductModal() {
   const router = useRouter();
   let btnModalProductRef = useRef(null);
 
-  const imageGalleryOptions = {
-    showPlayButton: false,
-    showBullets: true,
-    showIndex: true,
-    autoPlay: true,
-  };
   return (
     <>
       <Transition.Root appear show={isOpen} as={Fragment}>
@@ -38,17 +31,7 @@ export default function ProductModal() {
           onClose={setIsOpen}
           initialFocus={btnModalProductRef}
         >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-in-out duration-500"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in-out duration-500"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25 transition-opacity" />
-          </Transition.Child>
+          <TransitionChild />
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -64,14 +47,9 @@ export default function ProductModal() {
                 <Dialog.Panel className="w-[90%] max-w-4xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex flex-col lg:flex-row gap-5">
                     <div>
-                      <ImageGallery
-                        items={product!.attributes.image.data.map((item) => ({
-                          original: item.attributes.url,
-                          thumbnail: item.attributes.formats.thumbnail.url,
-                          slideToIndex: item.id,
-                        }))}
-                        {...imageGalleryOptions}
-                        thumbnailPosition="left"
+                      <ImageGalleryIndex
+                        attributes={product!.attributes}
+                        id={product!.id}
                       />
                     </div>
                     <div className="flex gap-3 flex-col lg:w-[45%]">
@@ -133,7 +111,7 @@ export default function ProductModal() {
                             <button
                               onClick={() => {
                                 router.push(
-                                  `/product/${product!.attributes.slug}`,
+                                  `/product/${product!.attributes.slug}`
                                 );
                                 setIsOpen(false);
                               }}
@@ -162,7 +140,6 @@ export default function ProductModal() {
                             />
                           </>
                         )}
-
                         <CartButton
                           onClick={() => cart.increaseCartQuantity(product!.id)}
                           title="Añadir"

@@ -2,6 +2,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef } from "react";
 import { GrClose } from "react-icons/gr";
+import TransitionChild from "./TransitionChild";
 
 interface SlideOverProps {
   openMenu: boolean;
@@ -25,17 +26,7 @@ export default function SlideOver({
           onClose={setOpenMenu}
           initialFocus={buttonSliderOver}
         >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-in-out duration-500"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in-out duration-500"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25 transition-opacity" />
-          </Transition.Child>
+          <TransitionChild />
 
           <div className="fixed inset-0 z-40 flex">
             <Transition.Child

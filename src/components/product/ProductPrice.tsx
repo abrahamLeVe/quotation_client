@@ -34,8 +34,8 @@ export default function ProductPrice({ price, discount }: ProductPriceProps) {
         </>
       ) : (
         <>
-          <div className="w-[60px] h-[16px] rounded-md bg-gray-200 "></div>
-          <div className="w-[60px] h-[16px] rounded-md bg-gray-200 "></div>
+          <div className="w-[60px] h-[18px] rounded-md bg-gray-200 "></div>
+          <div className="w-[60px] h-[18px] rounded-md bg-gray-200 "></div>
         </>
       )}
     </div>
