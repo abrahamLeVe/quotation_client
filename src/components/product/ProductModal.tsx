@@ -10,10 +10,10 @@ import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import ImageGalleryIndex from "../ui/ImageGallery";
+import TransitionChild from "../ui/TransitionChild";
 import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-import TransitionChild from "../ui/TransitionChild";
 
 export default function ProductModal() {
   const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();

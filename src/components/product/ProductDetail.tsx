@@ -2,7 +2,7 @@
 import { useFilterContext } from "@/context/filter.context";
 import { useProductContext } from "@/context/product.context";
 import { useMounted } from "@/hooks/useMounted";
-import { ProductsInterface } from "@/models/products.model";
+import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { capitalizeFirstLetter } from "@/utilities/utils";
 import Link from "next/link";
@@ -13,16 +13,16 @@ import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
-export default function ProductDetail({ data }: ProductsInterface) {
+export default function ProductDetail(data: ProductInterface) {
   const { getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
   const { filterProductsByCategoryId, setResultText } = useFilterContext();
 
-  const { attributes, id } = data[0];
+  const { attributes, id } = data;
   const mounted = useMounted();
 
   return (
-    <div className="flex gap-4 flex-col lg:w-[45%]">
+    <div className="flex flex-col  lg:w-[50%] gap-4">
       <div className="flex flex-col gap-3 ">
         <h1 className="text-lg font-medium leading-6 text-gray-900">
           {attributes.name}

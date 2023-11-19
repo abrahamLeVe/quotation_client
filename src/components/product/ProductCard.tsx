@@ -70,11 +70,6 @@ export default function ProductCard({
                       title="Eliminar"
                       icon={<MdDeleteOutline />}
                     />
-                    <CartButton
-                      onClick={() => cart.decreaseCartQuantity(product.id)}
-                      title="Quitar"
-                      icon={<BsCartDash />}
-                    />
                   </>
                 )}
               </>

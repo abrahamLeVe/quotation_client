@@ -13,6 +13,7 @@ interface ProductContext {
   isOpen: boolean;
   product: ProductInterface | undefined;
   getProduct: (id: number) => void;
+  getProductBySlug: (slug: string) => void;
   getItemQuantity: (id: number) => number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setProduct: React.Dispatch<
@@ -39,6 +40,13 @@ export function ProductProvider({ children }: ProductProviderProps) {
     setProduct(item);
   }
 
+  function getProductBySlug(slug: string) {
+    const item = products.data.find(
+      (item: ProductInterface) => item.attributes.slug === slug
+    );
+    setProduct(item);
+  }
+
   function getItemQuantity(id: number) {
     return cart.cartItemState.find((item) => item.id === id)?.quantity || 0;
   }
@@ -58,6 +66,7 @@ export function ProductProvider({ children }: ProductProviderProps) {
         getItemQuantity,
         setProduct,
         cleanProductModal,
+        getProductBySlug,
       }}
     >
       {children}

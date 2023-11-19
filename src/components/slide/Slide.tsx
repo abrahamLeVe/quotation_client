@@ -48,7 +48,7 @@ export default function Slide({ data }: SlideInterface) {
           >
             <img
               src={slide.url}
-              className="w-full md:rounded-2xl"
+              className="w-full h-full md:rounded-2xl"
               alt={slide.alt}
             />
           </div>

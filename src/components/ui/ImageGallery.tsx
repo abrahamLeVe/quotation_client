@@ -11,7 +11,7 @@ export default function ImageGalleryIndex(product: ProductInterface) {
     autoPlay: true,
   };
   return (
-    <div>
+    <>
       <ImageGallery
         items={product.attributes.image.data?.map((item) => ({
           original: item.attributes.url,
@@ -21,6 +21,6 @@ export default function ImageGalleryIndex(product: ProductInterface) {
         {...imageGalleryOptions}
         thumbnailPosition="left"
       />
-    </div>
+    </>
   );
 }

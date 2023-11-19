@@ -9,13 +9,18 @@ interface ProductPageProps {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  // await new Promise((resolve) =>
+  //   setTimeout(() => resolve("¡Promesa resuelta después de 3 segundos!"), 10000)
+  // );
+
   const { data } = await getDataProduct(params.slug);
   if (!data.length) {
     redirect("/");
   }
+  const { attributes, id } = data[0];
   return (
     <>
-      <ProductIndex data={data} />
+      <ProductIndex attributes={attributes} id={id} />
     </>
   );
 }
