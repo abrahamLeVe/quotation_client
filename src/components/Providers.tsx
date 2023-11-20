@@ -17,9 +17,11 @@ export default function Providers({ children }: ProvidersProps) {
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
           <FilterProvider>
+            <CartProvider>
             <ProductProvider>
-              <CartProvider>{children}</CartProvider>
+              {children}
             </ProductProvider>
+            </CartProvider>
           </FilterProvider>
         </SessionProvider>
       </QueryClientProvider>

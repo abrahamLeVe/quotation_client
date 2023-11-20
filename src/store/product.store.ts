@@ -38,7 +38,7 @@ const productStorage = create<productStorageProps>((set, get) => ({
   },
 
   calculateIGV: (subtotal) => {
-    const igvRate = 0.18;
+    const igvRate = 0;
     const igv = subtotal * igvRate;
 
     return igv;

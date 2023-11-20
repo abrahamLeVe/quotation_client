@@ -22,7 +22,7 @@ export default function ProductDetail(data: ProductInterface) {
   const mounted = useMounted();
 
   return (
-    <div className="flex flex-col  lg:w-[50%] gap-4">
+    <div className="flex flex-col lg:w-[50%] gap-4">
       <div className="flex flex-col gap-3 ">
         <h1 className="text-lg font-medium leading-6 text-gray-900">
           {attributes.name}
@@ -87,9 +87,11 @@ export default function ProductDetail(data: ProductInterface) {
           icon={<BsCartPlus />}
         />
       </div>
-      <div>
-        <article className="prose lg:prose-base">
-          <ReactMarkdown>{attributes.description}</ReactMarkdown>
+      <div className="w-full">
+        <article className="prose prose-base max-w-none">
+          <ReactMarkdown className="w-full">
+            {attributes.description}
+          </ReactMarkdown>
         </article>
       </div>
     </div>

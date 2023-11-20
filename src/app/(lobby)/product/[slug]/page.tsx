@@ -14,6 +14,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // );
 
   const { data } = await getDataProduct(params.slug);
+
   if (!data.length) {
     redirect("/");
   }

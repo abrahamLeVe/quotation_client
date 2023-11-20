@@ -13,8 +13,10 @@ interface CartProviderProps {
 
 interface CartContext {
   cartQuantity: number;
+  cartItems: ProductInterface[];
   openMenu: boolean;
   openCart: boolean;
+  setCartItems: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
   itemsOfCart: () => ProductInterface[];
@@ -30,11 +32,16 @@ export function useCartContext() {
 
 export function CartProvider({ children }: CartProviderProps) {
   const cart = cartStore((state) => state.cartItemState);
+  const products = productStorage((state) => state.productsOfCart);
+
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [cartItems, setCartItems] = useState<ProductInterface[]>(
+    products(cart)
+  );
   const mounted = useMounted();
 
-  const products = productStorage((state) => state.productsOfCart);
+  
 
   const cartQuantity = mounted
     ? cart.reduce((quantity, item) => item.quantity + quantity, 0)
@@ -46,6 +53,7 @@ export function CartProvider({ children }: CartProviderProps) {
 
   function itemsOfCart() {
     const items = products(cart);
+    console.log(items);
     return items;
   }
 
@@ -75,6 +83,8 @@ export function CartProvider({ children }: CartProviderProps) {
         getItemQuantity,
         itemsOfCart,
         setOpenMenu,
+        cartItems,
+        setCartItems,
       }}
     >
       {children}
