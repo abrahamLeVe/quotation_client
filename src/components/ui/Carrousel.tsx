@@ -30,6 +30,8 @@ export default function Carrousel({ data: products }: ProductsInterface) {
         }}
         itemsToShow={5}
         speed={400}
+        autoplayDelay={5000}
+        autoplay={true}
       >
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />

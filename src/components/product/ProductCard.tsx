@@ -31,7 +31,7 @@ export default function ProductCard({
             className="rounded-t-lg"
           />
         </div>
-        <div className="flex flex-col text-sm rounded-b-lg p-3 bg-white h-full gap-3">
+        <div className="flex flex-col text-sm rounded-b-lg p-3 justify-between bg-white h-full gap-3">
           <div className="flex flex-col gap-3">
             <p title={product.attributes.name}>
               {truncate(product.attributes.name, 70)}

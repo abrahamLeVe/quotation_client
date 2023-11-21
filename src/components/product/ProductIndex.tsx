@@ -1,3 +1,4 @@
+"use client";
 import { ProductInterface } from "@/models/products.model";
 import ImageGalleryIndex from "../ui/ImageGallery";
 import ProductDetail from "./ProductDetail";
