@@ -1,31 +1,29 @@
 "use client";
 import { useCartContext } from "@/context/cart.context";
-import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
 import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
-import FilterSection from "./FilterSection";
+import { truncate } from "@/utilities/utils";
 import Link from "next/link";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { FaEye } from "react-icons/fa6";
 import { CartButton } from "../product/ProductCard";
 import ProductPrice from "../product/ProductPrice";
 import ProductRating from "../product/ProductRating";
+import FilterSection from "./FilterSection";
 import FilterSelect from "./FilterSelect";
 import FilterSliderOver from "./FilterSliderOver";
-import { truncate } from "@/utilities/utils";
 
 export default function FilterResult() {
   const cart = cartStore((state) => state);
   const { products, resultText } = useFilterContext();
-  const { categories } = useCategoryContext();
   const { getItemQuantity } = useCartContext();
   const { getProduct } = useProductContext();
 
   return (
     <div className="flex w-full px-5">
       <div className="hidden lg:block">
-        <FilterSection data={categories} />
+        <FilterSection />
       </div>
       <div className="w-full">
         <div className="sticky top-0 flex-wrap w-full p-5 z-10 backdrop-blur-lg">
@@ -34,7 +32,7 @@ export default function FilterResult() {
             <h3>{products.length === 0 ? "Sin resultados." : resultText}</h3>
           </div>
           <div className="flex flex-wrap w-full justify-end items-center gap-2">
-            <FilterSliderOver data={categories} />
+            <FilterSliderOver />
             <FilterSelect />
           </div>
         </div>

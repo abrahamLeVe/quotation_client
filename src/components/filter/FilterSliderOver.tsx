@@ -1,12 +1,11 @@
 "use client";
-import { CategoriesInterface } from "@/models/category.model";
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { CartButton } from "../product/ProductCard";
 import SlideOver from "../ui/SlideOver";
 import FilterSection from "./FilterSection";
 
-export default function FilterSliderOver({ data }: CategoriesInterface) {
+export default function FilterSliderOver() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -19,7 +18,7 @@ export default function FilterSliderOver({ data }: CategoriesInterface) {
       />
       <SlideOver openMenu={open} setOpenMenu={setOpen}>
         <div className="mt-2">
-          <FilterSection data={data} />
+          <FilterSection />
         </div>
       </SlideOver>
     </div>

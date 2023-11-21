@@ -5,9 +5,10 @@ import { capitalizeFirstLetter } from "@/utilities/utils";
 import { AiOutlineClear } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { CartButton } from "../product/ProductCard";
+import { DisclosureIndex } from "../ui/Disclosure";
+import { useCategoryContext } from "@/context/category.context";
 
-
-export default function FilterSection({ data }: CategoriesInterface) {
+export default function FilterSection() {
   const {
     filterProducts,
     cleanFilter,
@@ -19,6 +20,7 @@ export default function FilterSection({ data }: CategoriesInterface) {
     setQuery,
     setResultText,
   } = useFilterContext();
+  const { categories } = useCategoryContext();
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = event.target.value.replace(/\s{2,}/g, " ");
@@ -86,23 +88,35 @@ export default function FilterSection({ data }: CategoriesInterface) {
           </div>
         </div>
 
-        <div className="flex flex-col w-full gap-2">
-          <h3 className="text-lg font-bold text-gray-900">Categorías:</h3>
-          {data.map((category) => (
-            <div key={category.id} className="relative hover:underline">
-              <p className="font-medium text-gray-900 ">
-                {capitalizeFirstLetter(category.attributes.name)}
-                {` (${category.attributes.products.data.length})`}
-              </p>
-              <button
-                onClick={() => {
-                  filterProductsByCategoryId(category.id),
-                    setResultText(category.attributes.name);
-                }}
-                className="absolute inset-0 w-full"
-              ></button>
-            </div>
-          ))}
+        <div className="flex flex-col w-full border-b">
+          <DisclosureIndex
+            title={"Categorías"}
+            child={
+              <>
+                {categories.map((category) => (
+                  <div key={category.id} className="relative hover:underline">
+                    <p className="font-medium text-gray-900 ">
+                      {capitalizeFirstLetter(category.attributes.name)}
+                      {` (${category.attributes.products.data.length})`}
+                    </p>
+                    <button
+                      onClick={() => {
+                        filterProductsByCategoryId(category.id),
+                          setResultText(category.attributes.name);
+                      }}
+                      className="absolute inset-0 w-full"
+                    ></button>
+                  </div>
+                ))}
+              </>
+            }
+          />
+        </div>
+        <div className="flex flex-col w-full border-b">
+          <DisclosureIndex title={"Marcas"} child={<>Trabajando en ello</>} />
+        </div>
+        <div className="flex flex-col w-full border-b">
+          <DisclosureIndex title={"Medidas"} child={<>Trabajando en ello</>} />
         </div>
       </div>
     </div>

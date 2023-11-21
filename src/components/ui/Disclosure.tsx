@@ -28,7 +28,7 @@ export function DisclosureIndex({ title, child }: DisclosureIndexProps) {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Disclosure.Panel className="px-4 pb-2 pt-4 text-gray-500">
+            <Disclosure.Panel className="px-4 pb-2  text-gray-500">
               <>{child}</>
             </Disclosure.Panel>
           </Transition>
