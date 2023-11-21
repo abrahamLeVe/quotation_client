@@ -1,8 +1,8 @@
 export interface CategoriesInterface {
-  data: Datum2[];
+  data: CategoryInterface[];
 }
 
-interface Datum2 {
+export interface CategoryInterface {
   id: number;
   attributes: Attributes3;
 }

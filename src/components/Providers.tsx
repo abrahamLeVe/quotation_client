@@ -4,6 +4,7 @@ import { ProductProvider } from "@/context/product.context";
 import { FilterProvider } from "@/context/filter.context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
+import { CategoryProvider } from "@/context/category.context";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -18,9 +19,9 @@ export default function Providers({ children }: ProvidersProps) {
         <SessionProvider>
           <FilterProvider>
             <CartProvider>
-            <ProductProvider>
-              {children}
-            </ProductProvider>
+              <ProductProvider>
+                <CategoryProvider>{children}</CategoryProvider>
+              </ProductProvider>
             </CartProvider>
           </FilterProvider>
         </SessionProvider>
