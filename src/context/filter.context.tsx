@@ -60,15 +60,19 @@ export function FilterProvider({ children }: FilterProviderProps) {
       cleanFilter();
       return;
     }
-
+    console.log(cleanedQuery);
     const categoryMatches = filterByCategory(cleanedQuery);
     const everyMatch = filterByEvery(cleanedQuery);
     const keywordMatches = filterByKeywords(cleanedQuery);
+    const everyDescriptionMatches = filterByEveryDescription(cleanedQuery);
+    const keywordDescriptionMatches = filterByKeywordDescription(cleanedQuery);
 
     const combinedResults: ProductInterface[] = [
       ...categoryMatches,
       ...everyMatch,
       ...keywordMatches,
+      ...everyDescriptionMatches,
+      ...keywordDescriptionMatches,
     ];
 
     currentResults = Array.from(
@@ -122,6 +126,26 @@ export function FilterProvider({ children }: FilterProviderProps) {
       );
 
       return query.every((keyword) => productName.includes(keyword));
+    });
+  }
+
+  function filterByEveryDescription(query: string[]): ProductInterface[] {
+    return productsStare.data.filter((product) => {
+      const productName = removeDiacritics(
+        product.attributes.description.toLowerCase()
+      );
+
+      return query.every((keyword) => productName.includes(keyword));
+    });
+  }
+
+  function filterByKeywordDescription(query: string[]): ProductInterface[] {
+    return productsStare.data.filter((product) => {
+      const productName = removeDiacritics(
+        product.attributes.description.toLowerCase()
+      );
+
+      return query.some((keyword) => productName.includes(keyword));
     });
   }
 
@@ -261,6 +285,7 @@ export const wordsExclude = new Set([
   "de",
   "del",
   "desde",
+  "dia",
   "donde",
   "dos",
   "e",

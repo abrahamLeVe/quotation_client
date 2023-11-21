@@ -3,8 +3,13 @@ import { useEffect } from "react";
 import { useMounted } from "./useMounted";
 
 export function useSpeechRecognition() {
-  const { filterProducts, isListening, setIsListening, setResultText } =
-    useFilterContext();
+  const {
+    filterProducts,
+    isListening,
+    setIsListening,
+    setResultText,
+    cleanFilter,
+  } = useFilterContext();
 
   let recognition: any = null;
 
@@ -57,7 +62,7 @@ export function useSpeechRecognition() {
   function startListening() {
     if (isListening) return;
     setIsListening(true);
-
+    cleanFilter();
     const randomMessage = getRandomMessage();
     readText(randomMessage);
 
