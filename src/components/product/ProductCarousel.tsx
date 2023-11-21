@@ -7,7 +7,7 @@ export default async function ProductCarousel() {
   return (
     <div className="flex flex-col w-full h-full px-4 py-5 sm:px-6 lg:px-8 justify-center">
       <h2 className="text-2xl font-bold tracking-tight text-gray-900 pb-5">
-        New Arrivals
+        Recién llegados
       </h2>
       <div className="w-full relative">
         <Carrousel data={products} />

@@ -12,6 +12,7 @@ import ReactMarkdown from "react-markdown";
 import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
+import { DisclosureIndex } from "../ui/Disclosure";
 
 export default function ProductDetail(data: ProductInterface) {
   const { getItemQuantity } = useProductContext();
@@ -87,12 +88,17 @@ export default function ProductDetail(data: ProductInterface) {
           icon={<BsCartPlus />}
         />
       </div>
-      <div className="w-full">
-        <article className="prose prose-base max-w-none">
-          <ReactMarkdown className="w-full">
-            {attributes.description}
-          </ReactMarkdown>
-        </article>
+      <div className="w-full border">
+        <DisclosureIndex
+          title={"Descripción"}
+          child={
+            <article className="prose prose-base max-w-none">
+              <ReactMarkdown>
+                {attributes.description}
+              </ReactMarkdown>
+            </article>
+          }
+        />
       </div>
     </div>
   );

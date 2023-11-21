@@ -13,7 +13,7 @@ export default function Loading() {
       </div>
 
       {/* product details */}
-      <div className="flex gap-4 flex-col justify-center lg:w-[50%]">
+      <div className="flex gap-4 flex-col lg:w-[50%]">
         <div className="flex flex-col gap-3 ">
           {/* name */}
           <div className="h-12 w-full bg-gray-200 mb-2"></div>
@@ -49,12 +49,7 @@ export default function Loading() {
         </div>
         {/* description */}
         <div>
-          <div className="h-6 w-full bg-gray-200 mb-2"></div>
-          <div className="h-32 w-full bg-gray-200 mb-2"></div>
-          <div className="h-6 w-full bg-gray-200 mb-2"></div>
-          <div className="h-6 w-full bg-gray-200 mb-2"></div>
-          <div className="h-6 w-full bg-gray-200 mb-2"></div>
-          <div className="h-6 w-full bg-gray-200 mb-2"></div>
+          <div className="h-[56px] w-full bg-gray-200 mb-2"></div>
         </div>
       </div>
     </div>

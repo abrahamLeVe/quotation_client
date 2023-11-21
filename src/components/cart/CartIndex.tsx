@@ -7,7 +7,7 @@ import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import { CartButton } from "../product/ProductCard";
 import ProductPrice from "../product/ProductPrice";
-import { CartBlockSummary } from "./CartBlockSummary";
+import { DisclosureIndex } from "../ui/Disclosure";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);
@@ -24,7 +24,7 @@ export default function CartIndex() {
       </div>
       <div className="flex flex-col md:flex-row mt-8 relative gap-4">
         {/* table */}
-        <div className="overflow-auto w-full h-full my-8 shadow-sm">
+        <div className="overflow-auto w-full h-full my-8 shadow-sm scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
           <table className="table-auto w-full text-sm">
             <thead className="text-left">
               <tr>
@@ -125,10 +125,16 @@ export default function CartIndex() {
 
             <tbody className="bg-white">
               <tr>
-                <td className="border-b p-4 ">
-                  <div>
-                    <CartBlockSummary />
-                  </div>
+                <td className="border-b">
+                  <DisclosureIndex
+                    title={"Estimación de envío"}
+                    child={
+                      <>
+                        Ingrese su dirección para obtener una estimación de
+                        costo de envío.
+                      </>
+                    }
+                  />
                 </td>
               </tr>
               <tr>
