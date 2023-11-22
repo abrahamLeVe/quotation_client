@@ -21,7 +21,7 @@ export default function CartIndex() {
       </div>
       <div className="flex flex-col md:flex-row mt-8 relative gap-4">
         {/* table */}
-        <div className="overflow-auto w-full h-full my-8 shadow-sm scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+        <div className="overflow-auto w-full h-full my-8 shadow-sm scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 select-none">
           <table className="table-auto w-full text-sm">
             <thead className="text-left">
               <tr>

@@ -181,7 +181,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function sortAlphabetically() {
     setProductsFilter(
-      products
+      productsFilter
         .slice()
         .sort((a, b) => a.attributes.name.localeCompare(b.attributes.name))
     );
@@ -189,7 +189,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function filterDiscountedProducts() {
     setProductsFilter(
-      products.filter((product) => product.attributes.discount > 0)
+      productsFilter.filter((product) => product.attributes.discount > 0)
     );
   }
 
@@ -199,7 +199,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function sortByDateNewest() {
     setProductsFilter(
-      products
+      productsFilter
         .slice()
         .sort(
           (a, b) =>
@@ -211,7 +211,9 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function sortByRating() {
     setProductsFilter(
-      products.slice().sort((a, b) => b.attributes.rating - a.attributes.rating)
+      productsFilter
+        .slice()
+        .sort((a, b) => b.attributes.rating - a.attributes.rating)
     );
   }
 
