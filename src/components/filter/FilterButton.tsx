@@ -6,7 +6,7 @@ import { BsMic, BsSearch } from "react-icons/bs";
 import { Icons } from "../Icons";
 
 export default function FilterButton() {
-  const { products, isListening } = useFilterContext();
+  const { productsFilter, isListening } = useFilterContext();
   const { startListening } = useSpeechRecognition();
 
   return (
@@ -16,9 +16,9 @@ export default function FilterButton() {
         <div className="p-2 text-gray-400 hover:text-gray-500 relative">
           <span className="sr-only">Buscar</span>
           <BsSearch className="h-6 w-6" aria-hidden="true" />
-          {products.length > 0 && (
+          {productsFilter.length > 0 && (
             <div className="border rounded-full w-6 h-6 absolute top-0 -right-1">
-              <p className="text-sm text-center">{products.length}</p>
+              <p className="text-sm text-center">{productsFilter.length}</p>
             </div>
           )}
           <Link href={"/filter"} className="absolute inset-0"></Link>

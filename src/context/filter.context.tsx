@@ -1,9 +1,9 @@
 "use client";
 import { FilterActions } from "@/components/filter/FilterSelect";
 import { ProductInterface } from "@/models/products.model";
-import productStorage from "@/store/product.store";
 import { removeDiacritics } from "@/utilities/utils";
 import { createContext, useContext, useState } from "react";
+import { useProductContext } from "./product.context";
 
 interface FilterProviderProps {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ interface FilterProviderProps {
 interface FilterContext {
   filterProducts: (query: string) => void;
   cleanFilter: () => void;
-  products: ProductInterface[];
+  productsFilter: ProductInterface[];
   query: string[];
   setQuery: React.Dispatch<React.SetStateAction<string[]>>;
   isListening: boolean;
@@ -43,8 +43,8 @@ export function useFilterContext() {
 }
 
 export function FilterProvider({ children }: FilterProviderProps) {
-  const productsStare = productStorage((state) => state.productState);
-  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const { products } = useProductContext();
+  const [productsFilter, setProductsFilter] = useState<ProductInterface[]>([]);
   const [query, setQuery] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string>("Sin resultados.");
   const [isListening, setIsListening] = useState(false);
@@ -78,7 +78,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
     currentResults = Array.from(
       new Set([...currentResults, ...combinedResults])
     );
-    setProducts(currentResults);
+    setProductsFilter(currentResults);
   }
 
   function processQuery(speechResult: string): string[] {
@@ -98,7 +98,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function filterByCategory(query: string[]): ProductInterface[] {
-    return productsStare.data.filter((product) => {
+    return products.filter((product) => {
       const productCategories = product.attributes.categories.data.map(
         (category) => removeDiacritics(category.attributes.name.toLowerCase())
       );
@@ -110,8 +110,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function filterProductsByCategoryId(categoryId: number) {
     cleanFilter();
-    setProducts(
-      productsStare.data.filter((product) => {
+    setProductsFilter(
+      products?.filter((product) => {
         return product.attributes.categories.data.some(
           (category) => category.id === categoryId
         );
@@ -120,7 +120,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function filterByEvery(query: string[]): ProductInterface[] {
-    return productsStare.data.filter((product) => {
+    return products.filter((product) => {
       const productName = removeDiacritics(
         product.attributes.name.toLowerCase()
       );
@@ -130,7 +130,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function filterByEveryDescription(query: string[]): ProductInterface[] {
-    return productsStare.data.filter((product) => {
+    return products.filter((product) => {
       const productName = removeDiacritics(
         product.attributes.description.toLowerCase()
       );
@@ -140,7 +140,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function filterByKeywordDescription(query: string[]): ProductInterface[] {
-    return productsStare.data.filter((product) => {
+    return products.filter((product) => {
       const productName = removeDiacritics(
         product.attributes.description.toLowerCase()
       );
@@ -150,7 +150,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function filterByKeywords(query: string[]): ProductInterface[] {
-    return productsStare.data.filter((product) => {
+    return products.filter((product) => {
       const productName = removeDiacritics(
         product.attributes.name.toLowerCase()
       );
@@ -162,7 +162,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   function filterByPrice(price: string) {
     const minPrice = parseFloat(price);
 
-    const filteredProducts = productsStare.data
+    const filteredProducts = products
       .filter((product) => product.attributes.price >= minPrice)
       .sort((a, b) => a.attributes.price - b.attributes.price);
 
@@ -172,7 +172,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
     );
     cleanFilter();
 
-    setProducts(filteredProducts);
+    setProductsFilter(filteredProducts);
     setMinPrice(minPrice);
     setMaxPrice(maxPrice);
 
@@ -180,7 +180,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function sortAlphabetically() {
-    setProducts(
+    setProductsFilter(
       products
         .slice()
         .sort((a, b) => a.attributes.name.localeCompare(b.attributes.name))
@@ -188,15 +188,17 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function filterDiscountedProducts() {
-    setProducts(products.filter((product) => product.attributes.discount > 0));
+    setProductsFilter(
+      products.filter((product) => product.attributes.discount > 0)
+    );
   }
 
   function allProducts() {
-    setProducts(productsStare.data);
+    setProductsFilter(products);
   }
 
   function sortByDateNewest() {
-    setProducts(
+    setProductsFilter(
       products
         .slice()
         .sort(
@@ -208,7 +210,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function sortByRating() {
-    setProducts(
+    setProductsFilter(
       products.slice().sort((a, b) => b.attributes.rating - a.attributes.rating)
     );
   }
@@ -216,7 +218,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   function cleanFilter(): void {
     currentResults = [];
     setQuery([]);
-    setProducts([]);
+    setProductsFilter([]);
     setSelected(FilterActions[0]);
     setMinPrice(0);
   }
@@ -226,7 +228,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
       value={{
         filterProducts,
         cleanFilter,
-        products,
+        productsFilter,
         query,
         setQuery,
         isListening,

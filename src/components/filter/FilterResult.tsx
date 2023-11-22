@@ -16,7 +16,7 @@ import FilterSliderOver from "./FilterSliderOver";
 
 export default function FilterResult() {
   const cart = cartStore((state) => state);
-  const { products, resultText } = useFilterContext();
+  const { productsFilter, resultText } = useFilterContext();
   const { getItemQuantity } = useCartContext();
   const { getProduct } = useProductContext();
 
@@ -29,7 +29,9 @@ export default function FilterResult() {
         <div className="sticky top-0 flex-wrap w-full p-5 z-10 backdrop-blur-lg">
           <div className="flex flex-wrap gap-3">
             <h2>RESULTADOS: </h2>
-            <h3>{products.length === 0 ? "Sin resultados." : resultText}</h3>
+            <h3>
+              {productsFilter.length === 0 ? "Sin resultados." : resultText}
+            </h3>
           </div>
           <div className="flex flex-wrap w-full justify-end items-center gap-2">
             <FilterSliderOver />
@@ -38,7 +40,7 @@ export default function FilterResult() {
         </div>
         <div>
           <ul className="flex-1 lg:p-5 -my-6 divide-y divide-gray-200">
-            {products.map((product) => (
+            {productsFilter.map((product) => (
               <li className="flex py-6 relative gap-5" key={product.id}>
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-100">
                   <img

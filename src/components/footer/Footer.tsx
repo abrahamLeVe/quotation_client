@@ -1,27 +1,9 @@
 "use client";
-import { getDataProducts } from "@/app/services/product.service";
-import productStorage from "@/store/product.store";
-import { useEffect } from "react";
 import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
-  const addProductToStore = productStorage((state) => state.addProduct);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await getDataProducts();
-        if (data) {
-          addProductToStore(data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  });
-
   const socialLinks = [
     { id: 1, icon: <BsFacebook />, label: "Facebook" },
     { id: 2, icon: <FaSquareXTwitter />, label: "Twitter" },

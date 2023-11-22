@@ -2,21 +2,22 @@
 import { useCartContext } from "@/context/cart.context";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
+import { useRouter } from "next/navigation";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
-import ProductPrice from "../product/ProductPrice";
 import { CartButton } from "../product/ProductCard";
-import { useRouter } from "next/navigation";
+import ProductPrice from "../product/ProductPrice";
 
 export default function CartItem() {
   const cart = cartStore((state) => state);
-  const { getItemQuantity, itemsOfCart, setOpenCart } = useCartContext();
+  const { getItemQuantity, setOpenCart, cartItems } = useCartContext();
   const router = useRouter();
+  console.log(cartItems);
   return (
     <div className="mt-8">
       <div className="flow-root">
         <ul role="list" className="-my-6 divide-y divide-gray-200">
-          {itemsOfCart().map((product) => (
+          {cartItems.map((product) => (
             <li className="flex py-6 relative" key={product.id}>
               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img

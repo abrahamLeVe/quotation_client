@@ -1,7 +1,6 @@
 "use client";
 import { useCartContext } from "@/context/cart.context";
 import { cartStore } from "@/store/cart.store";
-import productStorage from "@/store/product.store";
 import { truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
@@ -11,11 +10,9 @@ import { DisclosureIndex } from "../ui/Disclosure";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);
-  const product = productStorage((state) => state);
-  const { calculateTotal, getItemQuantity } = useCartContext();
+  const { calculateTotal, getItemQuantity, cartItems } = useCartContext();
   const subTotal = calculateTotal().subTotal;
   const total = calculateTotal().total;
-  const { productsOfCart } = product;
 
   return (
     <div className="px-4 py-6 sm:px-6">
@@ -37,7 +34,7 @@ export default function CartIndex() {
             </thead>
 
             <tbody className="bg-white">
-              {productsOfCart(cart.cartItemState).map((product) => (
+              {cartItems.map((product) => (
                 <tr key={product.id} className="relative">
                   <td className="border-b p-4 pl-8">
                     <div className="flex gap-2">

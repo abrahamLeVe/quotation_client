@@ -1,10 +1,10 @@
 "use client";
 import { CartProvider } from "@/context/cart.context";
-import { ProductProvider } from "@/context/product.context";
+import { CategoryProvider } from "@/context/category.context";
 import { FilterProvider } from "@/context/filter.context";
+import { ProductProvider } from "@/context/product.context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
-import { CategoryProvider } from "@/context/category.context";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -17,13 +17,13 @@ export default function Providers({ children }: ProvidersProps) {
     <>
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
-          <FilterProvider>
+          <ProductProvider>
             <CartProvider>
-              <ProductProvider>
-                <CategoryProvider>{children}</CategoryProvider>
-              </ProductProvider>
+              <CategoryProvider>
+                <FilterProvider>{children}</FilterProvider>
+              </CategoryProvider>
             </CartProvider>
-          </FilterProvider>
+          </ProductProvider>
         </SessionProvider>
       </QueryClientProvider>
     </>

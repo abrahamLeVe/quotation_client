@@ -5,7 +5,7 @@ import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
-import { BsCartDash, BsCartPlus } from "react-icons/bs";
+import { BsCartPlus } from "react-icons/bs";
 import { FaEye } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "./ProductPrice";

@@ -1,7 +1,7 @@
 "use client";
 import { getDataCategory } from "@/app/services/category.service";
 import { CategoryInterface } from "@/models/category.model";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface CategoryProviderProps {
   children: React.ReactNode;
@@ -20,20 +20,20 @@ export function useCategoryContext() {
 
 export function CategoryProvider({ children }: CategoryProviderProps) {
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
-  
+
   useEffect(() => {
     (async () => {
       try {
-        const {data} = await getDataCategory();
+        const { data } = await getDataCategory();
         if (data) {
+          console.log("into usereffect getcategorydata ", data);
           setCategories(data);
         }
       } catch (error) {
         console.log(error);
       }
     })();
-  },[]);
-  console.log(categories);
+  }, []);
 
   return (
     <CategoryContext.Provider
