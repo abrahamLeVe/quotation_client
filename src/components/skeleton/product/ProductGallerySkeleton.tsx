@@ -1,4 +1,6 @@
-export default function Loading() {
+import React from "react";
+
+export default function ProductGallerySkeleton() {
   return (
     <div className="flex flex-col w-full lg:flex-row gap-5 p-6">
       {/* galery image*/}

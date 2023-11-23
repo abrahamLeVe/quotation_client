@@ -1,11 +1,11 @@
 "use client";
+import { Fragment, useRef } from "react";
 import { useFilterContext } from "@/context/filter.context";
 import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
 import { capitalizeFirstLetter } from "@/utilities/utils";
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
-import { Fragment, useRef } from "react";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";

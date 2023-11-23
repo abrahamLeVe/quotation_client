@@ -1,7 +1,7 @@
 "use client";
 import { useFilterContext } from "@/context/filter.context";
-import { Listbox, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { Listbox, Transition } from "@headlessui/react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { HiChevronUpDown } from "react-icons/hi2";
 

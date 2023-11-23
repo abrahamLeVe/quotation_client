@@ -1,12 +1,11 @@
 "use client";
+import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
-import { CategoriesInterface } from "@/models/category.model";
 import { capitalizeFirstLetter } from "@/utilities/utils";
 import { AiOutlineClear } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { CartButton } from "../product/ProductCard";
 import { DisclosureIndex } from "../ui/Disclosure";
-import { useCategoryContext } from "@/context/category.context";
 
 export default function FilterSection() {
   const {

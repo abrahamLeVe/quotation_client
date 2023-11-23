@@ -1,7 +1,6 @@
 "use client";
 import { useFilterContext } from "@/context/filter.context";
 import { useProductContext } from "@/context/product.context";
-import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { capitalizeFirstLetter } from "@/utilities/utils";
@@ -9,18 +8,16 @@ import Link from "next/link";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ReactMarkdown from "react-markdown";
+import { DisclosureIndex } from "../ui/Disclosure";
 import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-import { DisclosureIndex } from "../ui/Disclosure";
 
 export default function ProductDetail(data: ProductInterface) {
   const { getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
   const { filterProductsByCategoryId, setResultText } = useFilterContext();
-
   const { attributes, id } = data;
-  const mounted = useMounted();
 
   return (
     <div className="flex flex-col lg:w-[50%] gap-4">
@@ -34,7 +31,7 @@ export default function ProductDetail(data: ProductInterface) {
             discount={attributes.discount}
             price={attributes.price}
           />
-          {getItemQuantity(id) > 0 && mounted && <p>x{getItemQuantity(id)}</p>}
+          {getItemQuantity(id) > 0 && <p>x{getItemQuantity(id)}</p>}
         </div>
 
         <ul>
@@ -64,24 +61,21 @@ export default function ProductDetail(data: ProductInterface) {
         </ul>
       </div>
       <div className="flex flex-wrap justify-end gap-2">
-        {mounted && (
+        {getItemQuantity(id) > 0 && (
           <>
-            {getItemQuantity(id) > 0 && (
-              <>
-                <CartButton
-                  onClick={() => cart.removeCartItem(id)}
-                  title="Eliminar"
-                  icon={<MdDeleteOutline />}
-                />
-                <CartButton
-                  onClick={() => cart.decreaseCartQuantity(id)}
-                  title="Quitar"
-                  icon={<BsCartDash />}
-                />
-              </>
-            )}
+            <CartButton
+              onClick={() => cart.removeCartItem(id)}
+              title="Eliminar"
+              icon={<MdDeleteOutline />}
+            />
+            <CartButton
+              onClick={() => cart.decreaseCartQuantity(id)}
+              title="Quitar"
+              icon={<BsCartDash />}
+            />
           </>
         )}
+
         <CartButton
           onClick={() => cart.increaseCartQuantity(id)}
           title="Añadir"
@@ -93,9 +87,7 @@ export default function ProductDetail(data: ProductInterface) {
           title={"Descripción"}
           child={
             <article className="prose prose-base max-w-none">
-              <ReactMarkdown>
-                {attributes.description}
-              </ReactMarkdown>
+              <ReactMarkdown>{attributes.description}</ReactMarkdown>
             </article>
           }
         />

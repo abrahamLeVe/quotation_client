@@ -1,8 +1,8 @@
 "use client";
+import { createContext, useContext, useState } from "react";
 import { FilterActions } from "@/components/filter/FilterSelect";
 import { ProductInterface } from "@/models/products.model";
 import { removeDiacritics } from "@/utilities/utils";
-import { createContext, useContext, useState } from "react";
 import { useProductContext } from "./product.context";
 
 interface FilterProviderProps {
@@ -306,6 +306,7 @@ export const wordsExclude = new Set([
   "f",
   "g",
   "h",
+  "hechos",
   "hasta",
   "hoy",
   "i",

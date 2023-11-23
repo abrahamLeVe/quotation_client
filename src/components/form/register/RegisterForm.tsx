@@ -1,8 +1,8 @@
 "use client";
+import { useState } from "react";
 import { registerUser } from "@/app/services/auth.service";
 import { Icons } from "@/components/Icons";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({

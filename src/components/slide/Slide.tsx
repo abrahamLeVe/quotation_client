@@ -1,6 +1,6 @@
 "use client";
-import { SlideInterface } from "@/models/slide.model";
 import { useEffect, useState } from "react";
+import { SlideInterface } from "@/models/slide.model";
 import { TiMinus } from "react-icons/ti";
 import { ArrowButton } from "./ArrowButton";
 

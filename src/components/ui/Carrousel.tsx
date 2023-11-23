@@ -1,6 +1,6 @@
 "use client";
-import { ProductsInterface } from "@/models/products.model";
 import { useState } from "react";
+import { ProductsInterface } from "@/models/products.model";
 import Carousel from "react-simply-carousel";
 import ProductCard from "../product/ProductCard";
 import { ArrowButton } from "../slide/ArrowButton";

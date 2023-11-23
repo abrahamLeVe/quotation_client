@@ -1,10 +1,10 @@
 "use client";
+import { createContext, useContext, useEffect, useState } from "react";
 import CartOffCanvas from "@/components/cart/CartSliderOver";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import productStorage from "@/store/product.store";
-import { createContext, useContext, useEffect, useState } from "react";
 import { useProductContext } from "./product.context";
 
 interface CartProviderProps {

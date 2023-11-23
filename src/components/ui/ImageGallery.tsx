@@ -1,7 +1,7 @@
 "use client";
-import { ProductInterface } from "@/models/products.model";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { ProductInterface } from "@/models/products.model";
 
 export default function ImageGalleryIndex(product: ProductInterface) {
   const imageGalleryOptions = {

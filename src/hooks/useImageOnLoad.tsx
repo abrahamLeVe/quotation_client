@@ -1,3 +1,4 @@
+"use client";
 import { CSSProperties, useState } from "react";
 
 interface ImageStyle {

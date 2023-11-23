@@ -1,9 +1,9 @@
 "use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CartProvider } from "@/context/cart.context";
 import { CategoryProvider } from "@/context/category.context";
 import { FilterProvider } from "@/context/filter.context";
 import { ProductProvider } from "@/context/product.context";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 
 interface ProvidersProps {

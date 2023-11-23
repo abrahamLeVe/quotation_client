@@ -1,6 +1,6 @@
 "use client";
-import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 import { GrClose } from "react-icons/gr";
 import TransitionChild from "./TransitionChild";
 
