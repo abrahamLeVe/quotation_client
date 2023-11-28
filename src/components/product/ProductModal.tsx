@@ -1,26 +1,24 @@
 "use client";
-import { Fragment, useRef } from "react";
-import { useFilterContext } from "@/context/filter.context";
 import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
-import { capitalizeFirstLetter } from "@/utilities/utils";
 import { Dialog, Transition } from "@headlessui/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BsCartDash, BsCartPlus } from "react-icons/bs";
+import { Fragment, useRef } from "react";
+import { BsCartCheck, BsCartPlus } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
+import { CartButtonAction } from "../cart/CartButtonAction";
 import ImageGalleryIndex from "../ui/ImageGallery";
 import TransitionChild from "../ui/TransitionChild";
-import { CartButton } from "./ProductCard";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
 export default function ProductModal() {
-  const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
-  const cart = cartStore((state) => state);
-  const { filterProductsByCategoryId, setResultText } = useFilterContext();
   const router = useRouter();
   let btnModalProductRef = useRef(null);
+  const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
+  const cart = cartStore((state) => state);
 
   return (
     <>
@@ -48,103 +46,111 @@ export default function ProductModal() {
                   <div className="flex flex-col lg:flex-row gap-5">
                     <div>
                       <ImageGalleryIndex
-                        attributes={product!.attributes}
-                        id={product!.id}
+                        attributes={product[0].attributes}
+                        id={product[0].id}
                       />
                     </div>
                     <div className="flex gap-3 flex-col lg:w-[45%]">
-                      <div className="flex flex-col gap-3 ">
+                      <div className="flex flex-col gap-2">
                         <Dialog.Title
                           as="h3"
                           className="text-lg font-medium leading-6"
                         >
-                          {product!.attributes.name}
+                          {product[0].attributes.name}
                         </Dialog.Title>
-                        <ProductRating rating={product!.attributes.rating} />
-                        <div className="flex flex-row gap-5">
+                        <div className="flex gap-2">
                           <ProductPrice
-                            discount={product!.attributes.discount}
-                            price={product!.attributes.price}
+                            discount={product[0].attributes.discount}
+                            price={product[0].attributes.price}
+                            popUp
                           />
-                          {getItemQuantity(product!.id) > 0 && (
-                            <p>x{getItemQuantity(product!.id)}</p>
-                          )}
                         </div>
-
-                        <ul>
-                          <li>
-                            <span className="font-semibold">
-                              Disponibilidad:{" "}
-                            </span>
-                            En stock
-                          </li>
-                          <li className="flex flex-wrap">
-                            <span className="font-semibold"> Categorías: </span>
-                            {product!.attributes.categories.data.map(
-                              (category) => (
-                                <div
-                                  key={category.id}
-                                  className="relative hover:underline mx-2"
+                        {product[0].attributes.brand?.data ? (
+                          <div className="flex flex-wrap gap-2">
+                            <span className="font-semibold"> Marca: </span>
+                            <Link
+                              href={`/product/filter?query=${product[0].attributes.brand.data?.attributes.name}`}
+                              className="underline text-gray-700 hover:text-gray-900"
+                            >
+                              {
+                                product[0].attributes.brand.data?.attributes
+                                  .name
+                              }
+                            </Link>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        <ProductRating rating={product[0].attributes.rating} />
+                        <div>
+                          <span className="font-semibold">
+                            Disponibilidad:{" "}
+                          </span>
+                          En stock
+                        </div>
+                        {product[0].attributes.categories.data.length > 0 ? (
+                          <div className="flex flex-wrap gap-2">
+                            <span className="font-semibold">Categorías:</span>
+                            {product[0].attributes.categories.data.map(
+                              (item) => (
+                                <Link
+                                  key={item.id}
+                                  href={`/product/filter?query=${item.attributes.name}`}
+                                  className="underline text-gray-700 hover:text-gray-900"
                                 >
-                                  <p className="font-medium text-gray-900 ">
-                                    {capitalizeFirstLetter(
-                                      category.attributes.name
-                                    )}
-                                  </p>
-                                  <button
-                                    onClick={() => {
-                                      filterProductsByCategoryId(category.id);
-                                      setResultText(category.attributes.name);
-                                      router.push("/filter");
-                                      setIsOpen(false);
-                                    }}
-                                    className="absolute inset-0 w-full"
-                                  ></button>
-                                </div>
+                                  {item.attributes.name}
+                                </Link>
                               )
                             )}
-                          </li>
-                          <li className="flex gap-1">
-                            <span className="font-semibold">
-                              Descripción completa:
-                            </span>
-                            <button
-                              onClick={() => {
-                                router.push(
-                                  `/product/${product!.attributes.slug}`
-                                );
-                                setIsOpen(false);
-                              }}
-                              className="hover:underline"
-                            >
-                              Click aquí
-                            </button>
-                          </li>
-                        </ul>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        <div>
+                          <span className="font-semibold">
+                            Descripción completa:{" "}
+                          </span>
+                          <button
+                            onClick={() => {
+                              router.push(
+                                `/product/${product[0].attributes.slug}`
+                              );
+                              setIsOpen(false);
+                            }}
+                            className="hover:underline"
+                          >
+                            Click aquí
+                          </button>
+                        </div>
                       </div>
                       <div className="flex flex-wrap justify-end gap-2">
-                        {getItemQuantity(product!.id) > 0 && (
+                        {getItemQuantity(product[0].id) ? (
                           <>
-                            <CartButton
-                              onClick={() => cart.removeCartItem(product!.id)}
+                            <CartButtonAction
+                              onClick={() => cart.removeCartItem(product[0].id)}
                               title="Eliminar"
                               icon={<MdDeleteOutline />}
                             />
 
-                            <CartButton
+                            <CartButtonAction
                               onClick={() =>
-                                cart.decreaseCartQuantity(product!.id)
+                                cart.increaseCartQuantity(product[0].id)
                               }
-                              title="Quitar"
-                              icon={<BsCartDash />}
+                              title={`x ${getItemQuantity(product[0].id)}`}
+                              icon={<BsCartCheck />}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <CartButtonAction
+                              onClick={() =>
+                                cart.increaseCartQuantity(product[0].id)
+                              }
+                              title="Añadir"
+                              icon={<BsCartPlus />}
                             />
                           </>
                         )}
-                        <CartButton
-                          onClick={() => cart.increaseCartQuantity(product!.id)}
-                          title="Añadir"
-                          icon={<BsCartPlus />}
-                        />
                       </div>
                     </div>
                     <button

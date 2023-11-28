@@ -1,16 +1,17 @@
 "use client";
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
-import { CartButton } from "../product/ProductCard";
+
 import SlideOver from "../ui/SlideOver";
 import FilterSection from "./FilterSection";
+import { CartButtonAction } from "../cart/CartButtonAction";
 
 export default function FilterSliderOver() {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="lg:hidden">
-      <CartButton
+      <CartButtonAction
         onClick={() => setOpen(true)}
         title="Filtro"
         icon={<IoFilter />}

@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
 import { SlideInterface } from "@/models/slide.model";
+import { useEffect, useState } from "react";
 import { TiMinus } from "react-icons/ti";
 import { ArrowButton } from "./ArrowButton";
 
 export default function Slide({ data }: SlideInterface) {
-  const slides = data.map((item) => ({
+  const slides = data?.map((item) => ({
     url: item.attributes.image.data?.attributes.url,
     alt: item.attributes.name,
     key: item.id,

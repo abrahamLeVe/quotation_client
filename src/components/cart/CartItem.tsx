@@ -5,8 +5,9 @@ import { truncate } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
-import { CartButton } from "../product/ProductCard";
+
 import ProductPrice from "../product/ProductPrice";
+import { CartButtonAction } from "./CartButtonAction";
 
 export default function CartItem() {
   const cart = cartStore((state) => state);
@@ -35,7 +36,6 @@ export default function CartItem() {
                   <div className="flex text-base  hover:underline font-medium text-gray-900 relative">
                     <h3 title={product.attributes.name}>
                       {truncate(product.attributes.name, 70)}
-
                       <button
                         onClick={() => {
                           router.push(`/product/${product!.attributes.slug}`);
@@ -57,7 +57,7 @@ export default function CartItem() {
                 </div>
                 <div className="flex flex-1 items-end justify-end text-sm gap-3">
                   <div title="Eliminar">
-                    <CartButton
+                    <CartButtonAction
                       onClick={() => {
                         cart.removeCartItem(product.id);
                         cart.cartItemState[0].id === product.id &&
@@ -70,7 +70,7 @@ export default function CartItem() {
                   </div>
                   {getItemQuantity(product.id) > 1 && (
                     <div title="Restar">
-                      <CartButton
+                      <CartButtonAction
                         onClick={() => {
                           cart.decreaseCartQuantity(product.id);
                         }}
@@ -80,7 +80,7 @@ export default function CartItem() {
                     </div>
                   )}
                   <div title="Aumentar">
-                    <CartButton
+                    <CartButtonAction
                       onClick={() => cart.increaseCartQuantity(product.id)}
                       icon={<BsCartPlus />}
                       className="max-w-[42px]"

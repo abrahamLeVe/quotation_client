@@ -3,9 +3,9 @@ import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
 import { capitalizeFirstLetter } from "@/utilities/utils";
 import { AiOutlineClear } from "react-icons/ai";
-import { BsSearch } from "react-icons/bs";
-import { CartButton } from "../product/ProductCard";
+import ProductSearch from "../ui/Search";
 import { DisclosureIndex } from "../ui/Disclosure";
+import { CartButtonAction } from "../cart/CartButtonAction";
 
 export default function FilterSection() {
   const {
@@ -18,20 +18,31 @@ export default function FilterSection() {
     query,
     setQuery,
     setResultText,
+    setMinPrice,
   } = useFilterContext();
   const { categories } = useCategoryContext();
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = event.target.value.replace(/\s{2,}/g, " ");
+    console.log(inputText);
     filterProducts(inputText);
     setQuery([inputText]);
+  };
+
+  const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+    setMinPrice(Number(event.target.value));
+  };
+
+  const handleRangeClick = () => {
+    filterByPrice(minPrice.toString());
   };
 
   return (
     <div className="lg:sticky top-0">
       <div className="flex flex-col min-w-[320px] h-full p-5 border-r-2 gap-3">
         <div className="flex gap-2 items-end">
-          <div>
+          {/* <div>
             <label
               htmlFor="query"
               className="text-lg font-bold tracking-tight text-gray-900 pb-3"
@@ -56,10 +67,12 @@ export default function FilterSection() {
                 className="block w-full rounded-md border-0 py-2 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-base sm:leading-6"
               />
             </div>
-          </div>
+          </div> */}
+
+          <ProductSearch placeholder={""} />
 
           <div title="Limpiar">
-            <CartButton
+            <CartButtonAction
               onClick={cleanFilter}
               icon={<AiOutlineClear className="text-gray-600" />}
               className="max-w-[42px]"
@@ -68,19 +81,28 @@ export default function FilterSection() {
         </div>
 
         <div className="flex flex-col w-full gap-3">
-          <h3 className="text-lg font-bold text-gray-900">
+          <label htmlFor="range" className="text-lg font-bold text-gray-900">
             Filtrar por precio
-          </h3>
-          <label htmlFor="range">Precio a partir de:</label>
-          <input
-            type="range"
-            id="range"
-            name="range"
-            min="0"
-            max={maxPrice}
-            onChange={(event) => filterByPrice(event.target.value)}
-            className="block w-full appearance-none bg-gray-400 h-4 rounded-lg overflow-hidden outline-none"
-          />
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="range"
+              id="range"
+              name="range"
+              min="0"
+              max={maxPrice}
+              onChange={handleRangeChange}
+              className="block w-full appearance-none bg-gray-400 h-4 rounded-lg overflow-hidden outline-none"
+            />
+            <div title="Filtar">
+              <CartButtonAction
+                onClick={() => handleRangeClick()}
+                icon={<AiOutlineClear className="text-gray-600" />}
+                className="max-w-[42px]"
+              />
+            </div>
+          </div>
+
           <div className="flex justify-between text-gray-600">
             <span>${minPrice}</span>
             <span>${maxPrice}</span>

@@ -1,13 +1,25 @@
 export interface ProductsInterface {
   data: ProductInterface[];
+  meta?: Meta;
+}
+
+interface Meta {
+  pagination: Pagination;
+}
+
+interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
 }
 
 export interface ProductInterface {
   id: number;
-  attributes: Attributes4;
+  attributes: Attributes6;
 }
 
-interface Attributes4 {
+interface Attributes6 {
   name: string;
   price: number;
   discount: number;
@@ -20,10 +32,53 @@ interface Attributes4 {
   image: Image;
   thumbnail: Thumbnail;
   categories: Categories;
+  brand: Brand;
+  sub_categories: Subcategories;
+  product_sizes: Productsizes;
+  product_colors: Productcolors;
 }
 
-interface Categories {
-  data: Datum3[];
+interface Productcolors {
+  data: Datum5[];
+}
+
+interface Datum5 {
+  id: number;
+  attributes: Attributes5;
+}
+
+interface Attributes5 {
+  Name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface Productsizes {
+  data: any[];
+}
+
+interface Subcategories {
+  data: (Datum4 | Datum3)[];
+}
+
+interface Datum4 {
+  id: number;
+  attributes: Attributes4;
+}
+
+interface Attributes4 {
+  name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  description?: any;
+}
+
+export interface Brand {
+  data?: Datum3;
 }
 
 interface Datum3 {
@@ -37,39 +92,28 @@ interface Attributes3 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  description?: string;
 }
 
-interface Thumbnail {
-  data?: Datum2;
+export interface Categories {
+  data: CategoriesDataInterface[];
 }
 
-interface Datum2 {
+export interface CategoriesDataInterface {
   id: number;
   attributes: Attributes2;
 }
 
 interface Attributes2 {
   name: string;
-  alternativeText?: any;
-  caption?: any;
-  width: number;
-  height: number;
-  formats: Formats2;
-  hash: string;
-  ext: string;
-  mime: string;
-  size: number;
-  url: string;
-  previewUrl?: any;
-  provider: string;
-  provider_metadata: Providermetadata;
+  slug: string;
   createdAt: string;
   updatedAt: string;
+  publishedAt: string;
 }
 
-interface Formats2 {
-  small: Small;
-  thumbnail: Small;
+interface Thumbnail {
+  data?: Datum;
 }
 
 interface Image {
@@ -103,8 +147,6 @@ interface Attributes {
 interface Formats {
   small: Small;
   thumbnail: Small;
-  large?: Small;
-  medium?: Small;
 }
 
 interface Small {

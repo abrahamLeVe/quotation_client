@@ -4,9 +4,9 @@ import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
-import { CartButton } from "../product/ProductCard";
 import ProductPrice from "../product/ProductPrice";
 import { DisclosureIndex } from "../ui/Disclosure";
+import { CartButtonAction } from "./CartButtonAction";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);
@@ -66,7 +66,7 @@ export default function CartIndex() {
                   <td className="border-b p-4">
                     <div className="flex flex-1 items-center gap-3">
                       <div title="Restar">
-                        <CartButton
+                        <CartButtonAction
                           onClick={() => {
                             cart.decreaseCartQuantity(product.id);
                           }}
@@ -76,7 +76,7 @@ export default function CartIndex() {
                       </div>
                       <p>x{getItemQuantity(product.id)}</p>
                       <div title="Aumentar">
-                        <CartButton
+                        <CartButtonAction
                           onClick={() => cart.increaseCartQuantity(product.id)}
                           icon={<BsCartPlus />}
                           className="max-w-[42px]"
@@ -95,7 +95,7 @@ export default function CartIndex() {
                   </td>
                   <td className="border-b p-4 pr-8">
                     <div title="Eliminar">
-                      <CartButton
+                      <CartButtonAction
                         onClick={() => {
                           cart.removeCartItem(product.id);
                         }}

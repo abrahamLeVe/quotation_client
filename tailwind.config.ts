@@ -24,6 +24,7 @@ const config: Config = {
         700: "#1d4ed8",
       },
       gray: {
+        50: "#f9fafb",
         100: "#f7fafc",
         200: "#e5e7eb",
         300: "#d1d5db",
@@ -45,6 +46,7 @@ const config: Config = {
       },
       orange: {
         300: "#FDBA74",
+        500: "#f97316",
       },
       purple: "#7e5bef",
       pink: "#ff49db",

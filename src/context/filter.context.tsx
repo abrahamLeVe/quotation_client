@@ -1,9 +1,10 @@
 "use client";
-import { createContext, useContext, useState } from "react";
 import { FilterActions } from "@/components/filter/FilterSelect";
+import { fetchDataFromApi } from "@/lib/api";
 import { ProductInterface } from "@/models/products.model";
-import { removeDiacritics } from "@/utilities/utils";
+import { createContext, useContext, useState } from "react";
 import { useProductContext } from "./product.context";
+var qs = require("qs");
 
 interface FilterProviderProps {
   children: React.ReactNode;
@@ -52,40 +53,55 @@ export function FilterProvider({ children }: FilterProviderProps) {
   const [maxPrice, setMaxPrice] = useState(1000);
   const [selected, setSelected] = useState(FilterActions[0]);
 
-  let currentResults: ProductInterface[] = [];
-
-  function filterProducts(speechResult: string): void {
-    const cleanedQuery = processQuery(speechResult);
+  async function filterProducts(query: string): Promise<void> {
+    const cleanedQuery = processQuery(query);
     if (cleanedQuery.length === 0) {
       cleanFilter();
       return;
     }
-    console.log(cleanedQuery);
-    const categoryMatches = filterByCategory(cleanedQuery);
-    const everyMatch = filterByEvery(cleanedQuery);
-    const keywordMatches = filterByKeywords(cleanedQuery);
-    const everyDescriptionMatches = filterByEveryDescription(cleanedQuery);
-    const keywordDescriptionMatches = filterByKeywordDescription(cleanedQuery);
 
-    const combinedResults: ProductInterface[] = [
-      ...categoryMatches,
-      ...everyMatch,
-      ...keywordMatches,
-      ...everyDescriptionMatches,
-      ...keywordDescriptionMatches,
-    ];
+    try {
+      const filter = {
+        $or: [
+          {
+            name: {
+              $contain: cleanedQuery,
+            },
+          },
+          {
+            description: {
+              $contain: cleanedQuery,
+            },
+          },
+        ],
+      };
 
-    currentResults = Array.from(
-      new Set([...currentResults, ...combinedResults])
-    );
-    setProductsFilter(currentResults);
+      const queryString = qs.stringify(
+        { filters: filter },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+
+      const { data } = await fetchDataFromApi(
+        `/api/products?populate=*&${queryString}`
+      );
+      console.log(data);
+
+      if (data) {
+        setProductsFilter(data);
+      }
+    } catch (error) {
+      cleanFilter();
+      console.error("Error in filterProductsFromApi", error);
+    }
   }
 
   function processQuery(speechResult: string): string[] {
     setResultText(speechResult);
     cleanFilter();
 
-    const firstFilter = removeDiacritics(speechResult.toLowerCase());
+    const firstFilter = speechResult.toLowerCase();
     const keywords = firstFilter
       .replace(/[.,]/g, "")
       .slice(0, 50)
@@ -97,17 +113,6 @@ export function FilterProvider({ children }: FilterProviderProps) {
       .filter((element) => element.length >= 3);
   }
 
-  function filterByCategory(query: string[]): ProductInterface[] {
-    return products.filter((product) => {
-      const productCategories = product.attributes.categories.data.map(
-        (category) => removeDiacritics(category.attributes.name.toLowerCase())
-      );
-      return query.some((keyword) =>
-        productCategories.some((category) => category.includes(keyword))
-      );
-    });
-  }
-
   function filterProductsByCategoryId(categoryId: number) {
     cleanFilter();
     setProductsFilter(
@@ -117,46 +122,6 @@ export function FilterProvider({ children }: FilterProviderProps) {
         );
       })
     );
-  }
-
-  function filterByEvery(query: string[]): ProductInterface[] {
-    return products.filter((product) => {
-      const productName = removeDiacritics(
-        product.attributes.name.toLowerCase()
-      );
-
-      return query.every((keyword) => productName.includes(keyword));
-    });
-  }
-
-  function filterByEveryDescription(query: string[]): ProductInterface[] {
-    return products.filter((product) => {
-      const productName = removeDiacritics(
-        product.attributes.description.toLowerCase()
-      );
-
-      return query.every((keyword) => productName.includes(keyword));
-    });
-  }
-
-  function filterByKeywordDescription(query: string[]): ProductInterface[] {
-    return products.filter((product) => {
-      const productName = removeDiacritics(
-        product.attributes.description.toLowerCase()
-      );
-
-      return query.some((keyword) => productName.includes(keyword));
-    });
-  }
-
-  function filterByKeywords(query: string[]): ProductInterface[] {
-    return products.filter((product) => {
-      const productName = removeDiacritics(
-        product.attributes.name.toLowerCase()
-      );
-
-      return query.some((keyword) => productName.includes(keyword));
-    });
   }
 
   function filterByPrice(price: string) {
@@ -218,7 +183,6 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function cleanFilter(): void {
-    currentResults = [];
     setQuery([]);
     setProductsFilter([]);
     setSelected(FilterActions[0]);

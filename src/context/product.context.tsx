@@ -1,9 +1,13 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import { getDataProducts } from "@/app/services/product.service";
+import {
+  getDataProductById,
+  getDataProducts,
+} from "@/app/services/product.service";
 import ProductModal from "@/components/product/ProductModal";
+import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface ProductProviderProps {
   children: React.ReactNode;
@@ -11,14 +15,12 @@ interface ProductProviderProps {
 
 interface ProductContext {
   isOpen: boolean;
-  product: ProductInterface | undefined;
+  product: ProductInterface[];
   products: ProductInterface[];
-  getProduct: (id: number) => void;
-  getItemQuantity: (id: number) => number;
+  openProductModal: (id: number) => void;
+  getItemQuantity: (id: number) => number | undefined;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setProduct: React.Dispatch<
-    React.SetStateAction<ProductInterface | undefined>
-  >;
+  setProduct: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   setProducts: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   cleanProductModal: () => void;
 }
@@ -30,11 +32,12 @@ export function useProductContext() {
 }
 
 export function ProductProvider({ children }: ProductProviderProps) {
-  const [product, setProduct] = useState<ProductInterface>();
+  const [product, setProduct] = useState<ProductInterface[]>([]);
   const [products, setProducts] = useState<ProductInterface[]>([]);
-
   const [isOpen, setIsOpen] = useState(false);
   const cart = cartStore((state) => state);
+
+  const mounted = useMounted();
 
   useEffect(() => {
     (async () => {
@@ -49,18 +52,25 @@ export function ProductProvider({ children }: ProductProviderProps) {
     })();
   }, []);
 
-  function getProduct(id: number) {
-    const item = products.find((item: ProductInterface) => item.id === id);
+  async function openProductModal(id: number) {
     setIsOpen(true);
-    setProduct(item);
+    try {
+      const { data } = await getDataProductById(id);
+      setProduct(data);
+    } catch (error) {
+      console.log("Error in openProductModal(id)", error);
+      cleanProductModal();
+    }
   }
 
   function getItemQuantity(id: number) {
-    return cart.cartItemState.find((item) => item.id === id)?.quantity || 0;
+    return mounted
+      ? cart.cartItemState.find((item) => item.id === id)?.quantity
+      : 0;
   }
 
   function cleanProductModal() {
-    setProduct(undefined);
+    setProduct([]);
     setIsOpen(false);
   }
 
@@ -69,7 +79,7 @@ export function ProductProvider({ children }: ProductProviderProps) {
       value={{
         product,
         isOpen,
-        getProduct,
+        openProductModal,
         setIsOpen,
         getItemQuantity,
         setProduct,
@@ -79,7 +89,7 @@ export function ProductProvider({ children }: ProductProviderProps) {
       }}
     >
       {children}
-      {product && <ProductModal />}
+      {product[0] ? <ProductModal /> : null}
     </ProductContext.Provider>
   );
 }
