@@ -21,7 +21,7 @@ export default function FilterButton() {
               <p className="text-sm text-center">{productsFilter.length}</p>
             </div>
           )} */}
-          <Link href={"/filter"} className="absolute inset-0"></Link>
+          <Link href={"/filter/search"} className="absolute inset-0"></Link>
         </div>
       </div>
       <div className="flex lg:ml-6">
@@ -36,10 +36,10 @@ export default function FilterButton() {
           >
             <span className="sr-only">Escuchar</span>
             <BsMic className="h-6 w-6" aria-hidden="true" />
-            <Link href={"/filter"} className="absolute inset-0"></Link>
+            {/* <Link href={"/filter/search"} className="absolute inset-0"></Link> */}
           </button>
         )}
       </div>
-    </>
+    </> 
   );
 }

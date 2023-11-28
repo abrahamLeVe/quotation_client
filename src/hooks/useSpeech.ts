@@ -1,15 +1,12 @@
-import { useEffect } from "react";
+"use client";
 import { useFilterContext } from "@/context/filter.context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useMounted } from "./useMounted";
 
 export function useSpeechRecognition() {
-  const {
-    filterProducts,
-    isListening,
-    setIsListening,
-    setResultText,
-    cleanFilter,
-  } = useFilterContext();
+  const { isListening, setIsListening } = useFilterContext();
+  const router = useRouter();
 
   let recognition: any = null;
 
@@ -27,8 +24,7 @@ export function useSpeechRecognition() {
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const speechResult = event.results[0][0].transcript;
-      setResultText(speechResult);
-      filterProducts(speechResult);
+      router.push(`/filter/search?query=${speechResult}`);
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
@@ -62,7 +58,6 @@ export function useSpeechRecognition() {
   function startListening() {
     if (isListening) return;
     setIsListening(true);
-    cleanFilter();
     const randomMessage = getRandomMessage();
     readText(randomMessage);
 

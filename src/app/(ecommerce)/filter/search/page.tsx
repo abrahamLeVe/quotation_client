@@ -13,12 +13,12 @@ export default async function FilterProductPage({
 }) {
   const query = searchParams?.query;
   return (
-    <>
+    <div className="flex flex-col w-full">
       <ProductSearch placeholder={"Buscar productos..."} />
       <Suspense key={query} fallback={<ProductsTableSkeleton />}>
         <ProductTable query={searchParams.query} />
-        <ProductsTableSkeleton />
+        {/* <ProductsTableSkeleton /> */}
       </Suspense>
-    </>
+    </div>
   );
 }
