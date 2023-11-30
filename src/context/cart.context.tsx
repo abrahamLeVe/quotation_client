@@ -22,7 +22,8 @@ interface CartContext {
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
   getItemQuantity: (id: number) => number;
-  calculateTotal: () => { subTotal: number; igv: number; total: number };
+  calculateTotal: () => { igv: number; total: number };
+  subTotal: number;
 }
 
 const CartContext = createContext({} as CartContext);
@@ -36,6 +37,7 @@ export function CartProvider({ children }: CartProviderProps) {
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [cartItems, setCartItems] = useState<ProductInterface[]>([]);
+  const [subTotal, setSubTotal] = useState<number>(0);
   const mounted = useMounted();
 
   useEffect(() => {
@@ -47,6 +49,17 @@ export function CartProvider({ children }: CartProviderProps) {
             data.filter((product) =>
               cart.some((cartItem) => cartItem.id === product.id)
             )
+          );
+          setSubTotal(
+            cart.reduce((acc, cartItem) => {
+              const product = data.find((item) => item.id === cartItem.id);
+              return (
+                acc +
+                (product!.attributes.price - product!.attributes.discount ||
+                  0) *
+                  cartItem.quantity
+              );
+            }, 0)
           );
         }
       } catch (error) {
@@ -63,31 +76,17 @@ export function CartProvider({ children }: CartProviderProps) {
     return cart.find((item) => item.id === id)?.quantity || 0;
   }
 
-  function calculateSubtotal(cartItems: ProductInterface[]) {
-    const subtotal = cart.reduce((acc, cartItem) => {
-      const product = cartItems.find((item) => item.id === cartItem.id);
-      return (
-        acc +
-        (product!.attributes.price - product!.attributes.discount || 0) *
-          cartItem.quantity
-      );
-    }, 0);
-
-    return subtotal;
-  }
-
   function calculateIGV(subtotal: number) {
-    const igvRate = 0; // Cambia esto con tu tasa real de IGV
+    const igvRate = 0;
     const igv = subtotal * igvRate;
 
     return igv;
   }
 
   function calculateTotal() {
-    const subtotal = calculateSubtotal(cartItems);
-    const igv = calculateIGV(subtotal);
-    const total = subtotal + igv;
-    return { subTotal: subtotal, igv, total };
+    const igv = calculateIGV(subTotal);
+    const total = subTotal + igv;
+    return { igv, total };
   }
 
   return (
@@ -102,6 +101,7 @@ export function CartProvider({ children }: CartProviderProps) {
         setOpenMenu,
         cartItems,
         setCartItems,
+        subTotal,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 "use client";
 import { useCartContext } from "@/context/cart.context";
 import { cartStore } from "@/store/cart.store";
-import { truncate } from "@/utilities/utils";
+import { formatCurrency, truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
@@ -10,8 +10,8 @@ import { CartButtonAction } from "./CartButtonAction";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);
-  const { calculateTotal, getItemQuantity, cartItems } = useCartContext();
-  const subTotal = calculateTotal().subTotal;
+  const { getItemQuantity, cartItems, subTotal, calculateTotal } =
+    useCartContext();
   const total = calculateTotal().total;
 
   return (
@@ -86,11 +86,11 @@ export default function CartIndex() {
                   </td>
                   <td className="border-b p-4">
                     <div className="flex flex-row gap-5">
-                      <ProductPrice
-                        price={
-                          product.attributes.price * getItemQuantity(product.id)
-                        }
-                      />
+                      {formatCurrency(
+                        (product.attributes.price -
+                          product.attributes.discount) *
+                          getItemQuantity(product.id)
+                      )}
                     </div>
                   </td>
                   <td className="border-b p-4 pr-8">
@@ -141,7 +141,7 @@ export default function CartIndex() {
                       <p>Subtotal:</p>
                     </div>
                     <div className=" font-semibold">
-                      <ProductPrice price={subTotal} />
+                      {formatCurrency(subTotal)}
                     </div>
                   </div>
                   <div className="flex justify-between gap-2">
@@ -160,9 +160,7 @@ export default function CartIndex() {
                     <div>
                       <p>Total</p>
                     </div>
-                    <div className="text-red-600">
-                      <ProductPrice price={total} />
-                    </div>
+                    <div className="text-red-600">{formatCurrency(total)}</div>
                   </div>
                 </td>
               </tr>

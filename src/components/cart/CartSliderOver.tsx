@@ -3,9 +3,9 @@ import { useCartContext } from "@/context/cart.context";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { GrClose } from "react-icons/gr";
+import TransitionChild from "../ui/TransitionChild";
 import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
-import TransitionChild from "../ui/TransitionChild";
 
 export default function CartSliderOver() {
   const { openCart, setOpenCart } = useCartContext();
@@ -44,7 +44,7 @@ export default function CartSliderOver() {
                             onClick={() => setOpenCart(false)}
                           >
                             <span className="absolute -inset-0.5" />
-                            <span className="sr-only">Close panel</span>
+                            <span className="sr-only">Cerrar carrito</span>
                             <GrClose className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>

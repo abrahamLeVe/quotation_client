@@ -5,7 +5,6 @@ import { truncate } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
-
 import ProductPrice from "../product/ProductPrice";
 import { CartButtonAction } from "./CartButtonAction";
 
@@ -38,7 +37,7 @@ export default function CartItem() {
                       {truncate(product.attributes.name, 70)}
                       <button
                         onClick={() => {
-                          router.push(`/product/${product!.attributes.slug}`);
+                          router.push(`/product/${product.attributes.slug}`);
                           setOpenCart(false);
                         }}
                         className="absolute inset-0"
@@ -50,9 +49,7 @@ export default function CartItem() {
                       discount={product.attributes.discount}
                       price={product.attributes.price}
                     />
-                    {getItemQuantity(product.id) > 0 && (
-                      <p>x{getItemQuantity(product.id)}</p>
-                    )}
+                    <p>x{getItemQuantity(product.id)}</p>
                   </div>
                 </div>
                 <div className="flex flex-1 items-end justify-end text-sm gap-3">

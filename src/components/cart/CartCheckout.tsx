@@ -4,8 +4,7 @@ import { formatCurrency } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
 
 export default function CartCheckout() {
-  const { calculateTotal, setOpenCart } = useCartContext();
-  const subTotal = calculateTotal().subTotal;
+  const { subTotal, setOpenCart } = useCartContext();
   const router = useRouter();
   return (
     <>
