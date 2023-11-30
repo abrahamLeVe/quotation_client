@@ -12,13 +12,13 @@ export function CategoryLink({
 }) {
   return (
     <>
-      <Popover className="relative w-full max-w-sm z-50">
+      <Popover className="w-full relative max-w-sm ">
         {({ open }) => (
           <>
             <Popover.Button
               className={`
                 ${open ? "text-gray-900/90" : "text-black"}
-                group inline-flex items-center rounded-md px-3 py-2 hover:text-gray-900 focus:outline-none focus-visible:ring-2 `}
+                group inline-flex items-center rounded-md px-3 py-2 hover:text-gray-900 focus:outline-none focus-visible:ring-2`}
             >
               <span className="font-semibold pr-1">Categorías</span>
               <BsChevronUp
@@ -37,9 +37,9 @@ export function CategoryLink({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute w-full left-1/2 z-10 mt-3  max-w-sm -translate-x-1/2 transform px-4 sm:px-0">
+              <Popover.Panel className="absolute w-full left-1/2 mt-3 z-20  max-w-sm -translate-x-1/2 transform px-4 sm:px-0">
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
-                  <div className="grid gap-8 bg-white p-5">
+                  <div className="grid gap-8 p-5 bg-white">
                     {categories.map((item) => (
                       <Link
                         key={item.id}

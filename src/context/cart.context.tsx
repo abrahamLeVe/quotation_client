@@ -1,11 +1,10 @@
 "use client";
+import { getDataProducts } from "@/app/services/product.service";
 import CartOffCanvas from "@/components/cart/CartSliderOver";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
-import productStorage from "@/store/product.store";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useProductContext } from "./product.context";
 
 interface CartProviderProps {
   children: React.ReactNode;
@@ -34,21 +33,27 @@ export function useCartContext() {
 
 export function CartProvider({ children }: CartProviderProps) {
   const cart = cartStore((state) => state.cartItemState);
-  const { products } = useProductContext();
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [cartItems, setCartItems] = useState<ProductInterface[]>([]);
   const mounted = useMounted();
 
   useEffect(() => {
-    (() => {
-      setCartItems(
-        products.filter((product) =>
-          cart.some((cartItem) => cartItem.id === product.id)
-        )
-      );
+    (async () => {
+      try {
+        const { data } = await getDataProducts();
+        if (data) {
+          setCartItems(
+            data.filter((product) =>
+              cart.some((cartItem) => cartItem.id === product.id)
+            )
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
     })();
-  }, [products, cart]);
+  }, [cart]);
 
   const cartQuantity = mounted
     ? cart.reduce((quantity, item) => item.quantity + quantity, 0)
@@ -58,14 +63,31 @@ export function CartProvider({ children }: CartProviderProps) {
     return cart.find((item) => item.id === id)?.quantity || 0;
   }
 
+  function calculateSubtotal(cartItems: ProductInterface[]) {
+    const subtotal = cart.reduce((acc, cartItem) => {
+      const product = cartItems.find((item) => item.id === cartItem.id);
+      return (
+        acc +
+        (product!.attributes.price - product!.attributes.discount || 0) *
+          cartItem.quantity
+      );
+    }, 0);
+
+    return subtotal;
+  }
+
+  function calculateIGV(subtotal: number) {
+    const igvRate = 0; // Cambia esto con tu tasa real de IGV
+    const igv = subtotal * igvRate;
+
+    return igv;
+  }
+
   function calculateTotal() {
-    const subTotal = productStorage((state) => state.calculateSubtotal)(cart);
-    const igv = productStorage((state) => state.calculateIGV)(subTotal);
-    const total = productStorage((state) => state.calculateTotal)(
-      subTotal,
-      igv
-    );
-    return { subTotal, igv, total };
+    const subtotal = calculateSubtotal(cartItems);
+    const igv = calculateIGV(subtotal);
+    const total = subtotal + igv;
+    return { subTotal: subtotal, igv, total };
   }
 
   return (

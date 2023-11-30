@@ -1,6 +1,6 @@
 // "use client";
 import { filterProducts } from "@/app/services/product.service";
-import ProductTable from "./table";
+import ProductTable from "./FilterProductTable";
 
 export default async function FilterResult({ query }: { query?: string }) {
   const products = await filterProducts(query);

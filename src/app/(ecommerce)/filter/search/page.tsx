@@ -1,4 +1,4 @@
-import ProductTable from "@/components/filter/table";
+import ProductTable from "@/components/filter/FilterProductTable";
 import ProductSearch from "@/components/ui/Search";
 import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
 import { Suspense } from "react";
@@ -17,7 +17,6 @@ export default async function FilterProductPage({
       <ProductSearch placeholder={"Buscar productos..."} />
       <Suspense key={query} fallback={<ProductsTableSkeleton />}>
         <ProductTable query={searchParams.query} />
-        {/* <ProductsTableSkeleton /> */}
       </Suspense>
     </div>
   );

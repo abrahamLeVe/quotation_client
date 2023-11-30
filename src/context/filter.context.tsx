@@ -44,7 +44,7 @@ export function useFilterContext() {
 }
 
 export function FilterProvider({ children }: FilterProviderProps) {
-  const { products } = useProductContext();
+  // const { products } = useProductContext();
   const [productsFilter, setProductsFilter] = useState<ProductInterface[]>([]);
   const [query, setQuery] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string>("Sin resultados.");
@@ -115,33 +115,33 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   function filterProductsByCategoryId(categoryId: number) {
     cleanFilter();
-    setProductsFilter(
-      products?.filter((product) => {
-        return product.attributes.categories.data.some(
-          (category) => category.id === categoryId
-        );
-      })
-    );
+    // setProductsFilter(
+    //   products?.filter((product) => {
+    //     return product.attributes.categories.data.some(
+    //       (category) => category.id === categoryId
+    //     );
+    //   })
+    // );
   }
 
   function filterByPrice(price: string) {
     const minPrice = parseFloat(price);
 
-    const filteredProducts = products
-      .filter((product) => product.attributes.price >= minPrice)
-      .sort((a, b) => a.attributes.price - b.attributes.price);
+    // const filteredProducts = products
+    //   .filter((product) => product.attributes.price >= minPrice)
+    //   .sort((a, b) => a.attributes.price - b.attributes.price);
 
-    const maxPrice = filteredProducts.reduce(
-      (max, product) => Math.max(max, product.attributes.price),
-      0
-    );
-    cleanFilter();
+    // const maxPrice = filteredProducts.reduce(
+    //   (max, product) => Math.max(max, product.attributes.price),
+    //   0
+    // );
+    // cleanFilter();
 
-    setProductsFilter(filteredProducts);
-    setMinPrice(minPrice);
-    setMaxPrice(maxPrice);
+    // setProductsFilter(filteredProducts);
+    // setMinPrice(minPrice);
+    // setMaxPrice(maxPrice);
 
-    setResultText("min-$" + minPrice.toFixed() + " max-$" + maxPrice.toFixed());
+    // setResultText("min-$" + minPrice.toFixed() + " max-$" + maxPrice.toFixed());
   }
 
   function sortAlphabetically() {
@@ -159,7 +159,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function allProducts() {
-    setProductsFilter(products);
+    // setProductsFilter(products);
   }
 
   function sortByDateNewest() {

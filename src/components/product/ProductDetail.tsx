@@ -10,6 +10,7 @@ import { CartButtonAction } from "../cart/CartButtonAction";
 import { DisclosureIndex } from "../ui/Disclosure";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
+import { FaCircle } from "react-icons/fa6";
 
 export default function ProductDetail(data: ProductInterface) {
   const { getItemQuantity } = useProductContext();
@@ -39,10 +40,29 @@ export default function ProductDetail(data: ProductInterface) {
               {attributes.brand.data?.attributes.name}
             </Link>
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
         <ProductRating rating={attributes.rating} />
+        <div>
+          <span className="font-semibold">Disponibilidad: </span>
+          En stock
+        </div>
+        {attributes.product_colors.data.length > 0 ? (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold">Color:</span>
+            {attributes.product_colors?.data.map((item) => (
+              <div
+                key={item.id}
+                title={item.attributes.Name}
+                className="border rounded-full shadow-sm"
+              >
+                <FaCircle
+                  className="h-5 w-5"
+                  style={{ color: `${item.attributes.code}` }}
+                />
+              </div>
+            ))}
+          </div>
+        ) : null}
         {attributes.categories.data.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             <span className="font-semibold">Categorías:</span>
@@ -56,9 +76,7 @@ export default function ProductDetail(data: ProductInterface) {
               </Link>
             ))}
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-wrap justify-end gap-2">
         {getItemQuantity(id) ? (

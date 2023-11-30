@@ -51,7 +51,6 @@ export default function CartSliderOver() {
                       </div>
                       <CartItem />
                     </div>
-
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <CartCheckout />
                     </div>

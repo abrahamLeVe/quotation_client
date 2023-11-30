@@ -38,7 +38,7 @@ interface Attributes6 {
   product_colors: Productcolors;
 }
 
-interface Productcolors {
+export interface Productcolors {
   data: Datum5[];
 }
 
@@ -53,6 +53,7 @@ interface Attributes5 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  code: string;
 }
 
 interface Productsizes {

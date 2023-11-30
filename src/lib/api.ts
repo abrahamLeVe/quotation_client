@@ -1,5 +1,5 @@
 "use server";
-import { API_URL, API_TOKEN} from "../utilities/urls";
+import { API_URL, API_TOKEN } from "../utilities/urls";
 
 export async function fetchDataFromApi(endpoint: string): Promise<any> {
   try {

@@ -1,116 +1,100 @@
 "use client";
-
 import { useProductContext } from "@/context/product.context";
-import { Brand, Categories } from "@/models/products.model";
+import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import Link from "next/link";
 import { BsCartCheck, BsCartPlus, BsEye } from "react-icons/bs";
+import { FaCircle } from "react-icons/fa6";
 import { CartButtonAction } from "../cart/CartButtonAction";
+import ImageGalleryIndex from "../ui/ImageGallery";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-
-export interface ProductSliderItem {
-  key: number;
-  url: string;
-  alt: string;
-  name: string;
-  slug: string;
-  price: number;
-  discount: number;
-  rating: number;
-  brand?: Brand;
-  brandLink?: string;
-  categories: Categories;
-}
 
 export default function ProductCard({
   product,
 }: {
-  product: ProductSliderItem;
+  product: ProductInterface;
 }) {
   const cart = cartStore((state) => state);
-  const { openProductModal, getItemQuantity } = useProductContext();
+  const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
 
   return (
     <>
       <div className="flex flex-col">
-        <div className="aspect-h-1 aspect-w-1 w-full bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-          <img
-            src={product.url}
-            alt={product.alt}
-            className="w-full object-cover object-center"
-          />
+        <div className="aspect-1 bg-gray-200 ">
+          <ImageGalleryIndex product={product} />
         </div>
 
         <div className="flex flex-col p-2 gap-2">
           <h3
             className=" text-gray-900 hover:text-black hover:underline relative"
-            title={product.name}
+            title={product.attributes.name}
           >
-            {truncate(product.name, 60)}
+            {truncate(product.attributes.name, 60)}
             <Link
-              href={`/product/${product.slug}`}
+              href={`/product/${product.attributes.slug}`}
               className="absolute inset-0"
             ></Link>
           </h3>
           <div className="flex gap-2">
             <ProductPrice
-              discount={product.discount}
-              price={product.price}
+              discount={product.attributes.discount}
+              price={product.attributes.price}
               popUp
             />
           </div>
-          {product.brand?.data ? (
+          {product.attributes.brand?.data ? (
             <div className="flex flex-wrap gap-2">
               <span className="font-semibold"> Marca: </span>
               <Link
-                href={`/product/filter?query=${product.brand.data?.attributes.name}`}
+                href={`/product/filter?query=${product.attributes.brand.data?.attributes.name}`}
                 className="underline text-gray-700 hover:text-gray-900"
               >
-                {product.brand.data?.attributes.name}
+                {product.attributes.brand.data?.attributes.name}
               </Link>
             </div>
-          ) : (
-            <></>
-          )}
-          <ProductRating rating={product.rating} />
-          {product.categories.data.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              <span className="font-semibold">Categorías:</span>
-              {product.categories.data.map((item) => (
-                <Link
+          ) : null}
+          <ProductRating rating={product.attributes.rating} />
+          {product.attributes.product_colors.data.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-semibold">Color:</span>
+              {product.attributes.product_colors?.data.map((item) => (
+                <div
                   key={item.id}
-                  href={`/product/filter?query=${item.attributes.name}`}
-                  className="underline text-gray-700 hover:text-gray-900"
+                  title={item.attributes.Name}
+                  className="border rounded-full shadow-sm"
                 >
-                  {item.attributes.name}
-                </Link>
+                  <FaCircle
+                    className="h-5 w-5"
+                    style={{ color: `${item.attributes.code}` }}
+                  />
+                </div>
               ))}
             </div>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
       </div>
       <div className="flex justify-end p-3 gap-2">
         <CartButtonAction
-          onClick={() => openProductModal(product.key)}
+          onClick={() => {
+            setProduct([product]), setIsOpen(true);
+          }}
           title="Detalles"
           icon={<BsEye />}
         />
-        {getItemQuantity(product.key) ? (
+        {getItemQuantity(product.id) ? (
           <>
             <CartButtonAction
-              onClick={() => cart.increaseCartQuantity(product.key)}
-              title={`x ${getItemQuantity(product.key)}`}
+              onClick={() => cart.increaseCartQuantity(product.id)}
+              title={`x ${getItemQuantity(product.id)}`}
               icon={<BsCartCheck />}
             />
           </>
         ) : (
           <>
             <CartButtonAction
-              onClick={() => cart.increaseCartQuantity(product.key)}
+              onClick={() => cart.increaseCartQuantity(product.id)}
               title="Añadir"
               icon={<BsCartPlus />}
             />

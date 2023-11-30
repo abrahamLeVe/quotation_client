@@ -1,28 +1,16 @@
 "use client";
 import { ProductInterface } from "@/models/products.model";
+import { Transition } from "@headlessui/react";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { FaCircle } from "react-icons/fa6";
 import { ArrowButton } from "../slide/ArrowButton";
 import ProductCard from "./ProductCard";
-import { Transition } from "@headlessui/react";
 
 interface ProductSliderProps {
   data: ProductInterface[];
 }
 
 export default function ProductSlider({ data }: ProductSliderProps) {
-  const products = data?.map((item) => ({
-    url: item.attributes.image.data[0].attributes.url,
-    alt: item.attributes.name,
-    key: item.id,
-    name: item.attributes.name,
-    slug: item.attributes.slug,
-    price: item.attributes.price,
-    discount: item.attributes.discount,
-    rating: item.attributes.rating,
-    brand: item.attributes.brand,
-    categories: item.attributes.categories,
-  }));
   const [windowWidth, setWindowWidth] = useState(0);
   const [isShowing, setIsShowing] = useState(true);
 
@@ -44,7 +32,8 @@ export default function ProductSlider({ data }: ProductSliderProps) {
     () => calculateItemsPerPage(windowWidth),
     [windowWidth]
   );
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  
+  const totalPages = Math.ceil(data.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
   const handleButtonClick = (newPage: number) => {
     setIsShowing(false);
@@ -70,7 +59,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
   useEffect(() => {
     const autoSlideInterval = setInterval(() => {
       nextPage();
-    }, 10000);
+    }, 50000);
 
     return () => {
       clearInterval(autoSlideInterval);
@@ -79,7 +68,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
 
   const startIdx = currentPage * itemsPerPage;
   const endIdx = startIdx + itemsPerPage;
-  const currentProducts = products.slice(startIdx, endIdx);
+  const currentProducts = data.slice(startIdx, endIdx);
 
   return (
     <section className="w-full z-30">
@@ -96,7 +85,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
         <div className=" flex flex-row gap-4">
           {currentProducts.map((product) => (
             <div
-              key={product.key}
+              key={product.id}
               className="flex flex-col w-full justify-between  sm:w-[50%] md:w-[33.333%] lg:w-[25%] xl:w-[20%] border rounded-lg overflow-hidden relative text-sm"
             >
               <ProductCard product={product} />

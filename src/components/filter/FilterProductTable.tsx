@@ -6,7 +6,6 @@ import { CategoryLink } from "../category/CategoryLink";
 
 export default async function ProductTable({ query }: { query?: string }) {
   const products = await filterProducts(query);
-  console.log(products);
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -101,7 +100,7 @@ export default async function ProductTable({ query }: { query?: string }) {
                       discount={product.attributes.discount}
                     />
                   </td>
-                  <td className="py-3 pl-6">
+                  <td className="py-3">
                     <div className="flex flex-wrap gap-3 ">
                       <CategoryLink
                         categories={product.attributes.categories.data}

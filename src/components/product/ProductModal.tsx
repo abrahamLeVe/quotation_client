@@ -6,10 +6,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useRef } from "react";
 import { BsCartCheck, BsCartPlus } from "react-icons/bs";
+import { FaCircle } from "react-icons/fa6";
 import { GrClose } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import { CartButtonAction } from "../cart/CartButtonAction";
-import ImageGalleryIndex from "../ui/ImageGallery";
+import { ImageGalleryModal } from "../ui/ImageGallery";
 import TransitionChild from "../ui/TransitionChild";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
@@ -45,7 +46,7 @@ export default function ProductModal() {
                 <Dialog.Panel className="w-[90%] max-w-6xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex flex-col lg:flex-row gap-5">
                     <div>
-                      <ImageGalleryIndex
+                      <ImageGalleryModal
                         attributes={product[0].attributes}
                         id={product[0].id}
                       />
@@ -78,10 +79,28 @@ export default function ProductModal() {
                               }
                             </Link>
                           </div>
-                        ) : (
-                          <></>
-                        )}
+                        ) : null}
                         <ProductRating rating={product[0].attributes.rating} />
+                        {product[0].attributes.product_colors.data.length >
+                        0 ? (
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="font-semibold">Color:</span>
+                            {product[0].attributes.product_colors.data.map(
+                              (item) => (
+                                <div
+                                  key={item.id}
+                                  title={item.attributes.Name}
+                                  className="border rounded-full shadow-sm"
+                                >
+                                  <FaCircle
+                                    className="h-5 w-5"
+                                    style={{ color: `${item.attributes.code}` }}
+                                  />
+                                </div>
+                              )
+                            )}
+                          </div>
+                        ) : null}
                         <div>
                           <span className="font-semibold">
                             Disponibilidad:{" "}
@@ -103,9 +122,7 @@ export default function ProductModal() {
                               )
                             )}
                           </div>
-                        ) : (
-                          <></>
-                        )}
+                        ) : null}
                         <div>
                           <span className="font-semibold">
                             Descripción completa:{" "}
