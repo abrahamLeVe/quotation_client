@@ -2,6 +2,8 @@
 import { useCartContext } from "@/context/cart.context";
 import { formatCurrency } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
+import { BsCart, BsCreditCard } from "react-icons/bs";
+import { CartButtonAction } from "./CartButtonAction";
 
 export default function CartCheckout() {
   const { subTotal, setOpenCart } = useCartContext();
@@ -14,26 +16,24 @@ export default function CartCheckout() {
       </div>
 
       <div className="mt-6 relative">
-        <button
+        <CartButtonAction
           onClick={() => {
             setOpenCart(false);
             router.push(`/cart`);
           }}
-          className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-        >
-          Ver carrito
-        </button>
+          title="Ver carrito" 
+          icon={<BsCart />}
+        />
       </div>
       <div className="mt-6 relative">
-        <button
+        <CartButtonAction
+          title="Check out"
           onClick={() => {
             setOpenCart(false);
             router.push(`/cart`);
           }}
-          className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-        >
-          Check out
-        </button>
+          icon={<BsCreditCard />}
+        />
       </div>
     </>
   );

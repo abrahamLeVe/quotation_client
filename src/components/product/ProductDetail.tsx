@@ -78,9 +78,9 @@ export default function ProductDetail(data: ProductInterface) {
           </div>
         ) : null}
       </div>
-      <div className="flex flex-wrap justify-end gap-2">
+      <div>
         {getItemQuantity(id) ? (
-          <>
+          <div className="flex flex-row gap-2">
             <CartButtonAction
               onClick={() => cart.removeCartItem(id)}
               title="Eliminar"
@@ -96,15 +96,15 @@ export default function ProductDetail(data: ProductInterface) {
               title={`x ${getItemQuantity(id)}`}
               icon={<BsCartCheck />}
             />
-          </>
+          </div>
         ) : (
-          <>
+          <div className="w-1/4 ml-auto">
             <CartButtonAction
               onClick={() => cart.increaseCartQuantity(id)}
               title="Añadir"
-              icon={<BsCartPlus />}
+              icon={<BsCartPlus />}              
             />
-          </>
+          </div>
         )}
       </div>
 

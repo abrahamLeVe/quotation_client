@@ -2,16 +2,19 @@
 import { useCartContext } from "@/context/cart.context";
 import { cartStore } from "@/store/cart.store";
 import { formatCurrency, truncate } from "@/utilities/utils";
-import { BsCartDash, BsCartPlus } from "react-icons/bs";
+import { BsCartDash, BsCartPlus, BsEye } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
 import { DisclosureIndex } from "../ui/Disclosure";
 import { CartButtonAction } from "./CartButtonAction";
+import { useProductContext } from "@/context/product.context";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);
   const { getItemQuantity, cartItems, subTotal, calculateTotal } =
     useCartContext();
+  const { setProduct, setIsOpen } = useProductContext();
+
   const total = calculateTotal().total;
 
   return (
@@ -38,7 +41,17 @@ export default function CartIndex() {
                 <tr key={product.id} className="relative">
                   <td className="border-b p-4 pl-8">
                     <div className="flex gap-2">
-                      <div className="h-24 w-24 overflow-hidden flex-shrink-0 rounded-md border border-gray-200">
+                      <div
+                        className="h-24 w-24 overflow-hidden flex-shrink-0 rounded-md border border-gray-200 relative"
+                        title="Detalles"
+                      >
+                        <CartButtonAction
+                          onClick={() => {
+                            setProduct([product]), setIsOpen(true);
+                          }}
+                          icon={<BsEye />}
+                          className="absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 w-[35px]"
+                        />
                         <img
                           src={
                             product.attributes.thumbnail.data?.attributes
