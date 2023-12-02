@@ -32,7 +32,6 @@ export default function FilterIndex({ query }: { query?: string }) {
         const products = await filterProducts(debouncedQuery);
 
         setProducts(products);
-        console.log(products);
       } catch (err) {
         console.log(err);
       }

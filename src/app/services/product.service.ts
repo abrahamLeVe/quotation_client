@@ -1,6 +1,6 @@
 import { fetchDataFromApi } from "@/lib/api";
 import { ProductsInterface } from "@/models/products.model";
-import { processQuery } from "@/utilities/validators/search.valodator";
+import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
 export async function getDataProducts(): Promise<ProductsInterface> {

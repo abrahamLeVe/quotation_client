@@ -18,6 +18,8 @@ interface FilterContext {
   setQuery: React.Dispatch<React.SetStateAction<string[]>>;
   isListening: boolean;
   setIsListening: React.Dispatch<React.SetStateAction<boolean>>;
+  openFilter: boolean;
+  setOpenFilter: React.Dispatch<React.SetStateAction<boolean>>;
   filterByPrice: (price: string) => void;
   minPrice: number;
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
@@ -49,6 +51,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
   const [query, setQuery] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string>("Sin resultados.");
   const [isListening, setIsListening] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
+
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [selected, setSelected] = useState(FilterActions[0]);
@@ -214,6 +218,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
         filterProductsByCategoryId,
         resultText,
         setResultText,
+        openFilter,
+        setOpenFilter
       }}
     >
       {children}

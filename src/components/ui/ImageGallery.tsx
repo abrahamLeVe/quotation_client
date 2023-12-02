@@ -11,7 +11,7 @@ export default function ImageGalleryIndex({
   const imageGalleryOptions = {
     showPlayButton: false,
     showBullets: true,
-    showNav: true,
+    showNav: false,
     showFullscreenButton: false,   
   };
   return (

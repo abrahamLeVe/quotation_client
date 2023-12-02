@@ -4,6 +4,7 @@ interface CartButtonProps extends React.InputHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
   title?: string;
   icon?: React.ReactNode;
+  name?: string;
 }
 
 export function CartButtonAction({
@@ -11,6 +12,7 @@ export function CartButtonAction({
   title,
   icon,
   className,
+  name,
 }: CartButtonProps) {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -24,7 +26,7 @@ export function CartButtonAction({
           className as string
         )}
         onClick={onClick}
-        title={title}
+        title={title || name}
       >
         <span className="text-2xl" aria-hidden="true">
           {icon}
