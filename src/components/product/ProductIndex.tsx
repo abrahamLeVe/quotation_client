@@ -1,11 +1,13 @@
 "use client";
 import { ProductInterface } from "@/models/products.model";
 import dynamic from "next/dynamic";
+import { ProductGallerySkeleton } from "../skeleton/product/ProductSkeleton";
 
 const ProductGallery = dynamic(
   () => import("@/components/product/ProductGallery"),
   {
     ssr: false,
+    loading: () => <ProductGallerySkeleton />,
   }
 );
 const ProductNotFound = dynamic(

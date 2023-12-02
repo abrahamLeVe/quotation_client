@@ -1,14 +1,32 @@
-import { filterProducts } from "@/app/services/product.service";
-import ProductPrice from "../product/ProductPrice";
-import ProductRating from "../product/ProductRating";
+"use client";
+import { ProductsInterface } from "@/models/products.model";
 import { truncate } from "@/utilities/utils";
 import { CategoryLink } from "../category/CategoryLink";
+import ProductCard from "../product/ProductCard";
+import ProductPrice from "../product/ProductPrice";
+import ProductRating from "../product/ProductRating";
 
-export default async function ProductTable({ query }: { query?: string }) {
-  const products = await filterProducts(query);
+export default function ProductTable({
+  products,
+}: {
+  products?: ProductsInterface;
+}) {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
+        <div className="hidden md:grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-2">
+            {products?.data?.map((product) => (
+              <div
+                key={product.id}
+                className="flex flex-col justify-between border rounded-lg overflow-hidden relative text-sm"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             {products?.data?.map((product) => (
@@ -48,6 +66,7 @@ export default async function ProductTable({ query }: { query?: string }) {
               </div>
             ))}
           </div>
+
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>

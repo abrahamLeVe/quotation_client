@@ -1,7 +1,4 @@
-import ProductTable from "@/components/filter/FilterProductTable";
-import ProductSearch from "@/components/ui/Search";
-import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
-import { Suspense } from "react";
+import FilterIndex from "@/components/filter/FilterIndex";
 
 export default async function FilterProductPage({
   searchParams,
@@ -12,12 +9,6 @@ export default async function FilterProductPage({
   };
 }) {
   const query = searchParams?.query;
-  return (
-    <div className="flex flex-col w-full">
-      <ProductSearch placeholder={"Buscar productos..."} />
-      <Suspense key={query} fallback={<ProductsTableSkeleton />}>
-        <ProductTable query={searchParams.query} />
-      </Suspense>
-    </div>
-  );
+
+  return <FilterIndex query={query} />;
 }

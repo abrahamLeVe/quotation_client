@@ -18,7 +18,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <label
         htmlFor="query"
         className="text-lg font-bold tracking-tight text-gray-900 pb-3"

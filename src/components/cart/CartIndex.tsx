@@ -50,7 +50,7 @@ export default function CartIndex() {
                             setProduct([product]), setIsOpen(true);
                           }}
                           icon={<BsEye />}
-                          className="absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 w-[35px]"
+                          className="absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 max-w-[35px]"
                         />
                         <img
                           src={
