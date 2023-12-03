@@ -1,15 +1,12 @@
 "use client";
 import { filterProducts } from "@/app/services/product.service";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useEffect, useTransition } from "react";
-import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
 import { useFilterContext } from "@/context/filter.context";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useEffect } from "react";
 
 export default function FilterIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
-  const { setProductsFilter } = useFilterContext();
-
-  const [isPending, startTransition] = useTransition();
+  const { setProductsFilter, setIsPending } = useFilterContext();
 
   useEffect(() => {
     if (!debouncedQuery) {
@@ -17,20 +14,18 @@ export default function FilterIndex({ query }: { query?: string }) {
       return;
     }
 
-    async function getProducts() {
+    (async () => {
+      setIsPending(true);
+
       try {
         const products = await filterProducts(debouncedQuery);
-
         setProductsFilter(products);
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
       }
-    }
+      setIsPending(false);
+    })();
+  }, [debouncedQuery, setProductsFilter, setIsPending]);
 
-    startTransition(getProducts);
-
-    return () => setProductsFilter(undefined);
-  }, [debouncedQuery]);
-
-  return <>{isPending && <ProductsTableSkeleton />}</>;
+  return <></>;
 }

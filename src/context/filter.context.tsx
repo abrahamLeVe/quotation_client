@@ -8,18 +8,20 @@ interface FilterProviderProps {
 }
 
 interface FilterContext {
-  cleanFilter: () => void;
   productsFilter: ProductsInterface | undefined;
   setProductsFilter: React.Dispatch<
     React.SetStateAction<ProductsInterface | undefined>
   >;
-
-  query: string[];
-  setQuery: React.Dispatch<React.SetStateAction<string[]>>;
   isListening: boolean;
   setIsListening: React.Dispatch<React.SetStateAction<boolean>>;
   openFilter: boolean;
   setOpenFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  isPending: boolean;
+  setIsPending: React.Dispatch<React.SetStateAction<boolean>>;
+
+  cleanFilter: () => void;
+  query: string[];
+  setQuery: React.Dispatch<React.SetStateAction<string[]>>;
   filterByPrice: (price: string) => void;
   minPrice: number;
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
@@ -51,6 +53,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   >(undefined);
   const [isListening, setIsListening] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const [query, setQuery] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string>("Sin resultados.");
@@ -162,6 +165,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
         openFilter,
         setOpenFilter,
         setProductsFilter,
+        isPending,
+        setIsPending,
       }}
     >
       {children}
