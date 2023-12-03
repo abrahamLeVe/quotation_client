@@ -152,15 +152,14 @@ export default function ProductTable({
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      <ProductRating rating={product.attributes.rating} />
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-3">
                       <ProductPrice
                         price={product.attributes.price}
                         discount={product.attributes.discount}
                       />
                     </td>
-
+                    <td className="whitespace-nowrap px-3 py-3">
+                      <ProductRating rating={product.attributes.rating} />
+                    </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex justify-end p-3 gap-2">
                         <CartButtonAction

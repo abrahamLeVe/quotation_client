@@ -1,6 +1,6 @@
 import Footer from "@/components/footer/Footer";
 import Collection from "@/components/lobby/Collection";
-import LogoSection from "@/components/lobby/LogoSection";
+import LogoSection from "@/components/lobby/BrandSection";
 import NewsletterSection from "@/components/lobby/NewsletterSections";
 import PromoSection from "@/components/lobby/PromoSection";
 import Testimonials from "@/components/lobby/Testimonials";

@@ -6,6 +6,7 @@ import { AiOutlineClear } from "react-icons/ai";
 import ProductSearch from "../ui/Search";
 import { DisclosureIndex } from "../ui/Disclosure";
 import { CartButtonAction } from "../cart/CartButtonAction";
+import Link from "next/link";
 
 export default function FilterSection() {
   const {
@@ -120,13 +121,18 @@ export default function FilterSection() {
                       {capitalizeFirstLetter(category.attributes.name)}
                       {` (${category.attributes.products.data.length})`}
                     </p>
-                    <button
+                    <Link
+                      href={`/filter/category?query=${category.attributes.name}`}
+                      className="absolute inset-0 w-full"
+                    ></Link>
+  
+                    {/* <button
                       onClick={() => {
                         filterProductsByCategoryId(category.id),
                           setResultText(category.attributes.name);
                       }}
                       className="absolute inset-0 w-full"
-                    ></button>
+                    ></button> */}
                   </div>
                 ))}
               </>

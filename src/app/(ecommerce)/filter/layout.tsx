@@ -1,23 +1,14 @@
 "use client";
-import { CartButtonAction } from "@/components/cart/CartButtonAction";
 import FilterSlider from "@/components/filter/FilterSlider";
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
-import { Transition } from "@headlessui/react";
-import React, { useState } from "react";
-import { BsChevronRight } from "react-icons/bs";
+import React from "react";
 
 export default function FilterLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const [isFilterVisible, setIsFilterVisible] = useState(false);
-
-  // const toggleFilterVisibility = () => {
-  //   setIsFilterVisible((prev) => !prev);
-  // };
-
   return (
     <>
       <NavBar />

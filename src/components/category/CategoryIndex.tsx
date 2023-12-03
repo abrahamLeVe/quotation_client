@@ -1,5 +1,5 @@
 "use client";
-import { filterProducts } from "@/app/services/product.service";
+import { filterProductsByCategory } from "@/app/services/category.service";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ProductsInterface } from "@/models/products.model";
 import dynamic from "next/dynamic";
@@ -11,7 +11,7 @@ const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
 const ProductSearch = dynamic(() => import("@/components/ui/Search"), {
   ssr: false,
 });
-export default function FilterIndex({ query }: { query?: string }) {
+export default function CategoryIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
   const [products, setProducts] = useState<ProductsInterface | undefined>(
     undefined
@@ -26,7 +26,7 @@ export default function FilterIndex({ query }: { query?: string }) {
 
     async function getProducts() {
       try {
-        const products = await filterProducts(debouncedQuery);
+        const products = await filterProductsByCategory(debouncedQuery);
 
         setProducts(products);
       } catch (err) {
@@ -42,8 +42,8 @@ export default function FilterIndex({ query }: { query?: string }) {
   return (
     <>
       <ProductSearch
-        placeholder={"Buscar productos..."}
-        title={"Buscar productos"}
+        placeholder={"Buscar categoría..."}
+        title={"Buscar productos por categoría: "}
       />
       {isPending ? (
         <ProductsTableSkeleton />

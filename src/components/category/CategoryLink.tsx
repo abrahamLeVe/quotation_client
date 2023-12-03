@@ -43,7 +43,7 @@ export function CategoryLink({
                     {categories.map((item) => (
                       <Link
                         key={item.id}
-                        href={`/product/filter?query=${item.attributes.name}`}
+                        href={`/filter/category?query=${item.attributes.name}`}
                         className="-m-3 rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
                       >
                         <div className="w-full">

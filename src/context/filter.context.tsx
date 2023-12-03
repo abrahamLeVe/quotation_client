@@ -46,7 +46,6 @@ export function useFilterContext() {
 }
 
 export function FilterProvider({ children }: FilterProviderProps) {
-  // const { products } = useProductContext();
   const [productsFilter, setProductsFilter] = useState<ProductInterface[]>([]);
   const [query, setQuery] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string>("Sin resultados.");
@@ -219,7 +218,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
         resultText,
         setResultText,
         openFilter,
-        setOpenFilter
+        setOpenFilter,
       }}
     >
       {children}

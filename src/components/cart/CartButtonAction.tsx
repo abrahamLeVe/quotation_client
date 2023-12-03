@@ -22,7 +22,7 @@ export function CartButtonAction({
     <>
       <button
         className={classNames(
-          "flex flex-wrap w-full border bg-white border-gray-400 rounded-md  p-1.5 text-gray-800 hover:text-gray-900 hover:border-gray-900  transition-all duration-300 items-center justify-center gap-2",
+          "flex flex-row w-full border bg-white border-gray-400 rounded-md  p-1.5 text-gray-800 hover:text-gray-900 hover:border-gray-900  transition-all duration-300 items-center justify-center gap-2",
           className as string
         )}
         onClick={onClick}

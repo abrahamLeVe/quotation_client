@@ -4,11 +4,12 @@ import { useFilterContext } from "@/context/filter.context";
 import { capitalizeFirstLetter } from "@/utilities/utils";
 import { Transition } from "@headlessui/react";
 import { DisclosureIndex } from "../ui/Disclosure";
+import { useRouter } from "next/navigation";
 
 export default function FilterSlider() {
+  const router = useRouter();
   const { openFilter, setOpenFilter } = useFilterContext();
   const { categories } = useCategoryContext();
-
   return (
     <>
       <Transition
@@ -26,31 +27,33 @@ export default function FilterSlider() {
 
       <div
         className={`absolute top-0 left-0 z-30 transition-transform ${
-          openFilter ? "" : "-translate-x-56"
+          openFilter ? "" : "-translate-x-[250px]"
         }`}
       >
-        <div className={`w-56 bg-white min-h-screen`}>
+        <div className={`w-[250px] bg-white min-h-screen`}>
           <div className="flex flex-col w-full border-b">
             <DisclosureIndex
               title={"Categorías"}
               child={
-                <>
+                <div className="flex flex-col items-start text-sm">
                   {categories.map((category) => (
-                    <div key={category.id} className="relative hover:underline">
-                      <p className="font-medium text-gray-900 ">
+                    <button
+                      key={category.id}
+                      className="relative hover:underline"
+                      onClick={() => {
+                        setOpenFilter(false);
+                        router.push(
+                          `/filter/category?query=${category.attributes.name}`
+                        );
+                      }}
+                    >
+                      <p className="text-gray-900 ">
                         {capitalizeFirstLetter(category.attributes.name)}
                         {` (${category.attributes.products.data.length})`}
                       </p>
-                      {/* <button
-                        onClick={() => {
-                          filterProductsByCategoryId(category.id),
-                            setResultText(category.attributes.name);
-                        }}
-                        className="absolute inset-0 w-full"
-                      ></button> */}
-                    </div>
+                    </button>
                   ))}
-                </>
+                </div>
               }
             />
           </div>
