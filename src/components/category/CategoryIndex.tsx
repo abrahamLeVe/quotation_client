@@ -8,9 +8,7 @@ import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
 const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
   ssr: false,
 });
-const ProductSearch = dynamic(() => import("@/components/ui/Search"), {
-  ssr: false,
-});
+
 export default function CategoryIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
   const [products, setProducts] = useState<ProductsInterface | undefined>(
@@ -41,10 +39,6 @@ export default function CategoryIndex({ query }: { query?: string }) {
 
   return (
     <>
-      <ProductSearch
-        placeholder={"Buscar categoría..."}
-        title={"Buscar productos por categoría: "}
-      />
       {isPending ? (
         <ProductsTableSkeleton />
       ) : (
