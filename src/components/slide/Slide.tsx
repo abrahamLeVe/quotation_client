@@ -37,21 +37,17 @@ export default function Slide({ data }: SlideInterface) {
   });
 
   return (
-    <section className="w-full relative z-30">
-      <div className="aspect-[16/6]">
+    <section className="w-full max-h-screen relative z-30">
+      <div className="aspect-[16/5]">
         {slides.map((slide, slideIndex) => (
-          <div
+          <img
             key={slide.key}
-            className={`aspect-[16/6] slide ${
+            src={slide.url}
+            className={`w-full h-full slide ${
               slideIndex === currentIndex ? "opacity-100" : "opacity-0"
-            } transition-opacity duration-700 ease-in-out absolute inset-0`}
-          >
-            <img
-              src={slide.url}
-              className="w-full h-full md:rounded-2xl"
-              alt={slide.alt}
-            />
-          </div>
+            } transition-opacity duration-700 ease-in-out absolute inset-0 rounded-xl`}
+            alt={slide.alt}
+          />
         ))}
       </div>
       <ArrowButton onClick={prevSlide} direction="left" />
@@ -64,7 +60,7 @@ export default function Slide({ data }: SlideInterface) {
             className="cursor-pointer z-40"
           >
             <TiMinus
-              className={`h-6 w-6  ${
+              className={`h-8 w-8 ${
                 slideIndex === currentIndex ? "text-indigo-600" : ""
               }`}
               aria-hidden="true"
