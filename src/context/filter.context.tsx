@@ -1,19 +1,19 @@
 "use client";
 import { FilterActions } from "@/components/filter/FilterSelect";
-import { fetchDataFromApi } from "@/lib/api";
-import { ProductInterface } from "@/models/products.model";
+import { ProductsInterface } from "@/models/products.model";
 import { createContext, useContext, useState } from "react";
-import { useProductContext } from "./product.context";
-var qs = require("qs");
 
 interface FilterProviderProps {
   children: React.ReactNode;
 }
 
 interface FilterContext {
-  filterProducts: (query: string) => void;
   cleanFilter: () => void;
-  productsFilter: ProductInterface[];
+  productsFilter: ProductsInterface | undefined;
+  setProductsFilter: React.Dispatch<
+    React.SetStateAction<ProductsInterface | undefined>
+  >;
+
   query: string[];
   setQuery: React.Dispatch<React.SetStateAction<string[]>>;
   isListening: boolean;
@@ -46,75 +46,18 @@ export function useFilterContext() {
 }
 
 export function FilterProvider({ children }: FilterProviderProps) {
-  const [productsFilter, setProductsFilter] = useState<ProductInterface[]>([]);
-  const [query, setQuery] = useState<string[]>([]);
-  const [resultText, setResultText] = useState<string>("Sin resultados.");
+  const [productsFilter, setProductsFilter] = useState<
+    ProductsInterface | undefined
+  >(undefined);
   const [isListening, setIsListening] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
+
+  const [query, setQuery] = useState<string[]>([]);
+  const [resultText, setResultText] = useState<string>("Sin resultados.");
 
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [selected, setSelected] = useState(FilterActions[0]);
-
-  async function filterProducts(query: string): Promise<void> {
-    const cleanedQuery = processQuery(query);
-    if (cleanedQuery.length === 0) {
-      cleanFilter();
-      return;
-    }
-
-    try {
-      const filter = {
-        $or: [
-          {
-            name: {
-              $contain: cleanedQuery,
-            },
-          },
-          {
-            description: {
-              $contain: cleanedQuery,
-            },
-          },
-        ],
-      };
-
-      const queryString = qs.stringify(
-        { filters: filter },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-
-      const { data } = await fetchDataFromApi(
-        `/api/products?populate=*&${queryString}`
-      );
-      console.log(data);
-
-      if (data) {
-        setProductsFilter(data);
-      }
-    } catch (error) {
-      cleanFilter();
-      console.error("Error in filterProductsFromApi", error);
-    }
-  }
-
-  function processQuery(speechResult: string): string[] {
-    setResultText(speechResult);
-    cleanFilter();
-
-    const firstFilter = speechResult.toLowerCase();
-    const keywords = firstFilter
-      .replace(/[.,]/g, "")
-      .slice(0, 50)
-      .split(" ")
-      .filter((word) => !wordsExclude.has(word));
-
-    return keywords
-      .map((word) => word.replace(/s$|es$/, ""))
-      .filter((element) => element.length >= 3);
-  }
 
   function filterProductsByCategoryId(categoryId: number) {
     cleanFilter();
@@ -148,17 +91,17 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function sortAlphabetically() {
-    setProductsFilter(
-      productsFilter
-        .slice()
-        .sort((a, b) => a.attributes.name.localeCompare(b.attributes.name))
-    );
+    // setProductsFilter(
+    //   productsFilter
+    //     .slice()
+    //     .sort((a, b) => a.attributes.name.localeCompare(b.attributes.name))
+    // );
   }
 
   function filterDiscountedProducts() {
-    setProductsFilter(
-      productsFilter.filter((product) => product.attributes.discount > 0)
-    );
+    // setProductsFilter(
+    //   productsFilter.filter((product) => product.attributes.discount > 0)
+    // );
   }
 
   function allProducts() {
@@ -166,36 +109,35 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function sortByDateNewest() {
-    setProductsFilter(
-      productsFilter
-        .slice()
-        .sort(
-          (a, b) =>
-            new Date(b.attributes.updatedAt).getTime() -
-            new Date(a.attributes.updatedAt).getTime()
-        )
-    );
+    // setProductsFilter(
+    //   productsFilter
+    //     .slice()
+    //     .sort(
+    //       (a, b) =>
+    //         new Date(b.attributes.updatedAt).getTime() -
+    //         new Date(a.attributes.updatedAt).getTime()
+    //     )
+    // );
   }
 
   function sortByRating() {
-    setProductsFilter(
-      productsFilter
-        .slice()
-        .sort((a, b) => b.attributes.rating - a.attributes.rating)
-    );
+    // setProductsFilter(
+    //   productsFilter
+    //     .slice()
+    //     .sort((a, b) => b.attributes.rating - a.attributes.rating)
+    // );
   }
 
   function cleanFilter(): void {
-    setQuery([]);
-    setProductsFilter([]);
-    setSelected(FilterActions[0]);
-    setMinPrice(0);
+    // setQuery([]);
+    // setProductsFilter([]);
+    // setSelected(FilterActions[0]);
+    // setMinPrice(0);
   }
 
   return (
     <FilterContext.Provider
       value={{
-        filterProducts,
         cleanFilter,
         productsFilter,
         query,
@@ -219,6 +161,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
         setResultText,
         openFilter,
         setOpenFilter,
+        setProductsFilter,
       }}
     >
       {children}

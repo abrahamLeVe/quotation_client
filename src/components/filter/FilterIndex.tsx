@@ -1,24 +1,19 @@
 "use client";
 import { filterProducts } from "@/app/services/product.service";
 import { useDebounce } from "@/hooks/use-debounce";
-import { ProductsInterface } from "@/models/products.model";
-import dynamic from "next/dynamic";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
-const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
-  ssr: false,
-});
+import { useFilterContext } from "@/context/filter.context";
 
 export default function FilterIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
-  const [products, setProducts] = useState<ProductsInterface | undefined>(
-    undefined
-  );
+  const { setProductsFilter } = useFilterContext();
+
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     if (!debouncedQuery) {
-      setProducts(undefined);
+      setProductsFilter(undefined);
       return;
     }
 
@@ -26,7 +21,7 @@ export default function FilterIndex({ query }: { query?: string }) {
       try {
         const products = await filterProducts(debouncedQuery);
 
-        setProducts(products);
+        setProductsFilter(products);
       } catch (err) {
         console.log(err);
       }
@@ -34,16 +29,8 @@ export default function FilterIndex({ query }: { query?: string }) {
 
     startTransition(getProducts);
 
-    return () => setProducts(undefined);
+    return () => setProductsFilter(undefined);
   }, [debouncedQuery]);
 
-  return (
-    <>
-      {isPending ? (
-        <ProductsTableSkeleton />
-      ) : (
-        <ProductTable products={products} />
-      )}
-    </>
-  );
+  return <>{isPending && <ProductsTableSkeleton />}</>;
 }

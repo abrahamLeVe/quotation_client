@@ -10,7 +10,6 @@ import Link from "next/link";
 
 export default function FilterSection() {
   const {
-    filterProducts,
     cleanFilter,
     filterByPrice,
     minPrice,
@@ -26,7 +25,7 @@ export default function FilterSection() {
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = event.target.value.replace(/\s{2,}/g, " ");
     console.log(inputText);
-    filterProducts(inputText);
+    // filterProducts(inputText);
     setQuery([inputText]);
   };
 
