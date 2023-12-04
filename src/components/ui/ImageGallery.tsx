@@ -12,15 +12,17 @@ export default function ImageGalleryIndex({
     showPlayButton: false,
     showBullets: true,
     showNav: false,
-    showFullscreenButton: false,   
+    showFullscreenButton: false,
   };
   return (
-    <ImageGallery
-      items={product.attributes.image.data?.map((item) => ({
-        original: item.attributes.url,
-      }))}
-      {...imageGalleryOptions}
-    />
+    <>
+      <ImageGallery
+        items={product.attributes.image.data?.map((item) => ({
+          original: item.attributes.url,
+        }))}
+        {...imageGalleryOptions}
+      />
+    </>
   );
 }
 

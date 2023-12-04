@@ -75,7 +75,7 @@ export default function ProductCard({
           ) : null}
         </div>
       </div>
-      <div className="flex justify-end p-3 gap-2">
+      <div className="flex flex-wrap justify-end p-3 gap-2">
         <CartButtonAction
           onClick={() => {
             setProduct([product]), setIsOpen(true);
