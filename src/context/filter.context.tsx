@@ -57,7 +57,6 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
   const [query, setQuery] = useState<string[]>([]);
   const [resultText, setResultText] = useState<string>("Sin resultados.");
-
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [selected, setSelected] = useState(FilterActions[0]);

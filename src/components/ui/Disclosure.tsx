@@ -5,14 +5,27 @@ import { BsChevronUp } from "react-icons/bs";
 interface DisclosureIndexProps {
   title: string;
   child: React.ReactNode;
+  getData?: () => void;
 }
 
-export function DisclosureIndex({ title, child }: DisclosureIndexProps) {
+export function DisclosureIndex({
+  title,
+  child,
+  getData,
+}: DisclosureIndexProps) {
+  const handleClick = () => {
+    if (getData) {
+      getData();
+    }
+  };
   return (
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex w-full justify-between font-semibold p-4">
+          <Disclosure.Button
+            className="flex w-full justify-between font-semibold p-4"
+            onClick={handleClick}
+          >
             <span>{title}</span>
             <BsChevronUp
               className={`${

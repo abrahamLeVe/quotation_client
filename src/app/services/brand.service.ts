@@ -1,16 +1,15 @@
-"use server";
 import { fetchDataFromApi } from "@/lib/api";
-import { CategoriesInterface } from "@/models/category.model";
+import { BrandsInterface } from "@/models/brand";
 import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
-export async function getDataCategory(): Promise<CategoriesInterface> {
-  const res = fetchDataFromApi(`/api/categories?populate=*`);
+export async function getDataBrand(): Promise<BrandsInterface> {
+  const res = fetchDataFromApi(`/api/brands?populate=*`);
   return res;
 }
 
-export async function filterProductsByCategory(
+export async function filterProductsByBrand(
   query?: string
 ): Promise<ProductsInterface | undefined> {
   if (!query) {
@@ -24,7 +23,7 @@ export async function filterProductsByCategory(
 
   try {
     const filter = {
-      categories: {
+      brand: {
         name: {
           $containsi: cleanedQuery,
         },

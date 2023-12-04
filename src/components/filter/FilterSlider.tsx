@@ -1,15 +1,15 @@
 "use client";
 import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
-import { capitalizeFirstLetter } from "@/utilities/utils";
 import { Transition } from "@headlessui/react";
+import CategoryList from "../category/CategoryList";
 import { DisclosureIndex } from "../ui/Disclosure";
-import { useRouter } from "next/navigation";
-
+import BrandList from "../brand/BrandList";
+import { Suspense } from "react";
 export default function FilterSlider() {
-  const router = useRouter();
   const { openFilter, setOpenFilter } = useFilterContext();
-  const { categories } = useCategoryContext();
+  const { getCategories, getBrands } = useCategoryContext();
+
   return (
     <>
       <Transition
@@ -34,26 +34,21 @@ export default function FilterSlider() {
           <div className="flex flex-col w-full border-b">
             <DisclosureIndex
               title={"Categorías"}
+              getData={getCategories}
               child={
-                <div className="flex flex-col items-start text-sm">
-                  {categories.map((category) => (
-                    <button
-                      key={category.id}
-                      className="relative hover:underline"
-                      onClick={() => {
-                        setOpenFilter(false);
-                        router.push(
-                          `/filter/category?query=${category.attributes.name}`
-                        );
-                      }}
-                    >
-                      <p className="text-gray-900 ">
-                        {capitalizeFirstLetter(category.attributes.name)}
-                        {` (${category.attributes.products.data.length})`}
-                      </p>
-                    </button>
-                  ))}
-                </div>
+                <Suspense fallback={<>Cargando...</>}>
+                  <CategoryList />
+                </Suspense>
+              }
+            />
+
+            <DisclosureIndex
+              title={"Marcas"}
+              getData={getBrands}
+              child={
+                <Suspense fallback={<>Cargando...</>}>
+                  <BrandList />
+                </Suspense>
               }
             />
           </div>

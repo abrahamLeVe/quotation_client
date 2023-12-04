@@ -1,5 +1,6 @@
 "use client";
 import { useCartContext } from "@/context/cart.context";
+import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
 import { formatCurrency, truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus, BsEye } from "react-icons/bs";
@@ -7,7 +8,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
 import { DisclosureIndex } from "../ui/Disclosure";
 import { CartButtonAction } from "./CartButtonAction";
-import { useProductContext } from "@/context/product.context";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);

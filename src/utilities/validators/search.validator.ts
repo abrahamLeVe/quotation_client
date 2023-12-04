@@ -1,5 +1,4 @@
 export function processQuery(query: string) {
-  console.log(query)
   const firstFilter = query.toLowerCase();
   const keywords = firstFilter
     .replace(/[.,]/g, "")

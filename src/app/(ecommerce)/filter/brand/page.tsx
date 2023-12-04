@@ -1,7 +1,4 @@
-// import ProductTable from "@/components/filter/table";
-import ProductSearch from "@/components/ui/Search";
-import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
-import { Suspense } from "react";
+import BrandIndex from "@/components/brand/BrandIndex";
 
 export default async function BrandPage({
   searchParams,
@@ -12,14 +9,6 @@ export default async function BrandPage({
   };
 }) {
   const query = searchParams?.query;
-  console.log(query?.toString());
 
-  return (
-    <>
-      <ProductSearch placeholder={"Buscar productos..."} />
-      <Suspense key={query} fallback={<ProductsTableSkeleton />}>
-        {/* <ProductTable query={searchParams.query} /> */}
-      </Suspense>
-    </>
-  );
+  return <BrandIndex query={query} />;
 }
