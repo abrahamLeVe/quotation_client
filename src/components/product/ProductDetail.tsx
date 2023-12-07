@@ -12,10 +12,14 @@ import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 import { FaCircle } from "react-icons/fa6";
 
-export default function ProductDetail(data: ProductInterface) {
+export default function ProductDetail({
+  data: product,
+}: {
+  data: ProductInterface;
+}) {
   const { getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
-  const { attributes, id } = data;
+  const { attributes, id } = product;
 
   return (
     <div className="flex flex-col lg:w-[50%] gap-4">
@@ -25,8 +29,8 @@ export default function ProductDetail(data: ProductInterface) {
         </h1>
         <div className="flex gap-2">
           <ProductPrice
-            discount={attributes.discount}
-            price={attributes.price}
+            discount={attributes.prices.data[0]?.attributes.discount}
+            price={attributes.prices.data[0]?.attributes.value}
             popUp
           />
         </div>
@@ -102,7 +106,7 @@ export default function ProductDetail(data: ProductInterface) {
             <CartButtonAction
               onClick={() => cart.increaseCartQuantity(id)}
               title="Añadir"
-              icon={<BsCartPlus />}              
+              icon={<BsCartPlus />}
             />
           </div>
         )}

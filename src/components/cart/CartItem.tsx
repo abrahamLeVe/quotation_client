@@ -46,9 +46,15 @@ export default function CartItem() {
                   </div>
                   <div className="flex flex-row gap-5">
                     <ProductPrice
-                      discount={product.attributes.discount}
-                      price={product.attributes.price}
+                      discount={
+                        product.attributes.prices.data[0]?.attributes.discount
+                      }
+                      price={
+                        product.attributes.prices.data[0]?.attributes.value
+                      }
+                      popUp
                     />
+
                     <p>x{getItemQuantity(product.id)}</p>
                   </div>
                 </div>

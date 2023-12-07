@@ -55,7 +55,8 @@ export function CartProvider({ children }: CartProviderProps) {
               const product = data.find((item) => item.id === cartItem.id);
               return (
                 acc +
-                (product!.attributes.price - product!.attributes.discount ||
+                (product!.attributes.prices.data[0].attributes.value -
+                  product!.attributes.prices.data[0].attributes.discount! ||
                   0) *
                   cartItem.quantity
               );

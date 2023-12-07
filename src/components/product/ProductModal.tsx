@@ -20,6 +20,7 @@ export default function ProductModal() {
   let btnModalProductRef = useRef(null);
   const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
+  console.log(product);
 
   return (
     <>
@@ -61,8 +62,14 @@ export default function ProductModal() {
                         </Dialog.Title>
                         <div className="flex gap-2">
                           <ProductPrice
-                            discount={product[0].attributes.discount}
-                            price={product[0].attributes.price}
+                            discount={
+                              product[0].attributes.prices.data[0]?.attributes
+                                .discount
+                            }
+                            price={
+                              product[0].attributes.prices.data[0]?.attributes
+                                .value
+                            }
                             popUp
                           />
                         </div>

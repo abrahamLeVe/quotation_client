@@ -18,7 +18,6 @@ export default function ProductCard({
 }) {
   const cart = cartStore((state) => state);
   const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
-
   return (
     <>
       <div className="flex flex-col">
@@ -39,11 +38,12 @@ export default function ProductCard({
           </h3>
           <div className="flex gap-2">
             <ProductPrice
-              discount={product.attributes.discount}
-              price={product.attributes.price}
+              discount={product.attributes.prices.data[0]?.attributes.discount}
+              price={product.attributes.prices.data[0]?.attributes.value}
               popUp
             />
           </div>
+
           {product.attributes.brand?.data ? (
             <div className="flex flex-wrap gap-2">
               <span className="font-semibold"> Marca: </span>

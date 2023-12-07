@@ -87,8 +87,13 @@ export default function ProductTable({
                   <div className="flex w-full items-center justify-between pt-2">
                     <div>
                       <ProductPrice
-                        price={product.attributes.price}
-                        discount={product.attributes.discount}
+                        discount={
+                          product.attributes.prices.data[0]?.attributes.discount
+                        }
+                        price={
+                          product.attributes.prices.data[0]?.attributes.value
+                        }
+                        popUp
                       />
                     </div>
                     <div className="flex justify-end gap-2">
@@ -153,8 +158,12 @@ export default function ProductTable({
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       <ProductPrice
-                        price={product.attributes.price}
-                        discount={product.attributes.discount}
+                        discount={
+                          product.attributes.prices.data[0]?.attributes.discount
+                        }
+                        price={
+                          product.attributes.prices.data[0]?.attributes.value
+                        }
                       />
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">

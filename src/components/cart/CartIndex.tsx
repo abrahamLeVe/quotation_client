@@ -71,8 +71,12 @@ export default function CartIndex() {
                   <td className="border-b p-4">
                     <div className="flex flex-col gap-3">
                       <ProductPrice
-                        discount={product.attributes.discount}
-                        price={product.attributes.price}
+                        discount={
+                          product.attributes.prices.data[0]?.attributes.discount
+                        }
+                        price={
+                          product.attributes.prices.data[0]?.attributes.value
+                        }
                       />
                     </div>
                   </td>
@@ -100,8 +104,9 @@ export default function CartIndex() {
                   <td className="border-b p-4">
                     <div className="flex flex-row gap-5">
                       {formatCurrency(
-                        (product.attributes.price -
-                          product.attributes.discount) *
+                        (product.attributes.prices.data[0]?.attributes.value -
+                          product.attributes.prices.data[0]?.attributes
+                            .discount!) *
                           getItemQuantity(product.id)
                       )}
                     </div>
