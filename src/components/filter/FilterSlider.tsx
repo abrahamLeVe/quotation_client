@@ -2,10 +2,15 @@
 import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
 import { Transition } from "@headlessui/react";
-import CategoryList from "../category/CategoryList";
+import dynamic from "next/dynamic";
 import { DisclosureIndex } from "../ui/Disclosure";
-import BrandList from "../brand/BrandList";
-import { Suspense } from "react";
+const CategoryList = dynamic(() => import("../category/CategoryList"), {
+  loading: () => <p>Cargando...</p>,
+});
+const BrandList = dynamic(() => import("../brand/BrandList"), {
+  loading: () => <p>Cargando...</p>,
+});
+
 export default function FilterSlider() {
   const { openFilter, setOpenFilter } = useFilterContext();
   const { getCategories, getBrands } = useCategoryContext();
@@ -35,21 +40,13 @@ export default function FilterSlider() {
             <DisclosureIndex
               title={"Categorías"}
               getData={getCategories}
-              child={
-                <Suspense fallback={<>Cargando...</>}>
-                  <CategoryList />
-                </Suspense>
-              }
+              child={<CategoryList />}
             />
 
             <DisclosureIndex
               title={"Marcas"}
               getData={getBrands}
-              child={
-                <Suspense fallback={<>Cargando...</>}>
-                  <BrandList />
-                </Suspense>
-              }
+              child={<BrandList />}
             />
           </div>
         </div>

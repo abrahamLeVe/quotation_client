@@ -1,12 +1,15 @@
 "use client";
 import { ProductInterface } from "@/models/products.model";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 import { DisclosureIndex } from "../ui/Disclosure";
 import { ImageGalleryModal } from "../ui/ImageGallery";
-import ProductDetail from "./ProductDetail";
+// import ProductDetail from "./ProductDetail";
 import ProductNotFound from "./ProductNotFound";
+import dynamic from "next/dynamic";
+const ProductDetail = dynamic(() => import("./ProductDetail"), {});
+const ReactMarkdown = dynamic(() => import("react-markdown"), {});
 
-export default function ProductPage({
+export default function ProductSinglePage({
   data: product,
 }: {
   data: ProductInterface[];

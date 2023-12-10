@@ -1,4 +1,3 @@
-"use client";
 import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
 import { capitalizeFirstLetter } from "@/utilities/utils";

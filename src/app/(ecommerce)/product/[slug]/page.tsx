@@ -1,5 +1,5 @@
 import { getDataProductBySlug } from "@/app/services/product.service";
-import ProductIndex from "@/components/product/ProductIndex";
+import ProductSinglePage from "@/components/product/ProductSinglePage";
 
 export interface ProductPageProps {
   params: {
@@ -12,7 +12,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <ProductIndex data={data} />
+      <ProductSinglePage data={data} />
     </>
   );
 }
