@@ -1,7 +1,9 @@
 "use client";
 import ProductModal from "@/components/product/ProductModal";
 import { useMounted } from "@/hooks/useMounted";
-import { ProductInterface } from "@/models/products.model";
+import { fetchDataFromApi } from "@/lib/api";
+import { PriceById } from "@/models/price.model";
+import { ProductInterface, ProductPriceInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { createContext, useContext, useState } from "react";
 
@@ -13,6 +15,7 @@ interface ProductContext {
   isOpen: boolean;
   product: ProductInterface[];
   getItemQuantity: (id: number) => number | undefined;
+
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setProduct: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   cleanProductModal: () => void;
@@ -27,6 +30,11 @@ export function useProductContext() {
 export function ProductProvider({ children }: ProductProviderProps) {
   const [product, setProduct] = useState<ProductInterface[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  // const [selectedSize, setSize] = useState<ProductPriceInterface>(
+  //   product[0].attributes.prices.data[0]
+  // );
+
   const cart = cartStore((state) => state);
 
   const mounted = useMounted();

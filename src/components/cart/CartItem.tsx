@@ -47,7 +47,7 @@ export default function CartItem() {
                   <div className="flex flex-row gap-5">
                     <ProductPrice
                       discount={
-                        product.attributes.prices.data[0]?.attributes.discount
+                        product.attributes.prices.data[0]?.attributes.discount!
                       }
                       price={
                         product.attributes.prices.data[0]?.attributes.value

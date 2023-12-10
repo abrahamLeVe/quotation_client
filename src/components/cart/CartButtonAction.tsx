@@ -26,9 +26,9 @@ export function CartButtonAction({
           className as string
         )}
         onClick={onClick}
-        title={title || name}
+        title={name || title}
       >
-        <span className="text-2xl" aria-hidden="true">
+        <span className={`text-2xl ${!icon && "hidden"}`} aria-hidden="true">
           {icon}
         </span>
         <p className={`${!title && "hidden"} text-sm`}>{title}</p>

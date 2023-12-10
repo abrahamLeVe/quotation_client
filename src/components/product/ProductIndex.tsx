@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { ProductGallerySkeleton } from "../skeleton/product/ProductSkeleton";
 
 const ProductGallery = dynamic(
-  () => import("@/components/product/ProductGallery"),
+  () => import("@/components/product/ProductPage"),
   {
     ssr: false,
     loading: () => <ProductGallerySkeleton />,

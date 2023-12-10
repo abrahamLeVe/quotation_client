@@ -72,7 +72,7 @@ export default function CartIndex() {
                     <div className="flex flex-col gap-3">
                       <ProductPrice
                         discount={
-                          product.attributes.prices.data[0]?.attributes.discount
+                          product.attributes.prices.data[0]?.attributes.discount!
                         }
                         price={
                           product.attributes.prices.data[0]?.attributes.value

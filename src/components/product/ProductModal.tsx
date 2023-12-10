@@ -2,25 +2,18 @@
 import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
 import { Dialog, Transition } from "@headlessui/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useRef } from "react";
-import { BsCartCheck, BsCartPlus } from "react-icons/bs";
-import { FaCircle } from "react-icons/fa6";
 import { GrClose } from "react-icons/gr";
-import { MdDeleteOutline } from "react-icons/md";
-import { CartButtonAction } from "../cart/CartButtonAction";
 import { ImageGalleryModal } from "../ui/ImageGallery";
 import TransitionChild from "../ui/TransitionChild";
-import ProductPrice from "./ProductPrice";
-import ProductRating from "./ProductRating";
+import ProductDetail from "./ProductDetail";
 
 export default function ProductModal() {
   const router = useRouter();
   let btnModalProductRef = useRef(null);
   const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
   const cart = cartStore((state) => state);
-  console.log(product);
 
   return (
     <>
@@ -54,82 +47,9 @@ export default function ProductModal() {
                     </div>
                     <div className="flex gap-3 flex-col lg:w-[45%]">
                       <div className="flex flex-col gap-2">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-lg font-medium leading-6"
-                        >
-                          {product[0].attributes.name}
-                        </Dialog.Title>
-                        <div className="flex gap-2">
-                          <ProductPrice
-                            discount={
-                              product[0].attributes.prices.data[0]?.attributes
-                                .discount
-                            }
-                            price={
-                              product[0].attributes.prices.data[0]?.attributes
-                                .value
-                            }
-                            popUp
-                          />
-                        </div>
-                        {product[0].attributes.brand?.data ? (
-                          <div className="flex flex-wrap gap-2">
-                            <span className="font-semibold"> Marca: </span>
-                            <Link
-                              href={`/product/filter?query=${product[0].attributes.brand.data?.attributes.name}`}
-                              className="underline text-gray-700 hover:text-gray-900"
-                            >
-                              {
-                                product[0].attributes.brand.data?.attributes
-                                  .name
-                              }
-                            </Link>
-                          </div>
-                        ) : null}
-                        <ProductRating rating={product[0].attributes.rating} />
-                        {product[0].attributes.product_colors.data.length >
-                        0 ? (
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="font-semibold">Color:</span>
-                            {product[0].attributes.product_colors.data.map(
-                              (item) => (
-                                <div
-                                  key={item.id}
-                                  title={item.attributes.Name}
-                                  className="border rounded-full shadow-sm"
-                                >
-                                  <FaCircle
-                                    className="h-5 w-5"
-                                    style={{ color: `${item.attributes.code}` }}
-                                  />
-                                </div>
-                              )
-                            )}
-                          </div>
-                        ) : null}
-                        <div>
-                          <span className="font-semibold">
-                            Disponibilidad:{" "}
-                          </span>
-                          En stock
-                        </div>
-                        {product[0].attributes.categories.data.length > 0 ? (
-                          <div className="flex flex-wrap gap-2">
-                            <span className="font-semibold">Categorías:</span>
-                            {product[0].attributes.categories.data.map(
-                              (item) => (
-                                <Link
-                                  key={item.id}
-                                  href={`/product/filter?query=${item.attributes.name}`}
-                                  className="underline text-gray-700 hover:text-gray-900"
-                                >
-                                  {item.attributes.name}
-                                </Link>
-                              )
-                            )}
-                          </div>
-                        ) : null}
+                        {/* Details */}
+                        <ProductDetail product={product[0]} isPage />
+
                         <div>
                           <span className="font-semibold">
                             Descripción completa:{" "}
@@ -146,35 +66,6 @@ export default function ProductModal() {
                             Click aquí
                           </button>
                         </div>
-                      </div>
-                      <div className="flex flex-wrap justify-end gap-2">
-                        {getItemQuantity(product[0].id) ? (
-                          <>
-                            <CartButtonAction
-                              onClick={() => cart.removeCartItem(product[0].id)}
-                              title="Eliminar"
-                              icon={<MdDeleteOutline />}
-                            />
-
-                            <CartButtonAction
-                              onClick={() =>
-                                cart.increaseCartQuantity(product[0].id)
-                              }
-                              title={`x ${getItemQuantity(product[0].id)}`}
-                              icon={<BsCartCheck />}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <CartButtonAction
-                              onClick={() =>
-                                cart.increaseCartQuantity(product[0].id)
-                              }
-                              title="Añadir"
-                              icon={<BsCartPlus />}
-                            />
-                          </>
-                        )}
                       </div>
                     </div>
                     <button

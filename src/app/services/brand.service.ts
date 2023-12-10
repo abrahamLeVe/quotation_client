@@ -2,6 +2,7 @@ import { fetchDataFromApi } from "@/lib/api";
 import { BrandsInterface } from "@/models/brand";
 import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
+import { populate } from "./product.service";
 let qs = require("qs");
 
 export async function getDataBrand(): Promise<BrandsInterface> {
@@ -31,7 +32,7 @@ export async function filterProductsByBrand(
     };
 
     const queryString = qs.stringify(
-      { filters: filter, populate: "*" },
+      { populate, filters: filter },
       {
         encodeValuesOnly: true,
       }

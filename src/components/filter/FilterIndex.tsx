@@ -27,5 +27,5 @@ export default function FilterIndex({ query }: { query?: string }) {
     })();
   }, [debouncedQuery, setProductsFilter, setIsPending]);
 
-  return <></>;
+  return null;
 }

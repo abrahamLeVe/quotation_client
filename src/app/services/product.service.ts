@@ -3,17 +3,58 @@ import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
+export const populate = {
+  image: {
+    populate: ["data"],
+  },
+  thumbnail: {
+    populate: ["data"],
+  },
+  categories: {
+    populate: ["data"],
+  },
+  brand: {
+    populate: ["data"],
+  },
+  product_colors: {
+    populate: ["data"],
+  },
+  prices: {
+    populate: {
+      product_colors: {
+        populate: ["data"],
+      },
+      model: {
+        populate: ["data"],
+      },
+      size: {
+        populate: ["category"],
+      },
+    },
+  },
+};
+
 export async function getDataProducts(): Promise<ProductsInterface> {
-  const res = fetchDataFromApi(`/api/products?populate=*`);
+  const queryString = qs.stringify({ populate }, { encodeValuesOnly: true });
+  const res = fetchDataFromApi(`/api/products?${queryString}`);
   return res;
 }
 
 export async function getDataProductBySlug(
   slug: string
 ): Promise<ProductsInterface> {
-  const res = fetchDataFromApi(
-    `/api/products?populate=*&filters[slug][$eq]=${slug}`
+  const filter = {
+    slug: {
+      $eq: slug,
+    },
+  };
+
+  const queryString = qs.stringify(
+    { populate, filters: filter },
+    { encodeValuesOnly: true }
   );
+
+  const res = fetchDataFromApi(`/api/products?${queryString}`);
   return res;
 }
 
@@ -36,32 +77,27 @@ export async function filterProducts(
   if (cleanedQuery.length === 0) {
     return;
   }
-  try {
-    const filter = {
-      $or: [
-        {
-          description: {
-            $containsi: cleanedQuery,
-          },
-        },
-        {
-          name: {
-            $containsi: cleanedQuery,
-          },
-        },
-      ],
-    };
 
-    const queryString = qs.stringify(
-      { filters: filter },
+  const filter = {
+    $or: [
       {
-        encodeValuesOnly: true,
-      }
+        description: {
+          $containsi: cleanedQuery,
+        },
+      },
+      {
+        name: {
+          $containsi: cleanedQuery,
+        },
+      },
+    ],
+  };
+  try {
+    const queryString = qs.stringify(
+      { populate, filters: filter },
+      { encodeValuesOnly: true }
     );
-
-    const res = await fetchDataFromApi(
-      `/api/products?populate=*&${queryString}`
-    );
+    const res = await fetchDataFromApi(`/api/products?${queryString}`);
 
     return res;
   } catch (error) {

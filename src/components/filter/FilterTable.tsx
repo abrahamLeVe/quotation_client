@@ -21,7 +21,6 @@ export default function ProductTable({
   const [isTable, setIsTable] = useState(true);
   const cart = cartStore((state) => state);
   const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
-
   return (
     <>
       <div className="flex justify-end gap-3 flex-row">
@@ -88,7 +87,8 @@ export default function ProductTable({
                     <div>
                       <ProductPrice
                         discount={
-                          product.attributes.prices.data[0]?.attributes.discount
+                          product.attributes.prices?.data[0]?.attributes
+                            .discount!
                         }
                         price={
                           product.attributes.prices.data[0]?.attributes.value
@@ -159,7 +159,8 @@ export default function ProductTable({
                     <td className="whitespace-nowrap px-3 py-3">
                       <ProductPrice
                         discount={
-                          product.attributes.prices.data[0]?.attributes.discount
+                          product.attributes.prices.data[0]?.attributes
+                            .discount!
                         }
                         price={
                           product.attributes.prices.data[0]?.attributes.value

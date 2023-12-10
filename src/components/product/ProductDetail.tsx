@@ -1,127 +1,154 @@
 "use client";
 import { useProductContext } from "@/context/product.context";
-import { ProductInterface } from "@/models/products.model";
+import {
+    ProductInterface,
+    ProductPriceInterface,
+} from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
+import { truncate } from "@/utilities/utils";
 import Link from "next/link";
+import React, { useState } from "react";
 import { BsCartCheck, BsCartDash, BsCartPlus } from "react-icons/bs";
+import { FaCircle } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
-import ReactMarkdown from "react-markdown";
 import { CartButtonAction } from "../cart/CartButtonAction";
-import { DisclosureIndex } from "../ui/Disclosure";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
-import { FaCircle } from "react-icons/fa6";
+
+interface ProductDetailProps {
+  product: ProductInterface;
+  isPage?: boolean;
+}
 
 export default function ProductDetail({
-  data: product,
-}: {
-  data: ProductInterface;
-}) {
-  const { getItemQuantity } = useProductContext();
+  product,
+  isPage = false,
+}: ProductDetailProps) {
+  const [selectedSize, setSize] = useState<ProductPriceInterface>(
+    product.attributes.prices.data[0]
+  );
   const cart = cartStore((state) => state);
-  const { attributes, id } = product;
+  const { getItemQuantity } = useProductContext();
+
+  const handleSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const sizeId = parseInt(event.target.value, 10);
+    const selectedSize = product.attributes.prices.data.find(
+      (price) => price.id === sizeId
+    );
+    setSize(selectedSize || product.attributes.prices.data[0]);
+  };
 
   return (
-    <div className="flex flex-col lg:w-[50%] gap-4">
-      <div className="flex flex-col gap-3 ">
-        <h1 className="text-lg font-medium leading-6 text-gray-900">
-          {attributes.name}
-        </h1>
+    <>
+      <h3 className=" text-gray-900 relative" title={product.attributes.name}>
+        {!isPage ? (
+          <>{truncate(product.attributes.name, 60)}</>
+        ) : (
+          <>{product.attributes.name}</>
+        )}
+      </h3>
+      {selectedSize && (
         <div className="flex gap-2">
           <ProductPrice
-            discount={attributes.prices.data[0]?.attributes.discount}
-            price={attributes.prices.data[0]?.attributes.value}
+            discount={selectedSize.attributes.discount || 0}
+            price={selectedSize.attributes.value || 0}
             popUp
           />
         </div>
-        {attributes.brand?.data ? (
-          <div className="flex flex-wrap gap-2">
-            <span className="font-semibold"> Marca: </span>
-            <Link
-              href={`/product/filter?query=${attributes.brand.data?.attributes.name}`}
-              className="underline text-gray-700 hover:text-gray-900"
-            >
-              {attributes.brand.data?.attributes.name}
-            </Link>
-          </div>
-        ) : null}
-        <ProductRating rating={attributes.rating} />
-        <div>
-          <span className="font-semibold">Disponibilidad: </span>
-          En stock
+      )}
+      {product.attributes.brand?.data ? (
+        <div className="flex flex-wrap gap-2">
+          <span className="font-semibold"> Marca: </span>
+          <Link
+            href={`/product/filter?query=${product.attributes.brand.data?.attributes.name}`}
+            className="underline text-gray-700 hover:text-gray-900"
+          >
+            {product.attributes.brand.data?.attributes.name}
+          </Link>
         </div>
-        {attributes.product_colors.data.length > 0 ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold">Color:</span>
-            {attributes.product_colors?.data.map((item) => (
-              <div
-                key={item.id}
-                title={item.attributes.Name}
-                className="border rounded-full shadow-sm"
-              >
-                <FaCircle
-                  className="h-5 w-5"
-                  style={{ color: `${item.attributes.code}` }}
-                />
-              </div>
+      ) : null}
+      <ProductRating rating={product.attributes.rating} />
+      {product.attributes.product_colors.data.length > 0 ? (
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-semibold">Color:</span>
+          {product.attributes.product_colors?.data.map((item) => (
+            <div
+              key={item.id}
+              title={item.attributes.Name}
+              className="border rounded-full shadow-sm"
+            >
+              <FaCircle
+                className="h-5 w-5"
+                style={{ color: `${item.attributes.code}` }}
+              />
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {!product.attributes.prices.data[0].attributes.size?.data ? (
+        <>
+          {product.attributes.categories.data.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              <span className="font-semibold">Categorías:</span>
+              {product.attributes.categories.data.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/product/filter?query=${item.attributes.name}`}
+                  className="underline text-gray-700 hover:text-gray-900"
+                >
+                  {item.attributes.name}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </>
+      ) : (
+        <div className="flex items-center gap-2">
+          <h3 className="block font-semibold ">Tallas: </h3>
+          <select
+            id="sizeSelect"
+            onChange={handleSizeChange}
+            value={selectedSize.id}
+            className="w-full border border-gray-300 rounded-md py-2 px-4 mt-1 focus:outline-none focus:ring focus:border-indigo-500 sm:text-sm"
+          >
+            {product.attributes.prices.data.map((price) => (
+              <option key={price.id} value={price.id}>
+                {`${price.attributes.size.data?.attributes.numberLatam}-${price.attributes.size.data?.attributes.category.data.attributes.name}`}
+              </option>
             ))}
-          </div>
-        ) : null}
-        {attributes.categories.data.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            <span className="font-semibold">Categorías:</span>
-            {attributes.categories.data.map((item) => (
-              <Link
-                key={item.id}
-                href={`/product/filter?query=${item.attributes.name}`}
-                className="underline text-gray-700 hover:text-gray-900"
-              >
-                {item.attributes.name}
-              </Link>
-            ))}
-          </div>
-        ) : null}
-      </div>
+          </select>
+        </div>
+      )}
       <div>
-        {getItemQuantity(id) ? (
+        {getItemQuantity(product.id) ? (
           <div className="flex flex-row gap-2">
             <CartButtonAction
-              onClick={() => cart.removeCartItem(id)}
-              title="Eliminar"
+              onClick={() => cart.removeCartItem(product.id)}
+              title={isPage ? "Eliminar" : undefined}
               icon={<MdDeleteOutline />}
             />
             <CartButtonAction
-              onClick={() => cart.decreaseCartQuantity(id)}
-              title="Quitar"
+              onClick={() => cart.decreaseCartQuantity(product.id)}
+              title={isPage ? "Quitar" : undefined}
               icon={<BsCartDash />}
             />
             <CartButtonAction
-              onClick={() => cart.increaseCartQuantity(id)}
-              title={`x ${getItemQuantity(id)}`}
+              onClick={() => cart.increaseCartQuantity(product.id)}
+              title={`x ${getItemQuantity(product.id)}`}
               icon={<BsCartCheck />}
             />
           </div>
         ) : (
-          <div className="w-1/4 ml-auto">
+          <div className={`${isPage && "w-1/3"}  ml-auto`}>
             <CartButtonAction
-              onClick={() => cart.increaseCartQuantity(id)}
+              onClick={() => cart.increaseCartQuantity(product.id)}
               title="Añadir"
               icon={<BsCartPlus />}
             />
           </div>
         )}
       </div>
-
-      <div className="w-full border">
-        <DisclosureIndex
-          title={"Descripción"}
-          child={
-            <article className="prose prose-base max-w-none">
-              <ReactMarkdown>{attributes.description}</ReactMarkdown>
-            </article>
-          }
-        />
-      </div>
-    </div>
+    </>
   );
 }

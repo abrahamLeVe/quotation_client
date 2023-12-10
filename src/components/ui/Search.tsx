@@ -16,7 +16,7 @@ export default function Search({
   const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set("query", term);
+      params.set("query", term.replace(/\s{2,}/g, " "));
     } else {
       params.delete("query");
     }
