@@ -11,6 +11,7 @@ import { CartButtonAction } from "../cart/CartButtonAction";
 import ProductCard from "../product/ProductCard";
 import ProductPrice from "../product/ProductPrice";
 import ProductRating from "../product/ProductRating";
+import FilterSelect from "./FilterSelect";
 
 export default function ProductTable({
   products,
@@ -24,6 +25,7 @@ export default function ProductTable({
   return (
     <>
       <div className="flex justify-end gap-3 flex-row">
+        <FilterSelect />
         <CartButtonAction
           onClick={() => setOpenFilter(true)}
           className="max-w-[80px]"
