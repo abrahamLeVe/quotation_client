@@ -6,15 +6,16 @@ import { useEffect } from "react";
 
 export default function CategoryIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
-  const { setProductsFilter, setIsPending } = useFilterContext();
+  const { setProductsFilter, setIsPending, cleanFilter } = useFilterContext();
   useEffect(() => {
     if (!debouncedQuery) {
       setProductsFilter(undefined);
       return;
     }
     (async () => {
+      cleanFilter()
       setIsPending(true);
-      try {
+      try {        
         const products = await filterProductsByCategory(debouncedQuery);
         setProductsFilter(products);
       } catch (error) {

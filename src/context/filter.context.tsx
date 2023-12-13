@@ -1,7 +1,7 @@
 "use client";
 import { FilterActions } from "@/components/filter/FilterSelect";
-import { ProductsInterface } from "@/models/products.model";
-import { createContext, useContext, useState } from "react";
+import { ProductInterface, ProductsInterface } from "@/models/products.model";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface FilterProviderProps {
   children: React.ReactNode;
@@ -36,7 +36,6 @@ interface FilterContext {
   sortByRating: () => void;
   filterDiscountedProducts: () => void;
   allProducts: () => void;
-  filterProductsByCategoryId: (id: number) => void;
   resultText: string;
   setResultText: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -60,50 +59,94 @@ export function FilterProvider({ children }: FilterProviderProps) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [selected, setSelected] = useState(FilterActions[0]);
+  const [originalProducts, setOriginalProducts] = useState<ProductInterface[]>(
+    []
+  );
 
-  function filterProductsByCategoryId(categoryId: number) {
-    cleanFilter();
-    // setProductsFilter(
-    //   products?.filter((product) => {
-    //     return product.attributes.categories.data.some(
-    //       (category) => category.id === categoryId
-    //     );
-    //   })
-    // );
-  }
+  useEffect(() => {
+    if (productsFilter?.data) {
+      const allPrices = productsFilter.data.flatMap((product) =>
+        product.attributes.prices.data.map((price) => price.attributes.value)
+      );
+      const min = Math.min(...allPrices);
+      const max = Math.max(...allPrices);
+      setMinPrice(min);
+      setMaxPrice(max);
+    }
+    return;
+  }, [productsFilter]);
 
   function filterByPrice(price: string) {
-    const minPrice = parseFloat(price);
+    const newMinPrice = parseFloat(price);
 
-    // const filteredProducts = products
-    //   .filter((product) => product.attributes.price >= minPrice)
-    //   .sort((a, b) => a.attributes.price - b.attributes.price);
+    if (newMinPrice > maxPrice) {
+      setMinPrice(newMinPrice);
+      setMaxPrice(newMinPrice);
+    }
 
-    // const maxPrice = filteredProducts.reduce(
-    //   (max, product) => Math.max(max, product.attributes.price),
-    //   0
-    // );
-    // cleanFilter();
+    const currentOriginalProducts = originalProducts.length
+      ? originalProducts
+      : [...productsFilter?.data!];
+    setOriginalProducts(currentOriginalProducts);
 
-    // setProductsFilter(filteredProducts);
-    // setMinPrice(minPrice);
-    // setMaxPrice(maxPrice);
+    const filteredProducts = currentOriginalProducts
+      .filter((product) =>
+        product.attributes.prices.data.some(
+          (price) => price.attributes.value >= newMinPrice
+        )
+      )
+      .sort((a, b) => {
+        const priceA = Math.min(
+          ...a.attributes.prices.data.map((price) => price.attributes.value)
+        );
+        const priceB = Math.min(
+          ...b.attributes.prices.data.map((price) => price.attributes.value)
+        );
 
-    // setResultText("min-$" + minPrice.toFixed() + " max-$" + maxPrice.toFixed());
+        return priceA - priceB;
+      });
+
+    setProductsFilter({ ...productsFilter, data: filteredProducts });
+    setSelected(FilterActions[0]);
   }
 
   function sortAlphabetically() {
-    // setProductsFilter(
-    //   productsFilter
-    //     .slice()
-    //     .sort((a, b) => a.attributes.name.localeCompare(b.attributes.name))
-    // );
+    if (productsFilter && productsFilter.data) {
+      const sortedProducts = productsFilter.data
+        .slice()
+        .sort((a, b) => a.attributes.name.localeCompare(b.attributes.name));
+
+      setProductsFilter({
+        ...productsFilter,
+        data: sortedProducts,
+      });
+    }
   }
 
   function filterDiscountedProducts() {
-    // setProductsFilter(
-    //   productsFilter.filter((product) => product.attributes.discount > 0)
-    // );
+    if (productsFilter && productsFilter.data) {
+      const sortedProducts = productsFilter.data.slice().sort((a, b) => {
+        const discountA = a.attributes.prices.data.some(
+          (price) => price.attributes.discount! > 0
+        );
+        const discountB = b.attributes.prices.data.some(
+          (price) => price.attributes.discount! > 0
+        );
+
+        if (discountA && !discountB) {
+          return -1;
+        } else if (!discountA && discountB) {
+          return 1;
+        } else {
+          return a.attributes.name.localeCompare(b.attributes.name);
+        }
+      });
+
+      setProductsFilter({
+        ...productsFilter,
+        data: sortedProducts,
+      });
+    }
   }
 
   function allProducts() {
@@ -111,30 +154,38 @@ export function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function sortByDateNewest() {
-    // setProductsFilter(
-    //   productsFilter
-    //     .slice()
-    //     .sort(
-    //       (a, b) =>
-    //         new Date(b.attributes.updatedAt).getTime() -
-    //         new Date(a.attributes.updatedAt).getTime()
-    //     )
-    // );
+    if (productsFilter && productsFilter.data) {
+      const sortedProducts = productsFilter.data
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(b.attributes.updatedAt).getTime() -
+            new Date(a.attributes.updatedAt).getTime()
+        );
+
+      setProductsFilter({
+        ...productsFilter,
+        data: sortedProducts,
+      });
+    }
   }
 
   function sortByRating() {
-    // setProductsFilter(
-    //   productsFilter
-    //     .slice()
-    //     .sort((a, b) => b.attributes.rating - a.attributes.rating)
-    // );
+    if (productsFilter && productsFilter.data) {
+      const sortedProducts = productsFilter.data
+        .slice()
+        .sort((a, b) => b.attributes.rating - a.attributes.rating);
+      setProductsFilter({
+        ...productsFilter,
+        data: sortedProducts,
+      });
+    }
   }
 
   function cleanFilter(): void {
-    // setQuery([]);
-    // setProductsFilter([]);
-    // setSelected(FilterActions[0]);
-    // setMinPrice(0);
+    setProductsFilter(undefined);
+    setOriginalProducts([]);
+    setSelected(FilterActions[0]);
   }
 
   return (
@@ -158,7 +209,6 @@ export function FilterProvider({ children }: FilterProviderProps) {
         sortByRating,
         filterDiscountedProducts,
         allProducts,
-        filterProductsByCategoryId,
         resultText,
         setResultText,
         openFilter,
@@ -172,130 +222,3 @@ export function FilterProvider({ children }: FilterProviderProps) {
     </FilterContext.Provider>
   );
 }
-
-export const wordsExclude = new Set([
-  "a",
-  "aquella",
-  "aquellas",
-  "aquellos",
-  "aquí",
-  "ayudame",
-  "ayúdame",
-  "b",
-  "bien",
-  "búscame",
-  "busca",
-  "buscar",
-  "buscame",
-  "c",
-  "categoria",
-  "categoría",
-  "categorias",
-  "categorías",
-  "chiste",
-  "como",
-  "con",
-  "cuál",
-  "cuales",
-  "cuando",
-  "cuánto",
-  "cuentame",
-  "cuéntame",
-  "d",
-  "de",
-  "del",
-  "desde",
-  "dia",
-  "donde",
-  "dos",
-  "e",
-  "el",
-  "en",
-  "encuentra",
-  "entre",
-  "eres",
-  "es",
-  "este",
-  "esto",
-  "estos",
-  "estan",
-  "f",
-  "g",
-  "h",
-  "hechos",
-  "hasta",
-  "hoy",
-  "i",
-  "j",
-  "k",
-  "l",
-  "la",
-  "le",
-  "lo",
-  "los",
-  "m",
-  "mas",
-  "menos",
-  "mismo",
-  "nada",
-  "nadie",
-  "ni",
-  "ningun",
-  "ninguna",
-  "ningunas",
-  "ningunos",
-  "ningunos",
-  "ningunas",
-  "ningunos",
-  "nunca",
-  "o",
-  "otra",
-  "otras",
-  "otros",
-  "p",
-  "par",
-  "para",
-  "pero",
-  "por",
-  "puede",
-  "pueden",
-  "pues",
-  "producto",
-  "productos",
-  "puedes",
-  "q",
-  "que",
-  "quien",
-  "quién",
-  "saber",
-  "se",
-  "si",
-  "sobre",
-  "solo",
-  "son",
-  "su",
-  "sus",
-  "t",
-  "tal",
-  "también",
-  "tambien",
-  "tanto",
-  "tiempo",
-  "todo",
-  "trabaja",
-  "trabajar",
-  "trabajo",
-  "tu",
-  "tus",
-  "u",
-  "una",
-  "un",
-  "v",
-  "vende",
-  "vendes",
-  "vez",
-  "w",
-  "x",
-  "y",
-  "z",
-]);

@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 
 export default function BrandList() {
   const { brands } = useCategoryContext();
-  const { setOpenFilter } = useFilterContext();
+  const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
   const handleClick = (name: string) => {
+    cleanFilter();
     setOpenFilter(false);
     router.push(`/filter/brand?query=${name}`);
   };

@@ -6,13 +6,14 @@ import { useEffect } from "react";
 
 export default function ColorIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
-  const { setProductsFilter, setIsPending } = useFilterContext();
+  const { setProductsFilter, setIsPending, cleanFilter } = useFilterContext();
   useEffect(() => {
     if (!debouncedQuery) {
       setProductsFilter(undefined);
       return;
     }
     (async () => {
+      cleanFilter();
       setIsPending(true);
       try {
         const products = await filterProductsByColor(debouncedQuery);

@@ -8,10 +8,12 @@ import { BsCartCheck, BsCartPlus, BsEye } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import { IoFilterSharp, IoGridSharp } from "react-icons/io5";
 import { CartButtonAction } from "../cart/CartButtonAction";
-import ProductCard from "../product/ProductCard";
 import ProductPrice from "../product/ProductPrice";
 import ProductRating from "../product/ProductRating";
-import FilterSelect from "./FilterSelect";
+import dynamic from "next/dynamic";
+const FilterSelect = dynamic(() => import("./FilterSelect"));
+const FilterSection = dynamic(() => import("./FilterSection"));
+const ProductCard = dynamic(() => import("../product/ProductCard"));
 
 export default function ProductTable({
   products,
@@ -22,16 +24,26 @@ export default function ProductTable({
   const [isTable, setIsTable] = useState(true);
   const cart = cartStore((state) => state);
   const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
+  console.log(products);
   return (
     <>
-      <div className="flex justify-end gap-3 flex-row">
-        <FilterSelect />
-        <CartButtonAction
-          onClick={() => setOpenFilter(true)}
-          className="max-w-[80px]"
-          icon={<IoFilterSharp />}
-          title="Filtro"
-        />
+      <div className="flex justify-end items-center gap-3 flex-row">
+        {products ? (
+          products.data.length > 0 ? (
+            <>
+              <FilterSection />
+              <FilterSelect />
+            </>
+          ) : null
+        ) : null}
+        <div>
+          <CartButtonAction
+            onClick={() => setOpenFilter(true)}
+            className="max-w-[80px]"
+            icon={<IoFilterSharp />}
+            title="Filtro"
+          />
+        </div>
         <div title={!isTable ? "Lista" : "Bloques"} className="hidden md:block">
           <CartButtonAction
             icon={isTable ? <IoGridSharp /> : <FaThList />}

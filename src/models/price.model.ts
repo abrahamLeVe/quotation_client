@@ -1,5 +1,5 @@
-export interface PriceById {
-  data: Datum[];
+export interface PricesInterface {
+  data: PriceInterface[];
   meta?: Meta;
 }
 
@@ -14,21 +14,40 @@ interface Pagination {
   total: number;
 }
 
-interface Datum {
+export interface PriceInterface {
+  id: number;
+  attributes: Attributes4;
+}
+
+interface Attributes4 {
+  name?: string;
+  value: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  discount?: number;
+  product: Product;
+  size: Size;
+  model: Model;
+  product_colors: Productcolors;
+}
+
+interface Productcolors {
+  data: Datum2[];
+}
+
+interface Datum2 {
   id: number;
   attributes: Attributes3;
 }
 
 interface Attributes3 {
-  name?: any;
-  value: number;
+  Name: string;
+  description: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  discount?: any;
-  product: Product;
-  size: Size;
-  model: Model;
+  code: string;
 }
 
 interface Model {
@@ -36,10 +55,10 @@ interface Model {
 }
 
 interface Size {
-  data: Data2;
+  data?: Datum;
 }
 
-interface Data2 {
+interface Datum {
   id: number;
   attributes: Attributes2;
 }

@@ -6,13 +6,14 @@ import { useEffect } from "react";
 
 export default function BrandIndex({ query }: { query?: string }) {
   const debouncedQuery = useDebounce(query, 300);
-  const { setProductsFilter, setIsPending } = useFilterContext();
+  const { setProductsFilter, setIsPending, cleanFilter } = useFilterContext();
   useEffect(() => {
     if (!debouncedQuery) {
       setProductsFilter(undefined);
       return;
     }
     (async () => {
+      cleanFilter();
       setIsPending(true);
       try {
         const products = await filterProductsByBrand(debouncedQuery);
@@ -24,5 +25,5 @@ export default function BrandIndex({ query }: { query?: string }) {
     })();
   }, [debouncedQuery, setProductsFilter, setIsPending]);
 
-  return <></>;
+  return null;
 }
