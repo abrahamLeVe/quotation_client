@@ -86,7 +86,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
           {currentProducts.map((product) => (
             <div
               key={product.id}
-              className="flex flex-col w-full justify-between  sm:w-[50%] md:w-[33.333%] lg:w-[25%] xl:w-[20%] border rounded-lg overflow-hidden relative text-sm"
+              className="flex flex-col w-full  justify-between items-stretch  sm:w-[50%] md:w-[33.333%] lg:w-[25%] xl:w-[20%] border rounded-lg overflow-hidden relative text-sm"
             >
               <ProductCard product={product} />
             </div>

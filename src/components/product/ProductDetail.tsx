@@ -1,14 +1,14 @@
 "use client";
 import { useProductContext } from "@/context/product.context";
 import {
-    ProductInterface,
-    ProductPriceInterface,
+  ProductInterface,
+  ProductPriceInterface,
 } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import Link from "next/link";
 import React, { useState } from "react";
-import { BsCartCheck, BsCartDash, BsCartPlus } from "react-icons/bs";
+import { BsCartCheck, BsCartDash, BsCartPlus, BsEye } from "react-icons/bs";
 import { FaCircle } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
 import { CartButtonAction } from "../cart/CartButtonAction";
@@ -28,7 +28,7 @@ export default function ProductDetail({
     product.attributes.prices.data[0]
   );
   const cart = cartStore((state) => state);
-  const { getItemQuantity } = useProductContext();
+  const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
 
   const handleSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const sizeId = parseInt(event.target.value, 10);
@@ -40,6 +40,7 @@ export default function ProductDetail({
 
   return (
     <>
+      {/* details */}
       <h3 className=" text-gray-900 relative" title={product.attributes.name}>
         {!isPage ? (
           <>{truncate(product.attributes.name, 60)}</>
@@ -47,6 +48,7 @@ export default function ProductDetail({
           <>{product.attributes.name}</>
         )}
       </h3>
+
       {selectedSize && (
         <div className="flex gap-2">
           <ProductPrice
@@ -56,6 +58,7 @@ export default function ProductDetail({
           />
         </div>
       )}
+
       {product.attributes.brand?.data ? (
         <div className="flex flex-wrap gap-2">
           <span className="font-semibold"> Marca: </span>
@@ -67,7 +70,9 @@ export default function ProductDetail({
           </Link>
         </div>
       ) : null}
+
       <ProductRating rating={product.attributes.rating} />
+
       {product.attributes.product_colors.data.length > 0 ? (
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-semibold">Color:</span>
@@ -120,34 +125,46 @@ export default function ProductDetail({
           </select>
         </div>
       )}
-      <div>
-        {getItemQuantity(product.id) ? (
-          <div className="flex flex-row gap-2">
-            <CartButtonAction
-              onClick={() => cart.removeCartItem(product.id)}
-              title={isPage ? "Eliminar" : undefined}
-              icon={<MdDeleteOutline />}
-            />
-            <CartButtonAction
-              onClick={() => cart.decreaseCartQuantity(product.id)}
-              title={isPage ? "Quitar" : undefined}
-              icon={<BsCartDash />}
-            />
-            <CartButtonAction
-              onClick={() => cart.increaseCartQuantity(product.id)}
-              title={`x ${getItemQuantity(product.id)}`}
-              icon={<BsCartCheck />}
-            />
-          </div>
-        ) : (
-          <div className={`${isPage && "w-1/3"}  ml-auto`}>
-            <CartButtonAction
-              onClick={() => cart.increaseCartQuantity(product.id)}
-              title="Añadir"
-              icon={<BsCartPlus />}
-            />
-          </div>
-        )}
+      
+      {/* actions */}
+      <div className="flex flex-col gap-2">
+        <div>
+          {getItemQuantity(product.id) ? (
+            <div className="flex flex-row gap-2">
+              <CartButtonAction
+                onClick={() => cart.removeCartItem(product.id)}
+                title={isPage ? "Eliminar" : undefined}
+                icon={<MdDeleteOutline />}
+              />
+              <CartButtonAction
+                onClick={() => cart.decreaseCartQuantity(product.id)}
+                title={isPage ? "Quitar" : undefined}
+                icon={<BsCartDash />}
+              />
+              <CartButtonAction
+                onClick={() => cart.increaseCartQuantity(product.id)}
+                title={`x ${getItemQuantity(product.id)}`}
+                icon={<BsCartCheck />}
+              />
+            </div>
+          ) : (
+            <div className={`${isPage && "w-1/3"}  ml-auto`}>
+              <CartButtonAction
+                onClick={() => cart.increaseCartQuantity(product.id)}
+                title="Añadir"
+                icon={<BsCartPlus />}
+              />
+            </div>
+          )}
+        </div>
+        <CartButtonAction
+          onClick={() => {
+            setProduct([product]), setIsOpen(true);
+          }}
+          title="Detalles"
+          icon={<BsEye />}
+          className={`${isPage ? "hidden" : "block"}`}
+        />
       </div>
     </>
   );

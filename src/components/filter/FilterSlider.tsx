@@ -10,10 +10,13 @@ const CategoryList = dynamic(() => import("../category/CategoryList"), {
 const BrandList = dynamic(() => import("../brand/BrandList"), {
   loading: () => <p>Cargando...</p>,
 });
+const ColorList = dynamic(() => import("../color/ColorList"), {
+  loading: () => <p>Cargando...</p>,
+});
 
 export default function FilterSlider() {
   const { openFilter, setOpenFilter } = useFilterContext();
-  const { getCategories, getBrands } = useCategoryContext();
+  const { getCategories, getBrands, getColors } = useCategoryContext();
 
   return (
     <>
@@ -47,6 +50,12 @@ export default function FilterSlider() {
               title={"Marcas"}
               getData={getBrands}
               child={<BrandList />}
+            />
+
+            <DisclosureIndex
+              title={"Colores"}
+              getData={getColors}
+              child={<ColorList />}
             />
           </div>
         </div>

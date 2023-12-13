@@ -1,4 +1,3 @@
-"use server";
 import { SlideInterface } from "@/models/slide.model";
 import { fetchDataFromApi } from "@/lib/api";
 

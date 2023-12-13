@@ -2,7 +2,7 @@ export function processQuery(query: string) {
   const firstFilter = query.toLowerCase();
   const keywords = firstFilter
     .replace(/[.,]/g, "")
-    .slice(0, 20)
+    .slice(0, 40)
     .split(" ")
     .filter((word) => !wordsExclude.has(word));
 

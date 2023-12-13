@@ -1,8 +1,10 @@
 "use client";
 import { getDataBrand } from "@/app/services/brand.service";
 import { getDataCategory } from "@/app/services/category.service";
+import { getDataColor } from "@/app/services/color.service";
 import { BrandInterface } from "@/models/brand";
 import { CategoryInterface } from "@/models/category.model";
+import { ColorInterface } from "@/models/colors.model";
 import { createContext, useContext, useState } from "react";
 
 interface CategoryProviderProps {
@@ -14,8 +16,11 @@ interface CategoryContext {
   setCategories: React.Dispatch<React.SetStateAction<CategoryInterface[]>>;
   brands: BrandInterface[];
   setBrands: React.Dispatch<React.SetStateAction<BrandInterface[]>>;
+  colors: ColorInterface[];
+  setColors: React.Dispatch<React.SetStateAction<ColorInterface[]>>;
   getCategories: () => Promise<void>;
   getBrands: () => Promise<void>;
+  getColors: () => Promise<void>;
 }
 
 const CategoryContext = createContext({} as CategoryContext);
@@ -27,6 +32,7 @@ export function useCategoryContext() {
 export function CategoryProvider({ children }: CategoryProviderProps) {
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [brands, setBrands] = useState<BrandInterface[]>([]);
+  const [colors, setColors] = useState<ColorInterface[]>([]);
 
   async function getCategories() {
     try {
@@ -38,12 +44,23 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
       console.log(error);
     }
   }
-  
+
   async function getBrands() {
     try {
       const { data } = await getDataBrand();
       if (data) {
         setBrands(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getColors() {
+    try {
+      const { data } = await getDataColor();
+      if (data) {
+        setColors(data);
       }
     } catch (error) {
       console.log(error);
@@ -58,7 +75,10 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
         getCategories,
         brands,
         setBrands,
-        getBrands
+        getBrands,
+        setColors,
+        colors,
+        getColors,
       }}
     >
       {children}

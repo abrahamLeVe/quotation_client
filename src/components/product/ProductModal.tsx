@@ -1,19 +1,17 @@
 "use client";
 import { useProductContext } from "@/context/product.context";
-import { cartStore } from "@/store/cart.store";
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { Fragment, useRef } from "react";
 import { GrClose } from "react-icons/gr";
-import { ImageGalleryModal } from "../ui/ImageGallery";
+import ImageGalleryModal from "../ui/ImageGallery";
 import TransitionChild from "../ui/TransitionChild";
 import ProductDetail from "./ProductDetail";
 
 export default function ProductModal() {
   const router = useRouter();
   let btnModalProductRef = useRef(null);
-  const { product, setIsOpen, isOpen, getItemQuantity } = useProductContext();
-  const cart = cartStore((state) => state);
+  const { product, setIsOpen, isOpen } = useProductContext();
 
   return (
     <>

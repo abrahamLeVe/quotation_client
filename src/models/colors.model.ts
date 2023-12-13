@@ -1,6 +1,6 @@
 export interface ColorsInterface {
   data: ColorInterface[];
-  meta: Meta;
+  meta?: Meta;
 }
 
 interface Meta {
@@ -16,24 +16,44 @@ interface Pagination {
 
 export interface ColorInterface {
   id: number;
-  attributes: Attributes3;
+  attributes: Attributes4;
 }
 
-interface Attributes3 {
+interface Attributes4 {
   Name: string;
   description: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  code: string;
   image: Image;
   products: Products;
+  prices: Prices;
+}
+
+interface Prices {
+  data: Datum3[];
+}
+
+interface Datum3 {
+  id: number;
+  attributes: Attributes3;
+}
+
+interface Attributes3 {
+  name: string;
+  value: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  discount: number;
 }
 
 interface Products {
-  data: Datum[];
+  data: Datum2[];
 }
 
-interface Datum {
+interface Datum2 {
   id: number;
   attributes: Attributes2;
 }
@@ -51,10 +71,10 @@ interface Attributes2 {
 }
 
 interface Image {
-  data: Data;
+  data?: Datum;
 }
 
-interface Data {
+interface Datum {
   id: number;
   attributes: Attributes;
 }

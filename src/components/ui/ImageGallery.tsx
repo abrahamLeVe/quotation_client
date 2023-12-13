@@ -3,7 +3,7 @@ import { ProductInterface } from "@/models/products.model";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
-export default function ImageGalleryIndex({
+export  function ImageGalleryIndex({
   product,
 }: {
   product: ProductInterface;
@@ -26,7 +26,7 @@ export default function ImageGalleryIndex({
   );
 }
 
-export function ImageGalleryModal(product: ProductInterface) {
+export default function ImageGalleryModal(product: ProductInterface) {
   const imageGalleryOptions = {
     showPlayButton: false,
     showBullets: true,
