@@ -1,6 +1,7 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BsSearch } from "react-icons/bs";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Search({
   placeholder,
@@ -13,7 +14,7 @@ export default function Search({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = (term: string) => {
+  const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("query", term.replace(/\s{2,}/g, " "));
@@ -21,7 +22,7 @@ export default function Search({
       params.delete("query");
     }
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, 300);
 
   return (
     <div className="w-full">

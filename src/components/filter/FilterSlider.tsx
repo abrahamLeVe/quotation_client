@@ -3,7 +3,7 @@ import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
 import { Transition } from "@headlessui/react";
 import dynamic from "next/dynamic";
-import { DisclosureIndex } from "../ui/Disclosure";
+import DisclosureIndex from "../ui/Disclosure";
 const CategoryList = dynamic(() => import("../category/CategoryList"), {
   loading: () => <p>Cargando...</p>,
 });

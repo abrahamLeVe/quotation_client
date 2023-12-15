@@ -1,31 +1,10 @@
-"use client";
 import { filterProducts } from "@/app/services/product.service";
-import { useFilterContext } from "@/context/filter.context";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useEffect } from "react";
+const ProductTable = dynamic(() => import("./FilterTable"));
 
-export default function FilterIndex({ query }: { query?: string }) {
-  const debouncedQuery = useDebounce(query, 300);
-  const { setProductsFilter, setIsPending } = useFilterContext();
+import dynamic from "next/dynamic";
 
-  useEffect(() => {
-    if (!debouncedQuery) {
-      setProductsFilter(undefined);
-      return;
-    }
+export default async function FilterIndex({ query }: { query?: string }) {
+  const products = await filterProducts(query);
 
-    (async () => {
-      setIsPending(true);
-
-      try {
-        const products = await filterProducts(debouncedQuery);
-        setProductsFilter(products);
-      } catch (error) {
-        console.log(error);
-      }
-      setIsPending(false);
-    })();
-  }, [debouncedQuery, setProductsFilter, setIsPending]);
-
-  return null;
+  return <ProductTable key={query} products={products} />;
 }

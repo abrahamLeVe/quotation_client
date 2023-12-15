@@ -1,9 +1,9 @@
 "use client";
 import { ProductInterface } from "@/models/products.model";
-import { DisclosureIndex } from "../ui/Disclosure";
 import dynamic from "next/dynamic";
 import ImageGalleryModal from "../ui/ImageGallery";
 const ProductDetail = dynamic(() => import("./ProductDetail"));
+const DisclosureIndex = dynamic(() => import("../ui/Disclosure"));
 const ReactMarkdown = dynamic(() => import("react-markdown"));
 const ProductNotFound = dynamic(() => import("./ProductNotFound"));
 

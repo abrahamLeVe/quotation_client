@@ -1,8 +1,8 @@
 import { fetchDataFromApi } from "@/lib/api";
 import { ColorsInterface } from "@/models/colors.model";
+import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
-import { populate } from "./product.service";
 let qs = require("qs");
 
 export async function getDataColor(): Promise<ColorsInterface> {
@@ -32,7 +32,7 @@ export async function filterProductsByColor(
     };
 
     const queryString = qs.stringify(
-      { populate, filters: filter },
+      { sort: ["name:asc"], populate, filters: filter },
       {
         encodeValuesOnly: true,
       }

@@ -8,7 +8,7 @@ interface DisclosureIndexProps {
   getData?: () => void;
 }
 
-export function DisclosureIndex({
+export default function DisclosureIndex({
   title,
   child,
   getData,

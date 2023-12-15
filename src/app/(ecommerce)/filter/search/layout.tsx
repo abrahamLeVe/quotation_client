@@ -5,7 +5,6 @@ import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkel
 import ProductSearch from "@/components/ui/Search";
 import { useFilterContext } from "@/context/filter.context";
 
-
 export default function FilterLayout({
   children,
 }: {
@@ -26,13 +25,14 @@ export default function FilterLayout({
           },
         ]}
       />
-      <ProductSearch placeholder={"Buscar productos..."} title={"Producto: "} />
+      {/* <ProductSearch placeholder={"Buscar productos..."} title={"Producto: "} />
 
       {isPending ? (
         <ProductsTableSkeleton />
       ) : (
         <ProductTable products={productsFilter} />
-      )}
+      )} */}
+      <ProductSearch placeholder={"Buscar productos..."} title={"Producto: "} />
 
       {children}
     </>

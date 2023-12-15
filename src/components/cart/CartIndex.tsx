@@ -6,7 +6,7 @@ import { formatCurrency, truncate } from "@/utilities/utils";
 import { BsCartDash, BsCartPlus, BsEye } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
-import { DisclosureIndex } from "../ui/Disclosure";
+import DisclosureIndex from "../ui/Disclosure";
 import { CartButtonAction } from "./CartButtonAction";
 
 export default function CartIndex() {
@@ -72,7 +72,8 @@ export default function CartIndex() {
                     <div className="flex flex-col gap-3">
                       <ProductPrice
                         discount={
-                          product.attributes.prices.data[0]?.attributes.discount!
+                          product.attributes.prices.data[0]?.attributes
+                            .discount!
                         }
                         price={
                           product.attributes.prices.data[0]?.attributes.value

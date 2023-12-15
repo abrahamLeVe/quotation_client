@@ -1,41 +1,16 @@
 import { fetchDataFromApi } from "@/lib/api";
+import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
-export const populate = {
-  image: {
-    populate: ["data"],
-  },
-  thumbnail: {
-    populate: ["data"],
-  },
-  categories: {
-    populate: ["data"],
-  },
-  brand: {
-    populate: ["data"],
-  },
-  product_colors: {
-    populate: ["data"],
-  },
-  prices: {
-    populate: {
-      product_colors: {
-        populate: ["data"],
-      },
-      model: {
-        populate: ["data"],
-      },
-      size: {
-        populate: ["category"],
-      },
-    },
-  },
-};
+
 
 export async function getDataProducts(): Promise<ProductsInterface> {
-  const queryString = qs.stringify({ populate }, { encodeValuesOnly: true });
+  const queryString = qs.stringify(
+    { sort: ["name:asc"], populate },
+    { encodeValuesOnly: true }
+  );
   const res = fetchDataFromApi(`/api/products?${queryString}`);
   return res;
 }
@@ -50,7 +25,7 @@ export async function getDataProductBySlug(
   };
 
   const queryString = qs.stringify(
-    { populate, filters: filter },
+    { sort: ["name:asc"], populate, filters: filter },
     { encodeValuesOnly: true }
   );
 
@@ -94,7 +69,7 @@ export async function filterProducts(
   };
   try {
     const queryString = qs.stringify(
-      { populate, filters: filter },
+      { sort: ["name:asc"], populate, filters: filter },
       { encodeValuesOnly: true }
     );
     const res = await fetchDataFromApi(`/api/products?${queryString}`);
