@@ -1,9 +1,9 @@
-"use client";
+'use client'
 import { ProductInterface } from "@/models/products.model";
 import dynamic from "next/dynamic";
+import DisclosureIndex from "../ui/Disclosure";
 import ImageGalleryModal from "../ui/ImageGallery";
 const ProductDetail = dynamic(() => import("./ProductDetail"));
-const DisclosureIndex = dynamic(() => import("../ui/Disclosure"));
 const ReactMarkdown = dynamic(() => import("react-markdown"));
 const ProductNotFound = dynamic(() => import("./ProductNotFound"));
 
@@ -42,7 +42,6 @@ export default function ProductSinglePage({
               </div>
             </div>
           </div>
-          <div></div>
         </>
       ) : (
         <div className="w-full min-h-screen">

@@ -7,7 +7,7 @@ import { BsCartDash, BsCartPlus, BsEye } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
 import DisclosureIndex from "../ui/Disclosure";
-import { CartButtonAction } from "./CartButtonAction";
+import { Button } from "../ui/button";
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);
@@ -16,7 +16,6 @@ export default function CartIndex() {
   const { setProduct, setIsOpen } = useProductContext();
 
   const total = calculateTotal().total;
-
   return (
     <div className="px-4 py-6 sm:px-6">
       <div className="text-lg font-medium text-gray-900">
@@ -45,13 +44,16 @@ export default function CartIndex() {
                         className="h-24 w-24 overflow-hidden flex-shrink-0 rounded-md border border-gray-200 relative"
                         title="Detalles"
                       >
-                        <CartButtonAction
+                        <Button
                           onClick={() => {
                             setProduct([product]), setIsOpen(true);
                           }}
-                          icon={<BsEye />}
-                          className="absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 max-w-[35px]"
-                        />
+                          title="Ver mas detalles"
+                          className="absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
+                        >
+                          <BsEye className="h-6 w-6" />
+                        </Button>
+
                         <img
                           src={
                             product.attributes.thumbnail.data?.attributes
@@ -83,23 +85,23 @@ export default function CartIndex() {
                   </td>
                   <td className="border-b p-4">
                     <div className="flex flex-1 items-center gap-3">
-                      <div title="Restar">
-                        <CartButtonAction
-                          onClick={() => {
-                            cart.decreaseCartQuantity(product.id);
-                          }}
-                          icon={<BsCartDash />}
-                          className="max-w-[42px]"
-                        />
-                      </div>
+                      <Button
+                        onClick={() => {
+                          cart.decreaseCartQuantity(product.id);
+                        }}
+                        title="Restar"
+                      >
+                        <BsCartDash className="h-6 w-6" />
+                      </Button>
                       <p>x{getItemQuantity(product.id)}</p>
-                      <div title="Aumentar">
-                        <CartButtonAction
-                          onClick={() => cart.increaseCartQuantity(product.id)}
-                          icon={<BsCartPlus />}
-                          className="max-w-[42px]"
-                        />
-                      </div>
+                      <Button
+                        onClick={() => {
+                          cart.increaseCartQuantity(product.id);
+                        }}
+                        title="Añadir"
+                      >
+                        <BsCartPlus className="h-6 w-6" />
+                      </Button>
                     </div>
                   </td>
                   <td className="border-b p-4">
@@ -113,15 +115,14 @@ export default function CartIndex() {
                     </div>
                   </td>
                   <td className="border-b p-4 pr-8">
-                    <div title="Eliminar">
-                      <CartButtonAction
-                        onClick={() => {
-                          cart.removeCartItem(product.id);
-                        }}
-                        icon={<MdDeleteOutline />}
-                        className="max-w-[42px]"
-                      />
-                    </div>
+                    <Button
+                      onClick={() => {
+                        cart.removeCartItem(product.id);
+                      }}
+                      title="Eliminar del carrito"
+                    >
+                      <MdDeleteOutline className="h-6 w-6" />
+                    </Button>
                   </td>
                 </tr>
               ))}

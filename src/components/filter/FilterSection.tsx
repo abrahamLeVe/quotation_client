@@ -1,11 +1,10 @@
 "use client";
 import { useFilterContext } from "@/context/filter.context";
 import { AiOutlineClear } from "react-icons/ai";
-import { CartButtonAction } from "../cart/CartButtonAction";
+import { Button } from "../ui/button";
 
 export default function FilterSection() {
-  const { cleanFilter, filterByPrice, minPrice, maxPrice } =
-    useFilterContext();
+  const { cleanFilter, filterByPrice, minPrice, maxPrice } = useFilterContext();
 
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     filterByPrice(event.target.value);
@@ -13,13 +12,9 @@ export default function FilterSection() {
 
   return (
     <>
-      <div title="Limpiar">
-        <CartButtonAction
-          onClick={cleanFilter}
-          icon={<AiOutlineClear className="text-gray-600" />}
-          className="max-w-[42px]"
-        />
-      </div>
+      <Button onClick={cleanFilter} title="Limpiar">
+        <AiOutlineClear className="h-6 w-6" />
+      </Button>
 
       <div className="flex flex-col w-full gap-0">
         <label htmlFor="range" className="font-bold text-gray-900">

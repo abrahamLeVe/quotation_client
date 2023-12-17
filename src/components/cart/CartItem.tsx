@@ -6,13 +6,12 @@ import { useRouter } from "next/navigation";
 import { BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductPrice from "../product/ProductPrice";
-import { CartButtonAction } from "./CartButtonAction";
+import { Button } from "../ui/button";
 
 export default function CartItem() {
   const cart = cartStore((state) => state);
   const { getItemQuantity, setOpenCart, cartItems } = useCartContext();
   const router = useRouter();
-  console.log(cartItems);
   return (
     <div className="mt-8">
       <div className="flow-root">
@@ -30,21 +29,20 @@ export default function CartItem() {
                 />
               </div>
 
-              <div className="ml-4 flex flex-1 flex-col gap-5">
+              <div className="ml-4 flex flex-1 flex-col gap-3">
                 <div>
-                  <div className="flex text-base  hover:underline font-medium text-gray-900 relative">
-                    <h3 title={product.attributes.name}>
-                      {truncate(product.attributes.name, 70)}
-                      <button
-                        onClick={() => {
-                          router.push(`/product/${product.attributes.slug}`);
-                          setOpenCart(false);
-                        }}
-                        className="absolute inset-0"
-                      ></button>
-                    </h3>
-                  </div>
-                  <div className="flex flex-row gap-5">
+                  <Button
+                    onClick={() => {
+                      router.push(`/product/${product.attributes.slug}`);
+                      setOpenCart(false);
+                    }}
+                    variant={"link"}
+                    className="p-0"
+                    title={product.attributes.name}
+                  >
+                    {truncate(product.attributes.name, 30)}
+                  </Button>
+                  <div className="flex flex-row gap-3">
                     <ProductPrice
                       discount={
                         product.attributes.prices.data[0]?.attributes.discount!
@@ -59,36 +57,34 @@ export default function CartItem() {
                   </div>
                 </div>
                 <div className="flex flex-1 items-end justify-end text-sm gap-3">
-                  <div title="Eliminar">
-                    <CartButtonAction
-                      onClick={() => {
-                        cart.removeCartItem(product.id);
-                        cart.cartItemState[0].id === product.id &&
-                          cart.cartItemState.length === 1 &&
-                          setOpenCart(false);
-                      }}
-                      icon={<MdDeleteOutline />}
-                      className="max-w-[42px]"
-                    />
-                  </div>
+                  <Button
+                    onClick={() => {
+                      cart.removeCartItem(product.id);
+                      cart.cartItemState[0].id === product.id &&
+                        cart.cartItemState.length === 1 &&
+                        setOpenCart(false);
+                    }}
+                    title="Eliminar del carrito"
+                  >
+                    <MdDeleteOutline className="h-6 w-6" />
+                  </Button>
+
                   {getItemQuantity(product.id) > 1 && (
-                    <div title="Restar">
-                      <CartButtonAction
-                        onClick={() => {
-                          cart.decreaseCartQuantity(product.id);
-                        }}
-                        icon={<BsCartDash />}
-                        className="max-w-[42px]"
-                      />
-                    </div>
+                    <Button
+                      onClick={() => {
+                        cart.decreaseCartQuantity(product.id);
+                      }}
+                      title="Restar"
+                    >
+                      <BsCartDash className="h-6 w-6" />
+                    </Button>
                   )}
-                  <div title="Aumentar">
-                    <CartButtonAction
-                      onClick={() => cart.increaseCartQuantity(product.id)}
-                      icon={<BsCartPlus />}
-                      className="max-w-[42px]"
-                    />
-                  </div>
+                  <Button
+                    onClick={() => cart.increaseCartQuantity(product.id)}
+                    title="Añadir"
+                  >
+                    <BsCartPlus className="h-6 w-6" />
+                  </Button>
                 </div>
               </div>
             </li>

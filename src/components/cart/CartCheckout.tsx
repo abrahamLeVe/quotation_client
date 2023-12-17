@@ -3,7 +3,7 @@ import { useCartContext } from "@/context/cart.context";
 import { formatCurrency } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
 import { BsCart, BsCreditCard } from "react-icons/bs";
-import { CartButtonAction } from "./CartButtonAction";
+import { Button } from "../ui/button";
 
 export default function CartCheckout() {
   const { subTotal, setOpenCart } = useCartContext();
@@ -14,26 +14,26 @@ export default function CartCheckout() {
         <p>Subtotal</p>
         <p>{formatCurrency(subTotal)}</p>
       </div>
+      <div className="flex gap-2 py-2">
+        <Button
+          onClick={() => {
+            setOpenCart(false);
+            router.push(`/cart`);
+          }}
+          title="Ver carrito"
+        >
+          <BsCart className="h-6 w-6" /> Ver carrito
+        </Button>
 
-      <div className="mt-6 relative">
-        <CartButtonAction
+        <Button
           onClick={() => {
             setOpenCart(false);
             router.push(`/cart`);
           }}
-          title="Ver carrito" 
-          icon={<BsCart />}
-        />
-      </div>
-      <div className="mt-6 relative">
-        <CartButtonAction
           title="Check out"
-          onClick={() => {
-            setOpenCart(false);
-            router.push(`/cart`);
-          }}
-          icon={<BsCreditCard />}
-        />
+        >
+          <BsCreditCard className="h-6 w-6" /> Pagar
+        </Button>
       </div>
     </>
   );

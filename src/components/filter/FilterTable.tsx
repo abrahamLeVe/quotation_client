@@ -7,15 +7,12 @@ import { useState } from "react";
 import { BsCartCheck, BsCartPlus, BsEye } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import { IoFilterSharp, IoGridSharp } from "react-icons/io5";
-import { CartButtonAction } from "../cart/CartButtonAction";
 import ProductCard from "../product/ProductCard";
 import ProductPrice from "../product/ProductPrice";
 import ProductRating from "../product/ProductRating";
+import { Button } from "../ui/button";
 import FilterSection from "./FilterSection";
 import FilterSelect from "./FilterSelect";
-// const FilterSelect = dynamic(() => import("./FilterSelect"));
-// const FilterSection = dynamic(() => import("./FilterSection"));
-// const ProductCard = dynamic(() => import("../product/ProductCard"));
 
 export default function ProductTable({
   products,
@@ -26,8 +23,7 @@ export default function ProductTable({
   const [isTable, setIsTable] = useState(true);
   const cart = cartStore((state) => state);
   const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
-  
-  console.log(products);
+
   return (
     <>
       <div className="flex justify-end items-center gap-3 flex-row">
@@ -39,26 +35,25 @@ export default function ProductTable({
             </>
           ) : null
         ) : null}
-        <div>
-          <CartButtonAction
-            onClick={() => setOpenFilter(true)}
-            className="max-w-[80px]"
-            icon={<IoFilterSharp />}
-            title="Filtro"
-          />
-        </div>
-        <div title={!isTable ? "Lista" : "Bloques"} className="hidden md:block">
-          <CartButtonAction
-            icon={isTable ? <IoGridSharp /> : <FaThList />}
-            onClick={() => setIsTable(!isTable)}
-            className="max-w-[42px]"
-          />
-        </div>
+        <Button onClick={() => setOpenFilter(true)} title="Filtro">
+          <IoFilterSharp className="h-6 w-6" /> Filtro
+        </Button>
+        <Button
+          onClick={() => setIsTable(!isTable)}
+          title={!isTable ? "Lista" : "Bloques"}
+          className="hidden md:block"
+        >
+          {isTable ? (
+            <IoGridSharp className="h-6 w-6" />
+          ) : (
+            <FaThList className="h-6 w-6" />
+          )}
+        </Button>
       </div>
       <div className="inline-block min-w-full align-middle">
         {!isTable ? (
           <div className="hidden md:grid">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
               {products?.data?.map((product) => (
                 <div
                   key={product.id}
@@ -75,7 +70,7 @@ export default function ProductTable({
               {products?.data?.map((product) => (
                 <div
                   key={product.id}
-                  className="mb-2 w-full rounded-md bg-white p-4"
+                  className="mb-2 w-full rounded-md bg-white p-4 relative"
                 >
                   <div className="border-b pb-2">
                     <div
@@ -100,7 +95,7 @@ export default function ProductTable({
                     </div>
                   </div>
 
-                  <div className="flex w-full items-center justify-between pt-2">
+                  <div className="flex w-full items-center justify-between pt-2 ">
                     <div>
                       <ProductPrice
                         discount={
@@ -110,23 +105,24 @@ export default function ProductTable({
                         price={
                           product.attributes.prices.data[0]?.attributes.value
                         }
-                        popUp
                       />
                     </div>
                     <div className="flex justify-end gap-2">
                       <div className="flex justify-end p-3 gap-2">
-                        <CartButtonAction
+                        <Button
                           onClick={() => {
                             setProduct([product]), setIsOpen(true);
                           }}
-                          icon={<BsEye />}
-                          name="Detalles"
-                        />
-                        <CartButtonAction
+                          title="Ver mas detalles"
+                        >
+                          <BsEye className="h-6 w-6" /> Ver detalles
+                        </Button>
+                        <Button
                           onClick={() => cart.increaseCartQuantity(product.id)}
-                          icon={<BsCartCheck />}
-                          name="Añadir"
-                        />
+                          title="Añadir"
+                        >
+                          <BsCartCheck className="h-6 w-6" /> Añadir
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -189,34 +185,35 @@ export default function ProductTable({
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex justify-end p-3 gap-2">
-                        <CartButtonAction
+                        <Button
                           onClick={() => {
                             setProduct([product]), setIsOpen(true);
                           }}
-                          title="Detalles"
-                          icon={<BsEye />}
-                          className="gap-1"
-                        />
+                          title="Ver mas detalles"
+                        >
+                          <BsEye className="h-6 w-6" /> Ver detalles
+                        </Button>
+
                         {getItemQuantity(product.id) ? (
-                          <>
-                            <CartButtonAction
-                              onClick={() =>
-                                cart.increaseCartQuantity(product.id)
-                              }
-                              title={`x ${getItemQuantity(product.id)}`}
-                              icon={<BsCartCheck />}
-                            />
-                          </>
+                          <Button
+                            onClick={() =>
+                              cart.increaseCartQuantity(product.id)
+                            }
+                            title="Ver mas detalles"
+                          >
+                            <BsCartCheck className="h-6 w-6" />{" "}
+                            {`x ${getItemQuantity(product.id)}`}
+                          </Button>
                         ) : (
-                          <>
-                            <CartButtonAction
-                              onClick={() =>
-                                cart.increaseCartQuantity(product.id)
-                              }
-                              title="Añadir"
-                              icon={<BsCartPlus />}
-                            />
-                          </>
+                          <Button
+                            onClick={() =>
+                              cart.increaseCartQuantity(product.id)
+                            }
+                            title="Añadir"
+                          >
+                            <BsCartPlus className="h-6 w-6" />
+                            Añadir
+                          </Button>
                         )}
                       </div>
                     </td>

@@ -32,7 +32,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
     () => calculateItemsPerPage(windowWidth),
     [windowWidth]
   );
-  
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
   const handleButtonClick = (newPage: number) => {
@@ -82,7 +82,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className=" flex flex-row gap-4">
+        <div className="flex flex-row gap-4">
           {currentProducts.map((product) => (
             <div
               key={product.id}
@@ -128,9 +128,15 @@ function calculateItemsPerPage(windowWidth: number): number {
   const XLARGE_SCREEN = 1200;
   const LARGE_SCREEN = 976;
   const MEDIUM_SCREEN = 768;
+  const SMALL_SCREEN = 640;
 
-  const breakpoints = [XLARGE_SCREEN, LARGE_SCREEN, MEDIUM_SCREEN];
-  const itemsPerPage = [5, 4, 3, 2];
+  const breakpoints = [
+    XLARGE_SCREEN,
+    LARGE_SCREEN,
+    MEDIUM_SCREEN,
+    SMALL_SCREEN,
+  ];
+  const itemsPerPage = [5, 4, 3, 2, 1];
 
   for (let i = 0; i < breakpoints.length; i++) {
     if (windowWidth >= breakpoints[i]) {
