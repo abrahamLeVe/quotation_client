@@ -39,7 +39,6 @@ export async function filterProductsByColor(
     );
 
     const res = await fetchDataFromApi(`/api/products?${queryString}`);
-    console.log("data color service", res);
     return res;
   } catch (error) {
     console.log("error in filterProducts", error);

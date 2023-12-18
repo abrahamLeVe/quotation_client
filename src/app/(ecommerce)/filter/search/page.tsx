@@ -12,10 +12,8 @@ export default async function FilterProductPage({
 }) {
   const query = searchParams?.query;
   return (
-    <>
-      <Suspense key={query} fallback={<ProductsTableSkeleton />}>
-        <FilterIndex query={query} />
-      </Suspense>
-    </>
+    <Suspense key={query} fallback={<ProductsTableSkeleton />}>
+      <FilterIndex query={query} />
+    </Suspense>
   );
 }

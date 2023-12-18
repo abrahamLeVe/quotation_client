@@ -1,16 +1,12 @@
 "use client";
-import ProductTable from "@/components/filter/FilterTable";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
-import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
 import ProductSearch from "@/components/ui/Search";
-import { useFilterContext } from "@/context/filter.context";
 
 export default function BrandLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { productsFilter, isPending } = useFilterContext();
   return (
     <>
       <Breadcrumbs
@@ -29,15 +25,8 @@ export default function BrandLayout({
           },
         ]}
       />
-      <ProductSearch
-        placeholder={"Buscar marca..."}
-        title={"Marca: "}
-      />
-      {isPending ? (
-        <ProductsTableSkeleton />
-      ) : (
-        <ProductTable products={productsFilter} />
-      )}
+      <ProductSearch placeholder={"Buscar marca..."} title={"Marca: "} />
+
       {children}
     </>
   );

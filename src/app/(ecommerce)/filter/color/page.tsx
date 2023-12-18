@@ -1,4 +1,6 @@
 import ColorIndex from "@/components/color/ColorIndex";
+import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
+import { Suspense } from "react";
 
 export default async function BrandPage({
   searchParams,
@@ -10,5 +12,9 @@ export default async function BrandPage({
 }) {
   const query = searchParams?.query;
 
-  return <ColorIndex query={query} />;
+  return (
+    <Suspense key={query} fallback={<ProductsTableSkeleton />}>
+      <ColorIndex query={query} />
+    </Suspense>
+  );
 }

@@ -4,8 +4,6 @@ import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
-
-
 export async function getDataProducts(): Promise<ProductsInterface> {
   const queryString = qs.stringify(
     { sort: ["name:asc"], populate },
@@ -28,8 +26,8 @@ export async function getDataProductBySlug(
     { sort: ["name:asc"], populate, filters: filter },
     { encodeValuesOnly: true }
   );
-
   const res = fetchDataFromApi(`/api/products?${queryString}`);
+  
   return res;
 }
 
@@ -79,3 +77,4 @@ export async function filterProducts(
     console.log("error in filterProducts", error);
   }
 }
+
