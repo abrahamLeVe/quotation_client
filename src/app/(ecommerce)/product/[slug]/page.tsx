@@ -1,4 +1,7 @@
-import { getDataProductBySlug } from "@/app/services/product.service";
+import {
+  getDataProductBySlug,
+  getDataProducts,
+} from "@/app/services/product.service";
 import CategoryProducts from "@/components/category/CategoryProducts";
 import ProductSinglePage from "@/components/product/ProductSinglePage";
 import { Suspense } from "react";
@@ -7,6 +10,14 @@ export interface ProductPageProps {
   params: {
     slug: string;
   };
+}
+
+export async function generateStaticParams() {
+  const products = await getDataProducts();
+
+  return products.data.map((product) => ({
+    slug: product.attributes.slug,
+  }));
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
