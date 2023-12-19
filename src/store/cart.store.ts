@@ -1,25 +1,35 @@
-"use client";
+import {
+  CartItem,
+  CartStateProps,
+  CustomPersistStorage,
+} from "@/models/cart.model";
+import { decryptCartState, encryptCartState } from "@/utilities/crypted";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { StorageValue, persist } from "zustand/middleware";
 
-export interface CartItem {
-  id: number;
-  quantity: number;
-}
+const customStorage: CustomPersistStorage<CartStateProps> = {
+  getItem: async (name: string) => {
+    const encodedState = localStorage.getItem(name);
+    if (encodedState) {
+      const decodedState = decryptCartState(encodedState);
+      return { state: decodedState } as StorageValue<CartStateProps>;
+    }
+    return null;
+  },
+  setItem: async (name: string, value: StorageValue<CartStateProps>) => {
+    const decodedState = value.state;
+    const encodedState = encryptCartState(decodedState);
+    localStorage.setItem(name, encodedState);
+  },
+  removeItem: async (name: string) => localStorage.removeItem(name),
+};
 
-interface cartStateProps {
-  cartItemState: CartItem[];
-  increaseCartQuantity: (id: number) => void;
-  decreaseCartQuantity: (id: number) => void;
-  removeCartItem: (id: number) => void;
-}
-
-export const cartStore = create<cartStateProps>()(
+export const cartStore = create<CartStateProps>()(
   persist(
     (set) => ({
       cartItemState: [],
       increaseCartQuantity: (id: number) => {
-        set((state: cartStateProps) => {
+        set((state: CartStateProps) => {
           const existingItem = state.cartItemState.find(
             (item) => item.id === id
           );
@@ -41,7 +51,7 @@ export const cartStore = create<cartStateProps>()(
         });
       },
       decreaseCartQuantity: (id: number) => {
-        set((state: cartStateProps) => {
+        set((state: CartStateProps) => {
           const updatedCart = state.cartItemState.map((item: CartItem) => {
             if (item.id === id) {
               const newQuantity = item.quantity - 1;
@@ -56,11 +66,11 @@ export const cartStore = create<cartStateProps>()(
           const filteredCart = updatedCart.filter(
             (item: CartItem | null) => item !== null
           );
-          return { cartItemState: filteredCart } as cartStateProps;
+          return { cartItemState: filteredCart } as CartStateProps;
         });
       },
       removeCartItem: (id: number) => {
-        set((state: cartStateProps) => {
+        set((state: CartStateProps) => {
           const updatedCart = state.cartItemState.filter(
             (item) => item.id !== id
           );
@@ -70,6 +80,7 @@ export const cartStore = create<cartStateProps>()(
     }),
     {
       name: "cart",
+      storage: customStorage,
     }
-  ) as () => cartStateProps
+  )
 );
