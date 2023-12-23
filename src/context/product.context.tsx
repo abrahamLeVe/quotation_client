@@ -1,7 +1,5 @@
 "use client";
-import ProductModal from "@/components/product/ProductModal";
 import { useMounted } from "@/hooks/useMounted";
-import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { createContext, useContext, useState } from "react";
 
@@ -11,11 +9,10 @@ interface ProductProviderProps {
 
 interface ProductContext {
   isOpen: boolean;
-  product: ProductInterface[];
   getItemQuantity: (id: number) => number | undefined;
+  getItemColorQuantity: (id: number, colorId: number) => number | undefined;
 
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setProduct: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   cleanProductModal: () => void;
 }
 
@@ -26,7 +23,6 @@ export function useProductContext() {
 }
 
 export function ProductProvider({ children }: ProductProviderProps) {
-  const [product, setProduct] = useState<ProductInterface[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const cart = cartStore((state) => state);
@@ -39,24 +35,29 @@ export function ProductProvider({ children }: ProductProviderProps) {
       : 0;
   }
 
+  function getItemColorQuantity(productId: number, colorId: number) {
+    return mounted
+      ? cart.cartItemState
+          .find((item) => item.id === productId)
+          ?.colors?.find((color) => color.id === colorId)?.quantity
+      : 0;
+  }
+
   function cleanProductModal() {
-    setProduct([]);
     setIsOpen(false);
   }
 
   return (
     <ProductContext.Provider
       value={{
-        product,
         isOpen,
         setIsOpen,
         getItemQuantity,
-        setProduct,
         cleanProductModal,
+        getItemColorQuantity,
       }}
     >
       {children}
-      {product[0] ? <ProductModal /> : null}
     </ProductContext.Provider>
   );
 }

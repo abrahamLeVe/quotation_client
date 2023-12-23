@@ -7,9 +7,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useProductContext } from "@/context/product.context";
 import { ProductPriceInterface } from "@/models/products.model";
+import { cartStore } from "@/store/cart.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { BsCartCheck } from "react-icons/bs";
 import z from "zod";
 import {
   Select,
@@ -20,7 +23,7 @@ import {
 } from "../ui/select";
 
 interface SizeSelectProps {
-  selectedSize: ProductPriceInterface;
+  selectedPrice: ProductPriceInterface;
   productPrices: ProductPriceInterface[];
   handleSizeChange: (id: string) => void;
 }
@@ -32,13 +35,16 @@ const FormSchema = z.object({
 });
 
 export default function SizeSelect({
-  selectedSize,
+  selectedPrice,
   productPrices,
   handleSizeChange,
 }: SizeSelectProps) {
+  const cart = cartStore((state) => state);
+  const { getItemQuantity } = useProductContext();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { id: selectedSize.id.toFixed() },
+    defaultValues: { id: selectedPrice.id.toFixed() },
   });
 
   return (
@@ -47,7 +53,7 @@ export default function SizeSelect({
         control={form.control}
         name="id"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="flex w-full gap-2 items-center">
             <FormLabel>Medidas:</FormLabel>
             <Select onValueChange={handleSizeChange} defaultValue={field.value}>
               <FormControl>
@@ -56,11 +62,26 @@ export default function SizeSelect({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {productPrices.map((price) => (
-                  <SelectItem key={price.id} value={price.id.toFixed()}>
-                    {`${price.attributes.size.data?.attributes.numberLatam}-${price.attributes.size.data?.attributes.category.data.attributes.name}`}
-                  </SelectItem>
-                ))}
+                {productPrices.map((price) => {
+                  const isInCurrentCart = cart.cartItemState.some(
+                    (item) => item.id === price.id
+                  );
+                  return (
+                    <SelectItem key={price.id} value={price.id.toFixed()}>
+                      <div className="flex gap-3">
+                        <div className="flex">
+                          {`${price.attributes.size.data?.attributes.numberLatam}-${price.attributes.size.data?.attributes.category.data.attributes.name}`}
+                        </div>
+                        {isInCurrentCart ? (
+                          <div className="flex ">
+                            <BsCartCheck className="h-5 w-5" />
+                            {`x ${getItemQuantity(price.id)}`}
+                          </div>
+                        ) : null}
+                      </div>
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
             <FormMessage />

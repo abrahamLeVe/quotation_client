@@ -25,7 +25,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <ProductSinglePage data={data} />
+      <ProductSinglePage data={data[0]} />
       {data[0] ? (
         <>
           <Suspense fallback={<>Cargando...</>}>

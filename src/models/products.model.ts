@@ -87,14 +87,14 @@ interface Model {
 }
 
 interface Productcolors2 {
-  data: Datum4[][];
+  data: ColorProduct[];
 }
 
 interface Productcolors {
-  data: Datum4[];
+  data: ColorProduct[];
 }
 
-interface Datum4 {
+export interface ColorProduct {
   id: number;
   attributes: Attributes4;
 }

@@ -8,12 +8,18 @@ export type ShoppingCartProviderProps = {
 export interface CartItem {
   id: number;
   quantity: number;
+  colors?: ItemColor[];
+}
+
+interface ItemColor {
+  id: number;
+  quantity: number;
 }
 
 export interface CartStateProps {
   cartItemState: CartItem[];
-  increaseCartQuantity: (id: number) => void;
-  decreaseCartQuantity: (id: number) => void;
+  increaseCartQuantity: (id: number, colorId: number) => void;
+  decreaseCartQuantity: (id: number, colorId: number) => void;
   removeCartItem: (id: number) => void;
 }
 

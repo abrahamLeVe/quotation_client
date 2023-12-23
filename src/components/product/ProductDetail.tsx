@@ -1,18 +1,16 @@
 "use client";
-import { useProductContext } from "@/context/product.context";
 import {
+  ColorProduct,
   ProductInterface,
   ProductPriceInterface,
 } from "@/models/products.model";
-import { cartStore } from "@/store/cart.store";
 import { truncate } from "@/utilities/utils";
 import Link from "next/link";
 import { useState } from "react";
-import { BsCartCheck, BsCartDash, BsCartPlus, BsEye } from "react-icons/bs";
-import { FaCircle } from "react-icons/fa6";
-import { MdDeleteOutline } from "react-icons/md";
+import CartButtonActions from "../cart/CartButtonActions";
+import ColorSelect from "../color/ColorSelect";
 import SizeSelect from "../size/SizeSelect";
-import { Button } from "../ui/button";
+import ProductModal from "./ProductModal";
 import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
@@ -25,74 +23,87 @@ export default function ProductDetail({
   product,
   isPage = false,
 }: ProductDetailProps) {
-  const [selectedSize, setSize] = useState<ProductPriceInterface>(
+  const [selectedPrice, setPrice] = useState<ProductPriceInterface>(
     product.attributes.prices.data[0]
   );
-  const cart = cartStore((state) => state);
-  const { getItemQuantity, setProduct, setIsOpen } = useProductContext();
+  const [colors, setColors] = useState<ColorProduct[]>(
+    selectedPrice.attributes.product_colors.data
+  );
+
+  const [idColor, setIdColor] = useState<number>(colors[0]?.id);
 
   const handleSizeChange = (id: string) => {
     const sizeId = parseInt(id);
-    const selectedSize = product.attributes.prices.data.find(
+    const priceSelected = product.attributes.prices.data.find(
       (price) => price.id === sizeId
     );
-    setSize(selectedSize || product.attributes.prices.data[0]);
+    setColors(priceSelected!.attributes.product_colors.data!);
+    setIdColor(priceSelected!.attributes.product_colors.data[0].id);
+
+    setPrice(priceSelected!);
+  };
+
+  const handleColorChange = (id: string) => {
+    const colorId = parseInt(id);
+    const selectedColor = colors.find((price) => price.id === colorId);
+    setIdColor(selectedColor?.id!);
   };
 
   return (
     <>
-      <h3 className=" text-gray-900 relative" title={product.attributes.name}>
-        {!isPage ? (
-          <>{truncate(product.attributes.name, 60)}</>
-        ) : (
-          <>{product.attributes.name}</>
+      <div className="flex flex-col gap-2">
+        <h3 className=" text-gray-900 relative" title={product.attributes.name}>
+          {!isPage ? (
+            <>{truncate(product.attributes.name, 60)}</>
+          ) : (
+            <>{product.attributes.name}</>
+          )}
+        </h3>
+
+        {!selectedPrice ? null : (
+          <div className="flex gap-2">
+            <ProductPrice
+              discount={selectedPrice.attributes.discount || 0}
+              price={selectedPrice.attributes.value || 0}
+              popUp
+            />
+          </div>
         )}
-      </h3>
 
-      {selectedSize ? (
-        <div className="flex gap-2">
-          <ProductPrice
-            discount={selectedSize.attributes.discount || 0}
-            price={selectedSize.attributes.value || 0}
-            popUp
+        {product.attributes.brand?.data ? (
+          <div className="flex flex-wrap gap-2">
+            <span className="font-semibold">Marca: </span>
+            <Link
+              href={`/product/filter?query=${product.attributes.brand.data?.attributes.name}`}
+              className="underline text-gray-700 hover:text-gray-900"
+            >
+              {product.attributes.brand.data?.attributes.name}
+            </Link>
+          </div>
+        ) : null}
+
+        <ProductRating rating={product.attributes.rating} />
+
+        {colors.length > 0 ? (
+          <ColorSelect
+            colors={colors}
+            handleColorChange={handleColorChange}
+            productId={selectedPrice.id}
+            key={selectedPrice.id}
           />
-        </div>
-      ) : null}
+        ) : null}
 
-      {product.attributes.brand?.data ? (
-        <div className="flex flex-wrap gap-2">
-          <span className="font-semibold"> Marca: </span>
-          <Link
-            href={`/product/filter?query=${product.attributes.brand.data?.attributes.name}`}
-            className="underline text-gray-700 hover:text-gray-900"
-          >
-            {product.attributes.brand.data?.attributes.name}
-          </Link>
-        </div>
-      ) : null}
-
-      <ProductRating rating={product.attributes.rating} />
-      {isPage ? (
-        <>
-          {product.attributes.product_colors.data.length > 0 ? (
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="font-semibold">Color:</span>
-              {product.attributes.product_colors?.data.map((item) => (
-                <div
-                  key={item.id}
-                  title={item.attributes.Name}
-                  className="border rounded-full shadow-sm"
-                >
-                  <FaCircle
-                    className="h-5 w-5"
-                    style={{ color: `${item.attributes.code}` }}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          {!product.attributes.prices.data[0].attributes.size?.data ? (
+        {isPage ? (
+          <>
+            {!product.attributes.prices.data[0].attributes.size?.data ? (
+              <></>
+            ) : (
+              <SizeSelect
+                selectedPrice={selectedPrice}
+                productPrices={product.attributes.prices.data}
+                handleSizeChange={handleSizeChange}
+              />
+            )}
             <>
               {product.attributes.categories.data.length > 0 ? (
                 <div className="flex flex-wrap gap-2">
@@ -109,65 +120,14 @@ export default function ProductDetail({
                 </div>
               ) : null}
             </>
-          ) : (
-            <SizeSelect
-              selectedSize={selectedSize}
-              productPrices={product.attributes.prices.data}
-              handleSizeChange={handleSizeChange}
-            />
-          )}
-        </>
-      ) : null}
+          </>
+        ) : null}
+      </div>
 
       {/* actions */}
       <div className="flex flex-col items-end gap-3 relative">
-        {getItemQuantity(product.id) ? (
-          <div className="flex flex-row gap-2">
-            <Button
-              onClick={() => cart.removeCartItem(product.id)}
-              title="Quitar"
-            >
-              <MdDeleteOutline className="h-6 w-6" />
-              {isPage ? "Quitar" : null}
-            </Button>
-
-            <Button
-              onClick={() => cart.decreaseCartQuantity(product.id)}
-              title="Restar"
-            >
-              <BsCartDash className="h-6 w-6" /> {isPage ? "Restar" : null}
-            </Button>
-
-            <Button
-              onClick={() => cart.increaseCartQuantity(product.id)}
-              title="Añadir"
-            >
-              <BsCartCheck className="h-6 w-6" />
-              {`x ${getItemQuantity(product.id)}`}
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <Button
-              onClick={() => cart.increaseCartQuantity(product.id)}
-              title="Añadir"
-            >
-              <BsCartPlus className="h-6 w-6" /> Añadir
-            </Button>
-          </div>
-        )}
-        {isPage ? null : (
-          <div>
-            <Button
-              onClick={() => {
-                setProduct([product]), setIsOpen(true);
-              }}
-              title="Ver mas detalles"
-            >
-              <BsEye className="h-6 w-6" /> Ver detalles
-            </Button>
-          </div>
-        )}
+        <CartButtonActions id={selectedPrice.id} idColor={idColor} />
+        {isPage ? null : <ProductModal product={product} />}
       </div>
     </>
   );

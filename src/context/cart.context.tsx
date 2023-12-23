@@ -46,18 +46,34 @@ export function CartProvider({ children }: CartProviderProps) {
         const { data } = await getDataProducts();
         if (data) {
           setCartItems(
-            data.filter((product) =>
-              cart.some((cartItem) => cartItem.id === product.id)
+            data.flatMap((product) =>
+              cart
+                .filter((cartItem) =>
+                  product.attributes.prices.data.some(
+                    (price) => price.id === cartItem.id
+                  )
+                )
+                .map(() => product)
             )
           );
+
+          console.log(cart);
           setSubTotal(
             cart.reduce((acc, cartItem) => {
-              const product = data.find((item) => item.id === cartItem.id);
+              const product = data.find((item) =>
+                item.attributes.prices.data.some(
+                  (price) => price.id === cartItem.id
+                )
+              );
+
+              const selectedPrice = product!.attributes.prices.data.find(
+                (price) => price.id === cartItem.id
+              );
+
               return (
                 acc +
-                (product!.attributes.prices.data[0].attributes.value -
-                  product!.attributes.prices.data[0].attributes.discount! ||
-                  0) *
+                (selectedPrice!.attributes.value -
+                  selectedPrice!.attributes.discount! || 0) *
                   cartItem.quantity
               );
             }, 0)
