@@ -1,148 +1,66 @@
 "use client";
 import { ProductInterface } from "@/models/products.model";
-import { Transition } from "@headlessui/react";
-import { Fragment, useEffect, useMemo, useState } from "react";
-import { FaCircle } from "react-icons/fa6";
-import { ArrowButton } from "../slide/ArrowButton";
 import ProductCard from "./ProductCard";
 
 interface ProductSliderProps {
   data: ProductInterface[];
 }
 
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import React from "react";
+
 export default function ProductSlider({ data }: ProductSliderProps) {
-  const [windowWidth, setWindowWidth] = useState(0);
-  const [isShowing, setIsShowing] = useState(true);
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
 
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
 
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const itemsPerPage = useMemo(
-    () => calculateItemsPerPage(windowWidth),
-    [windowWidth]
-  );
-
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const [currentPage, setCurrentPage] = useState(0);
-  const handleButtonClick = (newPage: number) => {
-    setIsShowing(false);
-
-    setTimeout(() => {
-      setCurrentPage(newPage);
-      setIsShowing(true);
-    }, 100);
-  };
-
-  const prevPage = () => {
-    handleButtonClick((currentPage - 1 + totalPages) % totalPages);
-  };
-
-  const nextPage = () => {
-    handleButtonClick((currentPage + 1) % totalPages);
-  };
-
-  const goToPage = (pageIndex: number) => {
-    handleButtonClick(pageIndex);
-  };
-
-  useEffect(() => {
-    const autoSlideInterval = setInterval(() => {
-      nextPage();
-    }, 500000);
-
-    return () => {
-      clearInterval(autoSlideInterval);
-    };
-  });
-
-  const startIdx = currentPage * itemsPerPage;
-  const endIdx = startIdx + itemsPerPage;
-  const currentProducts = data.slice(startIdx, endIdx);
+    api.on("select", () => {
+      console.log("current");
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   return (
-    <section className="w-full z-30">
-      <Transition
-        as={Fragment}
-        show={isShowing}
-        enter="transform transition duration-[400ms] ease-in-out"
-        enterFrom="opacity-0 scale-50"
-        enterTo="opacity-100 scale-100"
-        leave="transform transition duration-200 ease-in-out"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
-      >
-        <div className="flex flex-row gap-4">
-          {currentProducts.map((product) => (
-            <div
+    <>
+      <Carousel setApi={setApi} className="w-full">
+        <CarouselContent className="-ml-1">
+          {data.map((product) => (
+            <CarouselItem
               key={product.id}
-              className="flex flex-col w-full sm:w-[50%] md:w-[33.333%] lg:w-[25%] xl:w-[20%] border rounded-lg overflow-hidden relative text-sm"
+              className="pl-1 md:basis-1/3 lg:basis-1/4"
             >
-              <ProductCard product={product} />
-            </div>
+              <div className="p-1 h-full">
+                <Card className="h-full overflow-hidden">
+                  <CardContent className="flex flex-col h-full p-0">
+                    <ProductCard product={product} />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
           ))}
-        </div>
-      </Transition>
-
-      <ArrowButton
-        onClick={prevPage}
-        direction="left"
-        className={`${isShowing ? "" : "pointer-events-none"}`}
-      />
-      <ArrowButton
-        onClick={prevPage}
-        direction="right"
-        className={`${isShowing ? "" : "pointer-events-none"}`}
-      />
-      <div className="flex top-4 justify-center py-4 gap-2">
-        {Array.from({ length: totalPages }, (_, pageIndex) => (
-          <div
-            key={pageIndex}
-            onClick={() => goToPage(pageIndex)}
-            className="cursor-pointer z-40"
-          >
-            <FaCircle
-              className={`h-4 w-4  ${
-                pageIndex === currentPage ? "text-indigo-600" : ""
-              }`}
-              aria-hidden="true"
-            />
-          </div>
-        ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+      <div className="py-2 text-center text-sm text-muted-foreground">
+        Carrusel {current} de {count}
       </div>
-    </section>
+    </>
   );
-}
-
-function calculateItemsPerPage(windowWidth: number): number {
-  const XLARGE_SCREEN = 1200;
-  const LARGE_SCREEN = 976;
-  const MEDIUM_SCREEN = 768;
-  const SMALL_SCREEN = 640;
-
-  const breakpoints = [
-    XLARGE_SCREEN,
-    LARGE_SCREEN,
-    MEDIUM_SCREEN,
-    SMALL_SCREEN,
-  ];
-  const itemsPerPage = [5, 4, 3, 2, 1];
-
-  for (let i = 0; i < breakpoints.length; i++) {
-    if (windowWidth >= breakpoints[i]) {
-      return itemsPerPage[i];
-    }
-  }
-
-  return itemsPerPage[itemsPerPage.length - 1];
 }
