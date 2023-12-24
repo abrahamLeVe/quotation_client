@@ -1,17 +1,12 @@
 "use client";
-import { useCartContext } from "@/context/cart.context";
-import { useProductContext } from "@/context/product.context";
 import Link from "next/link";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
+import CartSliderOver from "../cart/CartSliderOver";
 import FilterButton from "../filter/FilterButton";
 import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
-  const { cartQuantity, setOpenCart } = useCartContext();
-  const { cleanProductModal } = useProductContext();
-
   return (
     <>
       <header className="bg-white">
@@ -50,21 +45,7 @@ export default function NavBar() {
 
                   {/* Cart */}
                   <div className="ml-4 flow-root lg:ml-6">
-                    <button
-                      onClick={() => {
-                        cartQuantity > 0 &&
-                          (setOpenCart(true), cleanProductModal());
-                      }}
-                      className="p-2 text-gray-400 hover:text-gray-500 relative"
-                    >
-                      <HiOutlineShoppingBag
-                        className="h-7 w-7 flex-shrink-0"
-                        aria-hidden="true"
-                      />
-                      <div className="border rounded-full w-6 h-6 absolute top-0 -right-1">
-                        <p className="text-sm">{cartQuantity}</p>
-                      </div>
-                    </button>
+                    <CartSliderOver />
                   </div>
                 </div>
               </div>

@@ -18,17 +18,15 @@ export default function CartButtonActions({
   isPage = false,
 }: CartButtonActionsProps) {
   const cart = cartStore((state) => state);
-  const { setOpenCart } = useCartContext();
   const { getItemQuantity } = useProductContext();
 
   return (
     <>
       {getItemQuantity(id) ? (
-        <div className="flex flex-wrap flex-row gap-2">
+        <div className="flex flex-wrap justify-end x|flex-row gap-2">
           <Button
             onClick={() => {
               cart.removeCartItem(id);
-              cart.cartItemState.length === 1 && setOpenCart(false);
             }}
             title="Quitar del carrito"
           >

@@ -1,6 +1,5 @@
 "use client";
 import { getDataProducts } from "@/app/services/product.service";
-import CartOffCanvas from "@/components/cart/CartSliderOver";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
@@ -17,9 +16,7 @@ interface CartContext {
   cartQuantity: number;
   cartItems: ProductInterface[];
   openMenu: boolean;
-  openCart: boolean;
   setCartItems: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
-  setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
   getItemQuantity: (id: number) => number;
   calculateTotal: () => { igv: number; total: number };
@@ -34,7 +31,6 @@ export function useCartContext() {
 
 export function CartProvider({ children }: CartProviderProps) {
   const cart = cartStore((state) => state.cartItemState);
-  const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [cartItems, setCartItems] = useState<ProductInterface[]>([]);
   const [subTotal, setSubTotal] = useState<number>(0);
@@ -110,10 +106,8 @@ export function CartProvider({ children }: CartProviderProps) {
     <CartContext.Provider
       value={{
         cartQuantity,
-        openCart,
         openMenu,
         calculateTotal,
-        setOpenCart,
         getItemQuantity,
         setOpenMenu,
         cartItems,
@@ -122,7 +116,6 @@ export function CartProvider({ children }: CartProviderProps) {
       }}
     >
       {children}
-      <CartOffCanvas />
     </CartContext.Provider>
   );
 }
