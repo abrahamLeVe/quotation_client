@@ -4,7 +4,8 @@ import useEmblaCarousel, {
   type EmblaOptionsType as CarouselOptions,
   type EmblaPluginType as CarouselPlugin,
 } from "embla-carousel-react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -201,20 +202,20 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute  h-8 w-8 rounded-full",
+        "absolute  h-9 w-9 rounded-full",
         orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "-left-2 top-1/3 -translate-y-1/2"
+          : "-top-5 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <BsChevronLeft className="h-6 w-6" />
       <span className="sr-only">Previous slide</span>
     </Button>
-  )
+  );
 })
 CarouselPrevious.displayName = "CarouselPrevious"
 
@@ -230,20 +231,20 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full",
+        "absolute h-9 w-9 rounded-full",
         orientation === "horizontal"
-          ? "-right-12 top-1/2 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "-right-2 top-1/3 -translate-y-1/2"
+          : "-bottom-5 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight className="h-4 w-4" />
+      <BsChevronRight className="h-6 w-6" />
       <span className="sr-only">Next slide</span>
     </Button>
-  )
+  );
 })
 CarouselNext.displayName = "CarouselNext"
 

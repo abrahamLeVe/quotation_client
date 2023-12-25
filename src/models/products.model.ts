@@ -21,8 +21,6 @@ export interface ProductInterface {
 
 interface Attributes7 {
   name: string;
-  price: number;
-  discount: number;
   description: string;
   createdAt: string;
   updatedAt: string;

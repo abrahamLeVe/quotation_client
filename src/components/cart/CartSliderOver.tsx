@@ -18,7 +18,7 @@ export default function CartSliderOver() {
   const { cartQuantity } = useCartContext();
 
   return (
-    <Sheet >
+    <Sheet>
       <SheetTrigger asChild>
         <Button variant="link" className="relative">
           <HiOutlineShoppingBag
@@ -30,7 +30,7 @@ export default function CartSliderOver() {
           </div>
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-auto">
+      <SheetContent className="overflow-auto sm:max-w-md">
         <SheetHeader>
           <SheetTitle>Carrito</SheetTitle>
         </SheetHeader>

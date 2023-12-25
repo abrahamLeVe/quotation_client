@@ -110,7 +110,7 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                           <div>
                             <h3 className="font-medium">Sub total:</h3>
                           </div>
-                          <div>
+                          <div className="text-red-600">
                             {formatCurrency(
                               (selectedPrice?.attributes.value! -
                                 selectedPrice?.attributes.discount!) *
