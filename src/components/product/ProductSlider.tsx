@@ -1,11 +1,6 @@
 "use client";
 import { ProductInterface } from "@/models/products.model";
 import ProductCard from "./ProductCard";
-
-interface ProductSliderProps {
-  data: ProductInterface[];
-}
-
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -16,6 +11,10 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import React from "react";
+
+interface ProductSliderProps {
+  data: ProductInterface[];
+}
 
 export default function ProductSlider({ data }: ProductSliderProps) {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -39,7 +38,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
   return (
     <>
       <Carousel setApi={setApi} className="w-full">
-        <CarouselContent className="-ml-1">
+        <CarouselContent className="-ml-1 ">
           {data.map((product) => (
             <CarouselItem
               key={product.id}
