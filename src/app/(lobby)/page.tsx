@@ -1,11 +1,17 @@
 import Slide from "@/components/slide/Slide";
-import { getDataSlide } from "../services/slide.service";
+import { fetchDataFromApi } from "@/lib/api";
+import { SlideInterface } from "@/models/slide.model";
+
+async function getDataSlide(): Promise<SlideInterface> {
+  const res = await fetchDataFromApi(`/api/sliders?populate=*`);
+  return res;
+}
 
 export default async function HomePage() {
-  const { data: slides } = await getDataSlide();
+  const data = await getDataSlide();
   return (
     <>
-      <Slide data={slides} />
+      <Slide data={data} />
     </>
   );
 }
