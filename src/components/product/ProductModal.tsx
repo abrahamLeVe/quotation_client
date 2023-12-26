@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import { BsEye } from "react-icons/bs";
 import ImageGalleryModal from "../ui/ImageGallery";
 import ProductDetail from "./ProductDetail";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 interface ProductModalProps {
   product: ProductInterface;
   isCart?: boolean;
@@ -38,35 +40,37 @@ export default function ProductModal({
           {isCart ? "" : "Ver mas detalles"}
         </Button>
       </DialogTrigger>
-      <DialogContent className="lg:max-w-6xl h-full max-h-[600px] overflow-y-auto">
-        <div className="flex flex-col lg:flex-row gap-5">
-          <div>
-            <ImageGalleryModal
-              attributes={product.attributes}
-              id={product.id}
-            />
-          </div>
-          <div className="flex gap-3 flex-col lg:w-[45%]">
-            <div className="flex flex-col gap-2">
-              {/* Details */}
-              <ProductDetail product={product} isPage />
+      <DialogContent className="lg:max-w-6xl h-full max-h-[600px]">
+        <ScrollArea>
+          <div className="flex flex-col lg:flex-row gap-5">
+            <div>
+              <ImageGalleryModal
+                attributes={product.attributes}
+                id={product.id}
+              />
+            </div>
+            <div className="flex gap-3 flex-col lg:w-[45%]">
+              <div className="flex flex-col gap-2">
+                {/* Details */}
+                <ProductDetail product={product} isPage />
 
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button
-                    type="button"
-                    variant="link"
-                    onClick={() => {
-                      router.push(`/product/${product.attributes.slug}`);
-                    }}
-                  >
-                    Descripción completa: Click Aquí
-                  </Button>
-                </DialogClose>
-              </DialogFooter>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button
+                      type="button"
+                      variant="link"
+                      onClick={() => {
+                        router.push(`/product/${product.attributes.slug}`);
+                      }}
+                    >
+                      Descripción completa: Click Aquí
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

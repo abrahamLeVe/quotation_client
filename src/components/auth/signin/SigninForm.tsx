@@ -1,10 +1,14 @@
 "use client";
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function SigninForm() {
+  const { data: session } = useSession();
+  if (session) {
+    signOut({ redirect: false });
+  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
