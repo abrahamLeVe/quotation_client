@@ -32,7 +32,7 @@ export default function CartSliderOver() {
         </Button>
       </SheetTrigger>
       <SheetContent className="sm:max-w-md">
-        <ScrollArea className="h-full">
+        <ScrollArea className="h-full pr-3">         
           <SheetHeader>
             <SheetTitle>Carrito</SheetTitle>
           </SheetHeader>
