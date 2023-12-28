@@ -3,8 +3,8 @@ import { Fragment, useState } from "react";
 import { Tab } from "@headlessui/react";
 import { HiBars3 } from "react-icons/hi2";
 import SlideOver from "../ui/SlideOver";
-import ButtonLoginForm from "./MenuAuth";
 import { navigation } from "./MenuFlyout";
+import Link from "next/link";
 
 export default function MenuMobile() {
   const [open, setOpen] = useState(false);
@@ -119,7 +119,15 @@ export default function MenuMobile() {
           ))}
         </div>
         <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-          <ButtonLoginForm />
+          <>
+            <Link href="/signin" className="flow-root">
+              Ingresar
+            </Link>
+            <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+            <Link href="/register" className="flow-root">
+              Registrarse
+            </Link>
+          </>
         </div>
         <div className="border-t border-gray-200 px-4 py-6">
           <a href="#" className="-m-2 flex items-center p-2">

@@ -1,4 +1,3 @@
-"use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import ProductSearch from "@/components/ui/Search";
 

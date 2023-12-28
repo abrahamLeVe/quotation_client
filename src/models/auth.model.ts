@@ -19,7 +19,6 @@ export interface registerUserPromps {
   username: string;
   password: string;
   email: string;
-  alias: string;
 }
 
 export interface loginUserPromps {

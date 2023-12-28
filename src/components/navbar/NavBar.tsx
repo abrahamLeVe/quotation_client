@@ -5,8 +5,11 @@ import FilterButton from "../filter/FilterButton";
 // import ButtonAcount from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
-
-export default function NavBar() {
+import { Session } from "next-auth";
+interface NavBarProps {
+  session: Session | null;
+}
+export default function NavBar({ session }: NavBarProps) {
   return (
     <>
       <header className="bg-white">
@@ -37,7 +40,24 @@ export default function NavBar() {
 
                 <div className="ml-auto flex items-center">
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    {/* <ButtonAcount /> */}
+                    {!session ? (
+                      <>
+                        <Link href="/signin" className="flow-root">
+                          Ingresar
+                        </Link>
+                        <span
+                          className="h-6 w-px bg-gray-200"
+                          aria-hidden="true"
+                        />
+                        <Link href="/register" className="flow-root">
+                          Registrarse
+                        </Link>
+                      </>
+                    ) : (
+                      <Link href="/signin" className="flow-root">
+                        Cerrar sesión
+                      </Link>
+                    )}
                   </div>
 
                   {/* Filter */}
