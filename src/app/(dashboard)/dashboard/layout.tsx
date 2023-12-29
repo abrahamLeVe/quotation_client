@@ -8,7 +8,7 @@ export default function LobbyLayout({
 }) {
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBar />
       <main className="flex flex-col max-w-screen-xl m-auto relative">
         {children}
       </main>

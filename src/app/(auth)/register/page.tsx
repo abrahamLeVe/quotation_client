@@ -12,20 +12,16 @@ import {
 import { Metadata } from "next";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa6";
-// import { getServerSession } from "next-auth/next";
-// import { options } from "@/app/api/auth/[...nextauth]/options";
 
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
 };
 
-export default async function RegisterPage() {
-  // const session = await getServerSession(options);
-  // console.log(session?.user);
+export default function RegisterPage() {
   return (
     <>
-      <div className="lg:p-8">
+      <div className="flex flex-col p-8 gap-4">
         <Breadcrumbs
           segments={[
             {
@@ -42,7 +38,7 @@ export default async function RegisterPage() {
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Crear una cuenta</CardTitle>
             <CardDescription>
-              Elija su método de inicio de sesión preferido
+              Elija su método de registro preferido
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
@@ -67,9 +63,15 @@ export default async function RegisterPage() {
               </div>
             </div>
             <RegisterForm />
+            <div className="flex flex-row  items-center gap-2">
+              <p className=" text-sm text-gray-500 ">¿Tienes una cuenta? </p>
+              <Button className="font-semibold leading-6 " variant="link">
+                <Link href="/signin">Ingresar</Link>
+              </Button>
+            </div>
           </CardContent>
-          <CardFooter>
-            <p className="px-8 text-center text-sm text-muted-foreground">
+          <CardFooter className="flex flex-col items-start gap-2">
+            <p className="px-8  text-sm text-muted-foreground">
               Al hacer clic en continuar, aceptas nuestros{" "}
               <Link
                 href="/terms"

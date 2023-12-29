@@ -34,7 +34,7 @@ export default function RegisterForm({
   }
 
   type Inputs = z.infer<typeof authSchema>;
-  // react-hook-form
+
   const form = useForm<Inputs>({
     resolver: zodResolver(authSchema),
     defaultValues: {
@@ -66,7 +66,7 @@ export default function RegisterForm({
         setError(true);
       }
     } catch (error) {
-      console.log(error);
+      setError(true);
     } finally {
       setIsPending(false);
     }

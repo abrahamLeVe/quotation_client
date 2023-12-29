@@ -21,7 +21,6 @@ export async function fetchDataFromApi(endpoint: string): Promise<any> {
 }
 
 export async function postDataFromApi(endpoint: string, payload: any) {
-  console.log(payload);
   try {
     const res = await fetch(`${API_URL}${endpoint}`, {
       method: "POST",

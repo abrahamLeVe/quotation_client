@@ -1,37 +1,52 @@
 "use client";
-import { useState } from "react";
 import { Icons } from "@/components/Icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { loginSchema } from "@/lib/validations/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { PasswordInput } from "../AuthPassword";
 
 export default function SigninForm() {
   const { data: session } = useSession();
   if (session) {
     signOut({ redirect: false });
   }
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-  });
+  const searchParams = useSearchParams();
+  let error = searchParams.get("error");
   const [isPending, setIsPending] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  type Inputs = z.infer<typeof loginSchema>;
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const form = useForm<Inputs>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+
+  async function onSubmit(data: Inputs) {
     setIsPending(true);
 
-    const { email, password } = formData;
     const credentials = {
-      email,
-      password,
+      email: data.email,
+      password: data.password,
       redirect: true,
       callbackUrl: "/dashboard/account",
     };
@@ -39,102 +54,64 @@ export default function SigninForm() {
     try {
       await signIn("credentials", credentials);
     } catch (error) {
-      console.log(error);
+      return error;
     } finally {
       setIsPending(false);
     }
-  };
+  }
 
   return (
-    <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Iniciar sesión en su cuenta
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Correo electrónico
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Contraseña
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    ¿Has olvidado tu contraseña?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="relative">
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Ingresar
-              </button>
-              {isPending && (
-                <div className="w-full h-full absolute rounded-md inset-0 bg-gray-500 opacity-75">
-                  <Icons.spinner
-                    className="m-auto h-9 w-9 animate-spin"
-                    aria-hidden="true"
-                  />
-                </div>
-              )}
-            </div>
-          </form>
-          <div className="flex flex-row my-5 justify-end items-center gap-2">
-            <p className="text-center text-sm text-gray-500 ">
-              No tiene una cuenta?{" "}
-            </p>
-            <p className="font-semibold leading-6 text-center text-indigo-600 hover:text-indigo-500 ">
-              <Link href="/register">Registrarse</Link>
-            </p>
-          </div>
-        </div>
-      </div>
-    </>
+    <Form {...form}>
+      <form
+        className="grid gap-4"
+        onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+      >
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="rodneymullen180@gmail.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <PasswordInput placeholder="**********" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button disabled={isPending}>
+          {isPending && (
+            <Icons.spinner
+              className="mr-2 h-4 w-4 animate-spin"
+              aria-hidden="true"
+            />
+          )}
+          Continue
+          <span className="sr-only">Continue to email verification page</span>
+        </Button>
+        {error ? (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              El correo electrónico y/o la contraseña son incorrectos.
+            </AlertDescription>
+          </Alert>
+        ) : null}
+      </form>
+    </Form>
   );
 }

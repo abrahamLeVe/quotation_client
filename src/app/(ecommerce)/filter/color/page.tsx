@@ -2,7 +2,7 @@ import ColorIndex from "@/components/color/ColorIndex";
 import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
 import { Suspense } from "react";
 
-export default async function BrandPage({
+export default async function ColorPage({
   searchParams,
 }: {
   searchParams: {

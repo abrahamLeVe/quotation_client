@@ -1,15 +1,14 @@
 "use client";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
 import FilterButton from "../filter/FilterButton";
-// import ButtonAcount from "./MenuAuth";
+import { Button } from "../ui/button";
 import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
-import { Session } from "next-auth";
-interface NavBarProps {
-  session: Session | null;
-}
-export default function NavBar({ session }: NavBarProps) {
+
+export default function NavBar() {
+  const { data: session } = useSession();
   return (
     <>
       <header className="bg-white">
@@ -54,9 +53,14 @@ export default function NavBar({ session }: NavBarProps) {
                         </Link>
                       </>
                     ) : (
-                      <Link href="/signin" className="flow-root">
-                        Cerrar sesión
-                      </Link>
+                      <Button
+                        onClick={() =>
+                          signOut({ redirect: true, callbackUrl: "/" })
+                        }
+                        className="flow-root"
+                      >
+                        Salir
+                      </Button>
                     )}
                   </div>
 

@@ -1,4 +1,4 @@
-import * as z from "zod";
+import z from "zod";
 
 export const authSchema = z.object({
   email: z.string().email({
@@ -18,6 +18,18 @@ export const authSchema = z.object({
     .string()
     .min(8, {
       message: "El nombre de usuario debe tener al menos 6 caracteres",
+    })
+    .max(100),
+});
+
+export const loginSchema = z.object({
+  email: z.string().email({
+    message: "Por favor, introduce una dirección de correo electrónico válida",
+  }),
+  password: z
+    .string()
+    .min(3, {
+      message: "No se admiten espacios en blanco",
     })
     .max(100),
 });

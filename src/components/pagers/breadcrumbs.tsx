@@ -42,9 +42,7 @@ export function Breadcrumbs({
               aria-current={isLastSegment ? "page" : undefined}
               className={classNames(
                 "relative truncate transition-colors hover:text-black",
-                isLastSegment
-                  ? " font-semibold"
-                  : "text-gray-500"
+                isLastSegment ? " font-semibold" : "text-gray-500"
               )}
             >
               {truncationLength > 0 && segment.title
