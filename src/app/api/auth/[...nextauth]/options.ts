@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import { loginUser } from "@/app/services/auth.service";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { getUserFromApi } from "@/lib/api";
 
 export const options: NextAuthOptions = {
   providers: [
@@ -23,9 +24,12 @@ export const options: NextAuthOptions = {
           const res = await loginUser(data);
 
           if (res.jwt) {
+            const auth = await getUserFromApi(res.jwt);
             const user = {
               token: res.jwt,
               email: res.user.email,
+              avatar: auth?.avatar,
+              name: auth?.username,
             };
             return user as any;
           }

@@ -1,14 +1,12 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
 import FilterButton from "../filter/FilterButton";
-import { Button } from "../ui/button";
+import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
-  const { data: session } = useSession();
   return (
     <>
       <header className="bg-white">
@@ -39,29 +37,7 @@ export default function NavBar() {
 
                 <div className="ml-auto flex items-center">
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    {!session ? (
-                      <>
-                        <Link href="/signin" className="flow-root">
-                          Ingresar
-                        </Link>
-                        <span
-                          className="h-6 w-px bg-gray-200"
-                          aria-hidden="true"
-                        />
-                        <Link href="/register" className="flow-root">
-                          Registrarse
-                        </Link>
-                      </>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          signOut({ redirect: true, callbackUrl: "/" })
-                        }
-                        className="flow-root"
-                      >
-                        Salir
-                      </Button>
-                    )}
+                    <AuthMenu />
                   </div>
 
                   {/* Filter */}

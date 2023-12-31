@@ -1,4 +1,5 @@
-import { API_URL, API_TOKEN } from "../utilities/urls";
+import { User } from "@/models/auth.model";
+import { API_TOKEN, API_URL } from "../utilities/urls";
 
 export async function fetchDataFromApi(endpoint: string): Promise<any> {
   try {
@@ -36,7 +37,7 @@ export async function postDataFromApi(endpoint: string, payload: any) {
   }
 }
 
-export async function getUserFromApi(jwt: string): Promise<any> {
+export async function getUserFromApi(jwt: string): Promise<User | undefined> {
   try {
     if (jwt) {
       const options = {
@@ -46,7 +47,7 @@ export async function getUserFromApi(jwt: string): Promise<any> {
         },
       };
 
-      const res = await fetch(`${API_URL}/api/users/me`, options);
+      const res = await fetch(`${API_URL}/api/users/me?populate=*`, options);
 
       const data = await res.json();
 
