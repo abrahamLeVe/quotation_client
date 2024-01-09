@@ -19,8 +19,7 @@ import { Button } from "../ui/button";
 
 export default function AuthMenu() {
   const { data: session, status } = useSession();
-  console.log(session);
-  const initials = `${session?.user.name.charAt(0).toUpperCase() ?? ""}`;
+  const initials = `${session?.user.name?.charAt(0).toUpperCase() ?? ""}`;
   return (
     <>
       {status === "loading" ? (
@@ -36,7 +35,7 @@ export default function AuthMenu() {
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarImage
-                      src={session.user?.avatar?.url}
+                      src={session.user.picture}
                       alt={session.user.email}
                     />
                     <AvatarFallback>{initials}</AvatarFallback>

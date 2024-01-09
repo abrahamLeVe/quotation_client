@@ -60,6 +60,7 @@ export default function RegisterForm({
 
     try {
       const res = await registerUser(data);
+      console.log(res.jwt);
       if (res.jwt) {
         await signIn("credentials", credentials);
       } else {
@@ -83,7 +84,7 @@ export default function RegisterForm({
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre de ususario</FormLabel>
+              <FormLabel>Nombre de usuario</FormLabel>
               <FormControl>
                 <Input placeholder="Rodrigo1987" {...field} />
               </FormControl>
@@ -96,7 +97,7 @@ export default function RegisterForm({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Correo electrónico</FormLabel>
               <FormControl>
                 <Input placeholder="rodneymullen180@gmail.com" {...field} />
               </FormControl>
@@ -109,7 +110,7 @@ export default function RegisterForm({
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Contraseña</FormLabel>
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>

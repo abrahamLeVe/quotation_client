@@ -13,9 +13,7 @@ export async function fetchDataFromApi(endpoint: string): Promise<any> {
 
     const res = await fetch(`${API_URL}${endpoint}`, options);
 
-    const data = await res.json();
-
-    return data;
+    return res.json();
   } catch (error) {
     console.log("Error of fetchDataFromApi", error);
   }
@@ -30,8 +28,7 @@ export async function postDataFromApi(endpoint: string, payload: any) {
       },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
-    return data;
+    return res.json();
   } catch (error) {
     return error;
   }
@@ -49,13 +46,28 @@ export async function getUserFromApi(jwt: string): Promise<User | undefined> {
 
       const res = await fetch(`${API_URL}/api/users/me?populate=*`, options);
 
-      const data = await res.json();
-
-      return data;
+      return res.json();
     } else {
       return;
     }
   } catch (error) {
     console.log("Error of getUserFromApi", error);
+  }
+}
+
+export async function providerFetch(provider?: string, access_token?: string) {
+  try {
+    const options = {
+      method: "GET",
+    };
+
+    const res = await fetch(
+      `${API_URL}/api/auth/${provider}/callback?access_token=${access_token}`,
+      options
+    );
+
+    return await res.json();
+  } catch (error) {
+    console.log("Error of providerAuth", error);
   }
 }

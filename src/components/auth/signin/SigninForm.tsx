@@ -40,7 +40,6 @@ export default function SigninForm() {
     },
   });
 
-
   async function onSubmit(data: Inputs) {
     setIsPending(true);
 
@@ -71,7 +70,7 @@ export default function SigninForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Correo electrónico</FormLabel>
               <FormControl>
                 <Input placeholder="rodneymullen180@gmail.com" {...field} />
               </FormControl>
@@ -84,7 +83,7 @@ export default function SigninForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Contraseña</FormLabel>
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>

@@ -3,11 +3,31 @@ import "next-auth";
 
 declare module "next-auth" {
   interface Session {
+    jwt: string;
     user: {
-      token: string;
+      accessToken: string;
       email: string;
-      avatar: Avatar;
+      exp: number;
+      iat: number;
+      jti: string;
       name: string;
+      picture: string;
+      sub: string;
+      userId: number;
+    };
+  }
+
+  interface User {
+    jwt: string;
+    user: {
+      id: number;
+      username: string;
+      email: string;
+      provider: string;
+      confirmed: boolean;
+      blocked: boolean;
+      createdAt: string;
+      updatedAt: string;
     };
   }
 }

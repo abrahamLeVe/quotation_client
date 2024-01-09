@@ -3,12 +3,13 @@ import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@/components/ui/card";
+import { API_URL } from "@/utilities/urls";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa6";
 
@@ -36,10 +37,12 @@ export default function SigninPage() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
-            <Button>
-              <FaGoogle className="mr-2 h-4 w-4" />
-              Github
-            </Button>
+            <a href={`${API_URL}/api/connect/google`}>
+              <Button>
+                <FaGoogle className="mr-2 h-4 w-4" />
+                Google
+              </Button>
+            </a>
             <Button>
               <FaGoogle className="mr-2 h-4 w-4" />
               Google

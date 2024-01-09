@@ -33,7 +33,6 @@ export const cartStore = create<CartStateProps>()(
           const existingItem = state.cartItemState.find(
             (item) => item.id === id
           );
-
           if (existingItem) {
             return {
               cartItemState: state.cartItemState.map((item) => {

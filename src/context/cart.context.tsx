@@ -21,6 +21,8 @@ interface CartContext {
   getItemQuantity: (id: number) => number;
   calculateTotal: () => { igv: number; total: number };
   subTotal: number;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CartContext = createContext({} as CartContext);
@@ -34,11 +36,13 @@ export function CartProvider({ children }: CartProviderProps) {
   const [openMenu, setOpenMenu] = useState(false);
   const [cartItems, setCartItems] = useState<ProductInterface[]>([]);
   const [subTotal, setSubTotal] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const mounted = useMounted();
 
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         const { data } = await getDataProducts();
         if (data) {
           setCartItems(
@@ -53,7 +57,6 @@ export function CartProvider({ children }: CartProviderProps) {
             )
           );
 
-          console.log(cart);
           setSubTotal(
             cart.reduce((acc, cartItem) => {
               const product = data.find((item) =>
@@ -77,6 +80,8 @@ export function CartProvider({ children }: CartProviderProps) {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [cart]);
@@ -113,6 +118,8 @@ export function CartProvider({ children }: CartProviderProps) {
         cartItems,
         setCartItems,
         subTotal,
+        setIsLoading,
+        isLoading,
       }}
     >
       {children}

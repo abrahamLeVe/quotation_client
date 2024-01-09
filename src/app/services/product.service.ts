@@ -1,3 +1,4 @@
+"use server";
 import { fetchDataFromApi } from "@/lib/api";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
@@ -9,7 +10,7 @@ export async function getDataProducts(): Promise<ProductsInterface> {
     { sort: ["name:asc"], populate },
     { encodeValuesOnly: true }
   );
-  const res = fetchDataFromApi(`/api/products?${queryString}`);
+  const res = await fetchDataFromApi(`/api/products?${queryString}`);
   return res;
 }
 
@@ -26,8 +27,8 @@ export async function getDataProductBySlug(
     { sort: ["name:asc"], populate, filters: filter },
     { encodeValuesOnly: true }
   );
-  const res = fetchDataFromApi(`/api/products?${queryString}`);
-  
+  const res = await fetchDataFromApi(`/api/products?${queryString}`);
+
   return res;
 }
 
@@ -77,4 +78,3 @@ export async function filterProducts(
     console.log("error in filterProducts", error);
   }
 }
-

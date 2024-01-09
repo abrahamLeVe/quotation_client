@@ -1,5 +1,4 @@
 "use client";
-import { useCartContext } from "@/context/cart.context";
 import { useProductContext } from "@/context/product.context";
 import { cartStore } from "@/store/cart.store";
 import { BsCartCheck, BsCartDash, BsCartPlus } from "react-icons/bs";
