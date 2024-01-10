@@ -58,7 +58,7 @@ export default function ColorSelect({
               defaultValue={field.value}
             >
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger title="Seleccione un color">
                   <SelectValue placeholder="Seleccione un color" />
                 </SelectTrigger>
               </FormControl>
@@ -67,7 +67,6 @@ export default function ColorSelect({
                   <SelectItem
                     key={color.id}
                     value={color.id.toFixed()}
-                    aria-label={color.attributes.Name}
                   >
                     <div className="flex gap-2">
                       <FaCircle

@@ -9,11 +9,16 @@ export function ImageGalleryIndex({ product }: { product: ProductInterface }) {
     showBullets: true,
     showNav: false,
     showFullscreenButton: false,
+    lazyLoad: true,
+    loading: "lazy",
   };
 
   const images = product.attributes.image.data?.map((item) => ({
     original: item.attributes.url,
     originalAlt: item.attributes.name,
+    originalHeight: item.attributes.height,
+    originalWidth: item.attributes.width,
+    lazyLoad: true,
   })) || [{ original: "/skeletonProduct.png" }];
 
   return (
@@ -29,6 +34,9 @@ export default function ImageGalleryModal(product: ProductInterface) {
     showBullets: true,
     showIndex: true,
     autoPlay: true,
+    lazyLoad: true,
+    loading: "lazy",
+    thumbnailLoading: "lazy",
   };
 
   const images = product.attributes.image.data?.map((item) => ({
@@ -37,6 +45,9 @@ export default function ImageGalleryModal(product: ProductInterface) {
     thumbnailAlt: item.attributes.name,
     thumbnail: item.attributes.formats.thumbnail.url,
     slideToIndex: item.id,
+    originalHeight: item.attributes.height,
+    originalWidth: item.attributes.width,
+    lazyLoad: true,
   })) || [
     { original: "/skeletonProduct.png", thumbnail: "/skeletonProduct.png" },
   ];

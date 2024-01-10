@@ -9,8 +9,10 @@ export default function AuthLayout({
         <div className="relative hidden h-full flex-col bg-muted p-10  lg:flex dark:border-r">
           <div className="absolute inset-0 bg-zinc-900/5 z-40" />
           <img
-            src="./auth.jpg"
+            src="./auth.webp"
             className="absolute inset-0 w-full h-full object-cover"
+            alt="auth"
+            loading="lazy"
           />
         </div>
         <main>{children}</main>
