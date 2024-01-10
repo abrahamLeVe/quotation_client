@@ -1,3 +1,4 @@
+"use server";
 export default function AuthLayout({
   children,
 }: {
@@ -12,7 +13,7 @@ export default function AuthLayout({
             src="./auth.webp"
             className="absolute inset-0 w-full h-full object-cover"
             alt="auth"
-            loading="lazy"
+            loading="eager"
           />
         </div>
         <main>{children}</main>
