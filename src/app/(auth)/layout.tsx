@@ -10,7 +10,7 @@ export default function AuthLayout({
           <div className="absolute inset-0 bg-zinc-900/5 z-40" />
           <img
             src="./auth.webp"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="aspect-square w-full h-full object-cover"
             alt="auth"
             loading="eager"
           />
