@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default async function AuthLayout({
   children,
 }: {
@@ -7,11 +9,12 @@ export default async function AuthLayout({
     <>
       <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="relative hidden w-full h-full bg-muted lg:flex dark:border-r">
-          <img
-            src="./auth.webp"
-            className="w-full object-cover"
+          <Image
+            src="./auth.webp"            
             alt="auth"
-            loading="eager"
+            width={2732}
+            height={2532}
+            priority
           />
         </div>
         <main>{children}</main>
