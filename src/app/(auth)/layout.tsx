@@ -1,4 +1,3 @@
-"use server";
 export default function AuthLayout({
   children,
 }: {
