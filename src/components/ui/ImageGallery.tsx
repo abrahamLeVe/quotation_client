@@ -13,6 +13,7 @@ export function ImageGalleryIndex({ product }: { product: ProductInterface }) {
 
   const images = product.attributes.image.data?.map((item) => ({
     original: item.attributes.url,
+    originalAlt: item.attributes.name,
   })) || [{ original: "/skeletonProduct.png" }];
 
   return (
@@ -32,6 +33,8 @@ export default function ImageGalleryModal(product: ProductInterface) {
 
   const images = product.attributes.image.data?.map((item) => ({
     original: item.attributes.url,
+    originalAlt: item.attributes.name,
+    thumbnailAlt: item.attributes.name,
     thumbnail: item.attributes.formats.thumbnail.url,
     slideToIndex: item.id,
   })) || [

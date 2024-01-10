@@ -64,7 +64,11 @@ export default function ColorSelect({
               </FormControl>
               <SelectContent>
                 {colors.map((color) => (
-                  <SelectItem key={color.id} value={color.id.toFixed()}>
+                  <SelectItem
+                    key={color.id}
+                    value={color.id.toFixed()}
+                    aria-label={color.attributes.Name}
+                  >
                     <div className="flex gap-2">
                       <FaCircle
                         className="h-5 w-5 border rounded-full"
@@ -73,9 +77,7 @@ export default function ColorSelect({
                       {color.attributes.Name}
                       <div className="flex ">
                         {getItemColorQuantity(productId, color.id) ? (
-                          <>
-                            {"x" + getItemColorQuantity(productId, color.id)}
-                          </>
+                          <>{"x" + getItemColorQuantity(productId, color.id)}</>
                         ) : null}
                       </div>
                     </div>

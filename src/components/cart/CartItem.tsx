@@ -53,7 +53,7 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                   .url
               }
               alt={product.attributes.name}
-              className="h-full w-full object-cover object-center"
+              className="aspect-square w-full object-cover object-center"
             />
           </div>
 
