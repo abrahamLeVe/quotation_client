@@ -32,23 +32,6 @@ export const getDataProductBySlug = cache(
     return res;
   }
 );
-// export async function getDataProductBySlug(
-//   slug: string
-// ): Promise<ProductsInterface> {
-//   const filter = {
-//     slug: {
-//       $eq: slug,
-//     },
-//   };
-
-//   const queryString = qs.stringify(
-//     { sort: ["name:asc"], populate, filters: filter },
-//     { encodeValuesOnly: true }
-//   );
-//   const res = await fetchDataFromApi(`/api/products?${queryString}`);
-
-//   return res;
-// }
 
 export async function getDataProductById(
   id: number

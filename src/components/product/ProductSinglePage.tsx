@@ -8,7 +8,7 @@ import CategoryProducts from "../category/CategoryProducts";
 
 export default function ProductSinglePage({
   data: product,
-}: {
+}: {  
   data: ProductInterface;
 }) {
   return (
