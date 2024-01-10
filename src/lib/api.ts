@@ -1,6 +1,7 @@
 import { User } from "@/models/auth.model";
 import { API_TOKEN, API_URL } from "../utilities/urls";
 
+
 export async function fetchDataFromApi(endpoint: string): Promise<any> {
   try {
     const options = {

@@ -1,3 +1,4 @@
+"use server";
 import { fetchDataFromApi } from "@/lib/api";
 import { CategoriesInterface } from "@/models/category.model";
 import { populate } from "@/models/filter.model";
