@@ -15,7 +15,7 @@ export default function AuthLayout({
             alt="auth"
             width={1920} // Define el ancho deseado
             height={1080} // Define la altura deseada
-            loading="eager"
+            priority
           />
         </div>
         <main>{children}</main>
