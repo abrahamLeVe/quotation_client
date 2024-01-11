@@ -26,11 +26,10 @@ export default function CartSliderOver() {
           variant="link"
           className="relative"
           disabled={cartQuantity === 0 || isLoading}
+          role="link"
+          title="Carrito de compras"
         >
-          <HiOutlineShoppingBag
-            className="h-7 w-7 flex-shrink-0"
-            aria-hidden="true"
-          />
+          <HiOutlineShoppingBag className="h-7 w-7 flex-shrink-0" />
           {isLoading ? (
             <Icons.spinner
               className="border rounded-full w-6 h-6 absolute top-0 right-0 animate-spin"

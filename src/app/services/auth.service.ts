@@ -15,3 +15,8 @@ export async function registerUser(data: registerUserPromps) {
   const res = await postDataFromApi("/api/auth/local/register", data);
   return res;
 }
+
+export async function registerNewsletter(data: { data: { email: string } }) {
+  const res = await postDataFromApi("/api/newsletters", data);
+  return res;
+}

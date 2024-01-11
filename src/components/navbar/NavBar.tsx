@@ -25,11 +25,11 @@ export default function NavBar() {
                 {/* Logo */}
                 <div className="ml-4 flex lg:ml-0 relative w-[50px]">
                   <img
-                    className="h-8 w-auto"
+                    className="aspect-square w-full object-cover"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt="mi empresa"
                   />
-                  <Link href={"/"} className="absolute inset-0"></Link>
+                  <Link href={"/"} className="absolute inset-0" aria-label="DSStore"></Link>
                 </div>
 
                 {/* Flyout menus */}

@@ -33,6 +33,11 @@ export const loginSchema = z.object({
     })
     .max(100),
 });
+export const emailSchema = z.object({
+  email: z.string().email({
+    message: "Por favor, introduce una dirección de correo electrónico válida",
+  }),
+});
 
 export const verifyEmailSchema = z.object({
   code: z

@@ -1,7 +1,6 @@
 import Footer from "@/components/footer/Footer";
 import LogoSection from "@/components/lobby/BrandSection";
 import Collection from "@/components/lobby/Collection";
-import NewsletterSection from "@/components/lobby/NewsletterSections";
 import PromoSection from "@/components/lobby/PromoSection";
 import Testimonials from "@/components/lobby/Testimonials";
 import NavBar from "@/components/navbar/NavBar";
@@ -22,7 +21,6 @@ export default function LobbyLayout({
         <PromoSection />
         <LogoSection />
         <Testimonials />
-        <NewsletterSection />
       </main>
       <Footer />
     </>

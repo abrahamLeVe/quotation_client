@@ -23,7 +23,7 @@ export function ImageGalleryIndex({ product }: { product: ProductInterface }) {
 
   return (
     <>
-      <ImageGallery items={images} {...imageGalleryOptions} />
+      <ImageGallery items={images} {...imageGalleryOptions} lazyLoad={true} />
     </>
   );
 }
@@ -57,6 +57,8 @@ export default function ImageGalleryModal(product: ProductInterface) {
       items={images}
       {...imageGalleryOptions}
       thumbnailPosition="left"
+      lazyLoad={true}
+      
     />
   );
 }

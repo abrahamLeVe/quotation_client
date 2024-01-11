@@ -1,7 +1,6 @@
 import { User } from "@/models/auth.model";
 import { API_TOKEN, API_URL } from "../utilities/urls";
 
-
 export async function fetchDataFromApi(endpoint: string): Promise<any> {
   try {
     const options = {
@@ -26,9 +25,11 @@ export async function postDataFromApi(endpoint: string, payload: any) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + API_TOKEN,
       },
       body: JSON.stringify(payload),
     });
+    console.log("res ", res);
     return res.json();
   } catch (error) {
     return error;
