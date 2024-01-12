@@ -1,14 +1,9 @@
 import Providers from "@/components/Providers";
 import "@/styles/globals.css";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ImageLoaderProps } from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "DSStore",
-  description: "Tienda en línea de productos novedosos",
-};
 
 export default function RootLayout({
   children,
@@ -23,3 +18,7 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
+  return `${src}?w=${width}&q=${quality || 75}`;
+};
