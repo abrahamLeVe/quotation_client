@@ -13,6 +13,7 @@ import { BsEye } from "react-icons/bs";
 import ImageGalleryModal from "../ui/ImageGallery";
 import ProductDetail from "./ProductDetail";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 interface ProductModalProps {
   product: ProductInterface;
@@ -56,15 +57,12 @@ export default function ProductModal({
 
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button
-                      type="button"
-                      variant="link"
-                      onClick={() => {
-                        router.push(`/product/${product.attributes.slug}`);
-                      }}
+                    <Link
+                      prefetch={true}
+                      href={`/product/${product.attributes.slug}`}
                     >
                       Descripción completa: Click Aquí
-                    </Button>
+                    </Link>
                   </DialogClose>
                 </DialogFooter>
               </div>
