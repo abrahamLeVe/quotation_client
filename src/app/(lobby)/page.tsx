@@ -3,7 +3,7 @@ import { fetchDataFromApi } from "@/lib/api";
 import { SlideInterface } from "@/models/slide.model";
 import { cache } from "react";
 
-export const getDataSliders = cache(async (): Promise<SlideInterface> => {
+const getDataSliders = cache(async (): Promise<SlideInterface> => {
   const res = await fetchDataFromApi(`/api/sliders?populate=*`);
   return res;
 });
