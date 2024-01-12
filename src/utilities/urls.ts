@@ -8,7 +8,7 @@ export const CLIENT_URL =
 
 export const OPENIA_URL = process.env.NEXT_PUBLIC_OPENIA_URL;
 
-export const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+export const NEXTAUTH_URL = process.env.NEXTAUTH_URL || "http://localhost:3000";
 
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
 
