@@ -6,14 +6,14 @@ import { processQuery } from "@/utilities/validators/search.validator";
 import { cache } from "react";
 let qs = require("qs");
 
-export async function getDataProducts(): Promise<ProductsInterface> {
+export const getDataProducts = cache(async (): Promise<ProductsInterface> => {
   const queryString = qs.stringify(
     { sort: ["name:asc"], populate },
     { encodeValuesOnly: true }
   );
   const res = await fetchDataFromApi(`/api/products?${queryString}`);
   return res;
-}
+});
 
 export const getDataProductBySlug = cache(
   async (slug: string): Promise<ProductsInterface> => {

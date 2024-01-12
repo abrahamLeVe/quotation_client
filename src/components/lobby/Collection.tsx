@@ -42,6 +42,7 @@ export default function Collection() {
                     src={callout.imageSrc}
                     alt={callout.imageAlt}
                     className="h-full w-full object-cover object-center"
+                    loading="lazy"
                   />
                 </div>
                 <h3 className="mt-6 text-sm text-gray-500">

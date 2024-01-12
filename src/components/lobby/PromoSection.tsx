@@ -7,9 +7,7 @@ export default function PromoSection() {
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Summer styles are finally here
             </h1>
-            <p className="mt-4 text-xl text-gray-500">
-            
-            </p>
+            <p className="mt-4 text-xl text-gray-500"></p>
           </div>
           <div>
             <div className="mt-10">
@@ -24,15 +22,17 @@ export default function PromoSection() {
                       <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
-                          alt=""
+                          alt="ecommerce-images1"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                          alt=""
+                          alt="ecommerce-images2"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                     </div>
@@ -40,22 +40,25 @@ export default function PromoSection() {
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                          alt=""
+                          alt="ecommerce-images3"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                          alt=""
+                          alt="ecommerce-images4"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
-                          alt=""
+                          alt="ecommerce-images5"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                     </div>
@@ -63,15 +66,17 @@ export default function PromoSection() {
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
-                          alt=""
+                          alt="ecommerce-images6"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
-                          alt=""
+                          alt="ecommerce-images7"
                           className="h-full w-full object-cover object-center"
+                          loading="lazy"
                         />
                       </div>
                     </div>

@@ -53,7 +53,7 @@ export default function Slide({ data }: CarouselPluginProps) {
                 <Card>
                   <CardContent className="p-0 lg:p-6">
                     <img
-                      src={slide.attributes.image.data.attributes.url}
+                      src={slide.attributes.image.data?.attributes.url}
                       className="aspect-[16/6] w-full object-cover"
                       alt={slide.attributes.name}
                       loading="eager"

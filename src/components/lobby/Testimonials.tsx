@@ -64,6 +64,7 @@ export default function Testimonials() {
                   src={post.author.imageUrl}
                   alt=""
                   className="h-10 w-10 rounded-full bg-gray-50"
+                  loading="lazy"
                 />
                 <div className="text-sm leading-6">
                   <p className="font-semibold text-gray-900">
