@@ -15,7 +15,7 @@ import { FaGoogle } from "react-icons/fa6";
 
 export default function SigninPage() {
   return (
-    <div className="flex flex-col p-8 gap-4">
+    <div className="flex flex-col w-full p-8 gap-4">
       <Breadcrumbs
         segments={[
           {

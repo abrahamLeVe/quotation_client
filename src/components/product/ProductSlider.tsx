@@ -41,7 +41,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
           {data.map((product) => (
             <CarouselItem
               key={product.id}
-              className="pl-1 md:basis-1/3 lg:basis-1/4"
+              className="pl-1 xs:basis-1/2 md:basis-1/3 lg:basis-1/4"
             >
               <div className="p-1 h-full">
                 <Card className="h-full overflow-hidden">

@@ -14,12 +14,12 @@ export default function LobbyLayout({
   return (
     <>
       <NavBar />
-      <main className="flex flex-col max-w-screen-xl mx-auto items-center gap-5">
+      <main className="flex flex-col md:container mx-auto items-center gap-5">
         {children}
         <ProductCarousel />
         <Collection />
-        <PromoSection />
         <LogoSection />
+        <PromoSection />
         <Testimonials />
       </main>
       <Footer />

@@ -9,7 +9,7 @@ export default function LobbyLayout({
   return (
     <>
       <NavBar />
-      <main className="flex flex-col max-w-screen-xl m-auto relative">
+      <main className="flex flex-col md:container m-auto relative">
         {children}
       </main>
       <Footer />
