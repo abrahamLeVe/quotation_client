@@ -16,18 +16,17 @@ const posts = [
         "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
   },
-  // More posts...
 ];
 
 export default function Testimonials() {
   return (
-    <div className="w-full bg-white py-24 sm:py-32">
+    <div className="w-full py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Testimonials
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
+          <p className="mt-2 text-lg leading-8 text-gray-900 dark:text-gray-400">
             Learn how to grow your business with our expert advice.
           </p>
         </div>
@@ -38,7 +37,10 @@ export default function Testimonials() {
               className="flex max-w-xl flex-col items-start justify-between"
             >
               <div className="flex items-center gap-x-4 text-xs">
-                <time dateTime={post.datetime} className="text-gray-500">
+                <time
+                  dateTime={post.datetime}
+                  className="text-gray-500 dark:text-gray-400"
+                >
                   {post.date}
                 </time>
                 <a
@@ -49,13 +51,13 @@ export default function Testimonials() {
                 </a>
               </div>
               <div className="group relative">
-                <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-200">
                   <a href={post.href}>
                     <span className="absolute inset-0" />
                     {post.title}
                   </a>
                 </h3>
-                <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+                <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-500">
                   {post.description}
                 </p>
               </div>
@@ -67,7 +69,7 @@ export default function Testimonials() {
                   loading="lazy"
                 />
                 <div className="text-sm leading-6">
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-gray-900 dark:text-gray-400">
                     <a href={post.author.href}>
                       <span className="absolute inset-0" />
                       {post.author.name}

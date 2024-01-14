@@ -52,7 +52,7 @@ export default function ProductDetail({
   return (
     <>
       <div className="flex flex-col gap-2">
-        <h3 className=" text-gray-900 relative" title={product.attributes.name}>
+        <h3 className="relative" title={product.attributes.name}>
           {!isPage ? (
             <>{truncate(product.attributes.name, 60)}</>
           ) : (

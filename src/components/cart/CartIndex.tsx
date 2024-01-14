@@ -12,9 +12,7 @@ export default function CartIndex() {
   const total = calculateTotal().total;
   return (
     <div className="px-4 py-6 sm:px-6 w-full">
-      <div className="text-lg font-medium text-gray-900">
-        Carrito de compras
-      </div>
+      <div className="text-lg font-medium ">Carrito de compras</div>
       <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
         {cart.cartItemState.length === 0 ? (
           <>Sin product_colors</>
@@ -31,7 +29,7 @@ export default function CartIndex() {
                   </tr>
                 </thead>
 
-                <tbody className="bg-white">
+                <tbody>
                   <tr>
                     <td className="border-b">
                       <DisclosureIndex

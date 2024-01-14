@@ -1,10 +1,10 @@
 "use client";
+import { Toaster } from "@/components/ui/toaster";
 import { CartProvider } from "@/context/cart.context";
 import { CategoryProvider } from "@/context/category.context";
 import { FilterProvider } from "@/context/filter.context";
 import { ProductProvider } from "@/context/product.context";
 import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/toaster";
 
 interface ProvidersProps {
   children: React.ReactNode;

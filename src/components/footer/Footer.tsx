@@ -139,7 +139,7 @@ export default function Footer() {
   ];
   return (
     <footer className="bg-slate-200 dark:bg-gray-900">
-      <div className="container px-6 py-12 mx-auto">
+      <div className=" md:container px-6 py-12 mx-auto">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 md:grid-cols-5">
           <div className="sm:col-span-2 sm:pr-5">
             <h1 className="max-w-lg text-xl font-semibold tracking-tight text-gray-800 xl:text-2xl dark:text-white">

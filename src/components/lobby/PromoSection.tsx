@@ -1,10 +1,12 @@
+import { Button } from "../ui/button";
+
 export default function PromoSection() {
   return (
-    <div className="relative w-full overflow-hidden bg-white">
+    <div className="relative w-full overflow-hidden">
       <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-400">
               Summer styles are finally here
             </h1>
             <p className="mt-4 text-xl text-gray-500"></p>
@@ -84,12 +86,12 @@ export default function PromoSection() {
                 </div>
               </div>
 
-              <a
-                href="#"
-                className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+              <Button
+                variant={"outline"}
+                className="font-medium"
               >
                 Shop Collection
-              </a>
+              </Button>
             </div>
           </div>
         </div>

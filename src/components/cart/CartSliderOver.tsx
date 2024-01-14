@@ -15,6 +15,7 @@ import { Icons } from "../Icons";
 import { ScrollArea } from "../ui/scroll-area";
 import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
+import { Badge } from "../ui/badge";
 
 export default function CartSliderOver() {
   const { cartQuantity, isLoading } = useCartContext();
@@ -29,16 +30,16 @@ export default function CartSliderOver() {
           role="link"
           title="Carrito de compras"
         >
-          <HiOutlineShoppingBag className="h-7 w-7 flex-shrink-0" />
+          <HiOutlineShoppingBag className="h-7 w-7" />
           {isLoading ? (
             <Icons.spinner
               className="border rounded-full w-6 h-6 absolute top-0 right-0 animate-spin"
               aria-hidden="true"
             />
           ) : (
-            <div className="border rounded-full w-6 h-6 absolute top-0 right-0">
-              <p className="text-sm">{cartQuantity}</p>
-            </div>
+            <Badge className="absolute top-0 right-0" variant={"outline"}>
+              {cartQuantity}
+            </Badge>
           )}
         </Button>
       </SheetTrigger>

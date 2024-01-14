@@ -1,5 +1,6 @@
 "use client";
 import { formatCurrency } from "@/utilities/utils";
+import { Badge } from "@/components/ui/badge";
 
 interface ProductPriceProps {
   price: number;
@@ -21,9 +22,9 @@ export default function ProductPrice({
         <>
           <p className="text-gray-500 line-through">{formattedPrice}</p>
           {popUp && (
-            <div className="absolute top-2 left-2 rounded-2xl px-3 py-[5px] bg-white shadow-lg">
-              ¡Oferta!
-            </div>
+            <Badge className="absolute top-2 left-2  py-[5px] shadow-lg">
+              <p>¡Oferta!</p>
+            </Badge>
           )}
         </>
       )}

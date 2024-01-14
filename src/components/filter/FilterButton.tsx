@@ -12,7 +12,7 @@ export default function FilterButton() {
   return (
     <>
       {/* Search */}
-      <div className="flex lg:ml-6">
+      <div className="flex">
         <div className="p-2 text-gray-400 hover:text-gray-500 relative">
           <span className="sr-only">Buscar</span>
           <BsSearch className="h-6 w-6" />
@@ -23,7 +23,7 @@ export default function FilterButton() {
           ></Link>
         </div>
       </div>
-      <div className="flex lg:ml-6">
+      <div className="flex">
         {isListening ? (
           <div className="p-2">
             <Icons.bars className="h-6 w-6 text-red-500" aria-hidden="true" />

@@ -12,7 +12,7 @@ export default function FilterLayout({
       <NavBar />
       <main className="flex overflow-hidden flex-row container mx-auto gap-5 relative p-3 md:p-5">
         <FilterSlider />
-        <div className={"w-full min-h-screen flex flex-col gap-3 z-10"}>
+        <div className={"w-full min-h-screen flex flex-col gap-3"}>
           {children}
         </div>
       </main>
