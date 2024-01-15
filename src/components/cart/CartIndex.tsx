@@ -23,7 +23,7 @@ export default function CartIndex() {
         ) : (
           <>
             <CartItem isPage />
-            <div className="sticky top-4 h-full my-8 lg:max-w-md w-full">
+            <div className="sticky top-20 h-full my-8 lg:max-w-md w-full">
               <table className="border-collapse w-full text-sm shadow-sm">
                 <thead>
                   <tr>

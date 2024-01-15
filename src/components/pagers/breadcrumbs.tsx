@@ -1,7 +1,7 @@
+import * as React from "react";
 import Link from "next/link";
-import { BsChevronRight } from "react-icons/bs";
-import { truncate } from "@/utilities/utils";
-import React from "react";
+import { HiChevronRight } from "react-icons/hi2";
+import { cn, truncate } from "@/lib/utils";
 
 interface BreadcrumbsProps extends React.ComponentPropsWithoutRef<"nav"> {
   segments: {
@@ -19,17 +19,14 @@ export function Breadcrumbs({
   className,
   ...props
 }: BreadcrumbsProps) {
-  const SeparatorIcon = separator ?? BsChevronRight;
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(" ");
-  }
+  const SeparatorIcon = separator ?? HiChevronRight;
 
   return (
     <nav
       aria-label="breadcrumbs"
-      className={classNames(
-        "flex w-full items-center overflow-auto text-sm font-medium",
-        className as string
+      className={cn(
+        "flex w-full items-center overflow-auto text-sm font-medium text-muted-foreground",
+        className
       )}
       {...props}
     >
@@ -38,20 +35,18 @@ export function Breadcrumbs({
 
         return (
           <React.Fragment key={segment.href}>
-            <span
+            <Link
               aria-current={isLastSegment ? "page" : undefined}
-              className={classNames(
-                "relative truncate transition-colors hover:text-black",
-                isLastSegment ? " font-semibold" : "text-gray-500"
+              href={segment.href}
+              className={cn(
+                "truncate transition-colors hover:text-foreground",
+                isLastSegment ? "text-foreground" : "text-muted-foreground"
               )}
             >
               {truncationLength > 0 && segment.title
                 ? truncate(segment.title, truncationLength)
                 : segment.title}
-              {!isLastSegment && (
-                <Link href={segment.href} className="absolute inset-0"></Link>
-              )}
-            </span>
+            </Link>
             {!isLastSegment && (
               <SeparatorIcon className="mx-2 h-4 w-4" aria-hidden="true" />
             )}

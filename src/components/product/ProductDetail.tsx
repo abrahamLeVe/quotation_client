@@ -75,7 +75,7 @@ export default function ProductDetail({
             <span className="font-semibold">Marca: </span>
             <Link
               href={`/product/filter?query=${product.attributes.brand.data?.attributes.name}`}
-              className="underline text-gray-700 hover:text-gray-900"
+              className="underline hover:opacity-95"
             >
               {product.attributes.brand.data?.attributes.name}
             </Link>

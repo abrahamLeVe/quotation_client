@@ -9,7 +9,7 @@ import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
   return (
-    <header className="sticky top-0 z-20 backdrop-blur-md bg-white/90 dark:bg-slate-950/90 scroll-auto">
+    <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90 scroll-auto">
       <div className="relative">
         <nav
           aria-label="Top"

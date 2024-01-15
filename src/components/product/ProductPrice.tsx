@@ -20,7 +20,7 @@ export default function ProductPrice({
     <>
       {hasDiscount && (
         <>
-          <p className="text-gray-500 line-through">{formattedPrice}</p>
+          <p className="font-light line-through">{formattedPrice}</p>
           {popUp && (
             <Badge className="absolute top-2 left-2  py-[5px] shadow-lg">
               <p>¡Oferta!</p>

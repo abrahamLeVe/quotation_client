@@ -14,7 +14,7 @@ export default function LobbyLayout({
   return (
     <>
       <NavBar />
-      <main className="flex flex-col md:container mx-auto items-center gap-5">
+      <main className="flex flex-col md:container mx-auto items-center gap-8">
         {children}
         <ProductCarousel />
         <Collection />

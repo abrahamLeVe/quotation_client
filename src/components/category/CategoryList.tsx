@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 export default function CategoryList() {
   const { categories } = useCategoryContext();
-      
-  const { setOpenFilter,cleanFilter } = useFilterContext();
+
+  const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
   const handleClick = (name: string) => {
     cleanFilter();
@@ -23,7 +23,7 @@ export default function CategoryList() {
           key={category.id}
           className="relative hover:underline"
         >
-          <p className="text-gray-900 ">
+          <p>
             {capitalizeFirstLetter(category.attributes.name)}
             {` (${category.attributes.products.data.length})`}
           </p>

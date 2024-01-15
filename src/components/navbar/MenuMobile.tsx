@@ -1,4 +1,10 @@
 "use client";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -6,21 +12,13 @@ import {
   SheetContent,
   SheetFooter,
   SheetHeader,
-  SheetPortal,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { HiBars3 } from "react-icons/hi2";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import AuthMenu from "./MenuAuth";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 export default function MenuMobile() {
   return (
@@ -36,9 +34,11 @@ export default function MenuMobile() {
         <ScrollArea className="h-full pr-3">
           <SheetHeader className="flex flex-row justify-between items-baseline">
             <SheetTitle>Menú</SheetTitle>
-            <AuthMenu />
+            <SheetClose asChild>
+              <AuthMenu />
+            </SheetClose>
           </SheetHeader>
-          <Separator />
+          <Separator className="my-4" />
           <Accordion type="single" collapsible className="w-full">
             {navigation.categories.map((category) => (
               <AccordionItem value={category.id} key={category.id}>
@@ -53,9 +53,7 @@ export default function MenuMobile() {
           </Accordion>
 
           <SheetFooter>
-            <SheetClose asChild>
-              <div className="flex flex-col w-full items-start"></div>
-            </SheetClose>
+            <div className="flex flex-col w-full items-start"></div>
           </SheetFooter>
         </ScrollArea>
       </SheetContent>
