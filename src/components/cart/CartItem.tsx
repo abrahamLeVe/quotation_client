@@ -41,7 +41,10 @@ export default function CartItem({ isPage = false }: CartItemProps) {
       const size = selectedPrice?.attributes.size.data;
 
       return (
-        <li className="flex py-6 items-center relative" key={selectedPrice?.id}>
+        <div
+          className="flex py-6 items-center relative"
+          key={selectedPrice?.id}
+        >
           <div
             className="h-24 w-24 overflow-hidden flex-shrink-0 rounded-md border border-gray-200 relative"
             title="Detalles"
@@ -118,7 +121,7 @@ export default function CartItem({ isPage = false }: CartItemProps) {
               </div>
             </div>
           </div>
-        </li>
+        </div>
       );
     });
   }, [cart, cartItems, idColor, isPage]);
@@ -126,14 +129,14 @@ export default function CartItem({ isPage = false }: CartItemProps) {
   return (
     <div className="mt-8 w-full">
       <div className="flow-root">
-        <ul role="list" className="-my-6 divide-y divide-gray-200 w-full">
+        <div className="-my-6 divide-y divide-gray-200 w-full">
           {memoizedCartItems.map((cartItem) => {
             if (!cartItem) {
               return null;
             }
             return cartItem;
           })}
-        </ul>
+        </div>
       </div>
     </div>
   );

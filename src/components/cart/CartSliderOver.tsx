@@ -12,10 +12,10 @@ import {
 import { useCartContext } from "@/context/cart.context";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Icons } from "../Icons";
+import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
 import CartCheckout from "./CartCheckout";
 import CartItem from "./CartItem";
-import { Badge } from "../ui/badge";
 
 export default function CartSliderOver() {
   const { cartQuantity, isLoading } = useCartContext();
@@ -43,7 +43,7 @@ export default function CartSliderOver() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="sm:max-w-md">
+      <SheetContent className="w-full sm:max-w-md ">
         <ScrollArea className="h-full pr-3">
           <SheetHeader>
             <SheetTitle>Carrito</SheetTitle>

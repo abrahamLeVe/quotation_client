@@ -1,14 +1,14 @@
 import { ProductInterface } from "@/models/products.model";
+import Markdown from "react-markdown";
+import CategoryProducts from "../category/CategoryProducts";
 import DisclosureIndex from "../ui/Disclosure";
 import ImageGalleryModal from "../ui/ImageGallery";
 import ProductDetail from "./ProductDetail";
 import ProductNotFound from "./ProductNotFound";
-import Markdown from "react-markdown";
-import CategoryProducts from "../category/CategoryProducts";
 
 export default function ProductSinglePage({
   data: product,
-}: {  
+}: {
   data: ProductInterface;
 }) {
   return (
@@ -16,7 +16,7 @@ export default function ProductSinglePage({
       {product ? (
         <>
           <div className="flex flex-col h-full w-full lg:flex-row gap-5 p-6 relative">
-            <div className="h-full lg:w-[50%] lg:sticky top-6">
+            <div className="h-full lg:w-[50%] lg:sticky top-20">
               <ImageGalleryModal
                 attributes={product.attributes}
                 id={product.id}

@@ -1,10 +1,14 @@
 "use client";
 import { useCartContext } from "@/context/cart.context";
-import { formatCurrency } from "@/utilities/utils";
-import DisclosureIndex from "../ui/Disclosure";
-import CartItem from "./CartItem";
-import { Icons } from "../Icons";
 import { cartStore } from "@/store/cart.store";
+import { formatCurrency } from "@/utilities/utils";
+import dynamic from "next/dynamic";
+import { Icons } from "../Icons";
+import DisclosureIndex from "../ui/Disclosure";
+const CartItem = dynamic(() => import("./CartItem"), {
+  ssr: false,
+  loading: () => <>Cargando items...</>,
+});
 
 export default function CartIndex() {
   const cart = cartStore((state) => state);

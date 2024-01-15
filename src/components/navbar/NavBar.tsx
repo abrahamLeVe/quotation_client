@@ -2,30 +2,30 @@
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
 import FilterButton from "../filter/FilterButton";
+import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import MenuMobile from "./MenuMobile";
-import { ModeToggle } from "../ui/mode-toggle";
 
 export default function NavBar() {
   return (
-    <header>
+    <header className="sticky top-0 z-20 backdrop-blur-md bg-white/90 dark:bg-slate-950/90 scroll-auto">
       <div className="relative">
         <nav
           aria-label="Top"
           className="mx-auto  container px-4 sm:px-6 lg:px-8"
         >
           <div className="border-b border-gray-200">
-            <div className="flex h-16 items-center">
+            <div className="flex h-16 items-center gap-2">
               <div className="flex lg:hidden">
                 <MenuMobile />
               </div>
               {/* Logo */}
-              <div className="ml-4 flex lg:ml-0 relative w-[50px]">
+              <div className="relative w-[50px] h-[50px]">
                 <img
                   className="aspect-square w-full object-cover"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt="mi empresa"
+                  alt="DSStore"
                 />
                 <Link
                   href={"/"}
@@ -40,7 +40,7 @@ export default function NavBar() {
               </div>
 
               <div className="ml-auto flex items-center gap-3">
-                <div>
+                <div className="hidden lg:flex">
                   <AuthMenu />
                 </div>
                 {/* Filter */}

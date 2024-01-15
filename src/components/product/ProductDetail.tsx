@@ -95,9 +95,7 @@ export default function ProductDetail({
 
         {isPage ? (
           <>
-            {!product.attributes.prices.data[0].attributes.size?.data ? (
-              <></>
-            ) : (
+            {!product.attributes.prices.data[0].attributes.size?.data ? null : (
               <SizeSelect
                 selectedPrice={selectedPrice}
                 productPrices={product.attributes.prices.data}
