@@ -43,10 +43,10 @@ export function CartProvider({ children }: CartProviderProps) {
     (async () => {
       try {
         setIsLoading(true);
-        const { data } = await getDataProducts();
-        if (data) {
+        const data = await getDataProducts();
+        if (data?.data) {
           setCartItems(
-            data.flatMap((product) =>
+            data.data.flatMap((product) =>
               cart
                 .filter((cartItem) =>
                   product.attributes.prices.data.some(
@@ -59,7 +59,7 @@ export function CartProvider({ children }: CartProviderProps) {
 
           setSubTotal(
             cart.reduce((acc, cartItem) => {
-              const product = data.find((item) =>
+              const product = data.data.find((item) =>
                 item.attributes.prices.data.some(
                   (price) => price.id === cartItem.id
                 )
@@ -77,6 +77,8 @@ export function CartProvider({ children }: CartProviderProps) {
               );
             }, 0)
           );
+        } else {
+          return null;
         }
       } catch (error) {
         console.log(error);

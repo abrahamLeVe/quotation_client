@@ -1,8 +1,17 @@
 "use client";
+import { registerNewsletter } from "@/app/services/auth.service";
+import { emailSchema } from "@/lib/validations/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { z } from "zod";
+import { Icons } from "../Icons";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -13,15 +22,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { AlertCircle } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { emailSchema } from "@/lib/validations/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Icons } from "../Icons";
-import { z } from "zod";
-import { registerNewsletter } from "@/app/services/auth.service";
 
 export default function Footer() {
   const [errorFetch, setErrorFetch] = useState();
@@ -40,9 +40,8 @@ export default function Footer() {
     setIsPending(true);
 
     try {
-      const res = await registerNewsletter({data});
-      if(!res?.data){
-        
+      const res = await registerNewsletter({ data });
+      if (!res?.data) {
       }
       console.log(res);
     } catch (error) {
@@ -263,9 +262,7 @@ export default function Footer() {
         <hr className="my-6 border-gray-200 md:my-8 dark:border-gray-700" />
 
         <div className="flex items-center justify-between">
-          <span>
-            <Link href="/">DSStore</Link>
-          </span>
+          <span>Built by leandrovegaabraham@gmail.com</span>
           <div className="flex -mx-2">
             {socialLinks
               ? socialLinks.map((item) => (
@@ -275,6 +272,7 @@ export default function Footer() {
                     className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                     aria-label={item.label}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <>{item.icon}</>
                   </a>

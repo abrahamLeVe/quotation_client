@@ -9,9 +9,10 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { dashboardConfig } from "@/config/dashboard";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { BsCreditCard, BsGear } from "react-icons/bs";
+import { BsCreditCard } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -55,33 +56,17 @@ export default function AuthMenu() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/stores">
-                      <MdOutlineSpaceDashboard
-                        className="mr-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                      Panel
-                      <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/billing">
-                      <BsCreditCard
-                        className="mr-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                      Facturación
-                      <DropdownMenuShortcut>⌘F</DropdownMenuShortcut>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard/account">
-                      <BsGear className="mr-2 h-4 w-4" aria-hidden="true" />
-                      Ajustes
-                      <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
-                    </Link>
-                  </DropdownMenuItem>
+                  {dashboardConfig.sidebarNav.map((item) => (
+                    <DropdownMenuItem asChild key={item.title + item.href}>
+                      <Link href={item.href || ""}>
+                        <>{item.icon}</>
+                        {item.title}
+                        <DropdownMenuShortcut>
+                          ⌘{item.shortcut}
+                        </DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem

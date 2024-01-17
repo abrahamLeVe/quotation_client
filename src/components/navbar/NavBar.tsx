@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
-import FilterButton from "../filter/FilterButton";
+import FilterButton, { SpeachButton } from "../filter/FilterButton";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
@@ -9,7 +9,7 @@ import MenuMobile from "./MenuMobile";
 
 export default function NavBar() {
   return (
-    <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90 scroll-auto">
+    <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
       <div className="relative">
         <nav
           aria-label="Top"
@@ -21,7 +21,7 @@ export default function NavBar() {
                 <MenuMobile />
               </div>
               {/* Logo */}
-              <div className="relative w-[50px] h-[50px]">
+              <div className="relative w-[50px] h-[50px] flex items-center">
                 <img
                   className="aspect-square w-full object-cover"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
@@ -39,17 +39,16 @@ export default function NavBar() {
                 <FlyoutMenu />
               </div>
 
-              <div className="ml-auto flex items-center gap-3">
+              <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex">
-                  <AuthMenu />
+                  <ModeToggle />
+                  <SpeachButton />
                 </div>
                 {/* Filter */}
                 <FilterButton />
                 {/* Cart */}
-                <div>
-                  <CartSliderOver />
-                </div>
-                <ModeToggle />
+                <CartSliderOver />
+                <AuthMenu />
               </div>
             </div>
           </div>
