@@ -75,7 +75,7 @@ export default function AuthMenu() {
                 >
                   <div>
                     <IoExitOutline
-                      className="mr-2 h-4 w-4"
+                      className="mr-2 h-[1.2rem] w-[1.2rem]"
                       aria-hidden="true"
                     />
                     Salir
@@ -96,7 +96,7 @@ export default function AuthMenu() {
                   <DropdownMenuItem asChild>
                     <Link href="/signin">
                       <MdOutlineSpaceDashboard
-                        className="mr-2 h-4 w-4"
+                        className="mr-2 h-[1.2rem] w-[1.2rem]"
                         aria-hidden="true"
                       />
                       Ingresar
@@ -106,7 +106,7 @@ export default function AuthMenu() {
                   <DropdownMenuItem asChild>
                     <Link href="/register">
                       <BsCreditCard
-                        className="mr-2 h-4 w-4"
+                        className="mr-2 h-[1.2rem] w-[1.2rem]"
                         aria-hidden="true"
                       />
                       Registro

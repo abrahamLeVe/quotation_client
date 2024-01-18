@@ -37,7 +37,7 @@ export default function ProductModal({
           }
           title="Ver mas detalles"
         >
-          <BsEye className="h-6 w-6" />
+          <BsEye className="h-[1.2rem] w-[1.2rem]" />
           {isCart ? "" : "Ver mas detalles"}
         </Button>
       </DialogTrigger>

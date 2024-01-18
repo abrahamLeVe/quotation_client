@@ -29,7 +29,7 @@ export default function CartButtonActions({
             }}
             title="Quitar del carrito"
           >
-            <MdDeleteOutline className="h-6 w-6" />
+            <MdDeleteOutline className="h-[1.2rem] w-[1.2rem]" />
             {isPage ? "Quitar" : null}
           </Button>
 
@@ -38,7 +38,7 @@ export default function CartButtonActions({
               onClick={() => cart.decreaseCartQuantity(id, idColor)}
               title="Restar"
             >
-              <BsCartDash className="h-6 w-6" /> {isPage ? "Restar" : null}
+              <BsCartDash className="h-[1.2rem] w-[1.2rem]" /> {isPage ? "Restar" : null}
             </Button>
           )}
 
@@ -46,7 +46,7 @@ export default function CartButtonActions({
             onClick={() => cart.increaseCartQuantity(id, idColor)}
             title="Añadir"
           >
-            <BsCartCheck className="h-6 w-6" />
+            <BsCartCheck className="h-[1.2rem] w-[1.2rem]" />
             {`x ${getItemQuantity(id)}`}
           </Button>
         </div>
@@ -56,7 +56,7 @@ export default function CartButtonActions({
             onClick={() => cart.increaseCartQuantity(id, idColor)}
             title="Añadir"
           >
-            <BsCartPlus className="h-6 w-6" /> Añadir
+            <BsCartPlus className="h-[1.2rem] w-[1.2rem]" /> Añadir
           </Button>
         </div>
       )}

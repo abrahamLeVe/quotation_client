@@ -27,7 +27,7 @@ export default function CartCheckout() {
             scroll={false}
             className="absolute inset-0"
           ></Link>
-          <BsCart className="h-6 w-6" /> Ver carrito
+          <BsCart className="h-[1.2rem] w-[1.2rem]" /> Ver carrito
         </Button>
         <Button className="relative">
           <Link
@@ -37,7 +37,7 @@ export default function CartCheckout() {
             scroll={false}
             className="absolute inset-0"
           ></Link>
-          <BsCreditCard className="h-6 w-6" /> Pagar
+          <BsCreditCard className="h-[1.2rem] w-[1.2rem]" /> Pagar
         </Button>
       </div>
     </div>

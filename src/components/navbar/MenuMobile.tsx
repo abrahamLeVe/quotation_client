@@ -19,6 +19,7 @@ import { HiBars3 } from "react-icons/hi2";
 import { SpeachButton } from "../filter/FilterButton";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
+import { ModeToggle } from "../ui/mode-toggle";
 
 export default function MenuMobile() {
   return (
@@ -34,7 +35,10 @@ export default function MenuMobile() {
         <ScrollArea className="h-full pr-3">
           <SheetHeader className="flex flex-row justify-between items-baseline">
             <SheetTitle>Menú</SheetTitle>
-            <SpeachButton />
+            <div>
+              <ModeToggle />
+              <SpeachButton />
+            </div>
           </SheetHeader>
           <Separator className="my-4" />
           <Accordion type="single" collapsible className="w-full">

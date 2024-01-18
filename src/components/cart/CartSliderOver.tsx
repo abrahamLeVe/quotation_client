@@ -24,16 +24,15 @@ export default function CartSliderOver() {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          variant="link"
+          variant="ghost"
           className="relative"
           disabled={cartQuantity === 0 || isLoading}
-          role="link"
           title="Carrito de compras"
         >
-          <HiOutlineShoppingBag className="h-7 w-7" />
+          <HiOutlineShoppingBag className="h-[1.2rem] w-[1.2rem]" />
           {isLoading ? (
             <Icons.spinner
-              className="border rounded-full w-6 h-6 absolute top-0 right-0 animate-spin"
+              className="border rounded-full h-[1.2rem] w-[1.2rem] absolute top-0 right-0 animate-spin"
               aria-hidden="true"
             />
           ) : (
