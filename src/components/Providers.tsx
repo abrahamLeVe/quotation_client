@@ -12,17 +12,15 @@ interface ProvidersProps {
 
 export default function Providers({ children }: ProvidersProps) {
   return (
-    <>
-      <SessionProvider>
-        <Toaster />
-        <ProductProvider>
-          <CartProvider>
-            <CategoryProvider>
-              <FilterProvider>{children}</FilterProvider>
-            </CategoryProvider>
-          </CartProvider>
-        </ProductProvider>
-      </SessionProvider>
-    </>
+    <SessionProvider>
+      <Toaster />
+      <ProductProvider>
+        <CartProvider>
+          <CategoryProvider>
+            <FilterProvider>{children}</FilterProvider>
+          </CategoryProvider>
+        </CartProvider>
+      </ProductProvider>
+    </SessionProvider>
   );
 }

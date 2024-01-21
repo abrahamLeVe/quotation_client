@@ -26,11 +26,16 @@ export default function ProductDetail({
   const [selectedPrice, setPrice] = useState<ProductPriceInterface>(
     product.attributes.prices.data[0]
   );
+
   const [colors, setColors] = useState<ColorProduct[]>(
     selectedPrice.attributes.product_colors.data
   );
 
-  const [idColor, setIdColor] = useState<number>(colors[0]?.id);
+  const [idColor, setIdColor] = useState<number | undefined>(
+    colors.length === 1
+      ? selectedPrice.attributes.product_colors.data[0]?.id
+      : undefined
+  );
 
   const handleSizeChange = (id: string) => {
     const sizeId = parseInt(id);
@@ -38,7 +43,12 @@ export default function ProductDetail({
       (price) => price.id === sizeId
     );
     setColors(priceSelected!.attributes.product_colors.data!);
-    setIdColor(priceSelected!.attributes.product_colors.data[0].id);
+
+    if (priceSelected!.attributes.product_colors.data.length > 1) {
+      setIdColor(undefined);
+    } else {
+      setIdColor(priceSelected!.attributes.product_colors.data[0].id);
+    }
 
     setPrice(priceSelected!);
   };
@@ -88,7 +98,7 @@ export default function ProductDetail({
           <ColorSelect
             colors={colors}
             handleColorChange={handleColorChange}
-            productId={selectedPrice.id}
+            priceId={selectedPrice.id}
             key={selectedPrice.id}
           />
         ) : null}
@@ -122,9 +132,13 @@ export default function ProductDetail({
         ) : null}
       </div>
 
-      {/* actions */}
       <div className="flex flex-col items-end gap-3 relative">
-        <CartButtonActions id={selectedPrice.id} idColor={idColor} />
+        <CartButtonActions
+          priceId={selectedPrice.id}
+          idColor={idColor!}
+          colors={colors}
+          isPage={isPage}
+        />
         {isPage ? null : <ProductModal product={product} />}
       </div>
     </>

@@ -48,7 +48,9 @@ export default function NavBar() {
                 <FilterButton />
                 {/* Cart */}
                 <CartSliderOver />
-                <AuthMenu />
+                <div className="ml-3">
+                  <AuthMenu />
+                </div>
               </div>
             </div>
           </div>

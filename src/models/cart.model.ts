@@ -11,7 +11,7 @@ export interface CartItem {
   colors?: ItemColor[];
 }
 
-interface ItemColor {
+export interface ItemColor {
   id: number;
   quantity: number;
 }

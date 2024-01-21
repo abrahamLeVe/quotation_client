@@ -28,6 +28,7 @@
     "embla-carousel-autoplay": "8.0.0-rc19",
     "embla-carousel-react": "8.0.0-rc19",
     "lucide-react": "^0.309.0",
+    "mercadopago": "^2.0.6",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",

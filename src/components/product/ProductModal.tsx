@@ -7,13 +7,12 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { ProductInterface } from "@/models/products.model";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { BsEye } from "react-icons/bs";
 import ImageGalleryModal from "../ui/ImageGallery";
 import ProductDetail from "./ProductDetail";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import Link from "next/link";
 
 interface ProductModalProps {
   product: ProductInterface;
@@ -24,8 +23,6 @@ export default function ProductModal({
   product,
   isCart = false,
 }: ProductModalProps) {
-  const router = useRouter();
-
   return (
     <Dialog>
       <DialogTrigger asChild>

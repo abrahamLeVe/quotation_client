@@ -10,7 +10,10 @@ interface ProductProviderProps {
 interface ProductContext {
   isOpen: boolean;
   getItemQuantity: (id: number) => number | undefined;
-  getItemColorQuantity: (id: number, colorId: number) => number | undefined;
+  getItemColorQuantity: (
+    priceId: number,
+    colorId: number
+  ) => number | undefined;
 
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cleanProductModal: () => void;
@@ -35,10 +38,10 @@ export function ProductProvider({ children }: ProductProviderProps) {
       : 0;
   }
 
-  function getItemColorQuantity(productId: number, colorId: number) {
+  function getItemColorQuantity(priceId: number, colorId: number) {
     return mounted
       ? cart.cartItemState
-          .find((item) => item.id === productId)
+          .find((item) => item.id === priceId)
           ?.colors?.find((color) => color.id === colorId)?.quantity
       : 0;
   }
