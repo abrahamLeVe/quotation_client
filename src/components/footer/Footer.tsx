@@ -13,6 +13,8 @@ import { z } from "zod";
 import { Icons } from "../Icons";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
+import { toast } from "../ui/use-toast";
+
 import {
   Form,
   FormControl,
@@ -40,10 +42,24 @@ export default function Footer() {
     setIsPending(true);
 
     try {
+      console.log({ data });
+
       const res = await registerNewsletter({ data });
-      if (!res?.data) {
-      }
       console.log(res);
+
+      if (!res?.data) {
+        return toast({
+          variant: "default",
+          title: "Registro",
+          description: "Gracias por su suscripción",
+        });
+      } else {
+        return toast({
+          variant: "default",
+          title: "Registro",
+          description: "Gracias por su suscripción",
+        });
+      }
     } catch (error) {
       console.log(error);
       return error;

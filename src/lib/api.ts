@@ -29,7 +29,6 @@ export async function postDataFromApi(endpoint: string, payload: any) {
       },
       body: JSON.stringify(payload),
     });
-    console.log("res ", res);
     return res.json();
   } catch (error) {
     return error;

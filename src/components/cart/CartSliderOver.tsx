@@ -22,7 +22,7 @@ export default function CartSliderOver() {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger asChild className="z-40">
         <Button
           variant="ghost"
           className="relative"

@@ -23,7 +23,6 @@ export default function CartItem({ isPage = false }: CartItemProps) {
         <div className="-my-6 divide-y divide-gray-200 w-full">
           {cart?.length > 0
             ? cart.map((cartItem) => {
-                console.log("cartItem ", cartItem);
                 const product = cartItems.find((p) =>
                   p.attributes.prices.data.some(
                     (price) => price.id === cartItem.id

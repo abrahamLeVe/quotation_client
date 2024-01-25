@@ -14,9 +14,7 @@ interface ProductContext {
     priceId: number,
     colorId: number
   ) => number | undefined;
-
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  cleanProductModal: () => void;
 }
 
 const ProductContext = createContext({} as ProductContext);
@@ -46,17 +44,12 @@ export function ProductProvider({ children }: ProductProviderProps) {
       : 0;
   }
 
-  function cleanProductModal() {
-    setIsOpen(false);
-  }
-
   return (
     <ProductContext.Provider
       value={{
         isOpen,
         setIsOpen,
         getItemQuantity,
-        cleanProductModal,
         getItemColorQuantity,
       }}
     >

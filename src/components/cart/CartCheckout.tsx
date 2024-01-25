@@ -1,17 +1,13 @@
-import { payMercadoPago } from "@/app/services/mp.service";
 import { useCartContext } from "@/context/cart.context";
 import { formatCurrency } from "@/utilities/utils";
 import Link from "next/link";
-import { BsCart, BsCreditCard } from "react-icons/bs";
+import { BsCart } from "react-icons/bs";
 import { Icons } from "../Icons";
+import PaymentMP from "../payment/PaymentMP";
 import { Button } from "../ui/button";
 
 export default function CartCheckout() {
   const { subTotal, isLoading } = useCartContext();
-
-  async function payMP() {
-    await payMercadoPago();
-  }
 
   return (
     <div className="w-full py-4 border-t">
@@ -34,10 +30,8 @@ export default function CartCheckout() {
           ></Link>
           <BsCart className="h-[1.2rem] w-[1.2rem]" /> Ver carrito
         </Button>
-        <Button className="relative" onClick={() => payMP()}>
-          <BsCreditCard className="h-[1.2rem] w-[1.2rem]" /> Pagar
-        </Button>
       </div>
+      <PaymentMP />
     </div>
   );
 }
