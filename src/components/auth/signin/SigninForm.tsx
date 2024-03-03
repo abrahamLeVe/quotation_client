@@ -1,6 +1,5 @@
 "use client";
 import { Icons } from "@/components/Icons";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,9 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,8 +23,8 @@ export default function SigninForm() {
   if (session) {
     signOut({ redirect: false });
   }
-  const searchParams = useSearchParams();
-  let error = searchParams.get("error");
+  // const searchParams = useSearchParams();
+  // let error = searchParams.get("error");
   const [isPending, setIsPending] = useState(false);
 
   type Inputs = z.infer<typeof loginSchema>;
@@ -101,15 +98,17 @@ export default function SigninForm() {
           Continue
           <span className="sr-only">Continue to email verification page</span>
         </Button>
-        {error ? (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              El correo electrónico y/o la contraseña son incorrectos.
-            </AlertDescription>
-          </Alert>
-        ) : null}
+        {/* <Suspense>
+          {error ? (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                El correo electrónico y/o la contraseña son incorrectos.
+              </AlertDescription>
+            </Alert>
+          ) : null}
+        </Suspense> */}
       </form>
     </Form>
   );

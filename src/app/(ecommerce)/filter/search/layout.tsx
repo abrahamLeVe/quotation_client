@@ -1,5 +1,7 @@
+"use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import ProductSearch from "@/components/ui/Search";
+import { Suspense } from "react";
 
 export default function FilterLayout({
   children,
@@ -20,9 +22,12 @@ export default function FilterLayout({
           },
         ]}
       />
-
-      <ProductSearch placeholder={"Buscar productos..."} title={"Producto: "} />
-
+      <Suspense>
+        <ProductSearch
+          placeholder={"Buscar productos..."}
+          title={"Producto: "}
+        />
+      </Suspense>
       {children}
     </>
   );

@@ -1,5 +1,7 @@
+"use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import ProductSearch from "@/components/ui/Search";
+import { Suspense } from "react";
 
 export default function ColorLayout({
   children,
@@ -24,8 +26,10 @@ export default function ColorLayout({
           },
         ]}
       />
-      <ProductSearch placeholder={"Buscar marca..."} title={"Marca: "} />
 
+      <Suspense>
+        <ProductSearch placeholder={"Buscar marca..."} title={"Marca: "} />
+      </Suspense>
       {children}
     </>
   );

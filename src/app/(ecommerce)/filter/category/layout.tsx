@@ -1,5 +1,7 @@
+"use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import ProductSearch from "@/components/ui/Search";
+import { Suspense } from "react";
 
 export default function CategoryLayout({
   children,
@@ -24,10 +26,12 @@ export default function CategoryLayout({
           },
         ]}
       />
-      <ProductSearch
-        placeholder={"Buscar categoría..."}
-        title={"Categoría: "}
-      />
+      <Suspense>
+        <ProductSearch
+          placeholder={"Buscar categoría..."}
+          title={"Categoría: "}
+        />
+      </Suspense>
       {children}
     </>
   );

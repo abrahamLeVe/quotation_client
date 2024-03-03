@@ -1,5 +1,7 @@
+"use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import ProductSearch from "@/components/ui/Search";
+import { Suspense } from "react";
 
 export default function BrandLayout({
   children,
@@ -24,8 +26,9 @@ export default function BrandLayout({
           },
         ]}
       />
-      <ProductSearch placeholder={"Buscar marca..."} title={"Marca: "} />
-
+      <Suspense>
+        <ProductSearch placeholder={"Buscar marca..."} title={"Marca: "} />
+      </Suspense>
       {children}
     </>
   );
