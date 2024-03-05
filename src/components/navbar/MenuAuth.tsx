@@ -21,7 +21,6 @@ import { Button } from "../ui/button";
 export default function AuthMenu() {
   const { data: session, status } = useSession();
   const initials = `${session?.user.name?.charAt(0).toUpperCase() ?? ""}`;
-  console.log("initial ", initials, "session ", session);
   return (
     <>
       {status === "loading" ? (
