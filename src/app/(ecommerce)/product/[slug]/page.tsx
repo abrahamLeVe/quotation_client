@@ -19,7 +19,6 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { data } = await getDataProductBySlug(params.slug);
-
   return (
     <>
       <ProductSinglePage data={data[0]} />

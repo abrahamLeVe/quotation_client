@@ -36,7 +36,6 @@ export default function Slide({ data }: CarouselPluginProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
-
   return (
     <>
       <Carousel

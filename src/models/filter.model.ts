@@ -23,7 +23,10 @@ export const populate = {
         populate: ["data"],
       },
       size: {
-        populate: ["category"],
+        populate: ["data"],
+      },
+      categories: {
+        populate: ["data"],
       },
     },
   },

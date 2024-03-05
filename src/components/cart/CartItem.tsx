@@ -92,14 +92,21 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                         </div>
                       </div>
                       <div className="flex gap-1 flex-col">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-1">
                           {size ? (
                             <div className="flex gap-1">
                               <h3 className="font-medium">Medida:{""}</h3>
-                              <p>
-                                {size.attributes.numberLatam}-
-                                {size.attributes.category.data.attributes.name}
-                              </p>
+                              <div className="flex">
+                                {`${size.attributes.numberLatam}${
+                                  selectedPrice.attributes.categories.data &&
+                                  selectedPrice.attributes.categories.data
+                                    .length > 0
+                                    ? " - " +
+                                      selectedPrice.attributes.categories
+                                        .data[0].attributes.name
+                                    : ""
+                                }`}
+                              </div>
                             </div>
                           ) : null}
                           <div className="flex flex-row max-w-[250px]">

@@ -54,6 +54,7 @@ interface Attributes6 {
   product_colors: Productcolors2;
   model: Model;
   size: Size;
+  categories: Categories
 }
 
 interface Size {
