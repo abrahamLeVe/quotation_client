@@ -1,6 +1,6 @@
 "use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
-import ProductSearch from "@/components/ui/Search";
+import ProductSearch from "@/components/ui/search";
 import { Suspense } from "react";
 
 export default function BrandLayout({

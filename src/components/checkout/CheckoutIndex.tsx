@@ -2,16 +2,17 @@
 import { cartStore } from "@/store/cart.store";
 import dynamic from "next/dynamic";
 import QuotationCheck from "../quotation/QuotationCheck";
-const CartItem = dynamic(() => import("./CartItem"), {
+import QuotationSend from "../quotation/QuotationSend";
+const CartItem = dynamic(() => import("../cart/CartItem"), {
   ssr: false,
   loading: () => <>Cargando items...</>,
 });
 
-export default function CartIndex() {
+export default function CheckoutIndex() {
   const cart = cartStore((state) => state);
   return (
     <div className="px-4 py-6 sm:px-6 w-full">
-      <div className="text-lg font-medium ">Carrito de compras</div>
+      <div className="text-lg font-medium ">Checkout</div>
       <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
         {cart.cartItemState.length === 0 ? (
           <>Carrito vacío</>
@@ -48,7 +49,7 @@ export default function CartIndex() {
                   <tr>
                     <td className="border-b text-lg font-semibold p-4">
                       <div className="flex justify-end items-center">
-                        <QuotationCheck />
+                        <QuotationSend />
                       </div>
                     </td>
                   </tr>

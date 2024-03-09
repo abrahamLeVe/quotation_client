@@ -4,8 +4,6 @@ import { ProductsInterface } from "@/models/products.model";
 import { IoFilterSharp } from "react-icons/io5";
 import ProductCard from "../product/ProductCard";
 import { Button } from "../ui/button";
-import FilterSection from "./FilterSection";
-import FilterSelect from "./FilterSelect";
 
 export default function ProductTable({
   products,
@@ -17,14 +15,6 @@ export default function ProductTable({
   return (
     <>
       <div className="flex justify-end items-center gap-3 flex-row">
-        {products ? (
-          products.data.length > 3 ? (
-            <>
-              <FilterSection />
-              <FilterSelect />
-            </>
-          ) : null
-        ) : null}
         <Button onClick={() => setOpenFilter(true)} title="Filtro">
           <IoFilterSharp className="h-6 w-6" /> Filtro
         </Button>

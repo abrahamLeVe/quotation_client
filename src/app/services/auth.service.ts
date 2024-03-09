@@ -1,5 +1,4 @@
-"use server";
-import { postDataFromApi } from "@/lib/api";
+import { postDataFromApi, loginUserPost } from "@/lib/api";
 import {
   AuthInterface,
   loginUserPromps,
@@ -7,7 +6,8 @@ import {
 } from "@/models/auth.model";
 
 export async function loginUser(data: loginUserPromps) {
-  const res = (await postDataFromApi("/api/auth/local", data)) as AuthInterface;
+  const res = (await loginUserPost("/api/auth/local", data)) as AuthInterface;
+  console.log(res);
   return res;
 }
 

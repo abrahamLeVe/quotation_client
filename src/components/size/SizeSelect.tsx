@@ -53,11 +53,11 @@ export default function SizeSelect({
         control={form.control}
         name="id"
         render={({ field }) => (
-          <FormItem className="flex w-full gap-2 items-center">
+          <FormItem className="flex flex-col gap-2 items-start">
             <FormLabel>Medidas:</FormLabel>
             <Select onValueChange={handleSizeChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Seleccione una medida" />
                 </SelectTrigger>
               </FormControl>
@@ -66,13 +66,16 @@ export default function SizeSelect({
                   const isInCurrentCart = cart.cartItemState.some(
                     (item) => item.id === price.id
                   );
+
+                  if (!price.attributes.size.data) {
+                    return null;
+                  }
+
                   return (
                     <SelectItem key={price.id} value={price.id.toFixed()}>
                       <div className="flex gap-3">
                         <div className="flex">
-                          {`${
-                            price.attributes.size.data?.attributes.numberLatam
-                          }${
+                          {`${price.attributes.size.data.attributes.name}${
                             price.attributes.categories.data &&
                             price.attributes.categories.data.length > 0
                               ? " - " +

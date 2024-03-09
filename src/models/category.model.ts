@@ -7,6 +7,19 @@ export interface CategoryInterface {
   attributes: Attributes3;
 }
 
+
+
+interface Meta {
+  pagination: Pagination;
+}
+
+interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
 interface Attributes3 {
   name: string;
   slug: string;
@@ -15,6 +28,17 @@ interface Attributes3 {
   publishedAt: string;
   image: Image;
   products: Products;
+  sizes: Sizes;
+  price: Price;
+  sub_categories: Sizes;
+}
+
+interface Price {
+  data?: any;
+}
+
+interface Sizes {
+  data: any[];
 }
 
 interface Products {
@@ -28,14 +52,12 @@ interface Datum {
 
 interface Attributes2 {
   name: string;
-  price: number;
-  discount: number;
   description: string;
+  slug: string;
+  rating: number;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  slug: string;
-  rating: number;
 }
 
 interface Image {
@@ -67,13 +89,13 @@ interface Attributes {
 }
 
 interface Formats {
-  small: Small;
-  thumbnail: Small;
-  large?: Small;
-  medium?: Small;
+  large: Large;
+  small: Large;
+  medium: Large;
+  thumbnail: Large;
 }
 
-interface Small {
+interface Large {
   ext: string;
   url: string;
   hash: string;

@@ -1,18 +1,48 @@
 export interface SlideInterface {
   data: Datum[];
+  meta: Meta;
+}
+
+interface Meta {
+  pagination: Pagination;
+}
+
+interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
 }
 
 interface Datum {
+  id: number;
+  attributes: Attributes3;
+}
+
+interface Attributes3 {
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: Image;
+  category: Category;
+}
+
+interface Category {
+  data: Data2;
+}
+
+interface Data2 {
   id: number;
   attributes: Attributes2;
 }
 
 interface Attributes2 {
   name: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  image: Image;
 }
 
 interface Image {

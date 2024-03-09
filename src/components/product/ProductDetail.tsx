@@ -11,7 +11,6 @@ import CartButtonActions from "../cart/CartButtonActions";
 import ColorSelect from "../color/ColorSelect";
 import SizeSelect from "../size/SizeSelect";
 import ProductModal from "./ProductModal";
-import ProductPrice from "./ProductPrice";
 import ProductRating from "./ProductRating";
 
 interface ProductDetailProps {
@@ -61,38 +60,36 @@ export default function ProductDetail({
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <h3 className="relative" title={product.attributes.name}>
+      <div className="flex flex-col gap-3">
+        <h3 className="relative text-xl" title={product.attributes.name}>
           {!isPage ? (
-            <>{truncate(product.attributes.name, 60)}</>
+            <>{truncate(product.attributes.name, 40)}</>
           ) : (
             <>{product.attributes.name}</>
           )}
         </h3>
 
-        {!selectedPrice ? null : (
-          <div className="flex gap-2">
-            <ProductPrice
-              discount={selectedPrice.attributes.discount || 0}
-              price={selectedPrice.attributes.value || 0}
-              popUp
-            />
-          </div>
-        )}
+        <ProductRating rating={product.attributes.rating} />
 
         {product.attributes.brand?.data ? (
           <div className="flex flex-wrap gap-2">
             <span className="font-semibold">Marca: </span>
             <Link
-              href={`/product/filter?query=${product.attributes.brand.data?.attributes.name}`}
-              className="underline hover:opacity-95"
+              href={`/filter/brand?query=${product.attributes.brand.data?.attributes.name}`}
+              className="hover:opacity-95 hover:underline "
             >
               {product.attributes.brand.data?.attributes.name}
             </Link>
           </div>
         ) : null}
 
-        <ProductRating rating={product.attributes.rating} />
+        {!product.attributes.prices.data[0].attributes.size?.data ? null : (
+          <SizeSelect
+            selectedPrice={selectedPrice}
+            productPrices={product.attributes.prices.data}
+            handleSizeChange={handleSizeChange}
+          />
+        )}
 
         {colors.length > 0 ? (
           <ColorSelect
@@ -105,41 +102,50 @@ export default function ProductDetail({
 
         {isPage ? (
           <>
-            {!product.attributes.prices.data[0].attributes.size?.data ? null : (
-              <SizeSelect
-                selectedPrice={selectedPrice}
-                productPrices={product.attributes.prices.data}
-                handleSizeChange={handleSizeChange}
-              />
-            )}
-            <>
-              {product.attributes.categories.data.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
-                  <span className="font-semibold">Categorías:</span>
-                  {product.attributes.categories.data.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={`/product/filter?query=${item.attributes.name}`}
-                      className="underline text-gray-700 hover:text-gray-900"
+            {product.attributes.categories.data.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                <span className="font-semibold">Categorías:</span>
+                {product.attributes.categories.data.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/filter/category?query=${item.attributes.name}`}
+                    className="hover:opacity-95 hover:underline"
+                  >
+                    {item.attributes.name}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+
+            {product.attributes.documents.data.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {product.attributes.documents.data.map((item) => (
+                  <div key={item.id} className="flex items-center gap-2">
+                    <span>{item.attributes.file.data.attributes.name}</span>
+                    <a
+                      href={item.attributes.file.data.attributes.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
                     >
-                      {item.attributes.name}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
-            </>
+                      Descargar
+                    </a>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </>
         ) : null}
-      </div>
 
-      <div className="flex flex-col items-end gap-3 relative">
-        <CartButtonActions
-          priceId={selectedPrice.id}
-          idColor={idColor!}
-          colors={colors}
-          isPage={isPage}
-        />
-        {isPage ? null : <ProductModal product={product} />}
+        <div className="flex flex-col items-end gap-3 relative">
+          <CartButtonActions
+            priceId={selectedPrice.id}
+            idColor={idColor!}
+            colors={colors}
+            isPage={isPage}
+          />
+          {isPage ? null : <ProductModal product={product} />}
+        </div>
       </div>
     </>
   );

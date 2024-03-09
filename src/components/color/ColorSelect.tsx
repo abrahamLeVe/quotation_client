@@ -39,7 +39,7 @@ export default function ColorSelect({
                 className="h-5 w-5 border rounded-full"
                 style={{ color: `${color.attributes.code}` }}
               />
-              {color.attributes.Name}
+              {color.attributes.name}
               <div className="flex">
                 {getItemColorQuantity(priceId, color.id) ? (
                   <>{"x" + getItemColorQuantity(priceId, color.id)}</>

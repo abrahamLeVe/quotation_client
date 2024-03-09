@@ -1,4 +1,3 @@
-"use server";
 import { fetchDataFromApi } from "@/lib/api";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
@@ -12,6 +11,11 @@ export const getDataProducts = cache(async (): Promise<ProductsInterface> => {
     { encodeValuesOnly: true }
   );
   const res = await fetchDataFromApi(`/api/products?${queryString}`);
+  return res;
+});
+
+export const getDataProductSlug = cache(async (): Promise<ProductsInterface> => { 
+  const res = await fetchDataFromApi(`/api/products`);
   return res;
 });
 

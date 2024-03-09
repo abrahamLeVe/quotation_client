@@ -1,5 +1,4 @@
 "use client";
-import Autoplay from "embla-carousel-autoplay";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -10,6 +9,8 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { SlideInterface } from "@/models/slide.model";
+import Autoplay from "embla-carousel-autoplay";
+import Link from "next/link";
 import React from "react";
 
 interface CarouselPluginProps {
@@ -41,7 +42,7 @@ export default function Slide({ data }: CarouselPluginProps) {
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
-        className="w-full"
+        className="w-full aspect-[16/6]"
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
@@ -49,13 +50,17 @@ export default function Slide({ data }: CarouselPluginProps) {
           {data.data.map((slide) => (
             <CarouselItem key={slide.id}>
               <div className="p-1">
-                <Card>
-                  <CardContent className="p-0 lg:p-6">
+                <Card className="transition-all duration-300 ease-in-out hover:bg-black dark:hover:bg-white hover:bg-opacity-10">
+                  <CardContent className="p-0 lg:p-6 relative">
                     <img
                       src={slide.attributes.image.data?.attributes.url}
                       className="aspect-[16/6] w-full object-cover"
                       alt={slide.attributes.name}
                       loading="eager"
+                    />
+                    <Link
+                      href={`/filter/category?query=${slide.attributes.category.data.attributes.name}`}
+                      className="absolute inset-0 "
                     />
                   </CardContent>
                 </Card>

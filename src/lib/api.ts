@@ -35,6 +35,21 @@ export async function postDataFromApi(endpoint: string, payload: any) {
   }
 }
 
+export async function loginUserPost(endpoint: string, payload: any) {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    console.log(res)
+    return res.json();
+  } catch (error) {
+    return error;
+  }
+}
 export async function getUserFromApi(jwt: string): Promise<User | undefined> {
   try {
     if (jwt) {

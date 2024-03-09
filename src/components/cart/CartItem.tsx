@@ -1,11 +1,10 @@
 "use client";
 import { useCartContext } from "@/context/cart.context";
 import { cartStore } from "@/store/cart.store";
-import { formatCurrency, truncate } from "@/utilities/utils";
+import { truncate } from "@/utilities/utils";
 import { useState } from "react";
 import ColorSelect from "../color/ColorSelect";
 import ProductModal from "../product/ProductModal";
-import ProductPrice from "../product/ProductPrice";
 import CartButtonActions from "./CartButtonActions";
 
 interface CartItemProps {
@@ -80,16 +79,9 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                           {isPage ? (
                             <>{product.attributes.name}</>
                           ) : (
-                            <>{truncate(product.attributes.name, 28)}</>
+                            <>{truncate(product.attributes.name, 55)}</>
                           )}
                         </h3>
-                        <div className="flex flex-row gap-3">
-                          <ProductPrice
-                            discount={selectedPrice?.attributes.discount!}
-                            price={selectedPrice?.attributes.value!}
-                            popUp
-                          />
-                        </div>
                       </div>
                       <div className="flex gap-1 flex-col">
                         <div className="flex flex-col gap-1">
@@ -97,7 +89,7 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                             <div className="flex gap-1">
                               <h3 className="font-medium">Medida:{""}</h3>
                               <div className="flex">
-                                {`${size.attributes.numberLatam}${
+                                {`${size.attributes.name}${
                                   selectedPrice.attributes.categories.data &&
                                   selectedPrice.attributes.categories.data
                                     .length > 0
@@ -125,20 +117,6 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                           </div>
                         </div>
                         <div className="flex flex-col items-end gap-3 relative">
-                          {isPage ? (
-                            <div className="flex flex-row  gap-1">
-                              <div>
-                                <h3 className="font-medium">Sub total:</h3>
-                              </div>
-                              <div className="text-red-600">
-                                {formatCurrency(
-                                  (selectedPrice?.attributes.value! -
-                                    selectedPrice?.attributes.discount!) *
-                                    cartItem.quantity
-                                )}
-                              </div>
-                            </div>
-                          ) : null}
                           <CartButtonActions
                             priceId={cartItem.id}
                             idColor={

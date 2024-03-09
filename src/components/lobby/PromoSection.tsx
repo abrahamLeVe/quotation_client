@@ -86,10 +86,7 @@ export default function PromoSection() {
                 </div>
               </div>
 
-              <Button
-                variant={"outline"}
-                className="font-medium"
-              >
+              <Button variant={"outline"} className="font-medium">
                 Shop Collection
               </Button>
             </div>

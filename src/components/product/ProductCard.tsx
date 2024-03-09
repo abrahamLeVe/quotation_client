@@ -14,7 +14,6 @@ export default function ProductCard({
         <ImageGalleryIndex product={product} />
       </div>
       <div className="flex flex-col h-full justify-between p-2 gap-2">
-        {/* Details */}
         <ProductDetail product={product} />
       </div>
     </>

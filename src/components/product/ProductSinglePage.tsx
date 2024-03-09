@@ -1,8 +1,7 @@
 import { ProductInterface } from "@/models/products.model";
-import Markdown from "react-markdown";
 import CategoryProducts from "../category/CategoryProducts";
-import DisclosureIndex from "../ui/Disclosure";
 import ImageGalleryModal from "../ui/ImageGallery";
+import { ProductDescription } from "./ProductDescription";
 import ProductDetail from "./ProductDetail";
 import ProductNotFound from "./ProductNotFound";
 
@@ -27,14 +26,9 @@ export default function ProductSinglePage({
                 <ProductDetail product={product} isPage />
               </div>
 
-              <div className="w-full border">
-                <DisclosureIndex
-                  title={"Descripción"}
-                  child={
-                    <article className="prose prose-base max-w-none">
-                      <Markdown>{product.attributes.description}</Markdown>
-                    </article>
-                  }
+              <div>
+                <ProductDescription
+                  description={product.attributes.description}
                 />
               </div>
             </div>

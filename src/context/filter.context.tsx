@@ -1,5 +1,5 @@
 "use client";
-import { FilterActions } from "@/components/filter/FilterSelect";
+// import { FilterActions } from "@/components/filter/FilterSelect";
 import { ProductInterface, ProductsInterface } from "@/models/products.model";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -27,10 +27,10 @@ interface FilterContext {
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
   maxPrice: number;
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
-  selected: { id: string; name: string };
-  setSelected: React.Dispatch<
-    React.SetStateAction<{ id: string; name: string }>
-  >;
+  // selected: { id: string; name: string };
+  // setSelected: React.Dispatch<
+  //   React.SetStateAction<{ id: string; name: string }>
+  // >;
   sortAlphabetically: () => void;
   sortByDateNewest: () => void;
   sortByRating: () => void;
@@ -58,7 +58,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   const [resultText, setResultText] = useState<string>("Sin resultados.");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
-  const [selected, setSelected] = useState(FilterActions[0]);
+  // const [selected, setSelected] = useState(FilterActions[0]);
   const [originalProducts, setOriginalProducts] = useState<ProductInterface[]>(
     []
   );
@@ -107,7 +107,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
       });
 
     setProductsFilter({ ...productsFilter, data: filteredProducts });
-    setSelected(FilterActions[0]);
+    // setSelected(FilterActions[0]);
   }
 
   function sortAlphabetically() {
@@ -185,7 +185,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
   function cleanFilter(): void {
     setProductsFilter(undefined);
     setOriginalProducts([]);
-    setSelected(FilterActions[0]);
+    // setSelected(FilterActions[0]);
   }
 
   return (
@@ -202,8 +202,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
         setMinPrice,
         maxPrice,
         setMaxPrice,
-        selected,
-        setSelected,
+        // selected,
+        // setSelected,
         sortAlphabetically,
         sortByDateNewest,
         sortByRating,

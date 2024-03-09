@@ -14,22 +14,27 @@ interface Pagination {
   total: number;
 }
 
-export interface PriceInterface {
+interface PriceInterface {
   id: number;
   attributes: Attributes4;
 }
 
 interface Attributes4 {
-  name?: string;
+  name: string;
   value: number;
+  discount?: number;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  discount?: number;
   product: Product;
   size: Size;
   model: Model;
   product_colors: Productcolors;
+  categories: Categories;
+}
+
+interface Categories {
+  data: any[];
 }
 
 interface Productcolors {
@@ -42,12 +47,12 @@ interface Datum2 {
 }
 
 interface Attributes3 {
-  Name: string;
+  name: string;
   description: string;
+  code: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  code: string;
 }
 
 interface Model {
@@ -68,9 +73,7 @@ interface Attributes2 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  numberUSA: number;
-  numberLatam: number;
-  cmFoot: number;
+  value: number;
 }
 
 interface Product {
@@ -84,12 +87,10 @@ interface Data {
 
 interface Attributes {
   name: string;
-  price: number;
-  discount: number;
   description: string;
+  slug: string;
+  rating: number;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  slug: string;
-  rating: number;
 }

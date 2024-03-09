@@ -28,10 +28,14 @@ export default function Search({
     <div className="w-full">
       <label
         htmlFor="query"
-        className="text-lg font-bold tracking-tight text-gray-900 pb-3"
+        className="flex text-lg font-semibold tracking-tight pb-3 gap-2"
       >
-        {title + ` ${searchParams.get("query")?.toString() || ""}`}
+        {title}{" "}
+        <p className="font-light">
+          {searchParams.get("query")?.toString() || ""}
+        </p>
       </label>
+
       <div className="relative mt-2 rounded-md shadow-sm">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <BsSearch className="h-3 w-3 text-gray-600" aria-hidden="true" />

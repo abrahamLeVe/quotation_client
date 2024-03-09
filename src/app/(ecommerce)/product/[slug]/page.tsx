@@ -1,6 +1,6 @@
 import {
   getDataProductBySlug,
-  getDataProducts,
+  getDataProductSlug,
 } from "@/app/services/product.service";
 import ProductSinglePage from "@/components/product/ProductSinglePage";
 
@@ -11,7 +11,7 @@ export interface ProductPageProps {
 }
 
 export async function generateStaticParams() {
-  const products = await getDataProducts();
+  const products = await getDataProductSlug();
   return products.data.map((product) => ({
     slug: product.attributes.slug,
   }));

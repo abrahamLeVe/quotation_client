@@ -21,7 +21,7 @@ export default function BrandList() {
           key={brand.id}
           className="relative hover:underline"
         >
-          <p className="text-gray-900 ">
+          <p>
             {capitalizeFirstLetter(brand.attributes.name)}
             {` (${brand.attributes.products.data.length})`}
           </p>

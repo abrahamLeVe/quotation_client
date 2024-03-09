@@ -19,8 +19,8 @@ interface CartContext {
   setCartItems: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
   getItemQuantity: (id: number) => number;
-  calculateTotal: () => { igv: number; total: number };
-  subTotal: number;
+  // calculateTotal: () => { igv: number; total: number };
+  // subTotal: number;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -35,7 +35,7 @@ export function CartProvider({ children }: CartProviderProps) {
   const cart = cartStore((state) => state.cartItemState);
   const [openMenu, setOpenMenu] = useState(false);
   const [cartItems, setCartItems] = useState<ProductInterface[]>([]);
-  const [subTotal, setSubTotal] = useState<number>(0);
+  // const [subTotal, setSubTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const mounted = useMounted();
 
@@ -57,26 +57,26 @@ export function CartProvider({ children }: CartProviderProps) {
             )
           );
 
-          setSubTotal(
-            cart.reduce((acc, cartItem) => {
-              const product = data.data.find((item) =>
-                item.attributes.prices.data.some(
-                  (price) => price.id === cartItem.id
-                )
-              );
+          // setSubTotal(
+          //   cart.reduce((acc, cartItem) => {
+          //     const product = data.data.find((item) =>
+          //       item.attributes.prices.data.some(
+          //         (price) => price.id === cartItem.id
+          //       )
+          //     );
 
-              const selectedPrice = product!.attributes.prices.data.find(
-                (price) => price.id === cartItem.id
-              );
+          //     const selectedPrice = product!.attributes.prices.data.find(
+          //       (price) => price.id === cartItem.id
+          //     );
 
-              return (
-                acc +
-                (selectedPrice!.attributes.value -
-                  selectedPrice!.attributes.discount! || 0) *
-                  cartItem.quantity
-              );
-            }, 0)
-          );
+          //     return (
+          //       acc +
+          //       (selectedPrice!.attributes.value -
+          //         selectedPrice!.attributes.discount! || 0) *
+          //         cartItem.quantity
+          //     );
+          //   }, 0)
+          // );
         } else {
           return null;
         }
@@ -103,23 +103,23 @@ export function CartProvider({ children }: CartProviderProps) {
     return igv;
   }
 
-  function calculateTotal() {
-    const igv = calculateIGV(subTotal);
-    const total = subTotal + igv;
-    return { igv, total };
-  }
+  // function calculateTotal() {
+  //   const igv = calculateIGV(subTotal);
+  //   const total = subTotal + igv;
+  //   return { igv, total };
+  // }
 
   return (
     <CartContext.Provider
       value={{
         cartQuantity,
         openMenu,
-        calculateTotal,
+        // calculateTotal,
         getItemQuantity,
         setOpenMenu,
         cartItems,
         setCartItems,
-        subTotal,
+        // subTotal,
         setIsLoading,
         isLoading,
       }}

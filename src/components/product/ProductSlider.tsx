@@ -1,6 +1,4 @@
 "use client";
-import { ProductInterface } from "@/models/products.model";
-import ProductCard from "./ProductCard";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -10,7 +8,9 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { ProductInterface } from "@/models/products.model";
 import React from "react";
+import ProductCard from "./ProductCard";
 
 interface ProductSliderProps {
   data: ProductInterface[];
@@ -36,7 +36,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
 
   return (
     <>
-      <Carousel setApi={setApi} className="w-full">
+      <Carousel setApi={setApi} className="w-full aspect-[16/6]">
         <CarouselContent className="-ml-1 ">
           {data.map((product) => (
             <CarouselItem

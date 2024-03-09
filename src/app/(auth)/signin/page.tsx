@@ -42,11 +42,7 @@ export default function SigninPage() {
                 <FaGoogle className="mr-2 h-4 w-4" />
                 Google
               </Button>
-            </a>
-            <Button>
-              <FaGoogle className="mr-2 h-4 w-4" />
-              Google
-            </Button>
+            </a>            
           </div>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

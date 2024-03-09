@@ -54,12 +54,14 @@ export default function ProductModal({
 
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Link
-                      prefetch={true}
-                      href={`/product/${product.attributes.slug}`}
-                    >
+                    <span className="font-semibold hover:underline relative">
                       Descripción completa: Click Aquí
-                    </Link>
+                      <Link
+                        prefetch={true}
+                        href={`/product/${product.attributes.slug}`}
+                        className="absolute inset-0"
+                      ></Link>
+                    </span>
                   </DialogClose>
                 </DialogFooter>
               </div>

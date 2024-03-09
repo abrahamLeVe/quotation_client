@@ -25,7 +25,7 @@ export async function filterProductsByColor(
   try {
     const filter = {
       product_colors: {
-        Name: {
+        name: {
           $containsi: cleanedQuery,
         },
       },

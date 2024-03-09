@@ -33,6 +33,7 @@ interface Attributes7 {
   brand: Brand;
   product_colors: Productcolors;
   prices: ProductPricesInterface;
+  documents: Documents
 }
 
 export interface ProductPricesInterface {
@@ -42,6 +43,56 @@ export interface ProductPricesInterface {
 export interface ProductPriceInterface {
   id: number;
   attributes: Attributes6;
+}
+
+export interface Documents {
+  data: DocumentData[];
+}
+
+interface DocumentData {
+  id: number;
+  attributes: Attributes2;
+}
+
+interface Attributes2 {
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  file: File;
+}
+
+interface File {
+  data: Data;
+}
+
+interface Data {
+  id: number;
+  attributes: AttributesFile;
+}
+
+interface AttributesFile {
+  name: string;
+  alternativeText?: any;
+  caption?: any;
+  width?: any;
+  height?: any;
+  formats?: any;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl?: any;
+  provider: string;
+  provider_metadata: Providermetadata;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Providermetadata {
+  public_id: string;
+  resource_type: string;
 }
 
 interface Attributes6 {
@@ -71,9 +122,7 @@ interface Attributes5 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  numberUSA: number;
-  numberLatam: number;
-  cmFoot: number;
+  value:number;
   category: Category;
 }
 
@@ -99,7 +148,7 @@ export interface ColorProduct {
 }
 
 interface Attributes4 {
-  Name: string;
+  name: string;
   description: string;
   createdAt: string;
   updatedAt: string;

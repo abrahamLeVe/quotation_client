@@ -14,6 +14,9 @@ export const populate = {
   product_colors: {
     populate: ["data"],
   },
+  documents: { 
+    populate: ["file", "file.data"],
+  },
   prices: {
     populate: {
       product_colors: {

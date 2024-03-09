@@ -17,12 +17,12 @@ export default function ColorList() {
     <div className="flex flex-col items-start text-sm">
       {colors.map((color) => (
         <button
-          onClick={() => handleClick(color.attributes.Name)}
+          onClick={() => handleClick(color.attributes.name)}
           key={color.id}
           className="relative hover:underline"
         >
-          <p className="text-gray-900 ">
-            {capitalizeFirstLetter(color.attributes.Name)}
+          <p>
+            {capitalizeFirstLetter(color.attributes.name)}
             {` (${color.attributes.products.data.length})`}
           </p>
         </button>

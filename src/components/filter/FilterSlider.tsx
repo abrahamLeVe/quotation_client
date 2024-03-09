@@ -1,17 +1,26 @@
 "use client";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
-import { Transition } from "@headlessui/react";
 import dynamic from "next/dynamic";
-import DisclosureIndex from "../ui/Disclosure";
+import { Icons } from "../Icons";
+
+const IconSpider = (
+  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+);
 const CategoryList = dynamic(() => import("../category/CategoryList"), {
-  loading: () => <p>Cargando...</p>,
+  loading: () => IconSpider,
 });
 const BrandList = dynamic(() => import("../brand/BrandList"), {
-  loading: () => <p>Cargando...</p>,
+  loading: () => IconSpider,
 });
 const ColorList = dynamic(() => import("../color/ColorList"), {
-  loading: () => <p>Cargando...</p>,
+  loading: () => IconSpider,
 });
 
 export default function FilterSlider() {
@@ -20,45 +29,44 @@ export default function FilterSlider() {
 
   return (
     <>
-      <Transition
-        as="div"
-        show={openFilter}
+      <div
         onClick={() => setOpenFilter(false)}
-        enter="ease-in-out duration-500"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="ease-in-out duration-500"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        className={"absolute inset-0 bg-black/25 transition-opacity z-20"}
-      />
+        className={`absolute inset-0 bg-black bg-opacity-25 transition-opacity duration-500 ease-in-out ${
+          openFilter ? "opacity-100" : "opacity-0 hidden"
+        } z-20`}
+      ></div>
 
       <div
         className={`absolute top-0 left-0 z-30 transition-transform ${
-          openFilter ? "" : "-translate-x-[250px]"
+          openFilter ? "" : "-translate-x-[260px]"
         }`}
       >
-        <div className={`w-[250px] bg-white min-h-screen`}>
-          <div className="flex flex-col w-full border-b">
-            <DisclosureIndex
-              title={"Categorías"}
-              getData={getCategories}
-              child={<CategoryList />}
-            />
-
-            <DisclosureIndex
-              title={"Marcas"}
-              getData={getBrands}
-              child={<BrandList />}
-            />
-
-            <DisclosureIndex
-              title={"Colores"}
-              getData={getColors}
-              child={<ColorList />}
-            />
-          </div>
-        </div>
+        <Accordion
+          type="single"
+          collapsible
+          className="w-[260px] bg-white min-h-screen h-full p-2 dark:bg-slate-950"
+        >
+          <AccordionItem value="item-1">
+            <AccordionTrigger onClick={getCategories}>
+              Categorías
+            </AccordionTrigger>
+            <AccordionContent>
+              <CategoryList />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger onClick={getBrands}>Marcas</AccordionTrigger>
+            <AccordionContent>
+              <BrandList />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger onClick={getColors}>Colores</AccordionTrigger>
+            <AccordionContent>
+              <ColorList />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </>
   );
