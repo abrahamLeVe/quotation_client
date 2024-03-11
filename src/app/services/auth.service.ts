@@ -7,7 +7,6 @@ import {
 
 export async function loginUser(data: loginUserPromps) {
   const res = (await loginUserPost("/api/auth/local", data)) as AuthInterface;
-  console.log(res);
   return res;
 }
 

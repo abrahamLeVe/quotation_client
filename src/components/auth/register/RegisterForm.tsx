@@ -60,7 +60,6 @@ export default function RegisterForm({
 
     try {
       const res = await registerUser(data);
-      console.log(res.jwt);
       if (res.jwt) {
         await signIn("credentials", credentials);
       } else {

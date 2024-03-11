@@ -40,7 +40,6 @@ export async function createQuotation({
     const res = await postDataFromApi("/api/quotations", {
       data:  { productos, email } ,
     });
-    // console.log("res de quotation ", res);
     return res;
   } catch (error) {
     console.log("error in quotationService", error);

@@ -18,6 +18,13 @@ export const dashboardConfig: DashboardConfig = {
       shortcut: "P",
     },
     {
+      title: "Cotizaciones",
+      href: "/dashboard/order",
+      icon: <BsCreditCard className="mr-2 h-4 w-4" aria-hidden="true" />,
+      items: [],
+      shortcut: "C",
+    },
+    {
       title: "Facturación",
       href: "/dashboard/stores",
       icon: <BsCreditCard className="mr-2 h-4 w-4" aria-hidden="true" />,
