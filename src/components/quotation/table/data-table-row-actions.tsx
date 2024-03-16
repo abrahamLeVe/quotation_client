@@ -19,7 +19,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { labels } from "./data/data";
-import { taskSchema } from "./data/schema";
+import { quotationSchema } from "./data/schema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -28,7 +28,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original);
+  const task = quotationSchema.parse(row.original);
 
   return (
     <DropdownMenu>
@@ -49,7 +49,7 @@ export function DataTableRowActions<TData>({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.label}>
+            <DropdownMenuRadioGroup value={task.name!}>
               {labels.map((label) => (
                 <DropdownMenuRadioItem key={label.value} value={label.value}>
                   {label.label}

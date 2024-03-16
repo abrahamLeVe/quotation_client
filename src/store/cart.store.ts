@@ -134,6 +134,9 @@ export const cartStore = create<CartStateProps>()(
           return { cartItemState: updatedCart };
         });
       },
+      clearCart: () => {
+        set({ cartItemState: [] });
+      },
     }),
     {
       name: "cart",

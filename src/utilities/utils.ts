@@ -6,7 +6,6 @@ export function formatCurrency(number: number) {
   return CURRENCY_FORMATER.format(number);
 }
 
-
 export function truncate(str: string, length: number) {
   return str.length > length ? `${str.substring(0, length)}...` : str;
 }
@@ -18,4 +17,14 @@ export function capitalizeFirstLetter(text: string): string {
 
 export function removeDiacritics(text: string): string {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+export function formatDate(dateString: string): string {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const date: Date = new Date(dateString);
+  return date.toLocaleDateString("es-PE", options);
 }

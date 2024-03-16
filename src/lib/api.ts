@@ -19,13 +19,17 @@ export async function fetchDataFromApi(endpoint: string): Promise<any> {
   }
 }
 
-export async function postDataFromApi(endpoint: string, payload: any) {
+export async function postDataFromApi(
+  endpoint: string,
+  payload: any,
+  token?: string
+) {
   try {
     const res = await fetch(`${API_URL}${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + API_TOKEN,
+        Authorization: "Bearer " + (token || API_TOKEN),
       },
       body: JSON.stringify(payload),
     });
@@ -35,7 +39,7 @@ export async function postDataFromApi(endpoint: string, payload: any) {
   }
 }
 
-export async function loginUserPost(endpoint: string, payload: any) {
+export async function login(endpoint: string, payload: any) {
   try {
     const res = await fetch(`${API_URL}${endpoint}`, {
       method: "POST",
@@ -44,12 +48,12 @@ export async function loginUserPost(endpoint: string, payload: any) {
       },
       body: JSON.stringify(payload),
     });
-    console.log(res)
     return res.json();
   } catch (error) {
     return error;
   }
 }
+
 export async function getUserFromApi(jwt: string): Promise<User | undefined> {
   try {
     if (jwt) {

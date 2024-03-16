@@ -9,18 +9,11 @@ export interface DashboardConfig {
 export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
-      title: "Panel",
-      href: "/dashboard/account",
+      title: "Cotizaciones",
+      href: "/dashboard/order",
       icon: (
         <MdOutlineSpaceDashboard className="mr-2 h-4 w-4" aria-hidden="true" />
       ),
-      items: [],
-      shortcut: "P",
-    },
-    {
-      title: "Cotizaciones",
-      href: "/dashboard/order",
-      icon: <BsCreditCard className="mr-2 h-4 w-4" aria-hidden="true" />,
       items: [],
       shortcut: "C",
     },

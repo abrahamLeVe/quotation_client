@@ -1,5 +1,6 @@
 "use client";
 import { Icons } from "@/components/Icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,7 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,8 +26,8 @@ export default function SigninForm() {
   if (session) {
     signOut({ redirect: false });
   }
-  // const searchParams = useSearchParams();
-  // let error = searchParams.get("error");
+  const searchParams = useSearchParams();
+  let error = searchParams.get("error");
   const [isPending, setIsPending] = useState(false);
 
   type Inputs = z.infer<typeof loginSchema>;
@@ -44,61 +47,62 @@ export default function SigninForm() {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: "/dashboard/account",
+      callbackUrl: "/dashboard/order",
     };
 
     try {
       await signIn("credentials", credentials);
-    } catch (error) {
-      return error;
+    } catch (e) {
+      console.log(e);
     } finally {
       setIsPending(false);
     }
   }
 
   return (
-    <Form {...form}>
-      <form
-        className="grid gap-4"
-        onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
-      >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Correo electrónico</FormLabel>
-              <FormControl>
-                <Input placeholder="rodneymullen180@gmail.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contraseña</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="**********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button disabled={isPending}>
-          {isPending && (
-            <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
-              aria-hidden="true"
-            />
-          )}
-          Continue
-          <span className="sr-only">Continue to email verification page</span>
-        </Button>
-        {/* <Suspense>
+    <>
+      <Form {...form}>
+        <form
+          className="grid gap-4"
+          onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Correo electrónico</FormLabel>
+                <FormControl>
+                  <Input placeholder="rodneymullen180@gmail.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contraseña</FormLabel>
+                <FormControl>
+                  <PasswordInput placeholder="**********" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button disabled={isPending}>
+            {isPending && (
+              <Icons.spinner
+                className="mr-2 h-4 w-4 animate-spin"
+                aria-hidden="true"
+              />
+            )}
+            Continue
+            <span className="sr-only">Continue to email verification page</span>
+          </Button>
+
           {error ? (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -108,8 +112,8 @@ export default function SigninForm() {
               </AlertDescription>
             </Alert>
           ) : null}
-        </Suspense> */}
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </>
   );
 }

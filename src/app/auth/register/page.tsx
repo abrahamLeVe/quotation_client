@@ -1,4 +1,4 @@
-import SigninForm from "@/components/auth/signin/SigninForm";
+import RegisterForm from "@/components/auth/register/RegisterForm";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,10 +10,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { API_URL } from "@/utilities/urls";
+import { Metadata } from "next";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa6";
 
-export default function SigninPage() {
+export const metadata: Metadata = {
+  title: "Authentication",
+  description: "Authentication forms built using the components.",
+};
+
+export default function RegisterPage() {
   return (
     <div className="flex flex-col w-full p-8 gap-4">
       <Breadcrumbs
@@ -23,16 +29,16 @@ export default function SigninPage() {
             href: "/",
           },
           {
-            title: "Login",
+            title: "Registro",
             href: "",
           },
         ]}
       />
       <Card className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Iniciar sesión</CardTitle>
+          <CardTitle className="text-2xl">Crear una cuenta</CardTitle>
           <CardDescription>
-            Elija su método de inicio de sesión preferido
+            Elija su método de registro preferido
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -42,7 +48,7 @@ export default function SigninPage() {
                 <FaGoogle className="mr-2 h-4 w-4" />
                 Google
               </Button>
-            </a>            
+            </a>
           </div>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -54,22 +60,31 @@ export default function SigninPage() {
               </span>
             </div>
           </div>
-          <SigninForm />
+          <RegisterForm />
           <div className="flex flex-row  items-center gap-2">
-            <p className=" text-sm text-gray-500 ">¿No tienes una cuenta?</p>
+            <p className=" text-sm text-gray-500 ">¿Tienes una cuenta? </p>
             <Button className="font-semibold leading-6 " variant="link">
-              <Link href="/register">Regístrate</Link>
+              <Link href="/auth/signin">Ingresar</Link>
             </Button>
           </div>
         </CardContent>
-        <CardFooter>
-          <p className="text-sm text-muted-foreground">
-            <Link
-              href="/terms"
+        <CardFooter className="flex flex-col items-start gap-2">
+          <p className="px-8  text-sm text-muted-foreground">
+            Al hacer clic en continuar, aceptas nuestros{" "}
+            <span
+              // href="/terms"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Restablecer la contraseña
-            </Link>
+              Términos de servicio
+            </span>{" "}
+            y{" "}
+            <span
+              // href="/privacy"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              política de privacidad
+            </span>
+            .
           </p>
         </CardFooter>
       </Card>

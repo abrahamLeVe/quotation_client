@@ -8,11 +8,11 @@ export default function QuotationCheck() {
   const { data: session } = useSession();
   const router = useRouter();
   const checkUser = () => {
-    router.push("/checkout");
+    router.push("/checkout", { scroll: false });
     if (!session) {
       return toast({
         variant: "destructive",
-        title: "Iniciar sesión requerido",
+        title: "Requiere autenticación",
         description:
           "Para continuar y hacer el seguimiento de su cotización, por favor inicie sesión o regístrese.",
       });

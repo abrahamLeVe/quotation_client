@@ -1,5 +1,6 @@
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import Image from "next/image";
+import { Suspense } from "react";
 import background from "../../../public/auth.webp";
 
 export default function AuthLayout({
@@ -22,7 +23,9 @@ export default function AuthLayout({
       <div className="fixed top-2 right-2">
         <ModeToggle />
       </div>
-      <main>{children}</main>
+      <main>
+        <Suspense>{children}</Suspense>
+      </main>
     </div>
   );
 }

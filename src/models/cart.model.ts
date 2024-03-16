@@ -21,6 +21,7 @@ export interface CartStateProps {
   increaseCartQuantity: (id: number, colorId: number) => void;
   decreaseCartQuantity: (id: number, colorId: number) => void;
   removeCartItem: (id: number) => void;
+  clearCart: () => void;
 }
 
 export interface CustomPersistStorage<T> extends PersistStorage<T> {

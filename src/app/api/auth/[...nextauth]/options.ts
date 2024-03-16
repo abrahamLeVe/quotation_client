@@ -1,7 +1,7 @@
 import { loginUser } from "@/app/services/auth.service";
 import { getUserFromApi, providerFetch } from "@/lib/api";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/utilities/urls";
-import { NextAuthOptions, RequestInternal } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { OAuthUserConfig } from "next-auth/providers/oauth";
@@ -16,8 +16,7 @@ const credentialsProviderConfig = {
     password: { label: "Password", type: "password" },
   },
   async authorize(
-    credentials: Record<"email" | "password", string> | undefined,
-    req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
+    credentials: Record<"email" | "password", string> | undefined
   ) {
     try {
       const data = {
@@ -85,7 +84,7 @@ export const options: NextAuthOptions = {
   },
 
   pages: {
-    signIn: "/signin",
+    signIn: "/auth/signin",
     signOut: "/auth/signout",
     error: "/auth/error",
     verifyRequest: "/auth/verify-request",

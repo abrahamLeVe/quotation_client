@@ -1,4 +1,4 @@
-import { Avatar } from "@/models/auth.model";
+import { Quotation } from "@/models/quotation.model";
 import "next-auth";
 
 declare module "next-auth" {
@@ -14,6 +14,7 @@ declare module "next-auth" {
       picture: string;
       sub: string;
       userId: number;
+      quotations: Quotation[];
     };
   }
 
@@ -28,6 +29,7 @@ declare module "next-auth" {
       blocked: boolean;
       createdAt: string;
       updatedAt: string;
+      quotations: Quotation[];
     };
   }
 }

@@ -2,6 +2,7 @@
 import { getDataProducts } from "@/app/services/product.service";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
+import { Items } from "@/models/quotation.model";
 import { cartStore } from "@/store/cart.store";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -19,10 +20,9 @@ interface CartContext {
   setCartItems: React.Dispatch<React.SetStateAction<ProductInterface[]>>;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
   getItemQuantity: (id: number) => number;
-  // calculateTotal: () => { igv: number; total: number };
-  // subTotal: number;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  productsInCar: () => Items[];
 }
 
 const CartContext = createContext({} as CartContext);
@@ -35,7 +35,6 @@ export function CartProvider({ children }: CartProviderProps) {
   const cart = cartStore((state) => state.cartItemState);
   const [openMenu, setOpenMenu] = useState(false);
   const [cartItems, setCartItems] = useState<ProductInterface[]>([]);
-  // const [subTotal, setSubTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const mounted = useMounted();
 
@@ -56,27 +55,6 @@ export function CartProvider({ children }: CartProviderProps) {
                 .map(() => product)
             )
           );
-
-          // setSubTotal(
-          //   cart.reduce((acc, cartItem) => {
-          //     const product = data.data.find((item) =>
-          //       item.attributes.prices.data.some(
-          //         (price) => price.id === cartItem.id
-          //       )
-          //     );
-
-          //     const selectedPrice = product!.attributes.prices.data.find(
-          //       (price) => price.id === cartItem.id
-          //     );
-
-          //     return (
-          //       acc +
-          //       (selectedPrice!.attributes.value -
-          //         selectedPrice!.attributes.discount! || 0) *
-          //         cartItem.quantity
-          //     );
-          //   }, 0)
-          // );
         } else {
           return null;
         }
@@ -96,32 +74,40 @@ export function CartProvider({ children }: CartProviderProps) {
     return cart.find((item) => item.id === id)?.quantity || 0;
   }
 
-  function calculateIGV(subtotal: number) {
-    const igvRate = 0;
-    const igv = subtotal * igvRate;
+  function productsInCar() {
+    const products: Items[] = cart.map((cartItem) => {
+      const product = cartItems.find((p) =>
+        p.attributes.prices.data.some((price) => price.id === cartItem.id)
+      );
 
-    return igv;
+      const selectedPrice = product?.attributes?.prices.data.find(
+        (price) => price.id === cartItem.id
+      );
+
+      return {
+        id: cartItem.id.toFixed(),
+        title: product?.attributes.name,
+        quantity: cartItem.quantity,
+        picture_url: product?.attributes.thumbnail.data.attributes.url,
+        size: selectedPrice?.attributes.size.data?.attributes.name,
+        colors: cartItem.colors,
+      };
+    });
+    return products;
   }
-
-  // function calculateTotal() {
-  //   const igv = calculateIGV(subTotal);
-  //   const total = subTotal + igv;
-  //   return { igv, total };
-  // }
 
   return (
     <CartContext.Provider
       value={{
         cartQuantity,
         openMenu,
-        // calculateTotal,
         getItemQuantity,
         setOpenMenu,
         cartItems,
         setCartItems,
-        // subTotal,
         setIsLoading,
         isLoading,
+        productsInCar,
       }}
     >
       {children}

@@ -1,3 +1,5 @@
+import { Quotation } from "./quotation.model";
+
 export interface AuthInterface {
   jwt: string;
   user: User;
@@ -24,6 +26,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   avatar?: Avatar;
+  quotations: Quotation[];
 }
 
 export interface Avatar {
@@ -70,5 +73,3 @@ interface Providermetadata {
   public_id: string;
   resource_type: string;
 }
-
-

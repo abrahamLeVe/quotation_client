@@ -58,7 +58,7 @@ export default function AuthMenu() {
                 <DropdownMenuGroup>
                   {dashboardConfig.sidebarNav.map((item) => (
                     <DropdownMenuItem asChild key={item.title + item.href}>
-                      <Link href={item.href || ""}>
+                      <Link href={item.href || ""} prefetch>
                         <>{item.icon}</>
                         {item.title}
                         <DropdownMenuShortcut>
@@ -94,7 +94,7 @@ export default function AuthMenu() {
               <DropdownMenuContent className="w-56 z-50" align="end" forceMount>
                 <DropdownMenuGroup>
                   <DropdownMenuItem asChild>
-                    <Link href="/signin">
+                    <Link href="/auth/signin">
                       <MdOutlineSpaceDashboard
                         className="mr-2 h-[1.2rem] w-[1.2rem]"
                         aria-hidden="true"
@@ -104,7 +104,7 @@ export default function AuthMenu() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/register">
+                    <Link href="/auth/register">
                       <BsCreditCard
                         className="mr-2 h-[1.2rem] w-[1.2rem]"
                         aria-hidden="true"

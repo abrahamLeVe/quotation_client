@@ -1,4 +1,4 @@
-import RegisterForm from "@/components/auth/register/RegisterForm";
+import SigninForm from "@/components/auth/signin/SigninForm";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,16 +10,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { API_URL } from "@/utilities/urls";
-import { Metadata } from "next";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa6";
 
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
-};
-
-export default function RegisterPage() {
+export default function SigninPage() {
   return (
     <div className="flex flex-col w-full p-8 gap-4">
       <Breadcrumbs
@@ -29,16 +23,16 @@ export default function RegisterPage() {
             href: "/",
           },
           {
-            title: "Registro",
+            title: "Login",
             href: "",
           },
         ]}
       />
       <Card className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Crear una cuenta</CardTitle>
+          <CardTitle className="text-2xl">Iniciar sesión</CardTitle>
           <CardDescription>
-            Elija su método de registro preferido
+            Elija su método de inicio de sesión preferido
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -60,31 +54,22 @@ export default function RegisterPage() {
               </span>
             </div>
           </div>
-          <RegisterForm />
+          <SigninForm />
           <div className="flex flex-row  items-center gap-2">
-            <p className=" text-sm text-gray-500 ">¿Tienes una cuenta? </p>
+            <p className=" text-sm text-gray-500 ">¿No tienes una cuenta?</p>
             <Button className="font-semibold leading-6 " variant="link">
-              <Link href="/signin">Ingresar</Link>
+              <Link href="/auth/register">Regístrate</Link>
             </Button>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-start gap-2">
-          <p className="px-8  text-sm text-muted-foreground">
-            Al hacer clic en continuar, aceptas nuestros{" "}
-            <Link
-              href="/terms"
+        <CardFooter>
+          <p className="text-sm text-muted-foreground">
+            <span
+              // href="/terms"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Términos de servicio
-            </Link>{" "}
-            y{" "}
-            <Link
-              href="/privacy"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              política de privacidad
-            </Link>
-            .
+              Restablecer la contraseña
+            </span>
           </p>
         </CardFooter>
       </Card>
