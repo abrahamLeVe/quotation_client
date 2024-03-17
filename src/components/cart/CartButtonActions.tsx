@@ -12,6 +12,7 @@ interface CartButtonActionsProps {
   idColor: number;
   isPage?: boolean;
   colors?: ColorProduct[];
+  color?: ColorProduct;
 }
 
 export default function CartButtonActions({
@@ -19,10 +20,11 @@ export default function CartButtonActions({
   idColor,
   isPage = false,
   colors,
+  color,
 }: CartButtonActionsProps) {
   const cart = cartStore((state) => state);
   const { getItemQuantity, getItemColorQuantity } = useProductContext();
-
+  console.log("color ", priceId, idColor, color);
   const addToCart = () => {
     if (colors?.length! > 0 && !idColor) {
       return toast({
@@ -31,7 +33,7 @@ export default function CartButtonActions({
         description: "Por favor seleccione un color.",
       });
     } else {
-      cart.increaseCartQuantity(priceId, idColor);
+      cart.increaseCartQuantity(priceId, idColor, color);
     }
   };
 

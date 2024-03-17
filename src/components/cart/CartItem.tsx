@@ -6,6 +6,7 @@ import { useState } from "react";
 import ColorSelect from "../color/ColorSelect";
 import ProductModal from "../product/ProductModal";
 import CartButtonActions from "./CartButtonActions";
+import { ColorProduct } from "@/models/products.model";
 
 interface CartItemProps {
   isPage?: boolean;
@@ -15,7 +16,8 @@ export default function CartItem({ isPage = false }: CartItemProps) {
   const { cartItems } = useCartContext();
   const cart = cartStore((state) => state.cartItemState);
   const [idColor, setIdColor] = useState<number | undefined>();
-
+  const [color, setColor] = useState<ColorProduct | undefined>();
+  console.log(cart);
   return (
     <div className="mt-8 w-full">
       <div className="flow-root">
@@ -37,7 +39,6 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                 );
 
                 const allColors = selectedPrice!.attributes.product_colors.data;
-
                 const colorsInCart = allColors.filter((color) =>
                   cartItem.colors?.some((colorl) => colorl.id === color.id)
                 );
@@ -48,6 +49,7 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                     (price) => price.id === colorId
                   );
                   setIdColor(selectedColor?.id);
+                  setColor(selectedColor);
                 };
 
                 const size = selectedPrice?.attributes.size.data;
@@ -125,6 +127,7 @@ export default function CartItem({ isPage = false }: CartItemProps) {
                                 : idColor!
                             }
                             colors={colorsInCart}
+                            color={color}
                           />
                         </div>
                       </div>

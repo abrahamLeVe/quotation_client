@@ -54,7 +54,6 @@ export default function SigninForm() {
       await signIn("credentials", credentials);
     } catch (e) {
       console.log(e);
-    } finally {
       setIsPending(false);
     }
   }

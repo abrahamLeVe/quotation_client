@@ -47,7 +47,7 @@ export default function Slide({ data }: CarouselPluginProps) {
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent>
-          {data.data.map((slide) => (
+          {data?.data.map((slide) => (
             <CarouselItem key={slide.id}>
               <div className="p-1">
                 <Card className="transition-all duration-300 ease-in-out hover:bg-black dark:hover:bg-white hover:bg-opacity-10">

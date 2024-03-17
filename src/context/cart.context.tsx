@@ -1,4 +1,3 @@
-"use client";
 import { getDataProducts } from "@/app/services/product.service";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";

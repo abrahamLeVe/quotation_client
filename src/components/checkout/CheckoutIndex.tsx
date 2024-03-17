@@ -1,17 +1,12 @@
 "use client";
 import { cartStore } from "@/store/cart.store";
-import dynamic from "next/dynamic";
-import QuotationCheck from "../quotation/QuotationCheck";
 import QuotationSend from "../quotation/QuotationSend";
-const CartItem = dynamic(() => import("../cart/CartItem"), {
-  ssr: false,
-  loading: () => <>Cargando items...</>,
-});
+import CartItem from "../cart/CartItem";
 
 export default function CheckoutIndex() {
   const cart = cartStore((state) => state);
   return (
-    <div className="px-4 py-6 sm:px-6 w-full">
+    <div className="px-4 py-6 sm:px-6 w-full min-h-screen">
       <div className="text-lg font-medium ">Checkout</div>
       <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
         {cart.cartItemState.length === 0 ? (

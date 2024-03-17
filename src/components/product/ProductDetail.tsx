@@ -29,6 +29,11 @@ export default function ProductDetail({
   const [colors, setColors] = useState<ColorProduct[]>(
     selectedPrice.attributes.product_colors.data
   );
+  const [color, setColor] = useState<ColorProduct | undefined>(
+    colors.length === 1
+      ? selectedPrice.attributes.product_colors.data[0]
+      : undefined
+  );
 
   const [idColor, setIdColor] = useState<number | undefined>(
     colors.length === 1
@@ -56,6 +61,7 @@ export default function ProductDetail({
     const colorId = parseInt(id);
     const selectedColor = colors.find((price) => price.id === colorId);
     setIdColor(selectedColor?.id!);
+    setColor(selectedColor);
   };
 
   return (
@@ -142,6 +148,7 @@ export default function ProductDetail({
             priceId={selectedPrice.id}
             idColor={idColor!}
             colors={colors}
+            color={color}
             isPage={isPage}
           />
           {isPage ? null : <ProductModal product={product} />}

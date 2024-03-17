@@ -3,6 +3,7 @@ import {
   CartStateProps,
   CustomPersistStorage,
 } from "@/models/cart.model";
+import { ColorProduct } from "@/models/products.model";
 import { decryptCartState, encryptCartState } from "@/utilities/crypted";
 import { create } from "zustand";
 import { StorageValue, persist } from "zustand/middleware";
@@ -28,7 +29,11 @@ export const cartStore = create<CartStateProps>()(
   persist(
     (set) => ({
       cartItemState: [],
-      increaseCartQuantity: (id: number, colorId: number) => {
+      increaseCartQuantity: (
+        id: number,
+        colorId: number,
+        color?: ColorProduct
+      ) => {
         set((state: CartStateProps) => {
           const existingItem = state.cartItemState.find(
             (item) => item.id === id
@@ -43,19 +48,23 @@ export const cartStore = create<CartStateProps>()(
                     updatedColors = [];
                   } else {
                     const existingColor = updatedColors.find(
-                      (color) => color.id === colorId
+                      (colorItem) => colorItem.id === colorId
                     );
 
                     if (existingColor) {
-                      updatedColors = updatedColors.map((color) =>
-                        color.id === colorId
-                          ? { ...color, quantity: color.quantity + 1 }
-                          : color
+                      updatedColors = updatedColors.map((colorItem) =>
+                        colorItem.id === colorId
+                          ? {
+                              ...colorItem,
+                              quantity: colorItem.quantity + 1,
+                              color,
+                            }
+                          : colorItem
                       );
                     } else {
                       updatedColors = [
                         ...updatedColors,
-                        { id: colorId, quantity: 1 },
+                        { id: colorId, quantity: 1, color },
                       ];
                     }
                   }
@@ -73,7 +82,8 @@ export const cartStore = create<CartStateProps>()(
             const newItem: CartItem = {
               id,
               quantity: 1,
-              colors: colorId !== null ? [{ id: colorId, quantity: 1 }] : [],
+              colors:
+                colorId !== null ? [{ id: colorId, quantity: 1, color }] : [],
             };
 
             return {

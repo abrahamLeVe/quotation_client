@@ -27,7 +27,6 @@ export default function QuotationSend() {
   async function onClick() {
     setLoading(true);
     const res = await createQuotation({ products, token, email, id });
-    setLoading(false);
 
     if (res.data === null && res.error) {
       const errorMessage = handleErrorMessage(res.error);
@@ -42,6 +41,7 @@ export default function QuotationSend() {
           </>
         ),
       });
+      setLoading(false);
     } else {
       toast({
         variant: "default",
