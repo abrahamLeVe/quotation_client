@@ -12,20 +12,19 @@ import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 
 export default function QuotationSend() {
-  const { productsInCar } = useCartContext();
-  const cart = cartStore((state) => state.clearCart);
-
-  const { data: session } = useSession();
-  const router = useRouter();
-
   const [loading, setLoading] = useState(false);
-  const email = session?.user.email;
-  const token = session?.user.accessToken;
-  const id = session?.user.userId;
-  const products = productsInCar();
+  const cart = cartStore((state) => state.clearCart);
+  const router = useRouter();
+  const { productsInCar, setIsLoading, isLoading } = useCartContext();
+  const { data: session } = useSession();
 
-  async function onClick() {
+  const onClick = async () => {
     setLoading(true);
+    const email = session?.user.email;
+    const token = session?.user.accessToken;
+    const id = session?.user.userId;
+    const products = productsInCar();
+
     const res = await createQuotation({ products, token, email, id });
 
     if (res.data === null && res.error) {
@@ -48,15 +47,15 @@ export default function QuotationSend() {
         title: "Éxito",
         description: "Cotización enviada con éxito",
       });
-      router.push("/dashboard/order");
-      router.refresh();
-      cart();
+      // router.push("/dashboard/order");
+      // router.refresh();
+      // cart();
     }
-  }
+  };
 
   return (
     <div>
-      <Button disabled={loading} onClick={onClick}>
+      <Button disabled={isLoading} onClick={onClick}>
         {loading && (
           <Icons.spinner
             className="mr-2 h-4 w-4 animate-spin"

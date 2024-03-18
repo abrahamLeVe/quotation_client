@@ -12,13 +12,11 @@ interface CartItemProps {
   isPage?: boolean;
 }
 
-export default function CartItem({ isPage = false }: CartItemProps) {
-  const { cartItems, productsInCar } = useCartContext();
+export default function CartItemCopy({ isPage = false }: CartItemProps) {
+  const { cartItems } = useCartContext();
   const cart = cartStore((state) => state.cartItemState);
   const [idColor, setIdColor] = useState<number | undefined>();
   const [color, setColor] = useState<ColorProduct | undefined>();
-  const products = productsInCar();
-  console.log("productsInCar ", products);
   return (
     <div className="mt-8 w-full">
       <div className="flow-root">

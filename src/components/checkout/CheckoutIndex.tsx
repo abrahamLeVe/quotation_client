@@ -1,7 +1,12 @@
 "use client";
 import { cartStore } from "@/store/cart.store";
-import QuotationSend from "../quotation/QuotationSend";
-import CartItem from "../cart/CartItem";
+import dynamic from "next/dynamic";
+// import CartItem from "../cart/CartItem";
+const CartItem = dynamic(() => import("../cart/CartItem"));
+// import QuotationSend from "../quotation/QuotationSend";
+const QuotationSend = dynamic(() => import("../quotation/QuotationSend"), {
+  ssr: false,
+});
 
 export default function CheckoutIndex() {
   const cart = cartStore((state) => state);

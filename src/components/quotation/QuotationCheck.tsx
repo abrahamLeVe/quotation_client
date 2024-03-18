@@ -8,7 +8,7 @@ export default function QuotationCheck() {
   const { data: session } = useSession();
   const router = useRouter();
   const checkUser = () => {
-    router.push("/checkout", { scroll: false });
+    router.push("/checkout", { scroll: true });
     if (!session) {
       return toast({
         variant: "destructive",

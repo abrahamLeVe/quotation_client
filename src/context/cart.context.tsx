@@ -1,3 +1,4 @@
+"use client";
 import { getDataProducts } from "@/app/services/product.service";
 import { useMounted } from "@/hooks/useMounted";
 import { ProductInterface } from "@/models/products.model";
@@ -8,10 +9,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 interface CartProviderProps {
   children: React.ReactNode;
 }
-export interface CartItem {
-  id: number;
-  quantity: number;
-}
+// export interface CartItem {
+//   id: number;
+//   quantity: number;
+// }
+
 interface CartContext {
   cartQuantity: number;
   cartItems: ProductInterface[];
@@ -65,10 +67,6 @@ export function CartProvider({ children }: CartProviderProps) {
     })();
   }, [cart]);
 
-  const cartQuantity = mounted
-    ? cart.reduce((quantity, item) => item.quantity + quantity, 0)
-    : 0;
-
   function getItemQuantity(id: number) {
     return cart.find((item) => item.id === id)?.quantity || 0;
   }
@@ -95,6 +93,9 @@ export function CartProvider({ children }: CartProviderProps) {
     return products;
   }
 
+  const cartQuantity = mounted
+    ? cart.reduce((quantity, item) => item.quantity + quantity, 0)
+    : 0;
   return (
     <CartContext.Provider
       value={{

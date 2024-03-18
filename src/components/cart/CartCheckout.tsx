@@ -1,6 +1,8 @@
+"client";
 import Link from "next/link";
 import { BsCart } from "react-icons/bs";
 import QuotationCheck from "../quotation/QuotationCheck";
+
 import { Button } from "../ui/button";
 
 export default function CartCheckout() {
