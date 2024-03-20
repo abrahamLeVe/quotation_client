@@ -9,10 +9,13 @@ import { toast } from "../ui/use-toast";
 
 interface CartButtonActionsProps {
   priceId: number;
-  idColor: number;
+  idColor?: number;
   isPage?: boolean;
-  colors?: ColorProduct[];
+  colors?: number;
   color?: ColorProduct;
+  size?: string;
+  picture_url?: string;
+  title?: string;
 }
 
 export default function CartButtonActions({
@@ -21,31 +24,40 @@ export default function CartButtonActions({
   isPage = false,
   colors,
   color,
+  size,
+  picture_url,
+  title,
 }: CartButtonActionsProps) {
   const cart = cartStore((state) => state);
   const { getItemQuantity, getItemColorQuantity } = useProductContext();
-  console.log("color ", priceId, idColor, color);
   const addToCart = () => {
-    if (colors?.length! > 0 && !idColor) {
+    if (colors! > 0 && !idColor) {
       return toast({
         variant: "destructive",
         title: "Color",
         description: "Por favor seleccione un color.",
       });
     } else {
-      cart.increaseCartQuantity(priceId, idColor, color);
+      cart.increaseCartQuantity(
+        priceId,
+        idColor!,
+        color,
+        size,
+        picture_url,
+        title
+      );
     }
   };
 
   const decreaseToCart = () => {
-    if (!getItemColorQuantity(priceId, idColor) && colors?.length! > 0) {
+    if (!getItemColorQuantity(priceId, idColor!) && colors! > 0) {
       return toast({
         variant: "destructive",
         title: "Color",
         description: "Por favor seleccione un color que esté en el carrito.",
       });
     } else {
-      cart.decreaseCartQuantity(priceId, idColor);
+      cart.decreaseCartQuantity(priceId, idColor!);
     }
   };
 

@@ -13,8 +13,7 @@ export default function CartCheckout() {
           <Link
             href={"/cart"}
             title="Ver carrito"
-            prefetch
-            scroll={false}
+            scroll={true}
             className="absolute inset-0"
           ></Link>
           <BsCart className="h-[1.2rem] w-[1.2rem]" /> Ver carrito

@@ -1,8 +1,8 @@
 import { postDataFromApi } from "@/lib/api";
-import { Items } from "@/models/quotation.model";
+import { ProductCart } from "@/models/cart.model";
 
 interface PayOrderProps {
-  products: Items[];
+  products: ProductCart[];
   email?: string;
   token?: string;
   id?: number;
@@ -22,7 +22,6 @@ export async function createQuotation({
       },
       token
     );
-    console.log("quotation res service ", res);
     return res;
   } catch (error) {
     console.log("error in quotationService", error);

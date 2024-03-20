@@ -10,12 +10,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useCartContext } from "@/context/cart.context";
+import dynamic from "next/dynamic";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Icons } from "../Icons";
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
-import CartCheckout from "./CartCheckout";
-import CartItem from "./CartItem";
+import CartItem from "./CartProducts";
+import EmptyCartMessage from "./message/EmptyCartMessage";
+const CartCheckout = dynamic(() => import("./CartCheckout"), {
+  ssr: false,
+});
 
 export default function CartSliderOver() {
   const { cartQuantity, isLoading } = useCartContext();
@@ -42,23 +46,23 @@ export default function CartSliderOver() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md ">
+      <SheetContent className="w-full sm:max-w-md">
         <ScrollArea className="h-full pr-3">
           <SheetHeader>
             <SheetTitle>Carrito</SheetTitle>
           </SheetHeader>
           {!cartQuantity ? (
-            <div className="grid gap-4 py-4">Carrito vacio</div>
+            <EmptyCartMessage score={3} />
           ) : (
             <>
               <div className="grid gap-4 py-4">
                 <CartItem />
+                <SheetFooter className="fixed bottom-0 max-w-max w-full">
+                  <SheetClose asChild>
+                    <CartCheckout />
+                  </SheetClose>
+                </SheetFooter>
               </div>
-              <SheetFooter>
-                <SheetClose asChild>
-                  <CartCheckout />
-                </SheetClose>
-              </SheetFooter>
             </>
           )}
         </ScrollArea>

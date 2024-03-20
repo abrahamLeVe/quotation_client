@@ -33,7 +33,7 @@ interface Attributes7 {
   brand: Brand;
   product_colors: Productcolors;
   prices: ProductPricesInterface;
-  documents: Documents
+  documents: Documents;
 }
 
 export interface ProductPricesInterface {
@@ -105,7 +105,7 @@ interface Attributes6 {
   product_colors: Productcolors2;
   model: Model;
   size: Size;
-  categories: Categories
+  categories: Categories;
 }
 
 interface Size {
@@ -122,7 +122,7 @@ interface Attributes5 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  value:number;
+  value: number;
   category: Category;
 }
 

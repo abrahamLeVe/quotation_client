@@ -24,7 +24,7 @@ export default function ProductTable({
           {products?.data?.map((product) => (
             <div
               key={product.id}
-              className="flex flex-col justify-between border rounded-lg overflow-hidden relative text-sm"
+              className="flex flex-col justify-between relative text-sm"
             >
               <ProductCard product={product} />
             </div>

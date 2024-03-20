@@ -1,6 +1,6 @@
 "use client";
 import { useProductContext } from "@/context/product.context";
-import { ColorProduct } from "@/models/products.model";
+import { Color2 } from "@/models/cart.model";
 import { FaCircle } from "react-icons/fa6";
 import {
   Select,
@@ -10,23 +10,23 @@ import {
   SelectValue,
 } from "../ui/select";
 
-interface ColorSelectProps {
-  colors: ColorProduct[];
-  priceId: number;
+interface SelectColorCartProps {
+  colors: Color2[];
+  productId: number;
   handleColorChange: (id: string) => void;
 }
 
-export default function ColorSelect({
+export default function SelectColorCart({
   colors,
   handleColorChange,
-  priceId,
-}: ColorSelectProps) {
+  productId,
+}: SelectColorCartProps) {
   const { getItemColorQuantity } = useProductContext();
-
   return (
     <Select
       onValueChange={handleColorChange}
-      defaultValue={colors.length === 1 ? colors[0].id.toFixed() : undefined}
+      defaultValue={colors?.length === 1 ? colors[0].id.toFixed() : undefined}
+      key={colors?.length}
     >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Color" />
@@ -37,12 +37,14 @@ export default function ColorSelect({
             <div className="flex gap-2">
               <FaCircle
                 className="h-5 w-5 border rounded-full"
-                style={{ color: `${color.attributes.code}` }}
+                style={{
+                  color: `${color.color?.attributes.code}`,
+                }}
               />
-              {color.attributes.name}
+              {color.color?.attributes?.name}
               <div className="flex">
-                {getItemColorQuantity(priceId, color.id) ? (
-                  <>{"x" + getItemColorQuantity(priceId, color.id)}</>
+                {getItemColorQuantity(productId, color.id) ? (
+                  <>{"x" + getItemColorQuantity(productId, color.id)}</>
                 ) : null}
               </div>
             </div>

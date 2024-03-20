@@ -69,7 +69,7 @@ export default function RegisterPage() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-start gap-2">
-          <p className="px-8  text-sm text-muted-foreground">
+          {/* <p className="px-8  text-sm text-muted-foreground">
             Al hacer clic en continuar, aceptas nuestros{" "}
             <span
               // href="/terms"
@@ -85,7 +85,7 @@ export default function RegisterPage() {
               política de privacidad
             </span>
             .
-          </p>
+          </p> */}
         </CardFooter>
       </Card>
     </div>

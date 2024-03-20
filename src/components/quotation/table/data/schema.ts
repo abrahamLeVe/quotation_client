@@ -1,13 +1,5 @@
 import { z } from "zod";
 
-export const taskSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  status: z.string(),
-  label: z.string(),
-  priority: z.string(),
-});
-
 const colorSchema = z
   .object({
     id: z.number().nullable().optional(),
@@ -16,7 +8,7 @@ const colorSchema = z
   .nullable();
 
 const productSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   title: z.string(),
   colors: z.array(colorSchema).nullable(),
   quantity: z.number(),

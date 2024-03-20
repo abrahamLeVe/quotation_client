@@ -1,13 +1,4 @@
-export interface Items {
-  id: string;
-  title?: string;
-  description?: string;
-  picture_url?: string;
-  category_id?: string;
-  quantity: number;
-  currency_id?: string;
-  unit_price?: number;
-}
+import { ProductCart } from "./cart.model";
 
 export interface Quotation {
   id: number;
@@ -15,7 +6,7 @@ export interface Quotation {
   updatedAt: string;
   publishedAt: string;
   email: string;
-  products: Producto[];
+  products: ProductCart[];
   name?: any;
   ruc?: any;
   dni?: any;
@@ -26,18 +17,4 @@ export interface Quotation {
   notes?: any;
   dateLimit: string;
   codeStatus?: string;
-}
-
-interface Producto {
-  id: string;
-  title: string;
-  colors?: Color[];
-  quantity: number;
-  picture_url: string;
-  size?: string;
-}
-
-interface Color {
-  id: number;
-  quantity: number;
 }

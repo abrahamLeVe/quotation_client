@@ -1,13 +1,18 @@
 "use client";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
 import FilterButton, { SpeachButton } from "../filter/FilterButton";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
-import MenuMobile from "./MenuMobile";
-
-export default function NavBar() {
+const MenuMobile = dynamic(() => import("./MenuMobile"), {
+  ssr: false,
+});
+interface NavBarProps {
+  isCart?: boolean;
+}
+export default function NavBar({ isCart = false }: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
       <div className="relative">
@@ -47,7 +52,12 @@ export default function NavBar() {
                 {/* Filter */}
                 <FilterButton />
                 {/* Cart */}
-                <CartSliderOver />
+                {isCart ? null : (
+                  <>
+                    <CartSliderOver />
+                  </>
+                )}
+
                 <div className="ml-3">
                   <AuthMenu />
                 </div>

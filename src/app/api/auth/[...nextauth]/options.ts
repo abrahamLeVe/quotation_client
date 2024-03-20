@@ -62,14 +62,12 @@ export const options: NextAuthOptions = {
           token.accessToken = jwt;
           token.userId = userData?.id;
           token.name = userData?.username;
-          token.picture = userData?.avatar?.url;
         } else if (user?.jwt) {
           const userData = await getUserFromApi(user.jwt);
           token.accessToken = user.jwt;
           token.userId = userData?.id;
           token.name = userData?.username;
           token.email = userData?.email;
-          token.picture = userData?.avatar?.url;
         }
       } catch (error) {
         console.error("Error processing JWT:", error);

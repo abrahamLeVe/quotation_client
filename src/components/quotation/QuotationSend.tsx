@@ -1,6 +1,5 @@
 "use client";
 import { createQuotation } from "@/app/services/quotation.service";
-import { useCartContext } from "@/context/cart.context";
 import { handleErrorMessage } from "@/lib/exceptions";
 import { cartStore } from "@/store/cart.store";
 import { useSession } from "next-auth/react";
@@ -14,8 +13,9 @@ import { toast } from "../ui/use-toast";
 export default function QuotationSend() {
   const [loading, setLoading] = useState(false);
   const cart = cartStore((state) => state.clearCart);
+  const products = cartStore((state) => state.cartItemState);
+
   const router = useRouter();
-  const { productsInCar, setIsLoading, isLoading } = useCartContext();
   const { data: session } = useSession();
 
   const onClick = async () => {
@@ -23,7 +23,6 @@ export default function QuotationSend() {
     const email = session?.user.email;
     const token = session?.user.accessToken;
     const id = session?.user.userId;
-    const products = productsInCar();
 
     const res = await createQuotation({ products, token, email, id });
 
@@ -47,15 +46,15 @@ export default function QuotationSend() {
         title: "Éxito",
         description: "Cotización enviada con éxito",
       });
-      // router.push("/dashboard/order");
-      // router.refresh();
-      // cart();
+      router.push("/dashboard/order");
+      router.refresh();
+      cart();
     }
   };
 
   return (
     <div>
-      <Button disabled={isLoading} onClick={onClick}>
+      <Button disabled={loading} onClick={onClick}>
         {loading && (
           <Icons.spinner
             className="mr-2 h-4 w-4 animate-spin"

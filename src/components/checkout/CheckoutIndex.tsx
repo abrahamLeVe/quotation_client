@@ -1,9 +1,7 @@
 "use client";
 import { cartStore } from "@/store/cart.store";
 import dynamic from "next/dynamic";
-// import CartItem from "../cart/CartItem";
-const CartItem = dynamic(() => import("../cart/CartItem"));
-// import QuotationSend from "../quotation/QuotationSend";
+
 const QuotationSend = dynamic(() => import("../quotation/QuotationSend"), {
   ssr: false,
 });
@@ -11,14 +9,13 @@ const QuotationSend = dynamic(() => import("../quotation/QuotationSend"), {
 export default function CheckoutIndex() {
   const cart = cartStore((state) => state);
   return (
-    <div className="px-4 py-6 sm:px-6 w-full min-h-screen">
+    <div className="p-4 py-6 sm:px-6 w-full min-h-screen">
       <div className="text-lg font-medium ">Checkout</div>
       <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
         {cart.cartItemState.length === 0 ? (
           <>Carrito vacío</>
         ) : (
           <>
-            <CartItem isPage />
             <div className="sticky top-20 h-full my-8 lg:max-w-md w-full">
               <table className="border-collapse w-full text-sm shadow-sm">
                 <thead>

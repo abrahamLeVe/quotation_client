@@ -1,6 +1,5 @@
 import CheckoutIndex from "@/components/checkout/CheckoutIndex";
-import Footer from "@/components/footer/Footer";
-import NavBar from "@/components/navbar/NavBar";
+import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 
 export default function CheckoutLayout({
   children,
@@ -9,12 +8,22 @@ export default function CheckoutLayout({
 }) {
   return (
     <>
-      <NavBar />
-      <main className="flex flex-col md:container m-auto relative">
+      <main className="flex flex-col md:container m-auto relative p-20">
+        <Breadcrumbs
+          segments={[
+            {
+              title: "Carrito",
+              href: "/cart",
+            },
+            {
+              title: "Checkout",
+              href: "",
+            },
+          ]}
+        />
         <CheckoutIndex />
         {children}
       </main>
-      <Footer />
     </>
   );
 }

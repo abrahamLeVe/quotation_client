@@ -8,7 +8,7 @@ import { truncate } from "@/utilities/utils";
 import Link from "next/link";
 import { useState } from "react";
 import CartButtonActions from "../cart/CartButtonActions";
-import ColorSelect from "../color/ColorSelect";
+import ColorSelect from "../select/SelectColorProduct";
 import SizeSelect from "../size/SizeSelect";
 import ProductModal from "./ProductModal";
 import ProductRating from "./ProductRating";
@@ -22,6 +22,7 @@ export default function ProductDetail({
   product,
   isPage = false,
 }: ProductDetailProps) {
+  const image = product.attributes.thumbnail.data.attributes.url;
   const [selectedPrice, setPrice] = useState<ProductPriceInterface>(
     product.attributes.prices.data[0]
   );
@@ -40,12 +41,18 @@ export default function ProductDetail({
       ? selectedPrice.attributes.product_colors.data[0]?.id
       : undefined
   );
+  const [sizeName, SetSizeName] = useState<string | undefined>(
+    selectedPrice.attributes.size.data
+      ? selectedPrice.attributes.size.data?.attributes.name
+      : undefined
+  );
 
   const handleSizeChange = (id: string) => {
     const sizeId = parseInt(id);
     const priceSelected = product.attributes.prices.data.find(
       (price) => price.id === sizeId
     );
+    SetSizeName(priceSelected!.attributes.size.data?.attributes.name);
     setColors(priceSelected!.attributes.product_colors.data!);
 
     if (priceSelected!.attributes.product_colors.data.length > 1) {
@@ -145,11 +152,14 @@ export default function ProductDetail({
 
         <div className="flex flex-col items-end gap-3 relative">
           <CartButtonActions
+            picture_url={image}
             priceId={selectedPrice.id}
             idColor={idColor!}
-            colors={colors}
+            colors={colors.length}
             color={color}
             isPage={isPage}
+            size={sizeName}
+            title={product.attributes.name}
           />
           {isPage ? null : <ProductModal product={product} />}
         </div>

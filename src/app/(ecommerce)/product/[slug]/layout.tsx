@@ -9,9 +9,7 @@ export default function ProductLayout({
   return (
     <>
       <NavBar />
-      <main className="flex flex-col md:container mx-auto gap-5 relative p-3 md:p-5">
-        {children}
-      </main>
+      {children}
       <Footer />
     </>
   );

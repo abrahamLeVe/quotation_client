@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -44,11 +43,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
               className="pl-1 xs:basis-1/2 md:basis-1/3 lg:basis-1/4 relative"
             >
               <div className="p-1 h-full">
-                <Card className="h-full overflow-hidden">
-                  <CardContent className="flex flex-col h-full p-0">
-                    <ProductCard product={product} />
-                  </CardContent>
-                </Card>
+                <ProductCard product={product} />
               </div>
             </CarouselItem>
           ))}
