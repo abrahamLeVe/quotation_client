@@ -22,9 +22,6 @@ export default function NavBar({ isCart = false }: NavBarProps) {
         >
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center gap-2">
-              <div className="flex lg:hidden">
-                <MenuMobile />
-              </div>
               {/* Logo */}
               <div className="relative w-[50px] h-[50px] flex items-center">
                 <img
@@ -61,6 +58,10 @@ export default function NavBar({ isCart = false }: NavBarProps) {
                 <div className="ml-3">
                   <AuthMenu />
                 </div>
+              </div>
+
+              <div className="flex lg:hidden">
+                <MenuMobile />
               </div>
             </div>
           </div>

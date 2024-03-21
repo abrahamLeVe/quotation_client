@@ -1,11 +1,22 @@
 import Footer from "@/components/footer/Footer";
-import LogoSection from "@/components/lobby/BrandSection";
-import Collection from "@/components/lobby/Collection";
-import PromoSection from "@/components/lobby/PromoSection";
-import Testimonials from "@/components/lobby/Testimonials";
 import NavBar from "@/components/navbar/NavBar";
-import ProductCarousel from "@/components/product/ProductCarousel";
+import dynamic from "next/dynamic";
 
+const ProductCarousel = dynamic(
+  () => import("@/components/product/ProductCarousel")
+);
+const Collection = dynamic(() => import("@/components/lobby/Collection"), {
+  ssr: false,
+});
+const LogoSection = dynamic(() => import("@/components/lobby/BrandSection"), {
+  ssr: false,
+});
+const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
+  ssr: false,
+});
+const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
+  ssr: false,
+});
 export default function LobbyLayout({
   children,
 }: {

@@ -1,9 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 import CartProducts from "./CartProducts";
-const ResumeCartMessage = dynamic(() => import("./message/ResumeCartMessage"), {
-  ssr: false,
-});
+import ResumeCartMessage from "./message/ResumeCartMessage";
 
 export default function CartIndex() {
   return (
