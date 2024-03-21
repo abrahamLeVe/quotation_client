@@ -1,4 +1,3 @@
-import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
 import dynamic from "next/dynamic";
 
@@ -17,6 +16,7 @@ const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
 const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
   ssr: false,
 });
+const Footer = dynamic(() => import("@/components/footer/Footer"));
 export default function LobbyLayout({
   children,
 }: {

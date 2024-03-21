@@ -55,9 +55,9 @@ export default function CartSliderOver() {
             <EmptyCartMessage score={3} />
           ) : (
             <>
-              <div className="grid gap-4 py-4">
+              <div className="grid gap-4 py-2 pb-24">
                 <CartItem />
-                <SheetFooter className="fixed bottom-0 max-w-max w-full">
+                <SheetFooter className="fixed bottom-0 backdrop-blur-md ">
                   <SheetClose asChild>
                     <CartCheckout />
                   </SheetClose>

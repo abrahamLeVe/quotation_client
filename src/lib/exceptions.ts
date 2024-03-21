@@ -8,7 +8,7 @@ export class AuthRequiredError extends Error {
 export const handleErrorMessage = (error: { status: number }) => {
   switch (error.status) {
     case 400:
-      return "Petición incorrecta. Verifica los datos proporcionados.";
+      return "El correo electrónico o nombre de usuario ya están en uso. Si ha creado una cuenta con este correo electrónico, por favor revise su bandeja de entrada.";
     case 401:
       return "Credenciales faltantes o inválidas. Inicia sesión nuevamente.";
     case 403:

@@ -30,13 +30,14 @@ export default function QuotationSend() {
       const errorMessage = handleErrorMessage(res.error);
       toast({
         variant: "destructive",
-        title: errorMessage,
+        title: "Error de credenciales",
         description: (
-          <>
+          <div className="flex flex-col gap-3">
+            <span>{errorMessage}</span>
             <span className="underline">
-              <Link href={"/auth/signin"}>Click Aquí</Link>
+              <Link href={"/auth/signin"}>Ingresar click Aquí</Link>
             </span>
-          </>
+          </div>
         ),
       });
       setLoading(false);

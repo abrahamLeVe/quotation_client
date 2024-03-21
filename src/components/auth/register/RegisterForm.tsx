@@ -13,22 +13,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { authSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle } from "lucide-react";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useState } from "react";
+import { signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { toast } from "@/components/ui/use-toast";
+import { useCartContext } from "@/context/cart.context";
+import { handleErrorMessage } from "@/lib/exceptions";
+import { Session } from "next-auth";
+import Link from "next/link";
 import { PasswordInput } from "../AuthPassword";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface RegisterFormProps {
+  session: Session | null;
+  searchParams: {
+    callbackUrl?: string;
+    error?: string;
+  };
+}
 
 export default function RegisterForm({
-  className,
-  ...props
-}: UserAuthFormProps) {
-  const { data: session } = useSession();
+  session,
+  searchParams,
+}: RegisterFormProps) {
   if (session) {
     signOut({ redirect: false });
   }
@@ -44,31 +51,52 @@ export default function RegisterForm({
     },
   });
 
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState(false);
+  const { isLoading, setIsLoading } = useCartContext();
 
   async function onSubmit(data: Inputs) {
-    setIsPending(true);
-    setError(false);
-
-    const credentials = {
-      email: data.email,
-      password: data.password,
-      redirect: true,
-      callbackUrl: "/dashboard/account",
-    };
+    setIsLoading(true);
 
     try {
       const res = await registerUser(data);
-      if (res.jwt) {
-        await signIn("credentials", credentials);
+      if (res.user) {
+        toast({
+          variant: "default",
+          title: "Cuenta creada correctamente",
+          description: (
+            <div className="flex flex-col gap-3">
+              <span>
+                Se ha enviado un correo electrónico de confirmación a{" "}
+                <strong>{res.user.email}</strong> . Por favor, revise su bandeja
+                de entrada y haga clic en el enlace de confirmación.
+              </span>
+
+              <span className="underline">
+                <Link href={"/auth/signin"}>Ingresar click Aquí</Link>
+              </span>
+            </div>
+          ),
+          duration: 50000,
+        });
       } else {
-        setError(true);
+        const errorMessage = handleErrorMessage(res.error);
+
+        toast({
+          variant: "destructive",
+          title: "Error de credenciales",
+          description: (
+            <div className="flex flex-col gap-3">
+              <span>{errorMessage}</span>
+              <span className="underline">
+                <Link href={"/auth/signin"}>Ingresar click Aquí</Link>
+              </span>
+            </div>
+          ),
+        });
       }
     } catch (error) {
-      setError(true);
+      console.log("error RegisterForm.tsx ", error);
     } finally {
-      setIsPending(false);
+      setIsLoading(false);
     }
   }
 
@@ -117,8 +145,8 @@ export default function RegisterForm({
             </FormItem>
           )}
         />
-        <Button disabled={isPending}>
-          {isPending && (
+        <Button>
+          {isLoading && (
             <Icons.spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-hidden="true"
@@ -127,15 +155,6 @@ export default function RegisterForm({
           Continue
           <span className="sr-only">Continue to email verification page</span>
         </Button>
-        {error ? (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              El correo electrónico o el nombre de usuario ya están en uso.
-            </AlertDescription>
-          </Alert>
-        ) : null}
       </form>
     </Form>
   );
