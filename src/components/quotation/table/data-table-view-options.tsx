@@ -17,6 +17,25 @@ interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
+const columnTranslations: { [key: string]: string } = {
+  id: "Código",
+  createdAt: "Creado en",
+  updatedAt: "Actualizado en",
+  publishedAt: "Publicado en",
+  email: "Correo electrónico",
+  products: "Productos",
+  name: "Nombre",
+  ruc: "RUC",
+  dni: "DNI",
+  direction: "Dirección",
+  phone: "Teléfono",
+  dayLimit: "Límite diario",
+  details: "Detalles",
+  notes: "Notas",
+  dateLimit: "Límite de fecha",
+  codeStatus: "Estado del código",
+};
+
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
@@ -29,11 +48,11 @@ export function DataTableViewOptions<TData>({
           className="ml-auto hidden h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
-          View
+          Vista
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>Alternar columnas</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -49,7 +68,7 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {columnTranslations[column.id] || column.id}
               </DropdownMenuCheckboxItem>
             );
           })}

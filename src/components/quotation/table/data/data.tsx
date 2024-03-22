@@ -26,31 +26,28 @@ export const labels = [
 
 export const statuses = [
   {
-    value: "En progreso",
-    label: "En progreso",
-    icon: StopwatchIcon,
-  },
-  {
-    value: "vencido",
-    label: "Vencido",
+    value: "Cancelada",
+    label: "Cancelada",
     icon: CrossCircledIcon,
   },
-];
-
-export const priorities = [
   {
-    label: "Low",
-    value: "low",
-    icon: ArrowDownIcon,
+    value: "Cerrada",
+    label: "Cerrada",
+    icon: CircleIcon,
   },
   {
-    label: "Medium",
-    value: "medium",
-    icon: ArrowRightIcon,
+    value: "Completada",
+    label: "Completada",
+    icon: CheckCircledIcon,
   },
   {
-    label: "High",
-    value: "high",
-    icon: ArrowUpIcon,
+    value: "En progreso",
+    label: "En progreso",
+    icon: QuestionMarkCircledIcon,
+  },
+  {
+    value: "Vencido",
+    label: "Vencido",
+    icon: StopwatchIcon,
   },
 ];

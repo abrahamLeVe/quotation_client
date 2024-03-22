@@ -24,12 +24,13 @@ export function DataTableToolbar<TData>({
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filtrar por código..."
-          value={table.getColumn("name")?.getFilterValue() as string}
+          value={(table.getColumn("id")?.getFilterValue() as number) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("id")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
+
         {table.getColumn("codeStatus") && (
           <DataTableFacetedFilter
             column={table.getColumn("codeStatus")}
@@ -37,20 +38,14 @@ export function DataTableToolbar<TData>({
             options={statuses}
           />
         )}
-        {/* {table.getColumn("name") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("name")}
-            title="Representante"
-            options={priorities}
-          />
-        )} */}
+
         {isFiltered && (
           <Button
             variant="ghost"
             onClick={() => table.resetColumnFilters()}
             className="h-8 px-2 lg:px-3"
           >
-            Reset
+            Resetear
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}

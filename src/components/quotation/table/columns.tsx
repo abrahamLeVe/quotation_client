@@ -1,12 +1,11 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatDate } from "@/utilities/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { labels, statuses } from "./data/data";
+import { statuses } from "./data/data";
 import { Quotation } from "./data/schema";
 
 export const columns: ColumnDef<Quotation>[] = [
@@ -39,12 +38,13 @@ export const columns: ColumnDef<Quotation>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Código" />
     ),
-    cell: ({ row }) => {
-      return (
-        <div className="w-[80px]">
-          <span className="truncate font-medium">{row.getValue("id")}</span>
-        </div>
-      );
+    cell: ({ row }) => (
+      <div className="w-[80px]">
+        <span className="truncate font-medium">{row.getValue("id")}</span>
+      </div>
+    ),
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
   {
@@ -52,18 +52,13 @@ export const columns: ColumnDef<Quotation>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Creación" />
     ),
-    cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.name);
-
-      return (
-        <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {formatDate(row.getValue("createdAt"))}
-          </span>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <div className="flex space-x-2">
+        <span className="max-w-[500px] truncate font-medium">
+          {formatDate(row.getValue("createdAt"))}
+        </span>
+      </div>
+    ),
   },
   {
     accessorKey: "dateLimit",
@@ -83,11 +78,11 @@ export const columns: ColumnDef<Quotation>[] = [
   {
     accessorKey: "codeStatus",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Stado" />
+      <DataTableColumnHeader column={column} title="Estado" />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("codeStatus")
+        (status) => status?.value === row.getValue("codeStatus")
       );
 
       return (
@@ -115,9 +110,6 @@ export const columns: ColumnDef<Quotation>[] = [
         </div>
       );
     },
-    // filterFn: (row, id, value) => {
-    //   return value.includes(row.getValue(id));
-    // },
   },
   {
     id: "actions",

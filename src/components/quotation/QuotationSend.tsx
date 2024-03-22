@@ -47,9 +47,10 @@ export default function QuotationSend() {
         title: "Éxito",
         description: "Cotización enviada con éxito",
       });
-      router.push("/dashboard/order");
-      router.refresh();
-      cart();
+      setLoading(false);
+      // router.push("/dashboard/order");
+      // router.refresh();
+      // cart();
     }
   };
 
