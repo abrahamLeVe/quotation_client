@@ -83,7 +83,7 @@ export default function CartProduct({
                 <div className="flex">{`${size}`}</div>
               </div>
             ) : null}
-            <div className="flex flex-row max-w-[250px]">
+            <div className="flex flex-col gap-2 max-w-[250px]">
               {product.colors?.length! > 0 ? (
                 <>
                   <SelectColorCart

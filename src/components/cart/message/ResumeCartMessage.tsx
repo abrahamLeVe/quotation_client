@@ -1,3 +1,4 @@
+"use client";
 import QuotationCheck from "@/components/quotation/QuotationCheck";
 import { cartStore } from "@/store/cart.store";
 

@@ -1,3 +1,4 @@
+"use client";
 import { useCartContext } from "@/context/cart.context";
 import ProductCard from "@/components/product/ProductCard";
 
@@ -22,7 +23,7 @@ export default function EmptyCartMessage({
   return (
     <div className="grid gap-4 py-4">
       <h2 className="text-lg font-semibold text-yellow-900 dark:text-white">
-        {title || "Vacío"}
+        {title || "Sin productos en el carrito"}
       </h2>
       <h3> {description || "¡Descubre nuestras ofertas!"}</h3>
       <div

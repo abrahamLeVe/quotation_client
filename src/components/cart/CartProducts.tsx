@@ -1,7 +1,12 @@
 "use client";
 import { cartStore } from "@/store/cart.store";
 import CartProduct from "./CartProduct";
-import EmptyCartMessage from "./message/EmptyCartMessage";
+import dynamic from "next/dynamic";
+import LoadingCart from "./loading";
+const EmptyCartMessage = dynamic(() => import("./message/EmptyCartMessage"), {
+  ssr: false,
+  loading: () => <LoadingCart />,
+});
 
 export default function CartProducts() {
   const cart = cartStore((state) => state.cartItemState);

@@ -15,9 +15,11 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { Icons } from "../Icons";
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
-import CartItem from "./CartProducts";
-import EmptyCartMessage from "./message/EmptyCartMessage";
+import CartProducts from "./CartProducts";
 const CartCheckout = dynamic(() => import("./CartCheckout"), {
+  ssr: false,
+});
+const EmptyCartMessage = dynamic(() => import("./message/EmptyCartMessage"), {
   ssr: false,
 });
 
@@ -56,7 +58,7 @@ export default function CartSliderOver() {
           ) : (
             <>
               <div className="grid gap-4 py-2 pb-24">
-                <CartItem />
+                <CartProducts />
                 <SheetFooter className="fixed bottom-0 backdrop-blur-md ">
                   <SheetClose asChild>
                     <CartCheckout />

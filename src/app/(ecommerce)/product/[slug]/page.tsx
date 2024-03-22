@@ -2,11 +2,17 @@ import {
   getDataProductBySlug,
   getDataProductSlug,
 } from "@/app/services/product.service";
-import CategoryProducts from "@/components/category/CategoryProducts";
 import { ProductDescription } from "@/components/product/ProductDescription";
 import ProductDetail from "@/components/product/ProductDetail";
-import ProductNotFound from "@/components/product/ProductNotFound";
 import ImageGalleryModal from "@/components/ui/ImageGallery";
+
+import dynamic from "next/dynamic";
+const CategoryProducts = dynamic(
+  () => import("@/components/category/CategoryProducts")
+);
+const ProductNotFound = dynamic(
+  () => import("@/components/product/ProductNotFound")
+);
 
 export interface ProductPageProps {
   params: {

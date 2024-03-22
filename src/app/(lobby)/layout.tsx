@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
 );
+const Footer = dynamic(() => import("@/components/footer/Footer"));
 const Collection = dynamic(() => import("@/components/lobby/Collection"), {
   ssr: false,
 });
@@ -16,7 +17,6 @@ const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
 const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
   ssr: false,
 });
-const Footer = dynamic(() => import("@/components/footer/Footer"));
 export default function LobbyLayout({
   children,
 }: {

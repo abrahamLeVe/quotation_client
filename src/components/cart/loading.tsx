@@ -1,9 +1,6 @@
-export default function loading() {
+export default function LoadingCart() {
   return (
-    <div className="px-4 py-6 sm:px-6 w-full min-h-screen">
-      <div className="text-lg font-medium animate-pulse">
-        Carrito de compras
-      </div>
+    <div className="px-4  sm:px-6 w-full min-h-screen">
       <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
         {/* Cart Products Placeholder */}
         <div className="animate-pulse bg-gray-200 rounded-lg p-4 flex-1">
