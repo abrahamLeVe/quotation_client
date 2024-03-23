@@ -59,7 +59,11 @@ export default function CartSummary({ isCart = true }: CartSummaryProps) {
   return (
     <>
       {cart?.length > 0 ? (
-        <div className="sticky top-20 h-full  w-full lg:w-1/2">
+        <div
+          className={`sticky  h-full  w-full lg:w-1/2 ${
+            isCart ? "top-20" : "top-0"
+          }`}
+        >
           <div className="flex flex-col gap-2 ">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">

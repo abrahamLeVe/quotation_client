@@ -56,7 +56,7 @@ export default function QuotationSend() {
 
   return (
     <div>
-      <Button disabled={loading} onClick={onClick}>
+      <Button disabled={loading} onClick={onClick} variant={"outline"}>
         {loading && (
           <Icons.spinner
             className="mr-2 h-4 w-4 animate-spin"
