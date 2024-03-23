@@ -54,8 +54,8 @@ export default function ProductModal({
 
                 <DialogFooter>
                   <DialogClose asChild>
-                    <span className="font-semibold hover:underline relative">
-                      Descripción completa: Click Aquí
+                    <span className="underline relative">
+                      Ver descripción completa
                       <Link
                         prefetch={true}
                         href={`/product/${product.attributes.slug}`}

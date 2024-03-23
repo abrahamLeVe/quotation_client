@@ -12,6 +12,7 @@ import ColorSelect from "../select/SelectColorProduct";
 import SizeSelect from "../size/SizeSelect";
 import ProductModal from "./ProductModal";
 import ProductRating from "./ProductRating";
+import { FaFilePdf } from "react-icons/fa6";
 
 interface ProductDetailProps {
   product: ProductInterface;
@@ -73,10 +74,10 @@ export default function ProductDetail({
 
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         <h3 className="relative text-xl" title={product.attributes.name}>
           {!isPage ? (
-            <>{truncate(product.attributes.name, 40)}</>
+            <>{truncate(product.attributes.name, 50)}</>
           ) : (
             <>{product.attributes.name}</>
           )}
@@ -86,10 +87,10 @@ export default function ProductDetail({
 
         {product.attributes.brand?.data ? (
           <div className="flex flex-wrap gap-2">
-            <span className="font-semibold">Marca: </span>
+            <span>Marca: </span>
             <Link
               href={`/filter/brand?query=${product.attributes.brand.data?.attributes.name}`}
-              className="hover:opacity-95 hover:underline "
+              className="hover:opacity-95 underline "
             >
               {product.attributes.brand.data?.attributes.name}
             </Link>
@@ -116,25 +117,26 @@ export default function ProductDetail({
         {isPage ? (
           <>
             {product.attributes.categories.data.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                <span className="font-semibold">Categorías:</span>
-                {product.attributes.categories.data.map((item) => (
+              <div className="flex flex-wrap gap-2 relative">
+                <span>Categorías:</span>
+                {product.attributes.categories.data.map((category) => (
                   <Link
-                    key={item.id}
-                    href={`/filter/category?query=${item.attributes.name}`}
-                    className="hover:opacity-95 hover:underline"
+                    href={`/filter/brand?query=${category.attributes.name}`}
+                    className="hover:opacity-95 underline "
+                    key={category.id}
                   >
-                    {item.attributes.name}
+                    {category.attributes.name}
                   </Link>
                 ))}
               </div>
             ) : null}
 
             {product.attributes.documents.data.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
+              <ul className="list-disc">
                 {product.attributes.documents.data.map((item) => (
-                  <div key={item.id} className="flex items-center gap-2">
-                    <span>{item.attributes.file.data.attributes.name}</span>
+                  <li key={item.id} className="flex items-center gap-2">
+                    <span>{item.attributes.name}</span>
+                    <FaFilePdf />
                     <a
                       href={item.attributes.file.data.attributes.url}
                       target="_blank"
@@ -143,9 +145,9 @@ export default function ProductDetail({
                     >
                       Descargar
                     </a>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             ) : null}
           </>
         ) : null}

@@ -1,15 +1,12 @@
-import Footer from "@/components/footer/Footer";
-import NavBar from "@/components/navbar/NavBar";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 
-export default function ProductLayout({
+export default function OrderLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <>
-      <NavBar />
       <Breadcrumbs
         segments={[
           {
@@ -17,13 +14,12 @@ export default function ProductLayout({
             href: "/",
           },
           {
-            title: "Detalles del producto",
+            title: "Mis cotizaciones",
             href: "",
           },
         ]}
       />
       {children}
-      <Footer />
     </>
   );
 }

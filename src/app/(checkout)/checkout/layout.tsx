@@ -16,7 +16,7 @@ export default function CheckoutLayout({
               href: "/cart",
             },
             {
-              title: "Checkout",
+              title: "Cotización",
               href: "",
             },
           ]}

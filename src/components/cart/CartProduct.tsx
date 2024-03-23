@@ -3,11 +3,10 @@ import { truncate } from "@/lib/utils";
 import { Color, ProductCart } from "@/models/cart.model";
 import Link from "next/link";
 import { useState } from "react";
-import { BsEye } from "react-icons/bs";
+import { GrEdit } from "react-icons/gr";
 import SelectColorCart from "../select/SelectColorCart";
 import { Button } from "../ui/button";
 import CartButtonActions from "./CartButtonActions";
-
 interface CartProductProps {
   product: ProductCart;
   isPage?: boolean;
@@ -60,14 +59,13 @@ export default function CartProduct({ product, isPage }: CartProductProps) {
           className={
             "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
           }
-          title="Ver mas detalles"
+          title="Editar"
         >
-          <BsEye className="h-[1.2rem] w-[1.2rem]" />
+          <GrEdit className="h-[1.2rem] w-[1.2rem]" />
           <Link
             prefetch={true}
             href={`/product/` + product.slug}
             className="absolute inset-0"
-            passHref
           ></Link>
         </Button>
         <img
