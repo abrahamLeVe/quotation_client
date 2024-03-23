@@ -14,7 +14,8 @@ export interface CartStateProps {
     color?: Color,
     size?: string,
     picture_url?: string,
-    title?: string
+    title?: string,
+    slug?: string
   ) => void;
   decreaseCartQuantity: (id: number, colorId: number) => void;
   removeCartItem: (id: number) => void;
@@ -35,6 +36,7 @@ export interface ProductCart {
   quantity: number;
   picture_url?: string;
   size?: string;
+  slug?: string;
 }
 
 export interface Color2 {

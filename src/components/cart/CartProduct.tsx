@@ -1,8 +1,11 @@
 "use client";
 import { truncate } from "@/lib/utils";
 import { Color, ProductCart } from "@/models/cart.model";
+import Link from "next/link";
 import { useState } from "react";
+import { BsEye } from "react-icons/bs";
 import SelectColorCart from "../select/SelectColorCart";
+import { Button } from "../ui/button";
 import CartButtonActions from "./CartButtonActions";
 
 interface CartProductProps {
@@ -10,10 +13,7 @@ interface CartProductProps {
   isPage?: boolean;
 }
 
-export default function CartProduct({
-  product,
-  isPage = false,
-}: CartProductProps) {
+export default function CartProduct({ product, isPage }: CartProductProps) {
   const [color, setColor] = useState<Color | undefined>(
     product.colors?.length === 1 ? product.colors[0].color : undefined
   );
@@ -56,7 +56,20 @@ export default function CartProduct({
         className="h-24 w-24 overflow-hidden flex-shrink-0 rounded-md border border-gray-200 relative"
         title="Detalles"
       >
-        {/* <ProductModal product={product} isCart /> */}
+        <Button
+          className={
+            "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
+          }
+          title="Ver mas detalles"
+        >
+          <BsEye className="h-[1.2rem] w-[1.2rem]" />
+          <Link
+            prefetch={true}
+            href={`/product/` + product.slug}
+            className="absolute inset-0"
+            passHref
+          ></Link>
+        </Button>
         <img
           src={product.picture_url}
           alt={product.title!}
@@ -83,7 +96,7 @@ export default function CartProduct({
                 <div className="flex">{`${size}`}</div>
               </div>
             ) : null}
-            <div className="flex flex-col gap-2 max-w-[250px]">
+            <div className="flex flex-col gap-2 ">
               {product.colors?.length! > 0 ? (
                 <>
                   <SelectColorCart

@@ -54,7 +54,7 @@ export default function CartSliderOver() {
             <SheetTitle>Carrito</SheetTitle>
           </SheetHeader>
           {!cartQuantity ? (
-            <EmptyCartMessage score={3} />
+            <EmptyCartMessage score={3} isPage={false} />
           ) : (
             <>
               <div className="grid gap-4 py-2 pb-24">

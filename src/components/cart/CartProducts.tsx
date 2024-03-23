@@ -1,14 +1,17 @@
 "use client";
 import { cartStore } from "@/store/cart.store";
-import CartProduct from "./CartProduct";
 import dynamic from "next/dynamic";
+import CartProduct from "./CartProduct";
 import LoadingCart from "./loading";
 const EmptyCartMessage = dynamic(() => import("./message/EmptyCartMessage"), {
   ssr: false,
   loading: () => <LoadingCart />,
 });
+interface CartProductsProps {
+  isPage?: boolean;
+}
 
-export default function CartProducts() {
+export default function CartProducts({ isPage = false }: CartProductsProps) {
   const cart = cartStore((state) => state.cartItemState);
 
   return (
@@ -19,7 +22,7 @@ export default function CartProducts() {
             cart.map((product) => {
               return (
                 <div key={product.id}>
-                  <CartProduct product={product} />
+                  <CartProduct product={product} isPage={isPage} />
                 </div>
               );
             })

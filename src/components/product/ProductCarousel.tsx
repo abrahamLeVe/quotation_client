@@ -8,7 +8,7 @@ export default async function ProductCarousel() {
       <h2 className="text-2xl font-bold tracking-tight pb-5">
         Recién llegados
       </h2>
-      <ProductSlider data={products} />
+      <ProductSlider data={products} isPage />
     </div>
   );
 }

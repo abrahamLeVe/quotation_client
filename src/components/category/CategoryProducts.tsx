@@ -19,7 +19,7 @@ export default async function CategoryProducts({
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 pb-5">
             Productos relacionados
           </h2>
-          <ProductSlider data={data!.data} />
+          <ProductSlider data={data!.data} isPage />
         </>
       )}
     </div>

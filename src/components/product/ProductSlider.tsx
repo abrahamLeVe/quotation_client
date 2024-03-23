@@ -13,9 +13,13 @@ import ProductCard from "./ProductCard";
 
 interface ProductSliderProps {
   data: ProductInterface[];
+  isPage?: boolean;
 }
 
-export default function ProductSlider({ data }: ProductSliderProps) {
+export default function ProductSlider({
+  data,
+  isPage = true,
+}: ProductSliderProps) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -40,7 +44,11 @@ export default function ProductSlider({ data }: ProductSliderProps) {
           {data.map((product) => (
             <CarouselItem
               key={product.id}
-              className="pl-1 xs:basis-1/2 md:basis-1/3 lg:basis-1/4 relative"
+              className={`relative ${
+                isPage
+                  ? "pl-1 xs:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                  : "pl-1 basis-1/2"
+              }`}
             >
               <div className="p-1 h-full">
                 <ProductCard product={product} />

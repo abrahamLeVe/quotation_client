@@ -16,6 +16,7 @@ interface CartButtonActionsProps {
   size?: string;
   picture_url?: string;
   title?: string;
+  slug?: string;
 }
 
 export default function CartButtonActions({
@@ -27,6 +28,7 @@ export default function CartButtonActions({
   size,
   picture_url,
   title,
+  slug,
 }: CartButtonActionsProps) {
   const cart = cartStore((state) => state);
   const { getItemQuantity, getItemColorQuantity } = useProductContext();
@@ -44,7 +46,8 @@ export default function CartButtonActions({
         color,
         size,
         picture_url,
-        title
+        title,
+        slug
       );
     }
   };

@@ -35,7 +35,8 @@ export const cartStore = create<CartStateProps>()(
         color?: Color,
         size?: string,
         picture_url?: string,
-        title?: string
+        title?: string,
+        slug?: string
       ) => {
         set((state: CartStateProps) => {
           const existingItem = state.cartItemState.find(
@@ -91,6 +92,7 @@ export const cartStore = create<CartStateProps>()(
               picture_url,
               size,
               title,
+              slug,
             };
 
             return {

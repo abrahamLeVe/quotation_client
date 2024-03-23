@@ -18,7 +18,7 @@ export default function CartLayout({
               href: "/",
             },
             {
-              title: "Carrito con productos",
+              title: "Carrito",
               href: "",
             },
           ]}

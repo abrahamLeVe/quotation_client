@@ -160,6 +160,7 @@ export default function ProductDetail({
             isPage={isPage}
             size={sizeName}
             title={product.attributes.name}
+            slug={product.attributes.slug}
           />
           {isPage ? null : <ProductModal product={product} />}
         </div>
