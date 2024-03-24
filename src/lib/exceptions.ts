@@ -5,7 +5,8 @@ export class AuthRequiredError extends Error {
   }
 }
 
-export const handleErrorMessage = (error: { status: number }) => {
+export const handleErrorMessage = (error: { status: number | undefined }) => {
+  console.log("error ", error);
   switch (error.status) {
     case 400:
       return "El correo electrónico o nombre de usuario ya están en uso. Si ha creado una cuenta con este correo electrónico, por favor revise su bandeja de entrada.";

@@ -11,11 +11,11 @@ interface CartProductsProps {
   isPage?: boolean;
 }
 
-export default function CartProducts({ isPage = false }: CartProductsProps) {
+export default function CartProducts({ isPage }: CartProductsProps) {
   const cart = cartStore((state) => state.cartItemState);
 
   return (
-    <div className="mt-8 w-full">
+    <div className={`mt-8 w-full ${isPage ? "pb-20" : "pb-0"}`}>
       <div className="flow-root">
         <div className="-my-6 divide-y divide-gray-200 w-full">
           {cart?.length > 0 ? (

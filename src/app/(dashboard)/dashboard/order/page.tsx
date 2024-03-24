@@ -10,34 +10,28 @@ import { z } from "zod";
 
 export const metadata: Metadata = {
   title: "Cotizaciones",
-  description: "Administración de cotizaciones.",
+  description: "Mis de cotizaciones.",
 };
 
 export default async function OrderPage() {
   const session = await getServerSession(options);
   const res = await getUserFromApi(session?.user.accessToken || "");
   const quotationsData = res?.quotations;
-  if (!quotationsData) {
-    throw new AuthRequiredError();
-  } else {
-    const quotations = z.array(quotationSchema).parse(quotationsData || []);
+  const quotations = z.array(quotationSchema).parse(quotationsData || []);
 
-    return (
-      <>
-        <div className="md:hidden">
-          <span>Falta</span>
-        </div>
-        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
-          <div className="flex items-center justify-between space-y-2">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">
-                Cotizaciones
-              </h2>
-            </div>
+  return (
+    <>
+      <div className="md:hidden">
+        <span>Falta</span>
+      </div>
+      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <div className="flex items-center justify-between space-y-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Cotizaciones</h2>
           </div>
-          <DataTable data={quotations} columns={columns} />
         </div>
-      </>
-    );
-  }
+        <DataTable data={quotations} columns={columns} error={res?.error} />
+      </div>
+    </>
+  );
 }

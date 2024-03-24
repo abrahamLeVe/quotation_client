@@ -12,7 +12,7 @@ export default function CartIndex() {
     <div className="px-4 py-6 sm:px-6 w-full min-h-screen">
       <div className="text-lg font-medium ">Productos a cotizar</div>
       <div className="flex flex-col-reverse lg:flex-row mt-8 relative gap-4 ">
-        <CartProducts isPage />
+        <CartProducts isPage={true} />
         <CartSummary />
       </div>
       <EmptyCartMessage score={0} title="También podria interesarte" isPage />

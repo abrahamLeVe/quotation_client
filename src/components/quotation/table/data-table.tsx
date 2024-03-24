@@ -27,15 +27,22 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+import { handleErrorMessage } from "@/lib/exceptions";
+import { Error } from "@/models/auth.model";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  error?: Error;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  error,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -113,7 +120,27 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Sin resultados.
+                  {!error ? (
+                    <>Sin resultados.</>
+                  ) : (
+                    <>
+                      <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertTitle>Error de credenciales</AlertTitle>
+                        <AlertDescription>
+                          {" "}
+                          <div className="flex flex-col gap-3">
+                            <span>{handleErrorMessage(error)}</span>
+                            <span className="underline">
+                              <Link href={"/auth/signin"}>
+                                Ingresar click Aquí
+                              </Link>
+                            </span>
+                          </div>
+                        </AlertDescription>
+                      </Alert>
+                    </>
+                  )}
                 </TableCell>
               </TableRow>
             )}

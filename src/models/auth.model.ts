@@ -27,7 +27,22 @@ export interface User {
   updatedAt: string;
   avatar?: Avatar;
   quotations: Quotation[];
+  error?: Error;
 }
+
+export interface ResError {
+  data?: null;
+  error: Error;
+}
+
+export interface Error {
+  status: number;
+  name: string;
+  message: string;
+  details: Details;
+}
+
+interface Details {}
 
 export interface Avatar {
   id: number;

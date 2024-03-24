@@ -4,6 +4,7 @@ import { toast } from "@/components/ui/use-toast";
 import Link from "next/link";
 
 const error = ({ error, reset }: { error: Error; reset: () => void }) => {
+  console.log("error ", error);
   toast({
     variant: "destructive",
     title: "Error de credenciales",

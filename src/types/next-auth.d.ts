@@ -15,6 +15,7 @@ declare module "next-auth" {
       sub: string;
       userId: number;
       quotations: Quotation[];
+      staus?: number;
     };
   }
 
@@ -30,6 +31,7 @@ declare module "next-auth" {
       createdAt: string;
       updatedAt: string;
       quotations: Quotation[];
+      staus?: number;
     };
   }
 }

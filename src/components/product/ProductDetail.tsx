@@ -121,7 +121,7 @@ export default function ProductDetail({
                 <span>Categorías:</span>
                 {product.attributes.categories.data.map((category) => (
                   <Link
-                    href={`/filter/brand?query=${category.attributes.name}`}
+                    href={`/filter/category?query=${category.attributes.name}`}
                     className="hover:opacity-95 underline "
                     key={category.id}
                   >

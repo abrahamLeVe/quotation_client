@@ -27,6 +27,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { Session } from "next-auth";
+import { UbigeoInterface } from "@/models/ubigeo.model";
 
 const profileFormSchema = z.object({
   name: z
@@ -65,10 +66,12 @@ const defaultValues: Partial<ProfileFormValues> = {
 
 interface CheckoutFormProps {
   session: Session | null;
+  peru: UbigeoInterface;
 }
 
-export function CheckoutForm({ session }: CheckoutFormProps) {
-  console.log("session ", session);
+export function CheckoutForm({ session, peru }: CheckoutFormProps) {
+  // console.log("session ", session);
+  console.log("peru ", peru);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,

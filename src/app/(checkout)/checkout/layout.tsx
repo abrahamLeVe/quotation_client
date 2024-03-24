@@ -1,4 +1,5 @@
 "use client";
+import LoadingCart from "@/components/cart/loading";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { cartStore } from "@/store/cart.store";
 import dynamic from "next/dynamic";
@@ -37,7 +38,7 @@ export default function CheckoutLayout({
           </div>
           <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
             {cart.cartItemState.length === 0 ? (
-              <>Carrito vacío</>
+              <LoadingCart />
             ) : (
               <>
                 {children}
