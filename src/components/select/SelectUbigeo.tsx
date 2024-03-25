@@ -30,6 +30,21 @@ import {
 import { Session } from "next-auth";
 
 const profileFormSchema = z.object({
+  name: z
+    .string({
+      required_error: "Requiere un nombre.",
+    })
+    .min(2, {
+      message: "El nombre debe tener al menos 2 caracteres.",
+    })
+    .max(30, {
+      message: "El nombre no debe tener más de 30 caracteres..",
+    }),
+  email: z
+    .string({
+      required_error: "Please select an email to display.",
+    })
+    .email(),
   departamento: z.string({
     required_error: "Seleccione un departamento para mostrar.",
   }),
@@ -43,20 +58,23 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-const defaultValues: Partial<ProfileFormValues> = {};
-
 interface CheckoutFormProps {
   session: Session | null;
   peru: UbigeoInterface;
 }
 
 import { useState } from "react";
+import { Input } from "../ui/input";
 
 export function SelectUbigeo({ peru, session }: CheckoutFormProps) {
   const [selectedDepartamento, setSelectedDepartamento] = useState<string>("");
   const [selectedProvincia, setSelectedProvincia] = useState<string>("");
   const [provincias, setProvincias] = useState<Provincia[]>([]);
   const [distritos, setDistritos] = useState<Distrito[]>([]);
+
+  const defaultValues: Partial<ProfileFormValues> = {
+    email: session?.user.email,
+  };
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -100,108 +118,158 @@ export function SelectUbigeo({ peru, session }: CheckoutFormProps) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="departamento"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Departamento *</FormLabel>
-              <Select
-                onValueChange={(value) => {
-                  field.onChange(value);
-                  handleDepartamentoChange(value);
-                }}
-                defaultValue={field.value}
-              >
+              <FormLabel>Razón Social *</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                Razón Social de su representada; en caso de ser a nombre de
+                persona natural favor de indicarnos su número de DNI y la
+                dirección de su domicilio.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Correo electrónico</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Elegir departamento" />
+                    <SelectValue placeholder="Select a verified email to display" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Object.keys(peru).map((departamentoId) => (
-                    <SelectItem key={departamentoId} value={departamentoId}>
-                      {peru[departamentoId].departamento}
-                    </SelectItem>
-                  ))}
+                  <SelectItem value={session?.user.email!}>
+                    {session?.user.email}
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
-                Seleccione un departamento para poder elegir una provincia
+                You can manage verified email addresses in your.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="provincia"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Provincia *</FormLabel>
-              <Select
-                onValueChange={(value) => {
-                  field.onChange(value);
-                  handleProvinciaChange(value);
-                }}
-                defaultValue={field.value}
-                disabled={!selectedDepartamento}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Elegir provincia" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {provincias.map((provincia) => (
-                    <SelectItem
-                      key={provincia.provincia_id}
-                      value={provincia.provincia_id}
-                    >
-                      {provincia.provincia}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                Seleccione una provincia para poder elegir un distrito
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="distrito"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Distrito *</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-                disabled={!selectedProvincia}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Elegir distrito" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {distritos.map((distrito) => (
-                    <SelectItem
-                      key={distrito.distrito_id}
-                      value={distrito.distrito_id}
-                    >
-                      {distrito.distrito}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormDescription>Seleccione un distrito</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="col-span-1">
+            <FormField
+              control={form.control}
+              name="departamento"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Departamento *</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      handleDepartamentoChange(value);
+                    }}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Elegir departamento" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {Object.keys(peru).map((departamentoId) => (
+                        <SelectItem key={departamentoId} value={departamentoId}>
+                          {peru[departamentoId].departamento}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Seleccione un departamento para poder elegir una provincia
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="col-span-1">
+            <FormField
+              control={form.control}
+              name="provincia"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Provincia *</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      handleProvinciaChange(value);
+                    }}
+                    defaultValue={field.value}
+                    disabled={!selectedDepartamento}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Elegir provincia" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {provincias.map((provincia) => (
+                        <SelectItem
+                          key={provincia.provincia_id}
+                          value={provincia.provincia_id}
+                        >
+                          {provincia.provincia}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Seleccione una provincia para poder elegir un distrito
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="col-span-1">
+            <FormField
+              control={form.control}
+              name="distrito"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Distrito *</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={!selectedProvincia}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Elegir distrito" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {distritos.map((distrito) => (
+                        <SelectItem
+                          key={distrito.distrito_id}
+                          value={distrito.distrito_id}
+                        >
+                          {distrito.distrito}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Seleccione un distrito</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
 
         <Button type="submit">Continuar</Button>
       </form>
