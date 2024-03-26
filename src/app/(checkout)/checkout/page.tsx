@@ -1,6 +1,5 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
-import { SelectUbigeo } from "@/components/select/SelectUbigeo";
 import { promises as fs } from "fs";
 import { getServerSession } from "next-auth";
 import path from "path";
@@ -20,8 +19,7 @@ export default async function CheckoutPage() {
   const peru = await getUbigeo();
   return (
     <>
-      {/* <CheckoutForm session={session} peru={peru} /> */}
-      <SelectUbigeo session={session} peru={peru} />
+      <CheckoutForm session={session} peru={peru} />
     </>
   );
 }

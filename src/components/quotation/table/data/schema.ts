@@ -15,6 +15,11 @@ const productSchema = z.object({
   picture_url: z.string(),
   size: z.string().optional(),
 });
+const locationSchema = z.object({
+  departamento: z.string().nullable(),
+  provincia: z.string().nullable(),
+  distrito: z.string().nullable(),
+});
 
 export const quotationSchema = z.object({
   id: z.number(),
@@ -24,8 +29,8 @@ export const quotationSchema = z.object({
   email: z.string(),
   products: z.array(productSchema),
   name: z.string().nullable(),
-  ruc: z.string().nullable(),
-  dni: z.string().nullable(),
+  tipe_doc: z.string().nullable(),
+  num_doc: z.string().nullable(),
   direction: z.string().nullable(),
   phone: z.string().nullable(),
   dayLimit: z.number(),
@@ -33,6 +38,7 @@ export const quotationSchema = z.object({
   notes: z.string().nullable(),
   dateLimit: z.string(),
   codeStatus: z.string().nullable(),
+  location: locationSchema,
 });
 
 export type Quotation = z.infer<typeof quotationSchema>;

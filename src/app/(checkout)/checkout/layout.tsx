@@ -1,5 +1,4 @@
 "use client";
-import LoadingCart from "@/components/cart/loading";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { cartStore } from "@/store/cart.store";
 import dynamic from "next/dynamic";
@@ -9,6 +8,9 @@ const CartSummary = dynamic(
     ssr: false,
   }
 );
+const LoadingCart = dynamic(() => import("@/components/cart/loading"), {
+  ssr: false,
+});
 
 export default function CheckoutLayout({
   children,
@@ -19,7 +21,7 @@ export default function CheckoutLayout({
 
   return (
     <>
-      <main className="flex flex-col md:container m-auto relative p-20">
+      <main className="flex flex-col md:container m-auto relative">
         <Breadcrumbs
           segments={[
             {

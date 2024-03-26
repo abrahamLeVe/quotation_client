@@ -1,24 +1,27 @@
+"use server";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 import { postDataFromApi } from "@/lib/api";
 import { ProductCart } from "@/models/cart.model";
+import { QuotationData } from "@/models/quotation.model";
+import { getServerSession } from "next-auth";
 
-interface PayOrderProps {
+interface CreateQuotationProps {
   products: ProductCart[];
-  email?: string;
-  token?: string;
-  id?: number;
+  dataQuotation: QuotationData;
 }
 
 export async function createQuotation({
   products,
-  email,
-  token,
-  id,
-}: PayOrderProps) {
+  dataQuotation,
+}: CreateQuotationProps) {
+  const session = await getServerSession(options);
+  const token = session?.user.accessToken;
+  const id = session?.user.userId;
   try {
     const res = await postDataFromApi(
       "/api/quotations",
       {
-        data: { products, email, user: { id } },
+        data: { products, ...dataQuotation, user: { id } },
       },
       token
     );

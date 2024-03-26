@@ -11,7 +11,7 @@ export default function CartIndex() {
   return (
     <div className="px-4 py-6 sm:px-6 w-full min-h-screen">
       <div className="text-lg font-medium ">Productos a cotizar</div>
-      <div className="flex flex-col-reverse lg:flex-row mt-8 relative gap-4 ">
+      <div className="flex flex-col lg:flex-row my-8 relative gap-4 ">
         <CartProducts isPage={true} />
         <CartSummary />
       </div>

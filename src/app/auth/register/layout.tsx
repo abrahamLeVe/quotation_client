@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useCartContext } from "@/context/cart.context";
 import { API_URL } from "@/utilities/urls";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa6";
@@ -18,8 +19,14 @@ export default function RegisterLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { isLoading } = useCartContext();
+
   return (
-    <div className="flex flex-col w-full p-8 gap-4">
+    <div
+      className={`flex flex-col w-full p-8 gap-4 ${
+        isLoading && "pointer-events-none"
+      }`}
+    >
       <Breadcrumbs
         segments={[
           {

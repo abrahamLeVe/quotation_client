@@ -8,13 +8,34 @@ export interface Quotation {
   email: string;
   products: ProductCart[];
   name?: any;
-  ruc?: any;
-  dni?: any;
-  direction?: any;
-  phone?: any;
+  tipe_doc: string;
+  location: any;
+  direction?: string;
+  phone?: string;
   dayLimit: number;
   details?: any;
   notes?: any;
   dateLimit: string;
   codeStatus?: string;
+  num_doc: string;
+}
+
+export interface QuotationData {
+  name: string;
+  email: string;
+  tipe_doc: string;
+  direction: string;
+  num_doc: string;
+  phone: string;
+  departamento: string;
+  provincia: string;
+  distrito: string;
+  location: Location;
+  details?: string | undefined;
+}
+
+interface Location {
+  departamento: string;
+  provincia: string;
+  distrito?: string | undefined;
 }

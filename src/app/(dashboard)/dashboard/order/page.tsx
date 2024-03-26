@@ -17,7 +17,10 @@ export default async function OrderPage() {
   const session = await getServerSession(options);
   const res = await getUserFromApi(session?.user.accessToken || "");
   const quotationsData = res?.quotations;
-  const quotations = z.array(quotationSchema).parse(quotationsData || []);
+  const quotations = z
+    .array(quotationSchema)
+    .parse(quotationsData || [])
+    .reverse();
 
   return (
     <>

@@ -29,12 +29,6 @@ const QuotationCheck = dynamic(
     ssr: false,
   }
 );
-const QuotationSend = dynamic(
-  () => import("@/components/quotation/QuotationSend"),
-  {
-    ssr: false,
-  }
-);
 
 interface CartSummaryProps {
   isCart?: boolean;
@@ -134,9 +128,7 @@ export default function CartSummary({ isCart = true }: CartSummaryProps) {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-            <div className=" ml-auto">
-              {isCart ? <QuotationCheck /> : <QuotationSend />}
-            </div>
+            <div className=" ml-auto">{isCart ? <QuotationCheck /> : null}</div>
           </div>
         </div>
       ) : null}
