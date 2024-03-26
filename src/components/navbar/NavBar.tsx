@@ -1,18 +1,24 @@
 "use client";
 import dynamic from "next/dynamic";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
 import FilterButton, { SpeachButton } from "../filter/FilterButton";
+import { Card } from "../ui/card";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
-import FlyoutMenu from "./MenuFlyout";
 const MenuMobile = dynamic(() => import("./MenuMobile"), {
   ssr: false,
 });
+const FlyoutMenu = dynamic(() => import("./MenuFlyout"), {
+  ssr: false,
+});
+
 interface NavBarProps {
   isCart?: boolean;
+  background: StaticImageData;
 }
-export default function NavBar({ isCart = false }: NavBarProps) {
+export default function NavBar({ isCart = false, background }: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
       <div className="relative">
@@ -23,18 +29,19 @@ export default function NavBar({ isCart = false }: NavBarProps) {
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center gap-2">
               {/* Logo */}
-              <div className="relative w-[50px] h-[50px] flex items-center">
-                <img
-                  className="aspect-square w-full object-cover"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              <Card className="relative w-[150px] h-full flex items-center dark:bg-slate-50">
+                <Image
+                  src={background}
                   alt="DSStore"
+                  placeholder="blur"
+                  className="object-cover"
                 />
                 <Link
                   href={"/"}
                   className="absolute inset-0"
                   aria-label="DSStore"
                 ></Link>
-              </div>
+              </Card>
 
               {/* Flyout menus */}
               <div className="hidden lg:flex">

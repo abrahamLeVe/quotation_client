@@ -1,7 +1,11 @@
 "use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { cartStore } from "@/store/cart.store";
+import background from "../../../../public/logoAyC.png";
+
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import { Card } from "@/components/ui/card";
 const CartSummary = dynamic(
   () => import("@/components/cart/message/CartSummary"),
   {
@@ -21,7 +25,10 @@ export default function CheckoutLayout({
 
   return (
     <>
-      <main className="flex flex-col md:container m-auto relative">
+      <main className="flex flex-col md:container m-auto relative p-3">
+        <Card className="relative w-[180px] h-20  dark:bg-slate-50 ml-auto">
+          <Image src={background} alt="DSStore" placeholder="blur" />
+        </Card>
         <Breadcrumbs
           segments={[
             {

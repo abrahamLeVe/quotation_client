@@ -18,7 +18,6 @@ export default function AuthLayout({
           src={background}
           alt="auth"
           placeholder="blur"
-          sizes="100vw"
           className="object-cover w-full"
         />
       </div>

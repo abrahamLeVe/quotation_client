@@ -1,6 +1,7 @@
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
+import background from "../../../../../public/logoAyC.png";
 
 export default function ProductLayout({
   children,
@@ -9,7 +10,7 @@ export default function ProductLayout({
 }) {
   return (
     <>
-      <NavBar />
+      <NavBar background={background} />
       <Breadcrumbs
         segments={[
           {

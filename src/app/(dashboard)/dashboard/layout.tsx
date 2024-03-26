@@ -1,5 +1,6 @@
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
+import background from "../../../../public/logoAyC.png";
 
 export default function LobbyLayout({
   children,
@@ -8,7 +9,7 @@ export default function LobbyLayout({
 }) {
   return (
     <>
-      <NavBar />
+      <NavBar background={background} />
       <main className="flex flex-col md:container m-auto relative">
         {children}
       </main>

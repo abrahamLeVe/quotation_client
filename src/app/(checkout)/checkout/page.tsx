@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import path from "path";
 import { cache } from "react";
 
-const getUbigeo = cache(async () => {
+const getPeru = cache(async () => {
   const data = await fs.readFile(
     path.join(process.cwd(), "src/app/(checkout)/checkout/data/peru.json")
   );
@@ -16,7 +16,7 @@ const getUbigeo = cache(async () => {
 
 export default async function CheckoutPage() {
   const session = await getServerSession(options);
-  const peru = await getUbigeo();
+  const peru = await getPeru();
   return (
     <>
       <CheckoutForm session={session} peru={peru} />

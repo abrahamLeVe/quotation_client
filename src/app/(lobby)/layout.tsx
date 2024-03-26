@@ -1,5 +1,6 @@
 import NavBar from "@/components/navbar/NavBar";
 import dynamic from "next/dynamic";
+import background from "../../../public/logoAyC.png";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -27,7 +28,7 @@ export default function LobbyLayout({
 }) {
   return (
     <>
-      <NavBar />
+      <NavBar background={background} />
       <main className="flex flex-col md:container mx-auto items-center gap-8">
         {children}
         <ProductCarousel />
