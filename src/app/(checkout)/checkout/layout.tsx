@@ -3,9 +3,9 @@ import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { cartStore } from "@/store/cart.store";
 import background from "../../../../public/logoAyC.png";
 
+import { Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Card } from "@/components/ui/card";
 const CartSummary = dynamic(
   () => import("@/components/cart/message/CartSummary"),
   {
