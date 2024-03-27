@@ -11,10 +11,7 @@ export const populate = {
   brand: {
     populate: ["data"],
   },
-  product_colors: {
-    populate: ["data"],
-  },
-  documents: { 
+  documents: {
     populate: ["file", "file.data"],
   },
   prices: {

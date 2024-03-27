@@ -1,3 +1,6 @@
+import Image from "next/image";
+import image from "../../../../../public/skeletonProduct.webp";
+
 export default function loading() {
   return (
     <div className="flex flex-col w-full lg:flex-row gap-5 p-6">
@@ -8,7 +11,7 @@ export default function loading() {
           <div className="w-[75px] h-[68.81px] md:w-[92px] md:h-[84.42px] m-[4px] bg-gray-200"></div>
         </div>
         <div className="ml-[2px]">
-          <img src="/skeletonProduct.png" alt="skeleton" className="w-full" />
+          <Image src={image} alt="skeleton" priority={false} />
         </div>
       </div>
 
@@ -55,5 +58,3 @@ export default function loading() {
     </div>
   );
 }
-
-

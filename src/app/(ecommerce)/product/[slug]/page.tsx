@@ -3,15 +3,18 @@ import {
   getDataProductSlug,
 } from "@/app/services/product.service";
 import { ProductDescription } from "@/components/product/ProductDescription";
-import ProductDetail from "@/components/product/ProductDetail";
 import ImageGalleryModal from "@/components/ui/ImageGallery";
 
 import dynamic from "next/dynamic";
+const ProductDetail = dynamic(
+  () => import("@/components/product/ProductDetail")
+);
 const CategoryProducts = dynamic(
   () => import("@/components/category/CategoryProducts")
 );
 const ProductNotFound = dynamic(
-  () => import("@/components/product/ProductNotFound")
+  () => import("@/components/product/ProductNotFound"),
+  { ssr: false }
 );
 
 export interface ProductPageProps {

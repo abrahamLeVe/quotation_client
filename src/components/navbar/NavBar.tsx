@@ -7,10 +7,8 @@ import FilterButton, { SpeachButton } from "../filter/FilterButton";
 import { Card } from "../ui/card";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
+import FlyoutMenu from "./MenuFlyout";
 const MenuMobile = dynamic(() => import("./MenuMobile"), {
-  ssr: false,
-});
-const FlyoutMenu = dynamic(() => import("./MenuFlyout"), {
   ssr: false,
 });
 
@@ -29,13 +27,8 @@ export default function NavBar({ isCart = false, background }: NavBarProps) {
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center gap-2">
               {/* Logo */}
-              <Card className="relative w-[150px] h-full flex items-center dark:bg-slate-50">
-                <Image
-                  src={background}
-                  alt="DSStore"
-                  placeholder="blur"
-                  className="object-cover"
-                />
+              <Card className="relative w-[150px]  h-16 flex items-center dark:bg-slate-50">
+                <Image src={background} alt="DSStore" />
                 <Link
                   href={"/"}
                   className="absolute inset-0"

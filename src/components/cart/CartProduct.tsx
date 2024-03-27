@@ -66,6 +66,7 @@ export default function CartProduct({ product, isPage }: CartProductProps) {
             prefetch={true}
             href={`/product/` + product.slug}
             className="absolute inset-0"
+            scroll={false}
           ></Link>
         </Button>
         <img

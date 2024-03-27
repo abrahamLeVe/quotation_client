@@ -26,8 +26,8 @@ export default function CheckoutLayout({
   return (
     <>
       <main className="flex flex-col md:container m-auto relative p-3">
-        <Card className="relative w-[180px] h-20  dark:bg-slate-50 ml-auto">
-          <Image src={background} alt="DSStore" placeholder="blur" />
+        <Card className="relative w-[180px] h-20  flex items-center dark:bg-slate-50 ml-auto">
+          <Image src={background} alt="DSStore" />
         </Card>
         <Breadcrumbs
           segments={[
