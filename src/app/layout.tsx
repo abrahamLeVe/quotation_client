@@ -4,11 +4,15 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "DSStore",
-  description: "Tienda en línea de productos novedosos",
+  title: "Cotiza en línea con Consorcio A&C Eléctrica S.A.C.",
+  openGraph: {
+    title: "Consorcio A&C Eléctrica S.A.C.",
+    description:
+      "Cotiza en línea con Consorcio A&C Eléctrica S.A.C. para obtener los mejores precios en materiales eléctricos para transformadores. ¡Solicita tu cotización ahora y descubre nuestras ofertas!",
+  },
 };
 
 export default function RootLayout({
@@ -17,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang={"es"} suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang={"es"} className={`${inter.variable}`} suppressHydrationWarning>
+      <body>
         <Providers>
           <ThemeProvider
             attribute="class"

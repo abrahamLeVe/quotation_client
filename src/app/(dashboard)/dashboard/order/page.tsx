@@ -10,7 +10,6 @@ import { z } from "zod";
 
 export const metadata: Metadata = {
   title: "Cotizaciones",
-  description: "Mis de cotizaciones.",
 };
 
 export default async function OrderPage() {

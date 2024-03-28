@@ -1,6 +1,7 @@
 import NavBar from "@/components/navbar/NavBar";
 import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
+import { getDataCategory } from "../services/category.service";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -21,14 +22,15 @@ const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
 });
 
-export default function LobbyLayout({
+export default async function LobbyLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const categories = await getDataCategory();
   return (
     <>
-      <NavBar background={background} />
+      <NavBar background={background} categories={categories} />
       <main className="flex flex-col md:container mx-auto items-center gap-8">
         {children}
         <ProductCarousel />

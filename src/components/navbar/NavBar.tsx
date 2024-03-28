@@ -8,6 +8,7 @@ import { Card } from "../ui/card";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
+import { CategoriesInterface } from "@/models/category.model";
 const MenuMobile = dynamic(() => import("./MenuMobile"), {
   ssr: false,
 });
@@ -15,8 +16,13 @@ const MenuMobile = dynamic(() => import("./MenuMobile"), {
 interface NavBarProps {
   isCart?: boolean;
   background: StaticImageData;
+  categories?: CategoriesInterface;
 }
-export default function NavBar({ isCart = false, background }: NavBarProps) {
+export default function NavBar({
+  isCart = false,
+  background,
+  categories,
+}: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
       <div className="relative">
@@ -28,7 +34,7 @@ export default function NavBar({ isCart = false, background }: NavBarProps) {
             <div className="flex h-16 items-center gap-2">
               {/* Logo */}
               <Card className="relative w-[150px]  h-16 flex items-center dark:bg-slate-50">
-                <Image src={background} alt="DSStore" />
+                <Image src={background} alt="DSStore" priority={true} />
                 <Link
                   href={"/"}
                   className="absolute inset-0"
@@ -38,7 +44,7 @@ export default function NavBar({ isCart = false, background }: NavBarProps) {
 
               {/* Flyout menus */}
               <div className="hidden lg:flex">
-                <FlyoutMenu />
+                <FlyoutMenu categories={categories} />
               </div>
 
               <div className="ml-auto flex items-center">

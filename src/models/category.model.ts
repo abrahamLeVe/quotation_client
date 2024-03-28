@@ -7,8 +7,6 @@ export interface CategoryInterface {
   attributes: Attributes3;
 }
 
-
-
 interface Meta {
   pagination: Pagination;
 }
@@ -31,6 +29,7 @@ interface Attributes3 {
   sizes: Sizes;
   price: Price;
   sub_categories: Sizes;
+  description: string;
 }
 
 interface Price {

@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Registro",
-  description: "Regístrese para gestionar sus cotizaciones.",
 };
 
 export default async function Page({

@@ -13,6 +13,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { CategoriesInterface } from "@/models/category.model";
+import { ScrollArea } from "../ui/scroll-area";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -51,7 +53,11 @@ const components: { title: string; href: string; description: string }[] = [
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
 ];
-export default function FlyoutMenu() {
+
+interface FlyoutMenuProps {
+  categories?: CategoriesInterface;
+}
+export default function FlyoutMenu({ categories }: FlyoutMenuProps) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -60,34 +66,47 @@ export default function FlyoutMenu() {
             Productos
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    {/* <Icons.logo className="h-6 w-6" /> */}
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components that you can copy and
-                      paste into your apps. Accessible. Customizable. Open
-                      Source.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
+            <ul className="grid md:w-[500px] lg:grid-cols-1">
+              <ScrollArea className="h-full max-h-96">
+                {categories?.data.map(
+                  (category) => (
+                    // category.attributes.products.data.length === 0 ? null : (
+                    <li className="row-span-3" key={category.id}>
+                      <NavigationMenuLink
+                        asChild
+                        className="h-20 border-b border-dashed relative block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <Link
+                          href={`/filter/category?query=${category.attributes.name}`}
+                          passHref
+                        >
+                          <div className="flex gap-2">
+                            <div className="aspect-1 min-w-14 min-h-14 overflow-hidden ">
+                              <img
+                                src={
+                                  category.attributes.image.data.attributes
+                                    .formats.thumbnail.url
+                                }
+                                alt={category.attributes.name}
+                                className="aspect-1 w-14 h-14 rounded-md"
+                              />
+                            </div>
+                            <div className="flex flex-col">
+                              <div className="text-sm font-medium">
+                                {category.attributes.name}
+                              </div>
+                              <p className="text-xs leading-tight text-muted-foreground">
+                                {category.attributes.description}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  )
+                  // )
+                )}
+              </ScrollArea>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

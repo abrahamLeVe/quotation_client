@@ -6,7 +6,9 @@ import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
 export async function getDataCategory(): Promise<CategoriesInterface> {
-  const res = fetchDataFromApi(`/api/categories?populate=*`);
+  const res = await fetchDataFromApi(
+    `/api/categories?populate=*&sort=name:asc`
+  );
   return res;
 }
 
