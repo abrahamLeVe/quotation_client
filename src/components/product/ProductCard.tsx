@@ -10,17 +10,15 @@ export default function ProductCard({
   product: ProductInterface;
 }) {
   return (
-    <>
-      <Card className="h-full overflow-hidden">
-        <CardContent className="flex flex-col h-full p-0">
-          <div className="aspect-1 bg-gray-200 ">
-            <ImageGalleryIndex product={product} />
-          </div>
-          <div className="flex flex-col h-full justify-between p-2 gap-2">
-            <ProductDetail product={product} />
-          </div>
-        </CardContent>
-      </Card>
-    </>
+    <Card className="h-full overflow-hidden">
+      <CardContent className="flex flex-col h-full p-0">
+        <div className="aspect-1 bg-gray-200">
+          <ImageGalleryIndex product={product} />
+        </div>
+        <div className="flex flex-col h-full justify-between p-2 gap-2">
+          <ProductDetail product={product} />
+        </div>
+      </CardContent>
+    </Card>
   );
 }

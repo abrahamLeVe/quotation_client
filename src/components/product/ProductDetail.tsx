@@ -13,6 +13,7 @@ import SizeSelect from "../size/SizeSelect";
 import ProductModal from "./ProductModal";
 import ProductRating from "./ProductRating";
 import { FaFilePdf } from "react-icons/fa6";
+import ScrollToTop from "@/hooks/useScrollTop";
 
 interface ProductDetailProps {
   product: ProductInterface;
@@ -77,7 +78,10 @@ export default function ProductDetail({
       <div className="flex flex-col gap-4">
         <h3 className="relative text-xl" title={product.attributes.name}>
           {!isPage ? (
-            <>{truncate(product.attributes.name, 50)}</>
+            <>
+              <ScrollToTop />
+              {truncate(product.attributes.name, 50)}
+            </>
           ) : (
             <>{product.attributes.name}</>
           )}

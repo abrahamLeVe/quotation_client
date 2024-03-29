@@ -10,7 +10,7 @@ const ProductCarousel = dynamic(
 const Collection = dynamic(() => import("@/components/lobby/Collection"), {
   ssr: false,
 });
-const LogoSection = dynamic(() => import("@/components/lobby/BrandSection"), {
+const BrandSlider = dynamic(() => import("@/components/brand/BrandSlider"), {
   ssr: false,
 });
 const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
@@ -38,7 +38,7 @@ export default async function LobbyLayout({
         {children}
         <ProductCarousel />
         <Collection />
-        <LogoSection />
+        <BrandSlider brands={brands} />
         <PromoSection />
         <Testimonials />
       </main>

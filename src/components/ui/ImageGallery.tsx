@@ -19,7 +19,7 @@ export function ImageGalleryIndex({ product }: { product: ProductInterface }) {
     originalHeight: item.attributes.height,
     originalWidth: item.attributes.width,
     lazyLoad: true,
-  })) || [{ original: "/skeletonProduct.png" }];
+  })) || [{ original: "/skeletonProduct.webp" }];
 
   return (
     <>
@@ -49,7 +49,7 @@ export default function ImageGalleryModal(product: ProductInterface) {
     originalWidth: item.attributes.width,
     lazyLoad: true,
   })) || [
-    { original: "/skeletonProduct.png", thumbnail: "/skeletonProduct.png" },
+    { original: "/skeletonProduct.webp", thumbnail: "/skeletonProduct.webp" },
   ];
 
   return (

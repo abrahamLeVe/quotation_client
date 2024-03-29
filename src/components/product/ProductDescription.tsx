@@ -1,3 +1,4 @@
+"use client";
 import {
   Accordion,
   AccordionContent,
@@ -10,7 +11,9 @@ interface ProductDescriptionProps {
   description: string;
 }
 
-export function ProductDescription({ description }: ProductDescriptionProps) {
+export default function ProductDescription({
+  description,
+}: ProductDescriptionProps) {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">

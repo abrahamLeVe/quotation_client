@@ -1,4 +1,9 @@
-export default function LogoSection() {
+import { BrandsInterface } from "@/models/brand";
+
+interface BrandSectionProps {
+  brands?: BrandsInterface;
+}
+export default function BrandSection({ brands }: BrandSectionProps) {
   return (
     <div className="w-full py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

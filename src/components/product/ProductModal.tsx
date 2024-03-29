@@ -60,7 +60,7 @@ export default function ProductModal({
                         prefetch={true}
                         href={`/product/${product.attributes.slug}`}
                         className="absolute inset-0"
-                        scroll={true}
+                        scroll={false}
                       ></Link>
                     </span>
                   </DialogClose>
