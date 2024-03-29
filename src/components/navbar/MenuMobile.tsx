@@ -20,8 +20,16 @@ import { SpeachButton } from "../filter/FilterButton";
 import { ModeToggle } from "../ui/mode-toggle";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
+import { CategoriesInterface } from "@/models/category.model";
+import { BrandsInterface } from "@/models/brand";
+import Link from "next/link";
 
-export default function MenuMobile() {
+interface MenuMobileProps {
+  categories?: CategoriesInterface;
+  brands?: BrandsInterface;
+}
+
+export default function MenuMobile({ categories, brands }: MenuMobileProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -42,16 +50,37 @@ export default function MenuMobile() {
           </SheetHeader>
           <Separator className="my-4" />
           <Accordion type="single" collapsible className="w-full">
-            {navigation.categories.map((category) => (
-              <AccordionItem value={category.id} key={category.id}>
-                <AccordionTrigger>{category.name}</AccordionTrigger>
-                {category.sections.map((section) => (
-                  <AccordionContent key={section.id}>
-                    {section.name}
+            <AccordionItem value="productos">
+              <AccordionTrigger>Productos</AccordionTrigger>
+              {categories?.data.map((category) => (
+                <Link
+                  href={`/filter/category?query=${category.attributes.name}`}
+                  passHref
+                  key={category.id}
+                >
+                  <AccordionContent className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                    {category.attributes.name}
                   </AccordionContent>
-                ))}
-              </AccordionItem>
-            ))}
+                </Link>
+              ))}
+            </AccordionItem>
+            <AccordionItem value="marcas">
+              <AccordionTrigger>Marcas</AccordionTrigger>
+              {brands?.data.map((brand) => (
+                <Link
+                  href={`/filter/brand?query=${brand.attributes.name}`}
+                  passHref
+                  key={brand.id}
+                >
+                  <AccordionContent
+                    key={brand.id}
+                    className="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                  >
+                    {brand.attributes.name}
+                  </AccordionContent>
+                </Link>
+              ))}
+            </AccordionItem>
           </Accordion>
 
           <SheetFooter>
@@ -64,97 +93,3 @@ export default function MenuMobile() {
     </Sheet>
   );
 }
-
-export const navigation = {
-  categories: [
-    {
-      id: "women",
-      name: "Women",
-      sections: [
-        {
-          id: "clothing",
-          name: "Clothing",
-          items: [
-            { name: "Tops", href: "#" },
-            { name: "Dresses", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Denim", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
-          ],
-        },
-        {
-          id: "accessories",
-          name: "Accessories",
-          items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Significant Other", href: "#" },
-          ],
-        },
-      ],
-    },
-    {
-      id: "men",
-      name: "Men",
-      sections: [
-        {
-          id: "clothing",
-          name: "Clothing",
-          items: [
-            { name: "Tops", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
-          ],
-        },
-        {
-          id: "accessories",
-          name: "Accessories",
-          items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-          ],
-        },
-      ],
-    },
-  ],
-  pages: [
-    { name: "Company", href: "#" },
-    { name: "Stores", href: "#" },
-  ],
-};

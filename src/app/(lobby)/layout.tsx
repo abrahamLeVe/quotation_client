@@ -2,6 +2,7 @@ import NavBar from "@/components/navbar/NavBar";
 import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataCategory } from "../services/category.service";
+import { getDataBrand } from "../services/brand.service";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -28,9 +29,11 @@ export default async function LobbyLayout({
   children: React.ReactNode;
 }) {
   const categories = await getDataCategory();
+  const brands = await getDataBrand();
+
   return (
     <>
-      <NavBar background={background} categories={categories} />
+      <NavBar background={background} categories={categories} brands={brands} />
       <main className="flex flex-col md:container mx-auto items-center gap-8">
         {children}
         <ProductCarousel />

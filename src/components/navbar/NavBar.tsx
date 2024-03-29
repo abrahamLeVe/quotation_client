@@ -9,6 +9,7 @@ import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import { CategoriesInterface } from "@/models/category.model";
+import { BrandsInterface } from "@/models/brand";
 const MenuMobile = dynamic(() => import("./MenuMobile"), {
   ssr: false,
 });
@@ -17,11 +18,13 @@ interface NavBarProps {
   isCart?: boolean;
   background: StaticImageData;
   categories?: CategoriesInterface;
+  brands?: BrandsInterface;
 }
 export default function NavBar({
   isCart = false,
   background,
   categories,
+  brands,
 }: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
@@ -44,7 +47,7 @@ export default function NavBar({
 
               {/* Flyout menus */}
               <div className="hidden lg:flex">
-                <FlyoutMenu categories={categories} />
+                <FlyoutMenu categories={categories} brands={brands} />
               </div>
 
               <div className="ml-auto flex items-center">
@@ -67,7 +70,7 @@ export default function NavBar({
               </div>
 
               <div className="flex lg:hidden">
-                <MenuMobile />
+                <MenuMobile categories={categories} brands={brands} />
               </div>
             </div>
           </div>
