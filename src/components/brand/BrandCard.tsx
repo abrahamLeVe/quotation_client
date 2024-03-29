@@ -17,7 +17,7 @@ export default function BrandCard({ brand }: { brand?: BrandInterface }) {
         />
         <Button
           className={
-            "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
+            "absolute top-0 right-0 bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
           }
           title="Ver productos"
         >

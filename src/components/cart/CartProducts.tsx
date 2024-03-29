@@ -19,13 +19,16 @@ export default function CartProducts({ isPage }: CartProductsProps) {
       <div className="flow-root">
         <div className="-my-6 divide-y divide-gray-200 w-full">
           {cart?.length > 0 ? (
-            cart.map((product) => {
-              return (
-                <div key={product.id}>
-                  <CartProduct product={product} isPage={isPage} />
-                </div>
-              );
-            })
+            <>
+              <div className="text-lg font-medium ">Productos a cotizar</div>
+              {cart.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <CartProduct product={product} isPage={isPage} />
+                  </div>
+                );
+              })}
+            </>
           ) : (
             <EmptyCartMessage score={3} isPage={true} />
           )}

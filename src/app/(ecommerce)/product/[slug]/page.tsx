@@ -1,3 +1,4 @@
+import { getDataCategory } from "@/app/services/category.service";
 import {
   getDataProductBySlug,
   getDataProductSlug,

@@ -91,7 +91,7 @@ export default function CartProduct({ product, isPage }: CartProductProps) {
           <div className="flex flex-col gap-1">
             {size ? (
               <div className="flex gap-1">
-                <h3 className="font-medium">Medida:{""}</h3>
+                <h3 className="font-medium">Medida: </h3>
                 <div className="flex">{`${size}`}</div>
               </div>
             ) : null}

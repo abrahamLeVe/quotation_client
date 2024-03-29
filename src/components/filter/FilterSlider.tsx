@@ -13,12 +13,7 @@ import { Icons } from "../Icons";
 const IconSpider = (
   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
 );
-const CategoryList = dynamic(() => import("../category/CategoryList"), {
-  loading: () => IconSpider,
-});
-const BrandList = dynamic(() => import("../brand/BrandList"), {
-  loading: () => IconSpider,
-});
+
 const ColorList = dynamic(() => import("../color/ColorList"), {
   loading: () => IconSpider,
 });
@@ -50,15 +45,11 @@ export default function FilterSlider() {
             <AccordionTrigger onClick={getCategories}>
               Categorías
             </AccordionTrigger>
-            <AccordionContent>
-              <CategoryList />
-            </AccordionContent>
+            <AccordionContent>{/* <CategoryList /> */}</AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
             <AccordionTrigger onClick={getBrands}>Marcas</AccordionTrigger>
-            <AccordionContent>
-              <BrandList />
-            </AccordionContent>
+            <AccordionContent>{/* <BrandList /> */}</AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger onClick={getColors}>Colores</AccordionTrigger>

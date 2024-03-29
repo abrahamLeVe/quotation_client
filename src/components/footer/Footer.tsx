@@ -4,7 +4,7 @@ import { emailSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
@@ -24,30 +24,10 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { useCartContext } from "@/context/cart.context";
-import { getDataProducts } from "@/app/services/product.service";
 
 export default function Footer() {
   const [errorFetch, setErrorFetch] = useState();
   const [isPending, setIsPending] = useState(false);
-  const { setProducts, setIsLoading } = useCartContext();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-        const data = await getDataProducts();
-        if (data?.data) {
-          setProducts(data);
-        } else {
-          setProducts(undefined);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      setIsLoading(false);
-    })();
-  }, [setProducts, setIsLoading]);
 
   type Inputs = z.infer<typeof emailSchema>;
 
