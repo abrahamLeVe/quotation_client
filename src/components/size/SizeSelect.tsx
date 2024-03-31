@@ -75,14 +75,7 @@ export default function SizeSelect({
                     <SelectItem key={price.id} value={price.id.toFixed()}>
                       <div className="flex gap-3">
                         <div className="flex">
-                          {`${price.attributes.size.data.attributes.name}${
-                            price.attributes.categories.data &&
-                            price.attributes.categories.data.length > 0
-                              ? " - " +
-                                price.attributes.categories.data[0].attributes
-                                  .name
-                              : ""
-                          }`}
+                          {price.attributes.size.data.attributes.name}
                         </div>
 
                         {isInCurrentCart ? (

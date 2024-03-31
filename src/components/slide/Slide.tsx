@@ -60,13 +60,13 @@ export default function Slide({ data }: CarouselPluginProps) {
                       loading="eager"
                     />
                     <Button
-                      className="absolute left-1/2 bottom-16 max-w-48 w-full -ml-24"
+                      className="absolute left-1/2 bottom-8 max-w-48 w-full -ml-24"
                       variant={"default"}
                     >
                       Ver productos
                       <Link
                         href={`/filter/category?query=${slide.attributes.category.data.attributes.name}`}
-                        className="absolute inset-0 "
+                        className="absolute inset-0"
                       />
                     </Button>
                   </CardContent>

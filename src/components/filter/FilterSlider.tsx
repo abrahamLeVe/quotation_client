@@ -5,10 +5,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useCategoryContext } from "@/context/category.context";
 import { useFilterContext } from "@/context/filter.context";
+import { ColorsInterface } from "@/models/colors.model";
+import { ProductsInterface } from "@/models/products.model";
 import dynamic from "next/dynamic";
 import { Icons } from "../Icons";
+import { useState } from "react";
 
 const IconSpider = (
   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
@@ -18,10 +20,16 @@ const ColorList = dynamic(() => import("../color/ColorList"), {
   loading: () => IconSpider,
 });
 
-export default function FilterSlider() {
-  const { openFilter, setOpenFilter } = useFilterContext();
-  const { getCategories, getBrands, getColors } = useCategoryContext();
+interface FilterSliderProps {
+  colors?: ColorsInterface;
+  products?: ProductsInterface;
+}
 
+export default function FilterSlider({ colors, products }: FilterSliderProps) {
+  const { openFilter, setOpenFilter } = useFilterContext();
+  // const [productsForFil, setProsuctsForFill] = useState(products);
+
+  // console.log("products ", products);
   return (
     <>
       <div
@@ -39,22 +47,20 @@ export default function FilterSlider() {
         <Accordion
           type="single"
           collapsible
-          className="w-[260px] bg-white min-h-screen h-full p-2 dark:bg-slate-950"
+          className="w-[260px] bg-white min-h-screen h-full p-4 dark:bg-slate-950"
         >
           <AccordionItem value="item-1">
-            <AccordionTrigger onClick={getCategories}>
-              Categorías
-            </AccordionTrigger>
+            <AccordionTrigger>Categorías</AccordionTrigger>
             <AccordionContent>{/* <CategoryList /> */}</AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger onClick={getBrands}>Marcas</AccordionTrigger>
+            <AccordionTrigger>Marcas</AccordionTrigger>
             <AccordionContent>{/* <BrandList /> */}</AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger onClick={getColors}>Colores</AccordionTrigger>
+            <AccordionTrigger>Colores</AccordionTrigger>
             <AccordionContent>
-              <ColorList />
+              <ColorList colors={colors} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>

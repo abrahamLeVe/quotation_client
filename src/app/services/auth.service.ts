@@ -6,12 +6,12 @@ import {
 } from "@/models/auth.model";
 
 export async function loginUser(data: loginUserPromps) {
-  const res = (await login("/api/auth/local?locale=es", data)) as AuthInterface;
+  const res = (await login("/api/auth/local", data)) as AuthInterface;
   return res;
 }
 
 export async function registerUser(data: registerUserPromps) {
-  const res = await postDataFromApi("/api/auth/local/register?locale=es", data);
+  const res = await postDataFromApi("/api/auth/local/register", data);
   return res;
 }
 

@@ -15,7 +15,7 @@ export default function CartProducts({ isPage }: CartProductsProps) {
   const cart = cartStore((state) => state.cartItemState);
 
   return (
-    <div className={`mt-8 w-full ${isPage ? "pb-20" : "pb-0"}`}>
+    <div className={`mt-8 w-full pb-0 ${isPage && " lg:pb-20"}`}>
       <div className="flow-root">
         <div className="-my-6 divide-y divide-gray-200 w-full">
           {cart?.length > 0 ? (

@@ -34,11 +34,9 @@ export default function QuotationCheck() {
   };
 
   return (
-    <div>
-      <Button onClick={checkUser} variant={"outline"}>
-        Generar cotización
-        <span className="sr-only">Generar cotización</span>
-      </Button>
-    </div>
+    <Button onClick={checkUser} variant={"outline"}>
+      Generar cotización
+      <span className="sr-only">Generar cotización</span>
+    </Button>
   );
 }

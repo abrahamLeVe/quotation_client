@@ -41,21 +41,24 @@ export default function ProductSlider({
     <>
       <Carousel setApi={setApi} className="w-full aspect-[16/6]">
         <CarouselContent className="-ml-1 ">
-          {data.map((product) => (
-            <CarouselItem
-              key={product.id}
-              className={`relative ${
-                isPage
-                  ? "pl-1 xs:basis-1/2 md:basis-1/3 lg:basis-1/4"
-                  : "pl-1 basis-1/2"
-              }`}
-            >
-              <div className="p-1 h-full">
-                <ProductCard product={product} />
-              </div>
-            </CarouselItem>
-          ))}
+          {data.map((product) =>
+            product.attributes.prices.data.length === 0 ? null : (
+              <CarouselItem
+                key={product.id}
+                className={`relative ${
+                  isPage
+                    ? "pl-1 xs:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                    : "pl-1 basis-1/2"
+                }`}
+              >
+                <div className="p-1 h-full relative">
+                  <ProductCard product={product} />
+                </div>
+              </CarouselItem>
+            )
+          )}
         </CarouselContent>
+
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>

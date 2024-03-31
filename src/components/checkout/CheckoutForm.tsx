@@ -103,9 +103,9 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
         description: "Cotización enviada con éxito",
       });
       setLoading(false);
-      router.push("/dashboard/order");
-      router.refresh();
-      cart();
+      // router.push("/dashboard/order");
+      // router.refresh();
+      // cart();
     }
   }
 
@@ -254,11 +254,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                 <FormItem>
                   <FormLabel>Número de documento *</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Número de documento DNI o RUC"
-                      {...field}
-                      type="number"
-                    />
+                    <Input placeholder="DNI o RUC" {...field} type="number" />
                   </FormControl>
                   <FormDescription>
                     Nombre de persona natural favor de indicarnos su número de
@@ -427,22 +423,23 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
             </FormItem>
           )}
         />
-
-        <Button
-          disabled={loading}
-          variant={"outline"}
-          type="submit"
-          className="m-auto"
-        >
-          {loading && (
-            <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
-              aria-hidden="true"
-            />
-          )}
-          Enviar cotización
-          <span className="sr-only">Enviar cotización</span>
-        </Button>
+        <div className="w-full flex">
+          <Button
+            className="ml-auto"
+            disabled={loading}
+            variant={"outline"}
+            type="submit"
+          >
+            {loading && (
+              <Icons.spinner
+                className="mr-2 h-4 w-4 animate-spin"
+                aria-hidden="true"
+              />
+            )}
+            Enviar cotización
+            <span className="sr-only">Enviar cotización</span>
+          </Button>
+        </div>
       </form>
     </Form>
   );

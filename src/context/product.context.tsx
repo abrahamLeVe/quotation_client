@@ -1,5 +1,6 @@
 "use client";
 import { useMounted } from "@/hooks/useMounted";
+import { ProductsInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { createContext, useContext, useState } from "react";
 
@@ -15,6 +16,10 @@ interface ProductContext {
     colorId: number
   ) => number | undefined;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  productsContext: ProductsInterface | undefined;
+  setProductsContext: React.Dispatch<
+    React.SetStateAction<ProductsInterface | undefined>
+  >;
 }
 
 const ProductContext = createContext({} as ProductContext);
@@ -25,6 +30,7 @@ export function useProductContext() {
 
 export function ProductProvider({ children }: ProductProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [productsContext, setProductsContext] = useState<ProductsInterface>();
 
   const cart = cartStore((state) => state);
 
@@ -51,6 +57,8 @@ export function ProductProvider({ children }: ProductProviderProps) {
         setIsOpen,
         getItemQuantity,
         getItemColorQuantity,
+        productsContext,
+        setProductsContext,
       }}
     >
       {children}

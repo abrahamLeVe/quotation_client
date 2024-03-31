@@ -1,4 +1,5 @@
 "use client";
+import ScrollToTop from "@/hooks/useScrollTop";
 import {
   ColorProduct,
   ProductInterface,
@@ -7,13 +8,12 @@ import {
 import { truncate } from "@/utilities/utils";
 import Link from "next/link";
 import { useState } from "react";
+import { FaFilePdf } from "react-icons/fa6";
 import CartButtonActions from "../cart/CartButtonActions";
 import ColorSelect from "../select/SelectColorProduct";
 import SizeSelect from "../size/SizeSelect";
 import ProductModal from "./ProductModal";
 import ProductRating from "./ProductRating";
-import { FaFilePdf } from "react-icons/fa6";
-import ScrollToTop from "@/hooks/useScrollTop";
 
 interface ProductDetailProps {
   product: ProductInterface;
@@ -24,9 +24,14 @@ export default function ProductDetail({
   product,
   isPage = false,
 }: ProductDetailProps) {
-  const image = product.attributes.thumbnail.data.attributes.url;
   const [selectedPrice, setPrice] = useState<ProductPriceInterface>(
     product.attributes.prices.data[0]
+  );
+
+  const [sizeName, SetSizeName] = useState<string | undefined>(
+    selectedPrice.attributes.size.data
+      ? selectedPrice.attributes.size.data?.attributes.name
+      : undefined
   );
 
   const [colors, setColors] = useState<ColorProduct[]>(
@@ -37,15 +42,9 @@ export default function ProductDetail({
       ? selectedPrice.attributes.product_colors.data[0]
       : undefined
   );
-
   const [idColor, setIdColor] = useState<number | undefined>(
     colors.length === 1
       ? selectedPrice.attributes.product_colors.data[0]?.id
-      : undefined
-  );
-  const [sizeName, SetSizeName] = useState<string | undefined>(
-    selectedPrice.attributes.size.data
-      ? selectedPrice.attributes.size.data?.attributes.name
       : undefined
   );
 
@@ -60,7 +59,9 @@ export default function ProductDetail({
     if (priceSelected!.attributes.product_colors.data.length > 1) {
       setIdColor(undefined);
     } else {
-      setIdColor(priceSelected!.attributes.product_colors.data[0].id);
+      setIdColor(
+        priceSelected!.attributes.product_colors.data[0]?.id || undefined
+      );
     }
 
     setPrice(priceSelected!);
@@ -72,6 +73,9 @@ export default function ProductDetail({
     setIdColor(selectedColor?.id!);
     setColor(selectedColor);
   };
+
+  if (product.attributes.prices.data.length === 0) return;
+  const image = product.attributes.thumbnail.data.attributes.url;
 
   return (
     <>

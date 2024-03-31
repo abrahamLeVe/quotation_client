@@ -128,7 +128,9 @@ export default function CartSummary({ isCart = true }: CartSummaryProps) {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-            <div className=" ml-auto">{isCart ? <QuotationCheck /> : null}</div>
+            <div className="ml-auto mb-5">
+              {isCart ? <QuotationCheck /> : null}
+            </div>
           </div>
         </div>
       ) : null}
