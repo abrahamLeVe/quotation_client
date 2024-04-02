@@ -11,12 +11,14 @@ export default async function CartPage() {
         <CartProducts isPage={true} />
         <CartSummary />
       </div>
-      <EmptyCartMessage
-        score={0}
-        title="También podria interesarte"
-        isPage
-        products={products}
-      />
+      <div className="">
+        <EmptyCartMessage
+          score={0}
+          title="También podria interesarte"
+          isPage
+          products={products}
+        />
+      </div>
     </div>
   );
 }

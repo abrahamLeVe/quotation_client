@@ -23,16 +23,14 @@ export default function EmptyCartMessage({
   );
 
   return (
-    <div className={`grid gap-4 ${isPage ? "pb-20" : "py-0"}`}>
+    <div className={`flex flex-col gap-4 ${isPage ? "pb-20" : "py-0"}`}>
       <Separator />
       <h2 className="text-lg font-semibold text-yellow-900 dark:text-white">
         {title || "Tu carrito está vacío."}
       </h2>
       <h3> {description || "¡Explora nuestros productos!"}</h3>
       {products ? (
-        <div>
-          <ProductSlider data={offers || []} isPage={isPage} />
-        </div>
+        <ProductSlider data={offers || []} isPage={isPage} />
       ) : (
         <div className="text-center py-8">
           <a

@@ -12,10 +12,12 @@ export interface CartStateProps {
     id: number,
     colorId: number,
     color?: Color,
-    size?: string,
+    size?: string | null,
     picture_url?: string,
     title?: string,
-    slug?: string
+    slug?: string,
+    value?: number,
+    discount?: number
   ) => void;
   decreaseCartQuantity: (id: number, colorId: number) => void;
   removeCartItem: (id: number) => void;
@@ -35,8 +37,10 @@ export interface ProductCart {
   colors?: Color2[];
   quantity: number;
   picture_url?: string;
-  size?: string;
+  size?: string | null;
   slug?: string;
+  value?: number;
+  discount?: number;
 }
 
 export interface Color2 {

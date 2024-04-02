@@ -13,7 +13,7 @@ const productSchema = z.object({
   colors: z.array(colorSchema).nullable(),
   quantity: z.number(),
   picture_url: z.string(),
-  size: z.string().optional(),
+  size: z.string().optional().nullable(),
 });
 const locationSchema = z.object({
   departamento: z.string().nullable(),

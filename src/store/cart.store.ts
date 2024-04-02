@@ -33,10 +33,12 @@ export const cartStore = create<CartStateProps>()(
         id: number,
         colorId: number,
         color?: Color,
-        size?: string,
+        size?: string | null,
         picture_url?: string,
         title?: string,
-        slug?: string
+        slug?: string,
+        value?: number,
+        discount?: number
       ) => {
         set((state: CartStateProps) => {
           const existingItem = state.cartItemState.find(
@@ -93,6 +95,8 @@ export const cartStore = create<CartStateProps>()(
               size,
               title,
               slug,
+              value,
+              discount,
             };
 
             return {

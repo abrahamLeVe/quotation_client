@@ -101,7 +101,7 @@ interface Attributes6 {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  discount?: null | number | number;
+  discount: number;
   product_colors: Productcolors2;
   model: Model;
   size: Size;

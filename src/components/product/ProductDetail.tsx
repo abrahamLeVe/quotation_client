@@ -28,10 +28,10 @@ export default function ProductDetail({
     product.attributes.prices.data[0]
   );
 
-  const [sizeName, SetSizeName] = useState<string | undefined>(
+  const [sizeName, SetSizeName] = useState<string | null>(
     selectedPrice.attributes.size.data
       ? selectedPrice.attributes.size.data?.attributes.name
-      : undefined
+      : null
   );
 
   const [colors, setColors] = useState<ColorProduct[]>(
@@ -47,14 +47,22 @@ export default function ProductDetail({
       ? selectedPrice.attributes.product_colors.data[0]?.id
       : undefined
   );
+  const [value, setValue] = useState<number>(
+    selectedPrice.attributes.value | 0
+  );
+  const [discount, setDiscount] = useState<number>(
+    selectedPrice.attributes.discount | 0
+  );
 
   const handleSizeChange = (id: string) => {
     const sizeId = parseInt(id);
     const priceSelected = product.attributes.prices.data.find(
       (price) => price.id === sizeId
     );
-    SetSizeName(priceSelected!.attributes.size.data?.attributes.name);
+    SetSizeName(priceSelected!.attributes.size.data?.attributes.name || null);
     setColors(priceSelected!.attributes.product_colors.data!);
+    setValue(priceSelected?.attributes.value!);
+    setDiscount(priceSelected?.attributes.discount!);
 
     if (priceSelected!.attributes.product_colors.data.length > 1) {
       setIdColor(undefined);
@@ -171,6 +179,8 @@ export default function ProductDetail({
             size={sizeName}
             title={product.attributes.name}
             slug={product.attributes.slug}
+            value={value}
+            discount={discount}
           />
           {isPage ? null : <ProductModal product={product} />}
         </div>
