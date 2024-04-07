@@ -7,6 +7,7 @@ import { AuthRequiredError } from "@/lib/exceptions";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { z } from "zod";
+export const revalidate = 6;
 
 export const metadata: Metadata = {
   title: "Cotizaciones",

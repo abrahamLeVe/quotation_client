@@ -19,8 +19,8 @@ export const labels = [
     label: "Feature",
   },
   {
-    value: "documentation",
-    label: "Documentation",
+    value: "Descargar comprobante",
+    label: "Descargar comprobante",
   },
 ];
 

@@ -279,7 +279,7 @@ export default function Footer() {
         <hr className="my-6 border-gray-200 md:my-8 dark:border-gray-700" />
 
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <span>Built by leandrovegaabraham@gmail.com</span>
+          <span>Consorcio A&C Eléctrica S.A.C</span>
           <div className="flex -mx-2">
             {socialLinks
               ? socialLinks.map((item) => (

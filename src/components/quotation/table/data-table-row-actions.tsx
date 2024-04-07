@@ -20,6 +20,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { labels } from "./data/data";
 import { quotationSchema } from "./data/schema";
+import { Quotation } from "@/models/quotation.model";
+import { generatePdf } from "@/components/voucher/voucher";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -42,7 +44,10 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>
+          Edit
+          <button onClick={() => handleGeneratePdf(task)}>Generar PDF</button>
+        </DropdownMenuItem>
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -67,3 +72,7 @@ export function DataTableRowActions<TData>({
     </DropdownMenu>
   );
 }
+
+const handleGeneratePdf = (cotizacion: Quotation) => {
+  generatePdf(cotizacion); // Llama a la función generatePdf pasando la cotización como argumento
+};
