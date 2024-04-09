@@ -10,6 +10,7 @@ import {
 import { ProductInterface } from "@/models/products.model";
 import React from "react";
 import ProductCard from "./ProductCard";
+import Autoplay from "embla-carousel-autoplay";
 
 interface ProductSliderProps {
   data: ProductInterface[];
@@ -37,9 +38,17 @@ export default function ProductSlider({
     });
   }, [api]);
 
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
+
   return (
     <>
-      <Carousel setApi={setApi} className="w-full aspect-[16/6]">
+      <Carousel
+        setApi={setApi}
+        plugins={[plugin.current]}
+        className="w-full aspect-[16/6]"
+      >
         <CarouselContent className="-ml-1 ">
           {data.map((product) =>
             product.attributes.prices.data.length === 0 ? null : (

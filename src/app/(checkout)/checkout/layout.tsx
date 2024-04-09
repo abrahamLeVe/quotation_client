@@ -6,6 +6,7 @@ import background from "../../../../public/logoAyC.png";
 import { Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useCartContext } from "@/context/cart.context";
 const CartSummary = dynamic(
   () => import("@/components/cart/message/CartSummary"),
   {
@@ -22,10 +23,15 @@ export default function CheckoutLayout({
   children: React.ReactNode;
 }) {
   const cart = cartStore((state) => state);
+  const { isLoading } = useCartContext();
 
   return (
     <>
-      <main className="flex flex-col md:container m-auto relative p-3">
+      <main
+        className={`flex flex-col md:container m-auto relative p-3 ${
+          isLoading && "pointer-events-none"
+        }`}
+      >
         <Card className="relative w-[180px] h-20  flex items-center dark:bg-slate-50 ml-auto">
           <Image src={background} alt="DSStore" />
         </Card>

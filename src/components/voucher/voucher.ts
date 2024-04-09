@@ -1,7 +1,10 @@
 import { dateSpanish } from "@/lib/utils";
-import { Quotation } from "@/models/quotation.model";
 import { convertirNumeroALetras } from "@/utilities/convert_to_number";
 import { formatCurrency } from "@/utilities/utils";
+import { z } from "zod";
+import { quotationSchema } from "../quotation/table/data/schema";
+
+export type Quotation = z.infer<typeof quotationSchema>;
 
 export function generatePdf(cotizacion: Quotation) {
   import("jspdf").then((jsPDFModule) => {
@@ -14,7 +17,8 @@ export function generatePdf(cotizacion: Quotation) {
       doc.setFontSize(12);
 
       const companyName = "Consorcio A&C Eléctrica S.A.C";
-      const companyAddress = "Calle. Juan Manuel Pereyra Nro. 536 Urb. Panamericana Norte";
+      const companyAddress =
+        "Calle. Juan Manuel Pereyra Nro. 536 Urb. Panamericana Norte";
       const companyCity = "Lima - Lima - Los Olivos";
       const companyRUC = "20603425627";
 
@@ -28,12 +32,12 @@ export function generatePdf(cotizacion: Quotation) {
 
       const dueDate = dateSpanish(new Date(cotizacion.dateLimit));
 
-      
-      const logoUrl = "https://res.cloudinary.com/dmpmxzyrg/image/upload/v1710720912/logo_app_e0c73ca462.png"; 
+      const logoUrl =
+        "https://res.cloudinary.com/dmpmxzyrg/image/upload/v1710720912/logo_app_e0c73ca462.png";
       const img = new Image();
-      img.crossOrigin = "Anonymous"; 
+      img.crossOrigin = "Anonymous";
       img.src = logoUrl;
-      img.onload = function() {
+      img.onload = function () {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
@@ -42,7 +46,7 @@ export function generatePdf(cotizacion: Quotation) {
           ctx.drawImage(img, 0, 0);
           const dataUrl = canvas.toDataURL("image/png");
 
-          doc.addImage(dataUrl, "PNG", 10, 5, 50, 20); 
+          doc.addImage(dataUrl, "PNG", 10, 5, 50, 20);
         } else {
           console.error("Error: Contexto de renderizado nulo.");
         }
@@ -57,7 +61,10 @@ export function generatePdf(cotizacion: Quotation) {
             ],
             [{ content: "RUC: " + companyRUC, styles: { halign: "center" } }],
             [
-              { content: "Nro: " + numCotizacion, styles: { halign: "center" } },
+              {
+                content: "Nro: " + numCotizacion,
+                styles: { halign: "center" },
+              },
               companyRUC,
             ],
           ],
@@ -89,7 +96,7 @@ export function generatePdf(cotizacion: Quotation) {
             ["Nombre", clientName],
             ["Email", clientEmail],
             ["Teléfono", clientPhone],
-            ["Tipo de Documento", clientDocType],
+            ["Tipo de Documento", clientDocType!.toLocaleUpperCase()],
             ["Número de Documento", clientDocNumber],
             ["Dirección", clientAddress],
             ["Fecha de Vencimiento", dueDate],
@@ -153,4 +160,3 @@ export function generatePdf(cotizacion: Quotation) {
     });
   });
 }
-

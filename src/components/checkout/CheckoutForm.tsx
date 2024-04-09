@@ -36,6 +36,7 @@ import { useState } from "react";
 import { Icons } from "../Icons";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { useCartContext } from "@/context/cart.context";
 
 interface CheckoutFormProps {
   session: Session | null;
@@ -47,7 +48,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
   const [selectedProvincia, setSelectedProvincia] = useState<string>("");
   const [provincias, setProvincias] = useState<Provincia[]>([]);
   const [distritos, setDistritos] = useState<Distrito[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { setIsLoading, isLoading } = useCartContext();
   const cart = cartStore((state) => state.clearCart);
   const products = cartStore((state) => state.cartItemState);
   const router = useRouter();
@@ -77,7 +78,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
   });
 
   async function onSubmit(data: ProfileFormValues) {
-    setLoading(true);
+    setIsLoading(true);
 
     const res = await createQuotation({ products, dataQuotation: data });
 
@@ -95,17 +96,18 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
           </div>
         ),
       });
-      setLoading(false);
+      setIsLoading(false);
     } else {
       toast({
         variant: "default",
         title: "Éxito",
-        description: "Cotización enviada con éxito",
+        description:
+          "Cotización enviada con éxito, revise su correo para mas información, gracias por su preferencia.",
       });
-      setLoading(false);
-      // router.push("/dashboard/order");
-      // router.refresh();
+      router.push("/dashboard/order");
+      router.refresh();
       // cart();
+      setIsLoading(false);
     }
   }
 
@@ -424,13 +426,8 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
           )}
         />
         <div className="w-full flex">
-          <Button
-            className="ml-auto"
-            disabled={loading}
-            variant={"outline"}
-            type="submit"
-          >
-            {loading && (
+          <Button className="ml-auto" variant={"outline"} type="submit">
+            {isLoading && (
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"

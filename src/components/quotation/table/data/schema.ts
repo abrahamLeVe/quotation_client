@@ -14,6 +14,7 @@ const productSchema = z.object({
   quantity: z.number(),
   picture_url: z.string(),
   size: z.string().optional().nullable(),
+  value: z.number(),
 });
 const locationSchema = z.object({
   departamento: z.string().nullable(),

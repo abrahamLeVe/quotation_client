@@ -52,7 +52,7 @@ export default function SigninForm({ session, searchParams }: SigninFormProps) {
       email: data.email,
       password: data.password,
       redirect: true,
-      callbackUrl: "/cart",
+      callbackUrl: "/dashboard/order",
     };
 
     try {

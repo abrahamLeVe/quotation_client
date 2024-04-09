@@ -20,8 +20,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { labels } from "./data/data";
 import { quotationSchema } from "./data/schema";
-import { Quotation } from "@/models/quotation.model";
 import { generatePdf } from "@/components/voucher/voucher";
+import { z } from "zod";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -31,6 +31,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = quotationSchema.parse(row.original);
+  console.log("task ", task);
 
   return (
     <DropdownMenu>
@@ -45,8 +46,9 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          Edit
-          <button onClick={() => handleGeneratePdf(task)}>Generar PDF</button>
+          <button onClick={() => handleGeneratePdf(task)}>
+            {""}Comprobante
+          </button>
         </DropdownMenuItem>
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
@@ -72,7 +74,7 @@ export function DataTableRowActions<TData>({
     </DropdownMenu>
   );
 }
-
+export type Quotation = z.infer<typeof quotationSchema>;
 const handleGeneratePdf = (cotizacion: Quotation) => {
   generatePdf(cotizacion); // Llama a la función generatePdf pasando la cotización como argumento
 };

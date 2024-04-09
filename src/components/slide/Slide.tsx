@@ -39,48 +39,57 @@ export default function Slide({ data }: CarouselPluginProps) {
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
   return (
-    <>
-      <Carousel
-        setApi={setApi}
-        plugins={[plugin.current]}
-        className="w-full aspect-[16/6]"
-        onMouseEnter={plugin.current.stop}
-        onMouseLeave={plugin.current.reset}
-      >
-        <CarouselContent>
-          {data?.data.map((slide) => (
-            <CarouselItem key={slide.id}>
-              <div className="p-1">
-                <Card className="transition-all duration-300 ease-in-out hover:bg-black dark:hover:bg-white hover:bg-opacity-10">
-                  <CardContent className="p-0 lg:p-6 relative">
+    <Carousel
+      setApi={setApi}
+      plugins={[plugin.current]}
+      className="w-full aspect-[16/6]"
+      onMouseEnter={plugin.current.stop}
+      onMouseLeave={plugin.current.reset}
+    >
+      <CarouselContent>
+        {data?.data.map((slide) => (
+          <CarouselItem key={slide.id}>
+            <div className="p-1">
+              <Card className="transition-all duration-300 ease-in-out hover:bg-black dark:hover:bg-white hover:bg-opacity-10">
+                <CardContent className="p-0 lg:p-6 relative">
+                  {slide.attributes.image.data?.attributes.mime.startsWith(
+                    "video/"
+                  ) ? (
+                    <video
+                      src={slide.attributes.image.data?.attributes.url}
+                      className="aspect-[16/6] w-full object-cover"
+                      controls
+                      aria-label="slide.attributes.nam"
+                    />
+                  ) : (
                     <img
                       src={slide.attributes.image.data?.attributes.url}
                       className="aspect-[16/6] w-full object-cover"
                       alt={slide.attributes.name}
                       loading="eager"
                     />
-                    <Button
-                      className="absolute left-1/2 bottom-8 max-w-48 w-full -ml-24"
-                      variant={"default"}
-                    >
-                      Ver productos
-                      <Link
-                        href={`/filter/category?query=${slide.attributes.category.data.attributes.name}`}
-                        className="absolute inset-0"
-                      />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="-left-0" />
-        <CarouselNext className="-right-0" />
-        <div className="py-2 text-center text-sm text-muted-foreground">
-          Carrusel {current} de {count}
-        </div>
-      </Carousel>
-    </>
+                  )}
+                  <Button
+                    className="absolute left-1/2 bottom-8 max-w-48 w-full -ml-24"
+                    variant={"default"}
+                  >
+                    Ver productos
+                    <Link
+                      href={`/filter/category?query=${slide.attributes.category.data.attributes.name}`}
+                      className="absolute inset-0"
+                    />
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className="-left-0" />
+      <CarouselNext className="-right-0" />
+      <div className="py-2 text-center text-sm text-muted-foreground">
+        Carrusel {current} de {count}
+      </div>
+    </Carousel>
   );
 }
