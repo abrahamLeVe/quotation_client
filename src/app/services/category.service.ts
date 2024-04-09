@@ -39,7 +39,6 @@ export async function filterProductsByCategory(
         encodeValuesOnly: true,
       }
     );
-    console.log("queryString ", queryString);
     const res = await fetchDataFromApi(`/api/products?${queryString}`);
     return res;
   } catch (error) {

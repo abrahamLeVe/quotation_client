@@ -1,5 +1,5 @@
 import { type SidebarNavItem } from "@/models/navigation.model";
-import { BsCreditCard, BsGear } from "react-icons/bs";
+// import { BsCreditCard, BsGear } from "react-icons/bs";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 export interface DashboardConfig {
@@ -17,19 +17,19 @@ export const dashboardConfig: DashboardConfig = {
       items: [],
       shortcut: "C",
     },
-    {
-      title: "Facturación",
-      href: "/dashboard/stores",
-      icon: <BsCreditCard className="mr-2 h-4 w-4" aria-hidden="true" />,
-      items: [],
-      shortcut: "F",
-    },
-    {
-      title: "Ajustes",
-      href: "/dashboard/purchases",
-      icon: <BsGear className="mr-2 h-4 w-4" aria-hidden="true" />,
-      items: [],
-      shortcut: "A",
-    },
+    // {
+    //   title: "Facturación",
+    //   href: "/dashboard/stores",
+    //   icon: <BsCreditCard className="mr-2 h-4 w-4" aria-hidden="true" />,
+    //   items: [],
+    //   shortcut: "F",
+    // },
+    // {
+    //   title: "Ajustes",
+    //   href: "/dashboard/purchases",
+    //   icon: <BsGear className="mr-2 h-4 w-4" aria-hidden="true" />,
+    //   items: [],
+    //   shortcut: "A",
+    // },
   ],
 };

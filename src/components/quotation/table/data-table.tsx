@@ -32,6 +32,7 @@ import { AlertCircle } from "lucide-react";
 import { handleErrorMessage } from "@/lib/exceptions";
 import { Error } from "@/models/auth.model";
 import Link from "next/link";
+import EmptyCartMessage from "@/components/cart/message/EmptyCartMessage";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -51,7 +52,7 @@ export function DataTable<TData, TValue>({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
-
+  console.log("data ", data);
   const table = useReactTable({
     data,
     columns,
@@ -121,7 +122,18 @@ export function DataTable<TData, TValue>({
                   className="h-24 text-center"
                 >
                   {!error ? (
-                    <>Sin resultados.</>
+                    <>
+                      {data.length === 0 ? (
+                        <>
+                          <EmptyCartMessage
+                            title="Sin cotizaciones"
+                            description=""
+                          />
+                        </>
+                      ) : (
+                        <>Sin resultados.</>
+                      )}
+                    </>
                   ) : (
                     <>
                       <Alert variant="destructive">

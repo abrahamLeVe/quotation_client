@@ -19,16 +19,17 @@ interface NavBarProps {
   background: StaticImageData;
   categories?: CategoriesInterface;
   brands?: BrandsInterface;
+  isDashboard?: boolean;
 }
 export default function NavBar({
   isCart = false,
+  isDashboard,
   background,
   categories,
   brands,
 }: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
-      {/* <div className="relative"> */}
       <nav aria-label="Top" className="mx-auto  container px-4 sm:px-6 lg:px-8">
         <div className="border-b border-gray-200">
           <div className="flex h-16 items-center gap-2">
@@ -43,8 +44,13 @@ export default function NavBar({
             </Card>
 
             {/* Flyout menus */}
+
             <div className="hidden lg:flex">
-              <FlyoutMenu categories={categories} brands={brands} />
+              {!isDashboard ? (
+                <FlyoutMenu categories={categories} brands={brands} />
+              ) : (
+                <></>
+              )}
             </div>
 
             <div className="ml-auto flex items-center">
@@ -55,11 +61,7 @@ export default function NavBar({
               {/* Filter */}
               <FilterButton />
               {/* Cart */}
-              {isCart ? null : (
-                <>
-                  <CartSliderOver />
-                </>
-              )}
+              {isCart ? null : <CartSliderOver />}
 
               <div className="ml-3">
                 <AuthMenu />
@@ -72,7 +74,6 @@ export default function NavBar({
           </div>
         </div>
       </nav>
-      {/* </div> */}
     </header>
   );
 }

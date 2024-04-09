@@ -30,8 +30,8 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = quotationSchema.parse(row.original);
-  console.log("task ", task);
+  const quotation = quotationSchema.parse(row.original);
+  console.log("quotation ", quotation);
 
   return (
     <DropdownMenu>
@@ -46,7 +46,7 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          <button onClick={() => handleGeneratePdf(task)}>
+          <button onClick={() => handleGeneratePdf(quotation)}>
             {""}Comprobante
           </button>
         </DropdownMenuItem>
@@ -56,7 +56,7 @@ export function DataTableRowActions<TData>({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.name!}>
+            <DropdownMenuRadioGroup value={quotation.name!}>
               {labels.map((label) => (
                 <DropdownMenuRadioItem key={label.value} value={label.value}>
                   {label.label}
