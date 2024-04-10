@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <main className="flex flex-col md:container mx-auto gap-5 relative p-3 md:p-5">
       {data[0] ? (
         <>
-          <div className="flex flex-col h-full w-full lg:flex-row gap-5 p-6 relative">
+          <div className="flex flex-col h-full w-full lg:flex-row gap-5 md:p-6 relative">
             <div className="h-full lg:w-[50%] lg:sticky top-20">
               <ImageGalleryModal
                 attributes={data[0].attributes}

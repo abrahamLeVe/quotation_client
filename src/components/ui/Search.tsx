@@ -25,7 +25,7 @@ export default function Search({
   }, 300);
 
   return (
-    <div className="w-full">
+    <div className="w-full md:w-1/3">
       <label
         htmlFor="query"
         className="flex text-lg font-semibold tracking-tight pb-3 gap-2"

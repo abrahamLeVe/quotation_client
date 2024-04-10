@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { labels } from "./data/data";
-import { quotationSchema } from "./data/schema";
 import { generatePdf } from "@/components/voucher/voucher";
 import { z } from "zod";
+import { labels } from "./data/data";
+import { quotationSchema } from "./data/schema";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -31,7 +31,6 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const quotation = quotationSchema.parse(row.original);
-  console.log("quotation ", quotation);
 
   return (
     <DropdownMenu>

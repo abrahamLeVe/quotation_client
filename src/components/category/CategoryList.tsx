@@ -1,34 +1,65 @@
 "use client";
-import { useCategoryContext } from "@/context/category.context";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useFilterContext } from "@/context/filter.context";
-import { capitalizeFirstLetter } from "@/utilities/utils";
+import { CategoriesInterface } from "@/models/category.model";
+import { capitalizeFirstLetter, truncate } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
 
-export default function CategoryList() {
-  const { categories } = useCategoryContext();
+interface CategoryListProps {
+  categories: CategoriesInterface;
+}
 
+export default function CategoryList({ categories }: CategoryListProps) {
   const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
-  const handleClick = (name: string) => {
+  const handleClick = (slug: string) => {
     cleanFilter();
     setOpenFilter(false);
-    router.push(`/filter/category?query=${name}`);
+    router.push(`/product/${slug}`);
   };
 
   return (
     <div className="flex flex-col items-start text-sm">
-      {categories.map((category) => (
-        <button
-          onClick={() => handleClick(category.attributes.name)}
-          key={category.id}
-          className="relative hover:underline"
-        >
-          <p>
-            {capitalizeFirstLetter(category.attributes.name)}
-            {` (${category.attributes.products.data.length})`}
-          </p>
-        </button>
-      ))}
+      <Accordion
+        type="multiple"
+        className="w-full bg-white min-h-screen h-full  dark:bg-slate-950"
+      >
+        {categories.data.map((category) => (
+          <AccordionItem
+            value={`category-${category.id}`}
+            key={`category-${category.id}`}
+          >
+            <AccordionTrigger className="dark:text-orange-300">
+              {category.attributes.name} -
+              {` (${category.attributes.products.data.length})`}
+            </AccordionTrigger>
+            <AccordionContent>
+              {category.attributes.products.data.map((product) => (
+                <div key={product.id}>
+                  <button
+                    onClick={() => handleClick(product.attributes.slug)}
+                    className="relative hover:underline"
+                    title={capitalizeFirstLetter(product.attributes.name)}
+                  >
+                    <span>
+                      -{" "}
+                      {truncate(
+                        capitalizeFirstLetter(product.attributes.name),
+                        40
+                      )}
+                    </span>
+                  </button>
+                </div>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   );
 }

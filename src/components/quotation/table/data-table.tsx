@@ -25,14 +25,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { DataTablePagination } from "./data-table-pagination";
-import { DataTableToolbar } from "./data-table-toolbar";
+import EmptyCartMessage from "@/components/cart/message/EmptyCartMessage";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import { handleErrorMessage } from "@/lib/exceptions";
 import { Error } from "@/models/auth.model";
+import { AlertCircle } from "lucide-react";
 import Link from "next/link";
-import EmptyCartMessage from "@/components/cart/message/EmptyCartMessage";
+import { DataTablePagination } from "./data-table-pagination";
+import { DataTableToolbar } from "./data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  console.log("data ", data);
+
   const table = useReactTable({
     data,
     columns,

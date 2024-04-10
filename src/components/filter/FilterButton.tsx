@@ -12,7 +12,9 @@ export default function FilterButton() {
       <span className="sr-only">Buscar</span>
       <BsSearch className="h-[1.2rem] w-[1.2rem]" />
       <Link
-        href={"/filter/search"}
+        href={
+          "/filter/category?query=Materiales%20eléctricos%20para%20transformadores"
+        }
         className="absolute inset-0"
         aria-label="Filtar productos"
       ></Link>

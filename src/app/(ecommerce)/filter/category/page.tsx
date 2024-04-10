@@ -1,6 +1,5 @@
 import CategoryIndex from "@/components/category/CategoryIndex";
-import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
-import { Suspense } from "react";
+import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 
 export default async function CategoryPage({
   searchParams,
@@ -13,8 +12,24 @@ export default async function CategoryPage({
   const query = searchParams?.query;
 
   return (
-    <Suspense key={query} fallback={<ProductsTableSkeleton />}>
-      <CategoryIndex query={query} />
-    </Suspense>
+    <>
+      <Breadcrumbs
+        segments={[
+          {
+            title: "Inicio",
+            href: "/",
+          },
+          {
+            title: "Busqueda de productos",
+            href: `/filter/search`,
+          },
+          {
+            title: `Categorias`,
+            href: ``,
+          },
+        ]}
+      />
+      <CategoryIndex query={query} name="Categoría" />
+    </>
   );
 }

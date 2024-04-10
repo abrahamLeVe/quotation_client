@@ -1,9 +1,12 @@
-import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import background from "../../../../public/logoAyC.png";
 import { getDataCategory } from "@/app/services/category.service";
 import { getDataBrand } from "@/app/services/brand.service";
+import dynamic from "next/dynamic";
+const Footer = dynamic(() => import("@/components/footer/Footer"), {
+  ssr: false,
+});
 
 export default async function CartLayout({
   children,

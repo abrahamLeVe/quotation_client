@@ -1,4 +1,5 @@
 import ColorIndex from "@/components/color/ColorIndex";
+import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
 import { Suspense } from "react";
 
@@ -13,8 +14,24 @@ export default async function ColorPage({
   const query = searchParams?.query;
 
   return (
-    <Suspense key={query} fallback={<ProductsTableSkeleton />}>
+    <>
+      <Breadcrumbs
+        segments={[
+          {
+            title: "Inicio",
+            href: "/",
+          },
+          {
+            title: "Busqueda de productos",
+            href: `/filter/search`,
+          },
+          {
+            title: "Colores",
+            href: ``,
+          },
+        ]}
+      />
       <ColorIndex query={query} />
-    </Suspense>
+    </>
   );
 }

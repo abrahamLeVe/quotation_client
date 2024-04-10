@@ -27,7 +27,7 @@ export default function FlyoutMenu({ categories, brands }: FlyoutMenuProps) {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-inherit">
-            Productos
+            Categorías
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ScrollArea>
@@ -37,7 +37,10 @@ export default function FlyoutMenu({ categories, brands }: FlyoutMenuProps) {
                     <li className="row-span-3" key={category.id}>
                       <ListItem
                         urlFilter={`/filter/category?query=${category.attributes.name}`}
-                        title={category.attributes.name}
+                        title={
+                          category.attributes.name +
+                          ` - ${category.attributes.products.data.length} productos`
+                        }
                         urlImg={
                           category.attributes.image.data?.attributes.formats
                             .thumbnail.url!
