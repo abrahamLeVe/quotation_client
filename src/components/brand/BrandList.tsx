@@ -16,10 +16,10 @@ interface BrandListProps {
 export default function BrandList({ brands }: BrandListProps) {
   const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
-  const handleClick = (name: string) => {
+  const handleClick = (slug: string) => {
     cleanFilter();
     setOpenFilter(false);
-    router.push(`/filter/brand?query=${name}`);
+    router.push(`/product/${slug}`);
   };
 
   return (
