@@ -1,6 +1,5 @@
 "use client";
 import ProductSearch from "@/components/ui/search";
-import { useFilterContext } from "@/context/filter.context";
 import { ProductInterface, ProductsInterface } from "@/models/products.model";
 import { Suspense, useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
@@ -20,6 +19,7 @@ import EmptyCartMessage from "../cart/message/EmptyCartMessage";
 import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
 import { Card, CardContent } from "../ui/card";
 import { Separator } from "../ui/separator";
+import { useProductContext } from "@/context/product.context";
 
 export default function ProductTable({
   products,
@@ -28,7 +28,7 @@ export default function ProductTable({
   products?: ProductsInterface;
   name: string;
 }) {
-  const { setOpenFilter } = useFilterContext();
+  const { setIsOpen } = useProductContext();
   const [filteredProducts, setFilteredProducts] = useState<ProductInterface[]>(
     []
   );
@@ -118,7 +118,7 @@ export default function ProductTable({
                 <div className="flex justify-between items-center">
                   {renderSortSelector()}
                 </div>
-                <Button onClick={() => setOpenFilter(true)} title="Filtro">
+                <Button onClick={() => setIsOpen(true)} title="Filtro">
                   <IoFilterSharp className="h-6 w-6" /> Filtro
                 </Button>
               </CardContent>

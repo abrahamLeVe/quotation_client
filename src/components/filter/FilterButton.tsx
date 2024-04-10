@@ -1,5 +1,5 @@
 "use client";
-import { useFilterContext } from "@/context/filter.context";
+import { useProductContext } from "@/context/product.context";
 import { useSpeechRecognition } from "@/hooks/useSpeech";
 import Link from "next/link";
 import { BsMic, BsSearch } from "react-icons/bs";
@@ -23,7 +23,7 @@ export default function FilterButton() {
 }
 
 export function SpeachButton() {
-  const { isListening } = useFilterContext();
+  const { isListening } = useProductContext();
   const { startListening } = useSpeechRecognition();
   return (
     <>

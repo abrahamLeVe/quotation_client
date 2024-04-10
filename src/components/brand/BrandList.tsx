@@ -1,4 +1,3 @@
-import { useFilterContext } from "@/context/filter.context";
 import { BrandsInterface } from "@/models/brand";
 import { capitalizeFirstLetter, truncate } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
@@ -14,11 +13,8 @@ interface BrandListProps {
 }
 
 export default function BrandList({ brands }: BrandListProps) {
-  const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
   const handleClick = (slug: string) => {
-    cleanFilter();
-    setOpenFilter(false);
     router.push(`/product/${slug}`);
   };
 

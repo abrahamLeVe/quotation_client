@@ -11,7 +11,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useFilterContext } from "@/context/filter.context";
 import { ColorsInterface } from "@/models/colors.model";
 import dynamic from "next/dynamic";
 import { Icons } from "../Icons";
@@ -21,6 +20,7 @@ import { CategoriesInterface } from "@/models/category.model";
 import { SizesInterface } from "@/models/size.model";
 
 import { ScrollArea } from "../ui/scroll-area";
+import { useProductContext } from "@/context/product.context";
 
 const IconSpider = (
   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
@@ -51,11 +51,11 @@ export default function FilterSlider({
   brands,
   sizes,
 }: FilterSliderProps) {
-  const { openFilter, setOpenFilter } = useFilterContext();
+  const { isOpen, setIsOpen } = useProductContext();
 
   return (
     <>
-      <Sheet open={openFilter} onOpenChange={setOpenFilter}>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent className="w-full sm:max-w-md">
           <ScrollArea className="h-full pr-3">
             <SheetHeader>

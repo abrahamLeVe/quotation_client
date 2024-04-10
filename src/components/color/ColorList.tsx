@@ -1,4 +1,3 @@
-import { useFilterContext } from "@/context/filter.context";
 import { ColorsInterface } from "@/models/colors.model";
 import { capitalizeFirstLetter } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
@@ -8,11 +7,8 @@ interface ColorListProps {
 }
 
 export default function ColorList({ colors }: ColorListProps) {
-  const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
   const handleClick = (name: string) => {
-    cleanFilter();
-    setOpenFilter(false);
     router.push(`/filter/color?query=${name}`);
   };
 

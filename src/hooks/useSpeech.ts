@@ -1,11 +1,11 @@
 "use client";
-import { useFilterContext } from "@/context/filter.context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useMounted } from "./useMounted";
+import { useProductContext } from "@/context/product.context";
 
 export function useSpeechRecognition() {
-  const { isListening, setIsListening } = useFilterContext();
+  const { isListening, setIsListening } = useProductContext();
   const router = useRouter();
 
   let recognition: any = null;

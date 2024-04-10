@@ -10,12 +10,14 @@ interface ProductProviderProps {
 
 interface ProductContext {
   isOpen: boolean;
+  isListening: boolean;
   getItemQuantity: (id: number) => number | undefined;
   getItemColorQuantity: (
     priceId: number,
     colorId: number
   ) => number | undefined;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsListening: React.Dispatch<React.SetStateAction<boolean>>;
   productsContext: ProductsInterface | undefined;
   setProductsContext: React.Dispatch<
     React.SetStateAction<ProductsInterface | undefined>
@@ -30,6 +32,8 @@ export function useProductContext() {
 
 export function ProductProvider({ children }: ProductProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+
   const [productsContext, setProductsContext] = useState<ProductsInterface>();
 
   const cart = cartStore((state) => state);
@@ -59,6 +63,8 @@ export function ProductProvider({ children }: ProductProviderProps) {
         getItemColorQuantity,
         productsContext,
         setProductsContext,
+        isListening,
+        setIsListening,
       }}
     >
       {children}

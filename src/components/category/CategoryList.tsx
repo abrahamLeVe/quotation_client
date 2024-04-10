@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useFilterContext } from "@/context/filter.context";
 import { CategoriesInterface } from "@/models/category.model";
 import { capitalizeFirstLetter, truncate } from "@/utilities/utils";
 import { useRouter } from "next/navigation";
@@ -15,11 +14,8 @@ interface CategoryListProps {
 }
 
 export default function CategoryList({ categories }: CategoryListProps) {
-  const { setOpenFilter, cleanFilter } = useFilterContext();
   const router = useRouter();
   const handleClick = (slug: string) => {
-    cleanFilter();
-    setOpenFilter(false);
     router.push(`/product/${slug}`);
   };
 
