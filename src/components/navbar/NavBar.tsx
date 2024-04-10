@@ -34,7 +34,7 @@ export default function NavBar({
         <div className="border-b border-gray-200">
           <div className="flex h-16 items-center gap-2">
             {/* Logo */}
-            <Card className="relative w-[150px]  h-16 flex items-center dark:bg-slate-50">
+            <Card className="hidden relative w-[150px]  h-16 xs:flex items-center dark:bg-slate-50">
               <Image src={background} alt="DSStore" priority={true} />
               <Link
                 href={"/"}

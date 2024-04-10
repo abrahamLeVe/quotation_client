@@ -3,10 +3,14 @@ import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataCategory } from "../services/category.service";
 import { getDataBrand } from "../services/brand.service";
+// import WhatsappButoon from "@/components/floating/whatsapp";
+// import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+// import { WhatsappBtn } from "@/components/whatsapp";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
 );
+
 const Collection = dynamic(() => import("@/components/lobby/Collection"), {
   ssr: false,
 });
@@ -17,6 +21,9 @@ const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
   ssr: false,
 });
 const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
+  ssr: false,
+});
+const WhatsappButoon = dynamic(() => import("@/components/floating/whatsapp"), {
   ssr: false,
 });
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
@@ -34,13 +41,14 @@ export default async function LobbyLayout({
   return (
     <>
       <NavBar background={background} categories={categories} brands={brands} />
-      <main className="flex flex-col md:container mx-auto items-center gap-8">
+      <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
         {children}
         <ProductCarousel />
         <Collection />
         <BrandSlider brands={brands} />
         <PromoSection />
         <Testimonials />
+        <WhatsappButoon />
       </main>
       <Footer />
     </>

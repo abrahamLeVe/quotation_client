@@ -16,6 +16,7 @@ import { Icons } from "../Icons";
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
 import CartProducts from "./CartProducts";
+
 const CartCheckout = dynamic(() => import("./CartCheckout"), {
   ssr: false,
 });
