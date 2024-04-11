@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataCategory } from "../services/category.service";
 import { getDataBrand } from "../services/brand.service";
-
+import Chat from "@/components/chat/Chat";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -24,9 +24,12 @@ const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
 });
-const WhatsappButoon = dynamic(() => import("@/components/floating/whatsapp-button"), {
-  ssr: false,
-});
+const WhatsappButoon = dynamic(
+  () => import("@/components/floating/whatsapp-button"),
+  {
+    ssr: false,
+  }
+);
 
 export default async function LobbyLayout({
   children,
@@ -46,6 +49,7 @@ export default async function LobbyLayout({
         <BrandSlider brands={brands} />
         <PromoSection />
         <Testimonials />
+        <Chat />
         <WhatsappButoon />
       </main>
       <Footer />
