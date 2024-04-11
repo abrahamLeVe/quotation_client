@@ -3,9 +3,7 @@ import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataCategory } from "../services/category.service";
 import { getDataBrand } from "../services/brand.service";
-// import WhatsappButoon from "@/components/floating/whatsapp";
-// import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-// import { WhatsappBtn } from "@/components/whatsapp";
+
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -23,10 +21,10 @@ const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
 const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
   ssr: false,
 });
-const WhatsappButoon = dynamic(() => import("@/components/floating/whatsapp"), {
+const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
 });
-const Footer = dynamic(() => import("@/components/footer/Footer"), {
+const WhatsappButoon = dynamic(() => import("@/components/floating/whatsapp-button"), {
   ssr: false,
 });
 

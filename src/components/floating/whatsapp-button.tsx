@@ -22,7 +22,7 @@ export default function WhatsappButton() {
       };
     } else {
       return {
-        mensaje: `Actualmente no disponible. Nuestro horario de atención es de Lunes a Sábado de 9:00 a 12:00 y de 14:00 a 19:00.`,
+        mensaje: `Actualmente no disponible. Nuestro horario de atención es de Lunes a Sábado de 8:00 a 12:00 y de 14:00 a 19:00.`,
         disponible: false,
         state: "No disponible",
       };
@@ -35,7 +35,6 @@ export default function WhatsappButton() {
   return (
     <div>
       <FloatingWhatsApp
-        phoneNumber="51966908047"
         accountName="Paolo Gallardo"
         initialMessageByServer={disponible ? saludoAleatorio : mensaje}
         statusMessage={state}

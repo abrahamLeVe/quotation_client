@@ -1,82 +1,14 @@
 "use client";
-import { useReducer, useEffect, useCallback, useRef, useMemo } from "react";
+import { useReducer, useEffect, useCallback, useRef, useMemo, useState } from "react";
 import { reducer } from "./reducer";
-import { WhatsappSVG, CloseSVG, SendSVG } from "./Icons";
-import styles from "./FloatingWhatsApp.module.css";
+import { WhatsappSVG, CloseSVG, SendSVG } from "./assets/Icons";
+import styles from "./styles/FloatingWhatsApp.module.css";
 
-import darkBG from "./assets/bg-chat-tile-light.png";
-import lightBG from "./assets/bg-chat-tile-dark.png";
-import dummyAvatar from "../../../../public/logoAyC.png";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Badge } from "@/components/ui/badge";
+import { FloatingWhatsAppProps } from "./model/floatingWa.model";
 
-export interface FloatingWhatsAppProps {
-  /** Callback function fires on click */
-  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  /** Callback function fires on submit with event and form input value passed */
-  onSubmit?: (
-    event: React.FormEvent<HTMLFormElement>,
-    formValue: string
-  ) => void;
-  /** Callback function fires on close */
-  onClose?: () => void;
-  /** Callback function fired when notification runs */
-  onNotification?: () => void;
-  /** Callback function called when notification loop done */
-  onLoopDone?: () => void;
 
-  /** Phone number in [intenational format](https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number) */
-  phoneNumber: string;
-  /** Account Name */
-  accountName: string;
-  /** Set chat box height */
-  chatboxHeight?: number;
-  /** Inline style applied to chat box */
-  chatboxStyle?: React.CSSProperties;
-  /** CSS className applied to chat box */
-  chatboxClassName?: string;
-  /** Change user avatar using [static assets](https://create-react-app.dev/docs/adding-images-fonts-and-files/) */
-  avatar?: string;
-  /** Text below the account username */
-  statusMessage?: string;
-  /** Text inside the chat box */
-  initialMessageByServer?: string;
-  /** Input placeholder */
-  placeholder?: string;
-
-  /** Time delay after which the initialMessageByServer is displayed (in seconds) */
-  messageDelay?: number;
-
-  /** Allow notifications (Disabled after user opens the chat box) */
-  notification?: boolean;
-  /** Time delay between notifications in seconds */
-  notificationDelay?: number;
-  /** Repeat notifications loop */
-  notificationLoop?: number;
-  /** Inline style applied to notification */
-  notificationStyle?: React.CSSProperties;
-  /** CSS className applied to notification */
-  notificationClassName?: string;
-
-  /** Closes the chat box if click outside the chat box */
-  allowClickAway?: boolean;
-  /** Closes the chat box if `Escape` key is clicked */
-  allowEsc?: boolean;
-  /** Enable / Disable dark mode */
-  darkMode?: boolean;
-  /** Inline style  applied to the main wrapping `Div` */
-  style?: React.CSSProperties;
-  /** CSS className applied to the main wrapping `Div` */
-  className?: string;
-
-  /** Inline style applied to button */
-  buttonStyle?: React.CSSProperties;
-  /** CSS className applied to button */
-  buttonClassName?: string;
-
-  disponible?: boolean;
-}
 
 export function FloatingWhatsApp({
   onClick,
@@ -85,11 +17,10 @@ export function FloatingWhatsApp({
   onNotification,
   onLoopDone,
 
-  phoneNumber = "+51948125398",
   accountName = "Consorcio A&C Eléctrica S.A.C",
   avatar = "./user_whatsapp.jpg",
   statusMessage,
-  initialMessageByServer = "Hello there! 🤝 \nHow can we help?",
+  initialMessageByServer,
   placeholder = "Type a message..",
 
   messageDelay = 2,
@@ -98,7 +29,7 @@ export function FloatingWhatsApp({
   allowEsc = false,
 
   notification = true,
-  notificationDelay = 60,
+  notificationDelay = 1800,
   notificationLoop = 0,
   notificationStyle,
   notificationClassName = "floating-whatsapp-notification",
@@ -110,12 +41,13 @@ export function FloatingWhatsApp({
   chatboxStyle,
   chatboxClassName = "floating-whatsapp-chatbox",
 
-  darkMode = false,
+  darkMode : darkModeProp,
   style,
   className = "floating-whatsapp",
 
   disponible,
 }: FloatingWhatsAppProps) {
+  const isDarkMode = useDarkMode();
   const [{ isOpen, isDelay, isNotification }, dispatch] = useReducer(reducer, {
     isOpen: false,
     isDelay: true,
@@ -185,13 +117,16 @@ export function FloatingWhatsApp({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!inputRef.current?.value) return;
-    // TODO: Change hardcoded endpoint to env variable
-    window.open(
-      `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${inputRef.current.value.trim()}`
-    );
+
+    const encodedMessage = encodeURIComponent(inputRef.current.value.trim());
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${process.env.NEXT_PUBLIC_CLIENT_PHONE}&text=${encodedMessage}`;
+
+    window.open(whatsappUrl, "_blank"); 
+
     if (onSubmit) onSubmit(event, inputRef.current.value);
     inputRef.current.value = "";
   };
+
 
   useEffect(() => {
     const onClickOutside = () => {
@@ -219,7 +154,7 @@ export function FloatingWhatsApp({
   return (
     <div
       className={`${styles.floatingWhatsapp} ${
-        darkMode ? `${styles.dark} ` : ""
+        isDarkMode ? `${styles.dark} ` : ""
       } ${className}`}
       style={style}
     >
@@ -230,13 +165,17 @@ export function FloatingWhatsApp({
         aria-hidden={!isOpen}
       >
         <WhatsappSVG />
-        {isNotification && (
-          <span
-            className={`${styles.notificationIndicator} ${notificationClassName}`}
-            style={notificationStyle}
-          >
-            1
-          </span>
+        {!disponible ? null : (
+          <>
+            {isNotification && (
+              <span
+                className={`${styles.notificationIndicator} ${notificationClassName}`}
+                style={notificationStyle}
+              >
+                1
+              </span>
+            )}
+          </>
         )}
       </div>
 
@@ -249,15 +188,15 @@ export function FloatingWhatsApp({
         style={{ height: isOpen ? chatboxHeight : 0, ...chatboxStyle }}
       >
         <header className={styles.chatHeader}>
-          <div className="relative pl-4">
-            <Avatar className="w-14 h-14">
-              <AvatarImage src={avatar} alt="Paolo" />
+          <div className="relative flex justify-end">
+            <Avatar className=" aspect-1">
+              <AvatarImage src={avatar} alt="Gerente General" />
               <AvatarFallback>PG</AvatarFallback>
             </Avatar>
             {!disponible ? (
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-gray-500 rounded-full border-2 border-white"></span>
+              <span className="absolute z-50 bottom-0 right-0 w-3 h-3 bg-gray-500 rounded-full border-2 border-white"></span>
             ) : (
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+              <span className="absolute z-50 bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
             )}
           </div>
 
@@ -266,11 +205,11 @@ export function FloatingWhatsApp({
             <span className={styles.statusSubtitle}>{statusMessage}</span>
           </div>
           <div
-            className={styles.close}
+            className={"cursor-pointer hover:opacity-90"}
             onClick={handleClose}
             aria-hidden={!isOpen}
           >
-            <CloseSVG />
+            <CloseSVG color="#FFF" />
           </div>
         </header>
 
@@ -319,4 +258,30 @@ export function FloatingWhatsApp({
       </div>
     </div>
   );
+}
+
+
+export function useDarkMode() {
+  const [isDarkMode, setIsDarkMode] = useState(
+    document.documentElement.classList.contains("dark")
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const isDark = document.documentElement.classList.contains("dark");
+          setIsDarkMode(isDark);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return isDarkMode;
 }

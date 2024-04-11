@@ -24,6 +24,7 @@ import { Distrito, Provincia, UbigeoInterface } from "@/models/ubigeo.model";
 import { Session } from "next-auth";
 
 import { createQuotation } from "@/app/services/quotation.service";
+import { useCartContext } from "@/context/cart.context";
 import { handleErrorMessage } from "@/lib/exceptions";
 import {
   ProfileFormValues,
@@ -36,7 +37,6 @@ import { useState } from "react";
 import { Icons } from "../Icons";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { useCartContext } from "@/context/cart.context";
 
 interface CheckoutFormProps {
   session: Session | null;
@@ -49,6 +49,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
   const [provincias, setProvincias] = useState<Provincia[]>([]);
   const [distritos, setDistritos] = useState<Distrito[]>([]);
   const { setIsLoading, isLoading } = useCartContext();
+  const [isEnable, setIsEnable] = useState<boolean>(true);
   const cart = cartStore((state) => state.clearCart);
   const products = cartStore((state) => state.cartItemState);
   const router = useRouter();
@@ -79,6 +80,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
 
   async function onSubmit(data: ProfileFormValues) {
     setIsLoading(true);
+    setIsEnable(false);
 
     const res = await createQuotation({ products, dataQuotation: data });
 
@@ -97,6 +99,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
         ),
       });
       setIsLoading(false);
+      setIsEnable(true);
     } else {
       toast({
         variant: "default",
@@ -106,7 +109,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
       });
       router.push("/dashboard/order");
       router.refresh();
-      // cart();
+      cart();
       setIsLoading(false);
     }
   }
@@ -157,7 +160,10 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="col-span-1">
             <FormField

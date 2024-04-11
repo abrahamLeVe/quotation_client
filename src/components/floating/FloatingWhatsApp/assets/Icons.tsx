@@ -5,17 +5,21 @@ export function WhatsappSVG() {
     </svg>
   );
 }
-export function CloseSVG() {
+export function CloseSVG({ color = "currentColor" }) {
   return (
-    <svg focusable="false" viewBox="0 0 24 24" width="24" height="24">
-      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+    <svg focusable="false" viewBox="0 0 24 24" width="28" height="28">
+      <path
+        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        fill={color}
+      />
     </svg>
   );
 }
-export function SendSVG() {
+export function SendSVG({ color = "currentColor" }) {
   return (
-    <svg focusable="false" viewBox="0 0 24 24" width="20" height="20">
+    <svg focusable="false" viewBox="0 0 24 24" width="24" height="24">
       <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+      fill={color}
     </svg>
   );
 }
