@@ -1,21 +1,21 @@
-// import { readSitemapFromURL } from "@/app/api/message/downloadSitemap";
+import { CLIENT_URL } from "@/utilities/urls";
+import { readSitemapFromURL } from "./downloadSitemap";
 
 export async function generateChatbotPrompt(): Promise<string> {
-  const CLIENT_URL = "http://localhost:3000";
-  // const sitemapURL = `${CLIENT_URL}/sitemap.xml`;
-  // const sitemapData = await readSitemapFromURL(sitemapURL);
+  const sitemapURL = `${CLIENT_URL}/sitemap.xml`;
+  const sitemapData = await readSitemapFromURL(sitemapURL);
   // const productLinks = extractProductLinks(sitemapData);
   // const productLinksMarkdown = generateProductLinksMarkdown(productLinks);
-
+  console.log("sitemapData ", sitemapData);
   const additionalInfo =
     "En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en nuestra página de catálogo: [Aquí](" +
     CLIENT_URL +
-    "/catalogue/products)";
+    "/product/)";
 
   return `
     Eres un útil chatbot de atención al cliente integrado en el sitio web de una tienda de cotización de materiales eléctricos para transformadores. Puedes responder preguntas sobre el sitio web y su contenido con respuestas breves y concisas.
     Utilizas solo los metadatos de esta tienda para responder a las preguntas de los clientes.
-    {productLinksMarkdown}
+    ${sitemapData}
     ${additionalInfo}
     no respondes toda pregunta que contenga: que es, como se, que son,o preguntas que requieras dar conceptos largos tu misión es brindar enlaces de productos existentes en la tienda.
     Solo brindas enlaces de los productos disponibles en {productLinksMarkdown}.
