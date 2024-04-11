@@ -1,35 +1,40 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+"use client";
+import { Separator } from "../ui/separator";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
 
-const Chat = () => {
-  return (
-    <>
-      <Accordion type="single" collapsible className="relative z-[9999] ">
-        <AccordionItem value="item-1">
-          <div className="fixed right-8 w-80 bottom-8  border border-white rounded-md overflow-hidden ">
-            <div className="w-full h-full flex flex-col top-0 bg-black/75 bg-opacity-50 backdrop-filter backdrop-blur-md shadow-2xl">
-              <AccordionTrigger className="px-6 border-b">
-                <ChatHeader />
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="flex flex-col h-80">
-                  <ChatMessages className="px-2 py-3 flex-1" />
-                  <ChatInput className="px-4" />
-                </div>
-              </AccordionContent>
-            </div>
-          </div>
-        </AccordionItem>
-      </Accordion>
-    </>
-  );
-};
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-export default Chat;
+export default function Chat() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="default" className="p-2 rounded-full w-full h-full">
+          <img
+            src="./bot.png"
+            alt="chat bot"
+            className="w-[60px] h-[60px]"
+            loading="lazy"
+          />
+          <span aria-readonly={true}>Chatear</span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80 bg-white/75 dark:bg-black/75 backdrop-blur-md dark:border-zinc-200">
+        <div className="w-full h-full flex flex-col top-0">
+          <ChatHeader />
+          <Separator className="border-t border-zinc-300" />
+          <div className="flex flex-col h-80">
+            <ChatMessages className="px-2 py-3 flex-1" />
+          </div>
+          <ChatInput className="px-4" />
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}

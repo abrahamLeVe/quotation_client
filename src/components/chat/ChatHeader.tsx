@@ -1,15 +1,20 @@
-const ChatHeader = () => {
+"use client";
+
+export default function ChatHeader() {
   return (
-    <div className="w-full flex gap-3 justify-start items-center text-white ">
+    <div className="w-full flex gap-3 justify-start items-center pb-2">
       <div className="flex flex-col items-start text-sm">
-        <p className="text-xs">Chatear con</p>
         <div className="flex gap-1.5 items-center">
-          <p className="w-3 h-3 rounded-full bg-green-500   " />
+          <img
+            src="./botProfile.png"
+            alt="chat bot"
+            className="w-[40px] h-[40px]"
+            loading="lazy"
+          />
+          <p className="w-3 h-3 rounded-full bg-green-500" />
           <p className="font-medium">Soporte de Bitbuddy</p>
         </div>
       </div>
     </div>
   );
-};
-
-export default ChatHeader;
+}

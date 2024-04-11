@@ -1,22 +1,26 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { FC, HTMLAttributes, useContext } from "react";
-import MarkdownLite from "./MarkdownLite";
 import { MessagesContext } from "@/context/messages.context";
+import { cn } from "@/lib/utils";
+import { HTMLAttributes, useContext } from "react";
+import MarkdownLite from "./MarkdownLite";
 
 interface ChatMessagesProps extends HTMLAttributes<HTMLDivElement> {}
 
-const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
+export default function ChatMessages({
+  className,
+  ...props
+}: ChatMessagesProps) {
   const { messages } = useContext(MessagesContext);
   const inverseMessages = [...messages].reverse();
 
   return (
     <div
       {...props}
-      className={cn(
-        "flex flex-col-reverse gap-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch",
-        className
-      )}
+      className={cn("flex flex-col-reverse gap-3 overflow-y-auto ", className)}
+      style={{
+        scrollbarWidth: "thin",
+        scrollbarColor: "#3b82f6 #e0f2fe",
+      }}
     >
       <div className="flex-1 flex-grow" />
       {inverseMessages.map((message) => (
@@ -35,20 +39,30 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                 }
               )}
             >
-              <p
+              <div
                 className={cn("px-4 py-2 rounded-lg", {
-                  "bg-blue-600 text-white": message.isUserMessage,
-                  "bg-white  text-gray-900": !message.isUserMessage,
+                  "bg-blue-600 text-white dark:text-blue-600 dark:bg-white":
+                    message.isUserMessage,
+                  "bg-gray-900 text-white dark:bg-white dark:text-gray-900":
+                    !message.isUserMessage,
                 })}
               >
-                <MarkdownLite text={message.text} />
-              </p>
+                <div className="">
+                  {!message.isUserMessage ? (
+                    <img
+                      src="./botMessage.png"
+                      alt="chat bot"
+                      className="w-[30px] h-[30px]"
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <MarkdownLite text={message.text} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       ))}
     </div>
   );
-};
-
-export default ChatMessages;
+}

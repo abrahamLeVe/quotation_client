@@ -1,9 +1,8 @@
 import NavBar from "@/components/navbar/NavBar";
 import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
-import { getDataCategory } from "../services/category.service";
 import { getDataBrand } from "../services/brand.service";
-import Chat from "@/components/chat/Chat";
+import { getDataCategory } from "../services/category.service";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -30,6 +29,9 @@ const WhatsappButoon = dynamic(
     ssr: false,
   }
 );
+const Chat = dynamic(() => import("@/components/chat/Chat"), {
+  ssr: false,
+});
 
 export default async function LobbyLayout({
   children,
@@ -49,8 +51,12 @@ export default async function LobbyLayout({
         <BrandSlider brands={brands} />
         <PromoSection />
         <Testimonials />
-        <Chat />
-        <WhatsappButoon />
+        <div className="fixed right-8 bottom-28">
+          <WhatsappButoon />
+        </div>
+        <div className="fixed right-5 bottom-5">
+          <Chat />
+        </div>
       </main>
       <Footer />
     </>

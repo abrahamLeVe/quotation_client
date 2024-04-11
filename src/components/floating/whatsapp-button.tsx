@@ -33,15 +33,13 @@ export default function WhatsappButton() {
   const { mensaje, disponible, state } = obtenerEstadoPorHorario();
 
   return (
-    <div>
-      <FloatingWhatsApp
-        accountName="Paolo Gallardo"
-        initialMessageByServer={disponible ? saludoAleatorio : mensaje}
-        statusMessage={state}
-        placeholder="Escribe aquí..."
-        allowEsc={true}
-        disponible={disponible}
-      />
-    </div>
+    <FloatingWhatsApp
+      accountName="Paolo Gallardo"
+      initialMessageByServer={disponible ? saludoAleatorio : mensaje}
+      statusMessage={state}
+      placeholder="Escribe aquí..."
+      allowEsc={true}
+      disponible={disponible}
+    />
   );
 }

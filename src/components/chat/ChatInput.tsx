@@ -2,38 +2,37 @@
 import { cn } from "@/lib/utils";
 import { CornerDownLeft, Loader2 } from "lucide-react";
 import { nanoid } from "nanoid";
-import { FC, HTMLAttributes, useRef, useState } from "react";
+import { HTMLAttributes, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { Message } from "@/lib/validations/message";
 import SendMessageMutation from "@/lib/send-message";
 
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {}
 
-const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
+export default function ChatInput({ className, ...props }: ChatInputProps) {
   const [input, setInput] = useState<string>("");
-  const textareaRef = useRef<null | HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { sendMessage, isPending, error } = SendMessageMutation();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       const trimmedInput = input.trim();
-      if (trimmedInput !== "") {
+      if (trimmedInput) {
         const message: Message = {
           id: nanoid(),
           isUserMessage: true,
-          text: trimmedInput.slice(0, 150),
+          text: trimmedInput.slice(0, 100),
         };
         sendMessage(message);
         setInput("");
-      } else {
-        return;
       }
     }
   };
 
   return (
     <div {...props} className={cn("border-t border-zinc-300", className)}>
+      {error && <div className="text-red-500 text-sm ">{error.message}</div>}
       <div className="relative mt-4 flex-1 overflow-hidden rounded-lg border-none outline-none">
         <TextareaAutosize
           ref={textareaRef}
@@ -42,7 +41,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
           maxRows={4}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          maxLength={150}
+          maxLength={100}
           autoFocus
           placeholder="Escribe un mensaje..."
           className="peer pr-14 resize-none block w-full border-0 bg-zinc-100 py-1.5 text-gray-900 focus:ring-0 text-sm sm:leading-6"
@@ -64,5 +63,4 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
       </div>
     </div>
   );
-};
-export default ChatInput;
+}

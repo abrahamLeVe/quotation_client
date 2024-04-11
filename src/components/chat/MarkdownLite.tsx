@@ -1,11 +1,12 @@
+"use client";
 import Link from "next/link";
-import React, { FC } from "react";
+import React from "react";
 
 interface MarkdownLiteProps {
   text: string;
 }
 
-const MarkdownLite: FC<MarkdownLiteProps> = ({ text }) => {
+export default function MarkdownLite({ text }: MarkdownLiteProps) {
   const linkRegex = /\[(.+?)\]\((.+?)\)/g;
   const parts = [];
 
@@ -43,6 +44,4 @@ const MarkdownLite: FC<MarkdownLiteProps> = ({ text }) => {
       ))}
     </>
   );
-};
-
-export default MarkdownLite;
+}

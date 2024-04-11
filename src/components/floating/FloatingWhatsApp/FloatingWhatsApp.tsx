@@ -1,14 +1,19 @@
 "use client";
-import { useReducer, useEffect, useCallback, useRef, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
+import { CloseSVG, SendSVG, WhatsappSVG } from "./assets/Icons";
 import { reducer } from "./reducer";
-import { WhatsappSVG, CloseSVG, SendSVG } from "./assets/Icons";
 import styles from "./styles/FloatingWhatsApp.module.css";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { FloatingWhatsAppProps } from "./model/floatingWa.model";
-
-
 
 export function FloatingWhatsApp({
   onClick,
@@ -41,7 +46,7 @@ export function FloatingWhatsApp({
   chatboxStyle,
   chatboxClassName = "floating-whatsapp-chatbox",
 
-  darkMode : darkModeProp,
+  darkMode: darkModeProp,
   style,
   className = "floating-whatsapp",
 
@@ -64,35 +69,35 @@ export function FloatingWhatsApp({
   const loops = useRef(0);
   const notificationInterval = useRef(0);
 
-  const handleNotification = useCallback(() => {
-    if (!notification) return;
+  // const handleNotification = useCallback(() => {
+  //   if (!notification) return;
 
-    dispatch({ type: "notification" });
-    if (onNotification) onNotification();
-    if (notificationLoop > 0) {
-      loops.current += 1;
+  //   dispatch({ type: "notification" });
+  //   if (onNotification) onNotification();
+  //   if (notificationLoop > 0) {
+  //     loops.current += 1;
 
-      if (loops.current === notificationLoop) {
-        clearInterval(notificationInterval.current);
-        if (onLoopDone) onLoopDone();
-      }
-    }
-  }, [notification, notificationLoop, onNotification, onLoopDone]);
+  //     if (loops.current === notificationLoop) {
+  //       clearInterval(notificationInterval.current);
+  //       if (onLoopDone) onLoopDone();
+  //     }
+  //   }
+  // }, [notification, notificationLoop, onNotification, onLoopDone]);
 
-  useEffect(() => {
-    const delayInSecond = notificationDelay * 1000;
-    if (delayInSecond < 10)
-      return console.error(
-        "notificationDelay prop value must be at least 10 seconds."
-      );
+  // useEffect(() => {
+  //   const delayInSecond = notificationDelay * 1000;
+  //   if (delayInSecond < 10)
+  //     return console.error(
+  //       "notificationDelay prop value must be at least 10 seconds."
+  //     );
 
-    notificationInterval.current = window.setInterval(
-      handleNotification,
-      delayInSecond
-    );
+  //   notificationInterval.current = window.setInterval(
+  //     handleNotification,
+  //     delayInSecond
+  //   );
 
-    return () => clearInterval(notificationInterval.current);
-  }, [handleNotification, notificationDelay]);
+  //   return () => clearInterval(notificationInterval.current);
+  // }, [handleNotification, notificationDelay]);
 
   const handleOpen = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -121,12 +126,11 @@ export function FloatingWhatsApp({
     const encodedMessage = encodeURIComponent(inputRef.current.value.trim());
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${process.env.NEXT_PUBLIC_CLIENT_PHONE}&text=${encodedMessage}`;
 
-    window.open(whatsappUrl, "_blank"); 
+    window.open(whatsappUrl, "_blank");
 
     if (onSubmit) onSubmit(event, inputRef.current.value);
     inputRef.current.value = "";
   };
-
 
   useEffect(() => {
     const onClickOutside = () => {
@@ -259,7 +263,6 @@ export function FloatingWhatsApp({
     </div>
   );
 }
-
 
 export function useDarkMode() {
   const [isDarkMode, setIsDarkMode] = useState(
