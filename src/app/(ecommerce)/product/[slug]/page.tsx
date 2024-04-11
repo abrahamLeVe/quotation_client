@@ -1,3 +1,4 @@
+import { getDataSlugProducts } from "@/app/services/metadata.service";
 import {
   getDataProductBySlug,
   getDataProductSlug,
@@ -27,7 +28,7 @@ export interface ProductPageProps {
   };
 }
 export async function generateStaticParams() {
-  const products = await getDataProductSlug();
+  const products = await getDataSlugProducts();
   return products.data.map((product) => ({
     slug: product.attributes.slug,
   }));

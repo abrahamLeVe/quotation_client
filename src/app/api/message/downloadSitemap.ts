@@ -1,6 +1,6 @@
 export async function readSitemapFromURL(url: string): Promise<string> {
   try {
-    const response = await fetch(url, { cache: "force-cache" });
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
         `Error al leer el sitemap desde la URL ${url}: ${response.status} ${response.statusText}`

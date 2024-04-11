@@ -8,6 +8,7 @@ export async function fetchDataFromApi(endpoint: string): Promise<any> {
       headers: {
         Authorization: "Bearer " + API_TOKEN,
       },
+      next: { revalidate: 3600 },
     };
 
     const res = await fetch(`${API_URL}${endpoint}`, options);

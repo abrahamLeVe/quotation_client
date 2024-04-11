@@ -1,22 +1,25 @@
 import { CLIENT_URL } from "@/utilities/urls";
-import { getDataProducts } from "./services/product.service";
+import {
+  getDataNameBrans,
+  getDataNameCategories,
+  getDataSlugProducts,
+} from "./services/metadata.service";
 
 export default async function sitemap() {
-  const data = await getDataProducts();
-
-  const products = data.data.map((product) => ({
+  const productsData = await getDataSlugProducts();
+  const categoriesData = await getDataNameCategories();
+  const brandsData = await getDataNameBrans();
+  const products = productsData.data.map((product) => ({
     url: `${CLIENT_URL}/product/${product.attributes.slug}`,
   }));
 
-  const routes = [
-    "/",
-    "/filter/category?query=",
-    "/filter/brand?query=",
-    "/filter/search?query=Aquí busca por coincidencia en el nombre de los productos",
-    "/cart",
-  ].map((route) => ({
-    url: `${CLIENT_URL}${route}`,
+  const categories = categoriesData.data.map((product) => ({
+    url: `${CLIENT_URL}/filter/category?query=${product.attributes.name}`,
   }));
 
-  return [...routes, ...products];
+  const brands = brandsData.data.map((product) => ({
+    url: `${CLIENT_URL}/filter/brand?query=${product.attributes.name}`,
+  }));
+
+  return [...products, ...categories, ...brands];
 }
