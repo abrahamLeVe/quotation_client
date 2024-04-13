@@ -10,6 +10,7 @@ import {
 import { BrandsInterface } from "@/models/brand";
 import React from "react";
 import BrandCard from "./BrandCard";
+import Autoplay from "embla-carousel-autoplay";
 
 interface BrandSliderProps {
   brands?: BrandsInterface;
@@ -33,12 +34,20 @@ export default function BrandSlider({ brands }: BrandSliderProps) {
     });
   }, [api]);
 
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
+
   return (
-    <div className="flex flex-col w-full px-4  justify-center relative">
+    <div className="flex flex-col w-full px-4 py-14  justify-center relative">
       <h2 className="text-2xl font-bold tracking-tight pb-5">
         Las mejores marcas
       </h2>
-      <Carousel setApi={setApi} className="w-full aspect-[16/5]">
+      <Carousel
+        setApi={setApi}
+        plugins={[plugin.current]}
+        className="w-full aspect-[16/5]"
+      >
         <CarouselContent className="-ml-1 ">
           {brands?.data.map((brand) => (
             <CarouselItem

@@ -47,7 +47,7 @@ export default async function LobbyLayout({
       <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
         {children}
         <ProductCarousel />
-        <Collection />
+        <Collection categories={categories} />
         <BrandSlider brands={brands} />
         <PromoSection />
         <Testimonials />
