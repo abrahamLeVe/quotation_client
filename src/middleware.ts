@@ -1,35 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
-
-import withAuth from "next-auth/middleware";
+import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 import { ratelimiter } from "./lib/rate-limiter";
 
-export async function middleware(req: NextRequest) {
-  const ip = req.ip ?? "127.0.0.1";
+export async function middleware(req: any) {
+  const token = await getToken({ req });
 
+  if (!token) {
+    return NextResponse.redirect(new URL("/api/auth/signin", req.url));
+  }
+
+  const ip = req.ip ?? "127.0.0.1";
   try {
     const { success } = await ratelimiter.limit(ip);
-
-    if (!success)
-      // return new NextResponse("Estás escribiendo mensajes demasiado rápido.");
-      return;
+    if (!success) {
+      return new NextResponse("Estás haciendo solicitudes demasiado rápido.", {
+        status: 429,
+      });
+    }
   } catch (error) {
     return new NextResponse(
-      "Lo sentimos, algo salió al procesar su mensaje. Por favor, inténtelo de nuevo más tarde."
+      "Lo sentimos, algo salió mal al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.",
+      { status: 500 }
     );
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/checkout/:path*"],
+  matcher: ["/dashboard/:path*", "/checkout/:path*", "/api/message/:path*"],
 };
-
-export default withAuth({
-  // Matches the pages config in `[...nextauth]`
-  pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
-    error: "/auth/error",
-    verifyRequest: "/auth/verify-request",
-    newUser: "/auth/new-user",
-  },
-});

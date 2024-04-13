@@ -33,6 +33,7 @@ export const loginSchema = z.object({
     })
     .max(100),
 });
+
 export const emailSchema = z.object({
   email: z.string().email({
     message: "Por favor, introduce una dirección de correo electrónico válida",
@@ -55,12 +56,11 @@ export const checkEmailSchema = z.object({
 export const resetPasswordSchema = z
   .object({
     password: authSchema.shape.password,
-    confirmPassword: authSchema.shape.password,
-    code: verifyEmailSchema.shape.code,
+    passwordConfirmation: authSchema.shape.password,
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: "Las contraseñas no coinciden",
+    path: ["passwordConfirmation"],
   });
 
 export const userPrivateMetadataSchema = z.object({

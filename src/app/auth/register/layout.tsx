@@ -73,24 +73,15 @@ export default function RegisterLayout({
             </Button>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-start gap-2">
-          {/* <p className="px-8  text-sm text-muted-foreground">
-            Al hacer clic en continuar, aceptas nuestros{" "}
-            <span
-              // href="/terms"
+        <CardFooter>
+          <p className="text-sm text-muted-foreground">
+            <Link
+              href="/auth/resetpass"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Términos de servicio
-            </span>{" "}
-            y{" "}
-            <span
-              // href="/privacy"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              política de privacidad
-            </span>
-            .
-          </p> */}
+              Restablecer la contraseña
+            </Link>
+          </p>
         </CardFooter>
       </Card>
     </div>

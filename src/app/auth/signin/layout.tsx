@@ -76,12 +76,12 @@ export default function SigninLayout({
         </CardContent>
         <CardFooter>
           <p className="text-sm text-muted-foreground">
-            <span
-              // href="/terms"
+            <Link
+              href="/auth/resetpass"
               className="underline underline-offset-4 hover:text-primary"
             >
               Restablecer la contraseña
-            </span>
+            </Link>
           </p>
         </CardFooter>
       </Card>

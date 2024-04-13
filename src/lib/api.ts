@@ -91,3 +91,18 @@ export async function providerFetch(provider?: string, access_token?: string) {
     console.log("Error of providerAuth", error);
   }
 }
+
+export async function changePassPost(endpoint: string, payload: any) {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  } catch (error) {
+    return error;
+  }
+}

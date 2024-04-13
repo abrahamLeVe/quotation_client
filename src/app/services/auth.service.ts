@@ -1,4 +1,4 @@
-import { login, postDataFromApi } from "@/lib/api";
+import { changePassPost, login, postDataFromApi } from "@/lib/api";
 import {
   AuthInterface,
   loginUserPromps,
@@ -17,5 +17,19 @@ export async function registerUser(data: registerUserPromps) {
 
 export async function registerNewsletter(data: { data: { email: string } }) {
   const res = await postDataFromApi("/api/newsletters", data);
+  return res;
+}
+
+export async function changePass(data: { email: string }) {
+  const res = await changePassPost("/api/auth/forgot-password", data);
+  return res;
+}
+
+export async function resetPass(data: {
+  code?: string;
+  password: string;
+  passwordConfirmation: string;
+}) {
+  const res = await changePassPost("/api/auth/reset-password", data);
   return res;
 }
