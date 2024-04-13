@@ -1,9 +1,22 @@
 import { z } from "zod";
 
+const colorAttributesSchema = z.object({
+  code: z.string(),
+  name: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  description: z.string(),
+  publishedAt: z.string(),
+});
+
 const colorSchema = z
   .object({
-    id: z.number().nullable().optional(),
-    quantity: z.number().nullable().optional(),
+    id: z.number(),
+    color: z.object({
+      id: z.number(),
+      attributes: colorAttributesSchema,
+    }),
+    quantity: z.number(),
   })
   .nullable();
 

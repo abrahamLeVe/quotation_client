@@ -10,7 +10,8 @@ export async function middleware(req: NextRequest) {
     const { success } = await ratelimiter.limit(ip);
 
     if (!success)
-      return new NextResponse("Estás escribiendo mensajes demasiado rápido.");
+      // return new NextResponse("Estás escribiendo mensajes demasiado rápido.");
+      return;
   } catch (error) {
     return new NextResponse(
       "Lo sentimos, algo salió al procesar su mensaje. Por favor, inténtelo de nuevo más tarde."
@@ -19,7 +20,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/checkout/:path*", "/api/message/:path*"],
+  matcher: ["/dashboard/:path*", "/checkout/:path*"],
 };
 
 export default withAuth({

@@ -15,7 +15,6 @@ export const getDataSlugProducts = cache(
       },
       { encodeValuesOnly: true }
     );
-    console.log("queryString ", queryString);
     const res = await fetchDataFromApi(`/api/products?${queryString}`);
     return res;
   }
@@ -31,7 +30,6 @@ export const getDataNameCategories = cache(
       },
       { encodeValuesOnly: true }
     );
-    console.log("queryString ", queryString);
     const res = await fetchDataFromApi(`/api/categories?${queryString}`);
     return res;
   }
@@ -46,7 +44,6 @@ export const getDataNameBrans = cache(async (): Promise<BrandsInterface> => {
     },
     { encodeValuesOnly: true }
   );
-  console.log("queryString ", queryString);
   const res = await fetchDataFromApi(`/api/brands?${queryString}`);
   return res;
 });
