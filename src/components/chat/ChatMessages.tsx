@@ -55,7 +55,7 @@ export default function ChatMessages({
                 className={cn("px-4 py-2 rounded-lg", {
                   "bg-blue-600 text-white dark:text-blue-600 dark:bg-white":
                     message.isUserMessage,
-                  "bg-gray-900 text-white dark:bg-white dark:text-gray-900":
+                  "bg-gray-900 text-white dark:backdrop-blur-md":
                     !message.isUserMessage,
                 })}
               >

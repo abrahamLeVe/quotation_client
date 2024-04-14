@@ -17,12 +17,12 @@ export async function generateChatbotPrompt(): Promise<string> {
   const sitemapURL = `${CLIENT_URL}/sitemap.xml`;
   const sitemapData = await readSitemapFromURL(sitemapURL);
 
-  const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en nuestra página de catálogo: [Aquí](${CLIENT_URL})(<img
-            src="url de la imagen"
+  const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en nuestra página de catálogo: [Aquí](${CLIENT_URL})${sitemapData}(<img
+            src="https://res.cloudinary.com/dmpmxzyrg/image/upload/v1711234059/thumbnail_Cinta_kapton_1_1327d12837.webp"
             alt="nombre del producto"
             className="w-[40px] h-[40px]"
             loading="lazy"
-          />):${sitemapData}, si vas a brindar una lista con productos, categorías o marcas mayores a tres elementos solucionas brindando solo enlaces claves cortas, optimizadas sin imagenes, para mostrar todo lo posible. Si vas a mostrar productos, categorías o marcas menores a tres elementos es indispensable y obligatorio mostrar su imagen, ejemplo: Nombre de producto, marca o categoría=(${CLIENT_URL})+su imagen `;
+          />), lista con productos, categorías o marcas mayores a tres elementos brindas solo enlaces claves cortas, optimizadas sin imagenes, para mostrar todo lo posible. mostrar productos, categorías o marcas menores a tres elementos si mostrar imagen.`;
 
   const companyInfo = `
     Nombre: ${companyData.nombre}

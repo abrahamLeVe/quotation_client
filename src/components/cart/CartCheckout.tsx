@@ -4,6 +4,7 @@ import { BsCart } from "react-icons/bs";
 import QuotationCheck from "../quotation/QuotationCheck";
 
 import { Button } from "../ui/button";
+import PaymentMP from "../payment/PaymentMP";
 
 export default function CartCheckout() {
   return (
@@ -18,6 +19,7 @@ export default function CartCheckout() {
           ></Link>
           <BsCart className="h-[1.2rem] w-[1.2rem]" /> Ver carrito
         </Button>
+
         <QuotationCheck />
       </div>
     </div>

@@ -23,6 +23,7 @@ import { z } from "zod";
 import { labels } from "./data/data";
 import { quotationSchema } from "./data/schema";
 import { ResumeQuotationTable } from "./resume-quotation";
+import PaymentMP from "@/components/payment/PaymentMP";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -36,7 +37,10 @@ export function DataTableRowActions<TData>({
   return (
     <DropdownMenu>
       <div className="relative">
-        <ResumeQuotationTable quotation={quotation} />
+        {/* <ResumeQuotationTable quotation={quotation} /> */}
+        <div className="">
+          <PaymentMP quotation={quotation} />
+        </div>
       </div>
       <DropdownMenuTrigger asChild>
         <div className="flex flex-row justify-end w-40 ">
@@ -74,7 +78,9 @@ export function DataTableRowActions<TData>({
     </DropdownMenu>
   );
 }
-export type Quotation = z.infer<typeof quotationSchema>;
+
+type Quotation = z.infer<typeof quotationSchema>;
+
 const handleGeneratePdf = (cotizacion: Quotation) => {
-  generatePdf(cotizacion); // Llama a la función generatePdf pasando la cotización como argumento
+  generatePdf(cotizacion);
 };

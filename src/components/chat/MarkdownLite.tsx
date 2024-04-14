@@ -33,7 +33,7 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
 
 export default function MarkdownLite({ text }: MarkdownLiteProps) {
   return (
-    <article className="prose prose-base max-w-none max-h-none  text-inherit">
+    <article className="prose prose-invert max-w-none max-h-none  text-inherit">
       <ReactMarkdown
         components={{
           a: ({ node, ...props }) => <MarkdownLink {...props} />,
