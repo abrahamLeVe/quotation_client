@@ -37,6 +37,14 @@ import { useState } from "react";
 import { Icons } from "../Icons";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import dynamic from "next/dynamic";
+
+const EmptyCartMessage = dynamic(
+  () => import("../cart/message/EmptyCartMessage"),
+  {
+    ssr: false,
+  }
+);
 
 interface CheckoutFormProps {
   session: Session | null;
@@ -158,292 +166,304 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
     }
   };
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Razón Social *</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Razón Social de su representada; en caso de ser a nombre de
-                    persona natural favor de indicarnos su número de DNI y la
-                    dirección de su domicilio.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Correo electrónico *</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+  if (session === null || products.length === 0) {
+    return (
+      <EmptyCartMessage
+        title="Carrito vacío o no tiene una cuenta registrada"
+        description="Explore nuestros productos y/o registrese para controlar sus pedidos."
+      />
+    );
+  } else {
+    return (
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Razón Social *</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
-                      </SelectTrigger>
+                      <Input {...field} />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value={session?.user.email!}>
-                        {session?.user.email}
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="tipe_doc"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tipo de documento *</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccione un tipo de documento" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="dni">DNI</SelectItem>
-                      <SelectItem value="ruc">RUC</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="direction"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Dirección *</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="num_doc"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Número de documento *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="DNI o RUC" {...field} type="number" />
-                  </FormControl>
-                  <FormDescription>
-                    Nombre de persona natural favor de indicarnos su número de
-                    DNI.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Teléfono de contacto *</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Número telefónico"
-                      {...field}
-                      type="number"
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
-                    Nombre de persona natural favor de indicarnos su número de
-                    DNI.
-                  </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="col-span-1">
-            <FormField
-              control={form.control}
-              name="departamento"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Departamento *</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      handleDepartamentoChange(value);
-                    }}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Elegir departamento" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {Object.keys(peru).map((departamentoId) => (
-                        <SelectItem key={departamentoId} value={departamentoId}>
-                          {peru[departamentoId].departamento}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    Seleccione un departamento para poder elegir una provincia
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="col-span-1" key={provincias.length}>
-            <FormField
-              control={form.control}
-              name="provincia"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Provincia *</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      handleProvinciaChange(value);
-                    }}
-                    defaultValue={field.value}
-                    disabled={!selectedDepartamento}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Elegir provincia" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {provincias.map((provincia) => (
-                        <SelectItem
-                          key={provincia.provincia_id}
-                          value={provincia.provincia_id}
-                        >
-                          {provincia.provincia}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    Seleccione una provincia para poder elegir un distrito
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="col-span-1" key={selectedProvincia}>
-            <FormField
-              control={form.control}
-              name="distrito"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Distrito *</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      handleDistritoChange(value);
-                    }}
-                    defaultValue={field.value}
-                    disabled={!selectedProvincia}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Elegir distrito" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {distritos.map((distrito) => (
-                        <SelectItem
-                          key={distrito.distrito_id}
-                          value={distrito.distrito_id}
-                        >
-                          {distrito.distrito}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>Seleccione un distrito</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-        <FormField
-          control={form.control}
-          name="details"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Comentarios</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Escribe tu mensaje aquí."
-                  {...field}
-                  className="resize-none"
-                />
-              </FormControl>
-              <FormDescription>
-                Tus comentarios por esta cotización.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="w-full flex">
-          <Button className="ml-auto" variant={"outline"} type="submit">
-            {isLoading && (
-              <Icons.spinner
-                className="mr-2 h-4 w-4 animate-spin"
-                aria-hidden="true"
+                    <FormDescription>
+                      Razón Social de su representada; en caso de ser a nombre
+                      de persona natural favor de indicarnos su número de DNI y
+                      la dirección de su domicilio.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
+            </div>
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Correo electrónico *</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a verified email to display" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={session?.user.email!}>
+                          {session?.user.email}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="tipe_doc"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tipo de documento *</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccione un tipo de documento" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="dni">DNI</SelectItem>
+                        <SelectItem value="ruc">RUC</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="direction"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Dirección *</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="num_doc"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Número de documento *</FormLabel>
+                    <FormControl>
+                      <Input placeholder="DNI o RUC" {...field} type="number" />
+                    </FormControl>
+                    <FormDescription>
+                      Nombre de persona natural favor de indicarnos su número de
+                      DNI.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Teléfono de contacto *</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Número telefónico"
+                        {...field}
+                        type="number"
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                      Nombre de persona natural favor de indicarnos su número de
+                      DNI.
+                    </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="col-span-1">
+              <FormField
+                control={form.control}
+                name="departamento"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Departamento *</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        handleDepartamentoChange(value);
+                      }}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Elegir departamento" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.keys(peru).map((departamentoId) => (
+                          <SelectItem
+                            key={departamentoId}
+                            value={departamentoId}
+                          >
+                            {peru[departamentoId].departamento}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Seleccione un departamento para poder elegir una provincia
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="col-span-1" key={provincias.length}>
+              <FormField
+                control={form.control}
+                name="provincia"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Provincia *</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        handleProvinciaChange(value);
+                      }}
+                      defaultValue={field.value}
+                      disabled={!selectedDepartamento}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Elegir provincia" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {provincias.map((provincia) => (
+                          <SelectItem
+                            key={provincia.provincia_id}
+                            value={provincia.provincia_id}
+                          >
+                            {provincia.provincia}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Seleccione una provincia para poder elegir un distrito
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="col-span-1" key={selectedProvincia}>
+              <FormField
+                control={form.control}
+                name="distrito"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Distrito *</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        handleDistritoChange(value);
+                      }}
+                      defaultValue={field.value}
+                      disabled={!selectedProvincia}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Elegir distrito" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {distritos.map((distrito) => (
+                          <SelectItem
+                            key={distrito.distrito_id}
+                            value={distrito.distrito_id}
+                          >
+                            {distrito.distrito}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>Seleccione un distrito</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <FormField
+            control={form.control}
+            name="details"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Comentarios</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Escribe tu mensaje aquí."
+                    {...field}
+                    className="resize-none"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Tus comentarios por esta cotización.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-            Enviar cotización
-            <span className="sr-only">Enviar cotización</span>
-          </Button>
-        </div>
-      </form>
-    </Form>
-  );
+          />
+          <div className="w-full flex">
+            <Button className="ml-auto" variant={"outline"} type="submit">
+              {isLoading && (
+                <Icons.spinner
+                  className="mr-2 h-4 w-4 animate-spin"
+                  aria-hidden="true"
+                />
+              )}
+              Enviar cotización
+              <span className="sr-only">Enviar cotización</span>
+            </Button>
+          </div>
+        </form>
+      </Form>
+    );
+  }
 }

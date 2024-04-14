@@ -51,7 +51,7 @@ export default function Slide({ data }: CarouselPluginProps) {
           <CarouselItem key={slide.id}>
             <div className="p-1">
               <Card className="transition-all duration-300 ease-in-out hover:bg-black dark:hover:bg-white hover:bg-opacity-10">
-                <CardContent className="p-0 lg:p-6 relative">
+                <CardContent className="p-0 lg:p-6 relative w-full h-full aspect-[16/6]">
                   {slide.attributes.image.data?.attributes.mime.startsWith(
                     "video/"
                   ) ? (
@@ -59,12 +59,12 @@ export default function Slide({ data }: CarouselPluginProps) {
                       src={slide.attributes.image.data?.attributes.url}
                       className="aspect-[16/6] w-full object-cover"
                       controls
-                      aria-label="slide.attributes.nam"
+                      aria-label={slide.attributes.name}
                     />
                   ) : (
                     <img
                       src={slide.attributes.image.data?.attributes.url}
-                      className="aspect-[16/6] w-full object-cover"
+                      className="aspect-[16/6] w-full h-full object-cover"
                       alt={slide.attributes.name}
                       loading="eager"
                     />

@@ -1,3 +1,4 @@
+"use client";
 const posts = [
   {
     id: 1,
@@ -7,7 +8,7 @@ const posts = [
       "Lo que realmente me impresionó fue la precisión de los precios y la rapidez con la que recibí mi cotización. En cuestión de minutos, ya tenía una estimación detallada que se ajustaba perfectamente a mi presupuesto.",
     date: "10 de abril del 2024",
     datetime: "2020-03-16",
-    category: { title: "Accesorios para trasformadores", href: "#" },
+    category: { title: "Cliente", href: "#" },
     author: {
       name: "Julio Sotelo Carpio",
       /* role: "Co-Founder / CTO", */
@@ -25,7 +26,7 @@ const posts = [
       "Me siento satisfecho por la calidad de los accesorios para transformadores que encontré en esta página. No solo son excelentes en rendimiento, sino que los precios también son muy razonables.",
     date: "01 de marzo del 2024",
     datetime: "2020-03-16",
-    category: { title: "Papel aislante", href: "#" },
+    category: { title: "Cliente", href: "#" },
     author: {
       name: "Fernando Castro Zumaeta",
       /* role: "Co-Founder / CTO", */
@@ -40,7 +41,7 @@ export default function Testimonials() {
   return (
     <div className="w-full py-14">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:mx-0">
+        <div className="mx-auto  lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Testimonios
           </h2>
@@ -65,19 +66,14 @@ export default function Testimonials() {
                 >
                   {post.date}
                 </time>
-                <a
-                  href={post.category.href}
-                  className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                >
+                <span className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                   {post.category.title}
-                </a>
+                </span>
               </div>
               <div className="group relative">
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-200">
-                  <a href={post.href}>
-                    <span className="absolute inset-0" />
-                    {post.title}
-                  </a>
+                  <span className="absolute inset-0" />
+                  {post.title}
                 </h3>
                 <p className="mt-5 line-clamp-5 text-sm leading-6 text-gray-600 dark:text-gray-500">
                   {post.description}
@@ -93,10 +89,8 @@ export default function Testimonials() {
   */}{" "}
                 <div className="text-sm leading-6">
                   <p className="font-semibold text-gray-900 dark:text-gray-400">
-                    <a href={post.author.href}>
-                      <span className="absolute inset-0" />
-                      {post.author.name}
-                    </a>
+                    <span className="absolute inset-0" />
+                    {post.author.name}
                   </p>
                   {/* <p className="text-gray-600">{post.author.role}</p> */}
                 </div>

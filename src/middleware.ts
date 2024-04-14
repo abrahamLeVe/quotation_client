@@ -6,7 +6,9 @@ export async function middleware(req: any) {
   const token = await getToken({ req });
 
   if (!token) {
-    return NextResponse.redirect(new URL("/api/auth/signin", req.url));
+    return new NextResponse("Este servicio es esclusivo para clientes.", {
+      status: 503,
+    });
   }
 
   const ip = req.ip ?? "127.0.0.1";
@@ -28,5 +30,5 @@ export async function middleware(req: any) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/checkout/:path*", "/api/message/:path*"],
+  matcher: ["/api/message/:path*"],
 };

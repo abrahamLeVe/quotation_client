@@ -52,14 +52,10 @@ export default function CheckoutLayout({
             Datos y productos de la cotización
           </div>
           <div className="flex flex-col lg:flex-row mt-8 relative gap-4 ">
-            {cart.cartItemState.length === 0 ? (
-              <LoadingCart />
-            ) : (
-              <>
-                {children}
-                <CartSummary isCart={false} />
-              </>
-            )}
+            <>
+              {children}
+              <CartSummary isCart={false} />
+            </>
           </div>
         </div>
       </main>

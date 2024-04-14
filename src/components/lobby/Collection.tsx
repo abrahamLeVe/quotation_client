@@ -1,7 +1,8 @@
 "use client";
 import { CategoriesInterface } from "@/models/category.model";
-import { Card, CardContent, CardFooter } from "../ui/card";
+import { shuffleArray } from "@/utilities/utils";
 import Link from "next/link";
+import { Card, CardContent, CardFooter } from "../ui/card";
 import {
   Tooltip,
   TooltipContent,
@@ -65,12 +66,4 @@ export default function Collection({ categories }: CollectionProps) {
       </CardContent>
     </Card>
   );
-}
-
-function shuffleArray<T>(array: T[]): T[] {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }

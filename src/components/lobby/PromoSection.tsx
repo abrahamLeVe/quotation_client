@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "../ui/button";
 
 export default function PromoSection() {
@@ -5,15 +6,19 @@ export default function PromoSection() {
     <div className="relative w-full overflow-hidden">
       <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
-          <div className="sm:max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-400">
+          <div className="sm:max-w-lg flex flex-col gap-4">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 lg:text-6xl dark:text-gray-400">
               Los mejores productos los tenemos nosotros
             </h1>
-            <p className="mt-4 text-xl text-gray-500"></p>
+
+            <a href="/ruta-de-tu-categoria" className="mt-4">
+              <Button variant={"outline"} className="font-medium">
+                Contactanos
+              </Button>
+            </a>
           </div>
           <div>
             <div className="mt-10">
-              {/* Decorative image grid */}
               <div
                 aria-hidden="true"
                 className="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
@@ -55,7 +60,6 @@ export default function PromoSection() {
                           loading="lazy"
                         />
                       </div>
-                     
                     </div>
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-44 w-44 overflow-hidden rounded-lg">
@@ -78,11 +82,6 @@ export default function PromoSection() {
                   </div>
                 </div>
               </div>
-              <a href="/ruta-de-tu-categoria">
-              <Button variant={"outline"} className="font-medium">
-                Contactanos
-              </Button>
-              </a>
             </div>
           </div>
         </div>

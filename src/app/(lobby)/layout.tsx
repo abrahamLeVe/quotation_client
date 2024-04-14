@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
+import { getDataProductsNSU } from "../services/product.service";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")

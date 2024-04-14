@@ -83,3 +83,17 @@ export async function filterProducts(
     console.log("error in filterProducts", error);
   }
 }
+
+export const getDataProductsNSU = cache(
+  async (): Promise<ProductsInterface> => {
+    const fieldsToPopulate = {
+      populate: ["thumbnail"],
+    };
+
+    const queryString = qs.stringify(fieldsToPopulate, {
+      encodeValuesOnly: true,
+    });
+    const res = await fetchDataFromApi(`/api/products?${queryString}`);
+    return res;
+  }
+);

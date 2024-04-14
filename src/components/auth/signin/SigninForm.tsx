@@ -23,7 +23,7 @@ import { PasswordInput } from "../AuthPassword";
 
 interface SigninFormProps {
   session: Session | null;
-  searchParams: {
+  searchParams?: {
     callbackUrl?: string;
     error?: string;
   };
@@ -107,7 +107,7 @@ export default function SigninForm({ session, searchParams }: SigninFormProps) {
             <span className="sr-only">Continue to email verification page</span>
           </Button>
 
-          {searchParams.error ? (
+          {searchParams?.error ? (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Error</AlertTitle>
