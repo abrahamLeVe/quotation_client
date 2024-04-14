@@ -2,7 +2,19 @@
 import { MessagesContext } from "@/context/messages.context";
 import { cn } from "@/lib/utils";
 import { HTMLAttributes, useContext } from "react";
-import MarkdownLite from "./MarkdownLite";
+import dynamic from "next/dynamic";
+import { Icons } from "../Icons";
+
+const MarkdownLite = dynamic(() => import("./MarkdownLite"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-[200px]  flex justify-center items-center">
+      <div className="w-[20px] h-[20px]">
+        <Icons.spinner />
+      </div>
+    </div>
+  ),
+});
 
 interface ChatMessagesProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -24,7 +36,7 @@ export default function ChatMessages({
     >
       <div className="flex-1 flex-grow" />
       {inverseMessages.map((message) => (
-        <div key={message.id} className="chat-message">
+        <div key={message.id} className="">
           <div
             className={cn("flex items-end", {
               "justify-end": message.isUserMessage,
@@ -47,7 +59,7 @@ export default function ChatMessages({
                     !message.isUserMessage,
                 })}
               >
-                <div className="">
+                <div className="break-words">
                   {!message.isUserMessage ? (
                     <img
                       src="./botMessage.png"
@@ -56,6 +68,7 @@ export default function ChatMessages({
                       loading="lazy"
                     />
                   ) : null}
+
                   <MarkdownLite text={message.text} />
                 </div>
               </div>

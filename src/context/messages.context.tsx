@@ -1,3 +1,5 @@
+"use client";
+import { getRandomMessage } from "@/hooks/useSpeech";
 import { Message } from "@/lib/validations/message";
 import { nanoid } from "nanoid";
 import { ReactNode, createContext, useState } from "react";
@@ -5,7 +7,7 @@ import { ReactNode, createContext, useState } from "react";
 const defaultValue = [
   {
     id: nanoid(),
-    text: "¿Hola, como puedo ayudarte?",
+    text: getRandomMessage(),
     isUserMessage: false,
   },
 ];

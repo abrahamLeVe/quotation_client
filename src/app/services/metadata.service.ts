@@ -11,7 +11,7 @@ export const getDataSlugProducts = cache(
       {
         sort: ["name:asc"],
         fields: ["slug"],
-        populate: {},
+        populate: ["thumbnail"],
       },
       { encodeValuesOnly: true }
     );
@@ -26,7 +26,7 @@ export const getDataNameCategories = cache(
       {
         sort: ["name:asc"],
         fields: ["name"],
-        populate: {},
+        populate: ["image"],
       },
       { encodeValuesOnly: true }
     );
@@ -40,7 +40,7 @@ export const getDataNameBrans = cache(async (): Promise<BrandsInterface> => {
     {
       sort: ["name:asc"],
       fields: ["name"],
-      populate: {},
+      populate: ["image"],
     },
     { encodeValuesOnly: true }
   );

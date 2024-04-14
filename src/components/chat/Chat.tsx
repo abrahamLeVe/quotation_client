@@ -25,11 +25,14 @@ export default function Chat() {
           <span aria-readonly={true}>Chatear</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 bg-white/75 dark:bg-black/75 backdrop-blur-md dark:border-zinc-200">
+      <PopoverContent
+        sideOffset={-75}
+        className=" max-w-[700px] w-full bg-white/75 dark:bg-black/75 backdrop-blur-md dark:border-zinc-200"
+      >
         <div className="w-full h-full flex flex-col top-0">
           <ChatHeader />
           <Separator className="border-t border-zinc-300" />
-          <div className="flex flex-col h-80">
+          <div className="flex flex-col min-h-80 max-h-[500px]">
             <ChatMessages className="px-2 py-3 flex-1" />
           </div>
           <ChatInput className="px-4" />
