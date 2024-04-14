@@ -37,9 +37,12 @@ export function DataTableRowActions<TData>({
   return (
     <DropdownMenu>
       <div className="relative">
-        {/* <ResumeQuotationTable quotation={quotation} /> */}
         <div className="">
-          <PaymentMP quotation={quotation} />
+          {quotation.codeStatus === "Completada" ? (
+            <PaymentMP quotation={quotation} />
+          ) : (
+            <ResumeQuotationTable quotation={quotation} />
+          )}
         </div>
       </div>
       <DropdownMenuTrigger asChild>
@@ -55,9 +58,10 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          {quotation.codeStatus === "Completada" ? (
+          {quotation.codeStatus === "Completada" ||
+          quotation.codeStatus === "Cerrada" ? (
             <button onClick={() => handleGeneratePdf(quotation)}>
-              Comprobante
+              Descargar comprobante
             </button>
           ) : (
             <>
@@ -69,7 +73,7 @@ export function DataTableRowActions<TData>({
           quotation.codeStatus === "Cancelada") && (
           <DropdownMenuItem>
             <DropdownMenuItem>
-              Delete
+              Archivar
               <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuItem>
