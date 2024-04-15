@@ -13,10 +13,6 @@ const CartSummary = dynamic(
     ssr: false,
   }
 );
-const LoadingCart = dynamic(() => import("@/components/cart/loading"), {
-  ssr: false,
-});
-
 export default function CheckoutLayout({
   children,
 }: {

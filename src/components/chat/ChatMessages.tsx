@@ -28,50 +28,47 @@ export default function ChatMessages({
   return (
     <div
       {...props}
-      className={cn("flex flex-col-reverse gap-3 overflow-y-auto ", className)}
+      className={cn("flex flex-col-reverse gap-4 overflow-y-auto ", className)}
       style={{
-        scrollbarWidth: "thin",
+        scrollbarWidth: "inherit",
         scrollbarColor: "#3b82f6 #e0f2fe",
       }}
     >
       <div className="flex-1 flex-grow" />
       {inverseMessages.map((message) => (
-        <div key={message.id} className="">
+        <div
+          key={message.id}
+          className={cn("flex items-end", {
+            "justify-end": message.isUserMessage,
+          })}
+        >
           <div
-            className={cn("flex items-end", {
-              "justify-end": message.isUserMessage,
-            })}
+            className={cn(
+              "flex flex-col space-y-2 text-sm  overflow-x-hidden",
+              {
+                "order-1 items-end": message.isUserMessage,
+                "order-2 items-start": !message.isUserMessage,
+              }
+            )}
           >
             <div
-              className={cn(
-                "flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden",
-                {
-                  "order-1 items-end": message.isUserMessage,
-                  "order-2 items-start": !message.isUserMessage,
-                }
-              )}
+              className={cn("px-4 py-2 rounded-lg max-w-sm", {
+                "bg-blue-600 text-white dark:text-blue-600 dark:bg-white":
+                  message.isUserMessage,
+                "bg-gray-900 text-white dark:backdrop-blur-md":
+                  !message.isUserMessage,
+              })}
             >
-              <div
-                className={cn("px-4 py-2 rounded-lg", {
-                  "bg-blue-600 text-white dark:text-blue-600 dark:bg-white":
-                    message.isUserMessage,
-                  "bg-gray-900 text-white dark:backdrop-blur-md":
-                    !message.isUserMessage,
-                })}
-              >
-                <div className="break-words">
-                  {!message.isUserMessage ? (
-                    <img
-                      src="./botMessage.png"
-                      alt="chat bot"
-                      className="w-[30px] h-[30px]"
-                      loading="lazy"
-                    />
-                  ) : null}
+              {!message.isUserMessage ? (
+                <img
+                  src="./botMessage.png"
+                  alt="chat bot"
+                  className="w-[30px] h-[30px]"
+                  loading="lazy"
+                />
+              ) : null}
 
-                  <MarkdownLite text={message.text} />
-                </div>
-              </div>
+              <MarkdownLite text={message.text} />
             </div>
           </div>
         </div>

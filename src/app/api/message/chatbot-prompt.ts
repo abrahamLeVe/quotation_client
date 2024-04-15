@@ -17,12 +17,14 @@ export async function generateChatbotPrompt(): Promise<string> {
   const sitemapURL = `${CLIENT_URL}/sitemap.xml`;
   const sitemapData = await readSitemapFromURL(sitemapURL);
 
-  const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en nuestra página de catálogo: [Aquí](${CLIENT_URL})${sitemapData}(<img
+  const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en:
+   [Aquí]${sitemapData}
+   [imagen](<img
             src="https://res.cloudinary.com/dmpmxzyrg/image/upload/v1711234059/thumbnail_Cinta_kapton_1_1327d12837.webp"
             alt="nombre del producto"
-            className="w-[40px] h-[40px]"
+            class="mi class name personalizado"
             loading="lazy"
-          />), lista con productos, categorías o marcas mayores a tres elementos brindas solo enlaces claves cortas, optimizadas sin imagenes, para mostrar todo lo posible. mostrar productos, categorías o marcas menores a tres elementos si mostrar imagen.`;
+          />), me encanta mostrar siempre imagen si voy a mostrar hasta 3, si quiere ver mas [Aquí]${sitemapData} galería o catálogo`;
 
   const companyInfo = `
     Nombre: ${companyData.nombre}
