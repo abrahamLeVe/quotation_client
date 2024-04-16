@@ -1,5 +1,6 @@
 import { User } from "@/models/auth.model";
 import { API_TOKEN, API_URL } from "../utilities/urls";
+let qs = require("qs");
 
 export async function fetchDataFromApi(endpoint: string): Promise<any> {
   try {
@@ -57,6 +58,11 @@ export async function login(endpoint: string, payload: any) {
 export async function getUserFromApi(jwt: string): Promise<User | undefined> {
   try {
     if (jwt) {
+      const params = {
+        "populate[quotations][populate][0]": "data",
+        "populate[payments][populate][0]": "quotation",
+      };
+
       const options = {
         method: "GET",
         headers: {
@@ -64,14 +70,26 @@ export async function getUserFromApi(jwt: string): Promise<User | undefined> {
         },
       };
 
-      const res = await fetch(`${API_URL}/api/users/me?populate=*`, options);
+      const url = `${API_URL}/api/users/me`;
 
-      return res.json();
+      const res = await fetch(`${url}?${qs.stringify(params)}`, options);
+
+      const userData = await res.json();
+
+      // Filtrar las citas con publishedAt no nulo
+      if (userData && userData.quotations) {
+        userData.quotations = userData.quotations.filter(
+          (quotation: any) => quotation.publishedAt !== null
+        );
+      }
+
+      return userData;
     } else {
       return;
     }
   } catch (error) {
     console.log("Error of getUserFromApi", error);
+    return undefined;
   }
 }
 
@@ -98,6 +116,26 @@ export async function changePassPost(endpoint: string, payload: any) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    return res.json();
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function putDataFromApi(
+  endpoint: string,
+  payload: any,
+  token?: string
+) {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (token || API_TOKEN),
       },
       body: JSON.stringify(payload),
     });

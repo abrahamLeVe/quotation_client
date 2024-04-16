@@ -6,7 +6,7 @@ const colorAttributesSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
   description: z.string(),
-  publishedAt: z.string(),
+  publishedAt: z.string().nullable(),
 });
 
 const colorSchema = z
@@ -39,7 +39,7 @@ export const quotationSchema = z.object({
   id: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
-  publishedAt: z.string(),
+  publishedAt: z.string().nullable(),
   email: z.string(),
   products: z.array(productSchema),
   name: z.string().nullable(),

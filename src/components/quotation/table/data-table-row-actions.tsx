@@ -7,23 +7,23 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import {
+  archiveQuotation,
+  cancelQuotation,
+} from "@/app/services/quotation.service";
+import PaymentMP from "@/components/payment/PaymentMP";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { generatePdf } from "@/components/voucher/voucher";
+import { FaDownload } from "react-icons/fa6";
+import { MdOutlineCancel } from "react-icons/md";
 import { z } from "zod";
-import { labels } from "./data/data";
 import { quotationSchema } from "./data/schema";
 import { ResumeQuotationTable } from "./resume-quotation";
-import PaymentMP from "@/components/payment/PaymentMP";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -33,6 +33,62 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const quotation = quotationSchema.parse(row.original);
+
+  async function handleCancelQuotation(idQuotation: number) {
+    const res = await cancelQuotation(idQuotation);
+    console.log("res ", res);
+    if (res.data === null && res.error) {
+      toast({
+        variant: "destructive",
+        title: res.error.message,
+        description: (
+          <div className="flex flex-col gap-3">
+            <span>{res.error.details}</span>
+          </div>
+        ),
+      });
+      // setIsLoading(false);
+    } else {
+      toast({
+        variant: "default",
+        title: "Éxito",
+        description:
+          "Cotización cancelada con éxito, revise su correo para mas información, gracias por su preferencia.",
+      });
+      // router.push("/dashboard/order");
+      // router.refresh();
+      // cart();
+      // setIsLoading(false);
+    }
+  }
+
+  async function handleArchiveQuotation(idQuotation: number) {
+    const res = await archiveQuotation(idQuotation);
+    console.log("res ", res);
+    if (res.data === null && res.error) {
+      toast({
+        variant: "destructive",
+        title: res.error.message,
+        description: (
+          <div className="flex flex-col gap-3">
+            <span>{res.error.details}</span>
+          </div>
+        ),
+      });
+      // setIsLoading(false);
+    } else {
+      toast({
+        variant: "default",
+        title: "Éxito",
+        description:
+          "Cotización cancelada con éxito, revise su correo para mas información, gracias por su preferencia.",
+      });
+      // router.push("/dashboard/order");
+      // router.refresh();
+      // cart();
+      // setIsLoading(false);
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -56,26 +112,62 @@ export function DataTableRowActions<TData>({
           </Button>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>
-          {quotation.codeStatus === "Completada" ||
-          quotation.codeStatus === "Cerrada" ? (
-            <button onClick={() => handleGeneratePdf(quotation)}>
-              Descargar comprobante
-            </button>
-          ) : (
-            <>
-              <button>Cancelar</button>
-            </>
-          )}
-        </DropdownMenuItem>
+      <DropdownMenuContent align="end" className="max-w-[300px] w-full">
+        {quotation.codeStatus === "Completada" ? (
+          <>
+            <DropdownMenuItem>
+              <button
+                onClick={() => handleGeneratePdf(quotation)}
+                className="flex gap-1"
+              >
+                <FaDownload />
+                Descargar comprobante
+              </button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <button
+                onClick={() => handleCancelQuotation(quotation.id)}
+                className="flex gap-1"
+              >
+                <MdOutlineCancel />
+                Cancelar
+              </button>
+            </DropdownMenuItem>
+          </>
+        ) : null}
+        {quotation.codeStatus === "Cerrada" ? (
+          <>
+            <DropdownMenuItem>
+              <button
+                onClick={() => handleGeneratePdf(quotation)}
+                className="flex gap-1"
+              >
+                <FaDownload />
+                Descargar comprobante
+              </button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <button
+                onClick={() => handleArchiveQuotation(quotation.id)}
+                className="flex gap-1"
+              >
+                Archivar
+                <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+              </button>
+            </DropdownMenuItem>
+          </>
+        ) : null}
+
         {(quotation.codeStatus === "Vencida" ||
           quotation.codeStatus === "Cancelada") && (
           <DropdownMenuItem>
-            <DropdownMenuItem>
+            <button
+              onClick={() => handleArchiveQuotation(quotation.id)}
+              className="flex gap-1"
+            >
               Archivar
               <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            </button>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

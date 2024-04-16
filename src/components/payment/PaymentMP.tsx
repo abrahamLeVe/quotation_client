@@ -26,6 +26,7 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
 
   return (
     <Wallet
+      key={quotation.id}
       initialization={{
         redirectMode: "modal",
       }}

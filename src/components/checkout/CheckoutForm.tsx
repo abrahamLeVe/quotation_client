@@ -25,19 +25,17 @@ import { Session } from "next-auth";
 
 import { createQuotation } from "@/app/services/quotation.service";
 import { useCartContext } from "@/context/cart.context";
-import { handleErrorMessage } from "@/lib/exceptions";
 import {
   ProfileFormValues,
   dataQuotationFormSchema,
 } from "@/lib/validations/formDataQuotation";
 import { cartStore } from "@/store/cart.store";
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Icons } from "../Icons";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import dynamic from "next/dynamic";
 
 const EmptyCartMessage = dynamic(
   () => import("../cart/message/EmptyCartMessage"),
@@ -93,16 +91,12 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
     const res = await createQuotation({ products, dataQuotation: data });
 
     if (res.data === null && res.error) {
-      const errorMessage = handleErrorMessage(res.error);
       toast({
         variant: "destructive",
-        title: "Error de credenciales",
+        title: res.error.message,
         description: (
           <div className="flex flex-col gap-3">
-            <span>{errorMessage}</span>
-            <span className="underline">
-              <Link href={"/auth/signin"}>Ingresar click Aquí</Link>
-            </span>
+            <span>{res.error.details}</span>
           </div>
         ),
       });
@@ -178,7 +172,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
+          // className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1">
