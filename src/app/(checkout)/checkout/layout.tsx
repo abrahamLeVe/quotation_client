@@ -13,6 +13,7 @@ const CartSummary = dynamic(
     ssr: false,
   }
 );
+
 export default function CheckoutLayout({
   children,
 }: {

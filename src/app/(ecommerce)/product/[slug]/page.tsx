@@ -1,8 +1,5 @@
 import { getDataSlugProducts } from "@/app/services/metadata.service";
-import {
-  getDataProductBySlug,
-  getDataProductSlug,
-} from "@/app/services/product.service";
+import { getDataProductBySlug } from "@/app/services/product.service";
 import ProductDetail from "@/components/product/ProductDetail";
 import ImageGalleryModal from "@/components/ui/ImageGallery";
 

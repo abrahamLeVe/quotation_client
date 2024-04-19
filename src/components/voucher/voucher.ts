@@ -107,20 +107,40 @@ export function generatePdf(cotizacion: Quotation) {
           styles: { fontSize: 12, cellWidth: "wrap", cellPadding: 1 },
         });
 
+        // Productos y sus detalles
         const productsInQuotation = cotizacion.products.map((product) => {
+          const colorDetails = product
+            .colors!.map(
+              (color) => `${color!.color.attributes.name} x${color!.quantity}`
+            )
+            .join(", ");
+          const measure = product.size ? product.size : "N/A";
           return {
             name: product.title || "Producto sin título",
             quantity: product.quantity,
+            measure,
             subtotal: product.value ? product.quantity * product.value : 0,
+            colors: colorDetails || "N/A",
           };
         });
 
         autoTable(doc, {
-          head: [["Ítem", "Descripción", "Cantidad", "Subtotal"]],
+          head: [
+            [
+              "Ítem",
+              "Descripción",
+              "Cantidad",
+              "Medidas",
+              "Colores",
+              "Subtotal",
+            ],
+          ],
           body: productsInQuotation.map((product, index) => [
             index + 1,
             product.name,
-            { content: product.quantity, styles: { halign: "right" } },
+            product.quantity,
+            product.measure,
+            product.colors,
             {
               content: formatCurrency(product.subtotal),
               styles: { halign: "right" },
@@ -130,7 +150,6 @@ export function generatePdf(cotizacion: Quotation) {
           theme: "grid",
           styles: { fontSize: 12 },
         });
-
         const total = productsInQuotation.reduce(
           (acc, product) => acc + product.subtotal,
           0

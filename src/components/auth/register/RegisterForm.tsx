@@ -75,7 +75,7 @@ export default function RegisterForm({
               </span>
             </div>
           ),
-          duration: 50000,
+          duration: 5000,
         });
       } else {
         const errorMessage = handleErrorMessage(res.error);
@@ -87,7 +87,7 @@ export default function RegisterForm({
             <div className="flex flex-col gap-3">
               <span>{errorMessage}</span>
               <span className="underline">
-                <Link href={"/auth/signin"}>Ingresar click Aquí</Link>
+                <Link href={"/auth/resetpass"}>Restablecer contraseña</Link>
               </span>
             </div>
           ),

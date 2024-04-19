@@ -15,14 +15,14 @@ export async function POST(request: NextRequest) {
   //   if (secret !== process.env.SECRET) return Response.json({ success: false });
 
   const payment = await new Payment(client).get({ id: body.data.id });
+
   if (payment) {
     if (payment.status === "approved") {
       const order = {
         payment_id: payment.id,
         amount: payment.transaction_amount,
         status: payment.status,
-        quotation: payment.metadata.quotation,
-        user: payment.metadata.user_id,
+        cotizacion: payment.metadata.cotizacion,
         userToken: payment.metadata.user_token,
       };
       await createOrder(order);

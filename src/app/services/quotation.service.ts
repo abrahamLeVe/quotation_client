@@ -34,7 +34,7 @@ export async function createQuotation({
 export async function cancelQuotation(idQuotation: number) {
   const session = await getServerSession(options);
   const token = session?.user.accessToken;
-  console.log(idQuotation);
+  console.log(session?.user.userId);
   try {
     const res = await putDataFromApi(
       `/api/quotations/${idQuotation.toString()}`,
@@ -44,6 +44,7 @@ export async function cancelQuotation(idQuotation: number) {
           state: 5,
           codeStatus: "Cancelada",
           email: session?.user.email,
+          userId: session?.user.userId,
         },
       },
       token
@@ -66,6 +67,7 @@ export async function archiveQuotation(idQuotation: number) {
           id: idQuotation,
           codeStatus: "Cerrada",
           publishedAt: null,
+          userId: session?.user.userId,
         },
       },
       token

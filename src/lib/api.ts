@@ -58,11 +58,6 @@ export async function login(endpoint: string, payload: any) {
 export async function getUserFromApi(jwt: string): Promise<User | undefined> {
   try {
     if (jwt) {
-      const params = {
-        "populate[quotations][populate][0]": "data",
-        "populate[payments][populate][0]": "quotation",
-      };
-
       const options = {
         method: "GET",
         headers: {
@@ -70,13 +65,12 @@ export async function getUserFromApi(jwt: string): Promise<User | undefined> {
         },
       };
 
-      const url = `${API_URL}/api/users/me`;
-
-      const res = await fetch(`${url}?${qs.stringify(params)}`, options);
-
+      const res = await fetch(
+        `${API_URL}/api/users/me?populate[quotations][populate][0]=pago`,
+        options
+      );
       const userData = await res.json();
 
-      // Filtrar las citas con publishedAt no nulo
       if (userData && userData.quotations) {
         userData.quotations = userData.quotations.filter(
           (quotation: any) => quotation.publishedAt !== null

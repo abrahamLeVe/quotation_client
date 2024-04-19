@@ -8,7 +8,6 @@ import { generateChatbotPrompt } from "./chatbot-prompt";
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
-  // console.log("message route ", messages);
 
   const parsedMessages = MessageArraySchema.parse(messages);
 

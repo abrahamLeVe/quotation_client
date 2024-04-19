@@ -44,7 +44,7 @@ export function ResumeQuotationTable({ quotation }: ResumeQuotationTProps) {
       <DialogTrigger asChild>
         <Button
           className={
-            "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
+            "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md  "
           }
           title="Ver mas detalles"
         >

@@ -2,17 +2,16 @@ import { fetchDataFromApi } from "@/lib/api";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
 import { processQuery } from "@/utilities/validators/search.validator";
-import { cache } from "react";
 let qs = require("qs");
 
-export const getDataProducts = cache(async (): Promise<ProductsInterface> => {
+export const getDataProducts = async (): Promise<ProductsInterface> => {
   const queryString = qs.stringify(
     { sort: ["name:asc"], populate },
     { encodeValuesOnly: true }
   );
   const res = await fetchDataFromApi(`/api/products?${queryString}`);
   return res;
-});
+};
 
 export const getDataProductSlug = async (): Promise<ProductsInterface> => {
   const res = await fetchDataFromApi(`/api/products`);
@@ -84,16 +83,14 @@ export async function filterProducts(
   }
 }
 
-export const getDataProductsNSU = cache(
-  async (): Promise<ProductsInterface> => {
-    const fieldsToPopulate = {
-      populate: ["thumbnail"],
-    };
+export const getDataProductsNSU = async (): Promise<ProductsInterface> => {
+  const fieldsToPopulate = {
+    populate: ["thumbnail"],
+  };
 
-    const queryString = qs.stringify(fieldsToPopulate, {
-      encodeValuesOnly: true,
-    });
-    const res = await fetchDataFromApi(`/api/products?${queryString}`);
-    return res;
-  }
-);
+  const queryString = qs.stringify(fieldsToPopulate, {
+    encodeValuesOnly: true,
+  });
+  const res = await fetchDataFromApi(`/api/products?${queryString}`);
+  return res;
+};

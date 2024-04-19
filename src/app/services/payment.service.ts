@@ -4,7 +4,6 @@ import { quotationSchema } from "@/components/quotation/table/data/schema";
 import { postDataFromApi } from "@/lib/api";
 import MercadoPagoConfig, { Preference } from "mercadopago";
 import { Items } from "mercadopago/dist/clients/commonTypes";
-import { PaymentResponse } from "mercadopago/dist/clients/payment/commonTypes";
 import { getServerSession } from "next-auth";
 
 import { z } from "zod";
@@ -31,8 +30,9 @@ export async function payMercadoPago(quotation: Quotation) {
     body: {
       items,
       metadata: {
-        quotation: quotation,
-        userId: session?.user.userId,
+        cotizacion: {
+          id: quotation.id,
+        },
         userToken: session?.user.accessToken,
       },
     },
@@ -46,17 +46,17 @@ interface OrderProps {
   payment_id: number | undefined;
   amount: number | undefined;
   status: string | undefined;
-  quotation: Quotation;
-  user: number;
+  cotizacion: {
+    id: number;
+  };
   userToken: string;
 }
 
 export async function createOrder(order: OrderProps) {
-  const id = order?.user;
   const res = await postDataFromApi(
     "/api/payments",
     {
-      data: { ...order, user: { id } },
+      data: order,
     },
     order.userToken
   );

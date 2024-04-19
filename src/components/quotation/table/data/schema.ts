@@ -1,5 +1,18 @@
 import { z } from "zod";
 
+const pagoSchema = z
+  .object({
+    id: z.number(),
+    payment_id: z.string(),
+    amount: z.number(),
+    status: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    publishedAt: z.string(),
+  })
+  .optional()
+  .nullable();
+
 const colorAttributesSchema = z.object({
   code: z.string(),
   name: z.string(),
@@ -53,6 +66,7 @@ export const quotationSchema = z.object({
   dateLimit: z.string(),
   codeStatus: z.string().nullable(),
   location: locationSchema,
+  pago: pagoSchema,
 });
 
 export type Quotation = z.infer<typeof quotationSchema>;

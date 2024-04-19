@@ -1,9 +1,10 @@
-const CURRENCY_FORMATER = new Intl.NumberFormat("en-US", {
-  currency: "USD",
+const CURRENCY_FORMATTER = new Intl.NumberFormat("es-PE", {
+  currency: "PEN",
   style: "currency",
 });
-export function formatCurrency(number: number) {
-  return CURRENCY_FORMATER.format(number);
+
+export function formatCurrency(number: number | bigint) {
+  return CURRENCY_FORMATTER.format(number);
 }
 
 export function truncate(str: string, length: number) {

@@ -158,10 +158,10 @@ export function convertirNumeroALetras(num: number): string {
     enteros: Math.floor(entero),
     centavos: decimal,
     letrasCentavos: "",
-    letrasMonedaPlural: "DÓLARES",
-    letrasMonedaSingular: "DÓLAR",
-    letrasMonedaCentavoPlural: "CENTAVOS",
-    letrasMonedaCentavoSingular: "CENTAVO",
+    letrasMonedaPlural: "SOLES",
+    letrasMonedaSingular: "SOL",
+    letrasMonedaCentavoPlural: "CENTIMOS",
+    letrasMonedaCentavoSingular: "CENTIMO",
   };
 
   if (data.centavos > 0) {
@@ -189,11 +189,11 @@ export function convertirNumeroALetras(num: number): string {
 
 function convertirCentavos(num: number): string {
   if (num === 1) {
-    return "UN " + "CENTAVO";
+    return "UN " + "CENTIMO";
   } else if (num < 10) {
-    return Unidades(num) + " " + "CENTAVOS";
+    return Unidades(num) + " " + "CENTIMOS";
   } else if (num >= 10) {
-    return Decenas(num) + " " + "CENTAVOS";
+    return Decenas(num) + " " + "CENTIMOS";
   } else {
     return "";
   }

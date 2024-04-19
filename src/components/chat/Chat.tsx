@@ -32,7 +32,7 @@ export default function Chat() {
         <div className="flex flex-col">
           <ChatHeader />
           <Separator className="border-t border-zinc-300" />
-          <div className="flex flex-col min-h-80 max-h-[500px]">
+          <div className="flex flex-col h-full max-h-[450px]">
             <ChatMessages className="px-2 py-3 flex-1" />
           </div>
           <ChatInput className="px-4" />

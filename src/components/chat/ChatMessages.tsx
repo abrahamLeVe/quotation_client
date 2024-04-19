@@ -30,7 +30,7 @@ export default function ChatMessages({
       {...props}
       className={cn("flex flex-col-reverse gap-4 overflow-y-auto ", className)}
       style={{
-        scrollbarWidth: "inherit",
+        scrollbarWidth: "thin",
         scrollbarColor: "#3b82f6 #e0f2fe",
       }}
     >
