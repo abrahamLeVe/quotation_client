@@ -24,12 +24,13 @@ import { quotationSchema } from "./data/schema";
 import { ResumeQuotationTable } from "./resume-quotation";
 import { useRouter } from "next/navigation";
 import { voucheMP } from "@/components/voucher/voucherMP";
-import dynamic from "next/dynamic";
+import PaymentMP from "@/components/payment/PaymentMP";
+// import dynamic from "next/dynamic";
 
-const PaymentMP = dynamic(() => import("@/components/payment/PaymentMP"), {
-  ssr: false,
-  loading: () => <div className="w-[346px] h-[103px]">Cargando ajajajajaj</div>,
-});
+// const PaymentMP = dynamic(() => import("@/components/payment/PaymentMP"), {
+//   ssr: false,
+//   loading: () => <div className="w-[346px] h-[103px]">Cargando ajajajajaj</div>,
+// });
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

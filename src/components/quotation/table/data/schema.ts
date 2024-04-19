@@ -8,7 +8,7 @@ const pagoSchema = z
     status: z.string(),
     createdAt: z.string(),
     updatedAt: z.string(),
-    publishedAt: z.string(),
+    publishedAt: z.string().nullable(),
   })
   .optional()
   .nullable();
