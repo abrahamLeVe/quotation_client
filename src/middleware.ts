@@ -5,6 +5,8 @@ import { ratelimiter } from "./lib/rate-limiter";
 export async function middleware(req: any) {
   const token = await getToken({ req });
   console.log("get token provider ", token);
+  console.log("req middleware ", req);
+
   if (!token) {
     return new NextResponse("Este servicio es esclusivo para clientes.", {
       status: 503,
