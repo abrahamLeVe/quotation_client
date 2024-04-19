@@ -1,5 +1,4 @@
 "use client";
-import ProductSearch from "@/components/ui/search";
 import { ProductInterface, ProductsInterface } from "@/models/products.model";
 import { Suspense, useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
@@ -20,6 +19,7 @@ import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
 import { Card, CardContent } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { useProductContext } from "@/context/product.context";
+import Search from "../ui/search";
 
 export default function ProductTable({
   products,
@@ -85,10 +85,7 @@ export default function ProductTable({
       {products === undefined ? (
         <>
           <Suspense>
-            <ProductSearch
-              placeholder={`Buscar por ${name}`}
-              title={`${name}: `}
-            />
+            <Search placeholder={`Buscar por ${name}`} title={`${name}: `} />
           </Suspense>
           <ProductsTableSkeleton />
         </>
@@ -96,10 +93,7 @@ export default function ProductTable({
         <>
           <div className="flex flex-col md:flex-row gap-5">
             <Suspense>
-              <ProductSearch
-                placeholder={`Buscar por ${name}`}
-                title={`${name}: `}
-              />
+              <Search placeholder={`Buscar por ${name}`} title={`${name}: `} />
             </Suspense>
             <Card className="flex flex-col w-full items-center justify-center md:w-3/4 ">
               <CardContent className="flex flex-row flex-wrap w-full justify-between  gap-6 p-4">
