@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth/next";
 import { ratelimiter } from "./lib/rate-limiter";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
 export async function middleware(req: any) {
-  const token = await getToken({ req });
-  console.log("get token provider ", token);
-  console.log("req middleware ", req);
+  const session = await getServerSession(options);
+  console.log("get token provider ", session);
 
-  if (!token) {
+  if (!session) {
     return new NextResponse("Este servicio es esclusivo para clientes.", {
       status: 503,
     });
