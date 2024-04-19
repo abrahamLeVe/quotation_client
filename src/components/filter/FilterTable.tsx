@@ -19,7 +19,7 @@ import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
 import { Card, CardContent } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { useProductContext } from "@/context/product.context";
-import Search from "@/components/ui/search";
+import Search from "@/components/ui/search-filter";
 
 export default function ProductTable({
   products,
