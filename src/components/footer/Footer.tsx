@@ -47,11 +47,11 @@ export default function Footer() {
       const res = await registerNewsletter({ data });
       console.log(res);
 
-      if (!res?.data) {
+      if (res.data === null) {
         return toast({
           variant: "default",
           title: "Registro",
-          description: "Gracias por su suscripción",
+          description: "Usted ya está suscrito",
         });
       } else {
         return toast({

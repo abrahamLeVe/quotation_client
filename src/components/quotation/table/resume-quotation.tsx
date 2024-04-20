@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/table";
 import { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Tooltip, TooltipProvider } from "@radix-ui/react-tooltip";
-import { BsEye } from "react-icons/bs";
 import { z } from "zod";
 import { quotationSchema } from "./data/schema";
 
@@ -42,14 +41,7 @@ export function ResumeQuotationTable({ quotation }: ResumeQuotationTProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          className={
-            "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md  "
-          }
-          title="Ver mas detalles"
-        >
-          Resumen
-        </Button>
+        <Button title="Ver mas detalles">Resumen</Button>
       </DialogTrigger>
       <DialogContent className="lg:max-w-6xl h-full max-h-[600px]">
         <ScrollArea>

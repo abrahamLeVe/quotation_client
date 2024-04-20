@@ -31,43 +31,40 @@ export async function createQuotation({
   }
 }
 
-export async function cancelQuotation(idQuotation: number) {
-  const session = await getServerSession(options);
-  const token = session?.user.accessToken;
-  console.log(session?.user.userId);
-  try {
-    const res = await putDataFromApi(
-      `/api/quotations/${idQuotation.toString()}`,
-      {
-        data: {
-          id: idQuotation,
-          state: 5,
-          codeStatus: "Cancelada",
-          email: session?.user.email,
-          userId: session?.user.userId,
-        },
-      },
-      token
-    );
-    return res;
-  } catch (error) {
-    console.log("error in putDataFromApi", error);
-  }
+export interface UpdateQuotationProps {
+  idQuotation: number;
+  codeStatus?: string;
+  state?: number;
+  isArchived?: boolean;
 }
 
-export async function archiveQuotation(idQuotation: number) {
+export async function updateQuotation({
+  idQuotation,
+  codeStatus = "Cancelada",
+  state = 5,
+  isArchived = false,
+}: UpdateQuotationProps) {
   const session = await getServerSession(options);
   const token = session?.user.accessToken;
-  console.log(idQuotation);
+  let data = {};
+
+  if (isArchived === true) {
+    data = {
+      publishedAt: null,
+    };
+  }
+
   try {
     const res = await putDataFromApi(
       `/api/quotations/${idQuotation.toString()}`,
       {
         data: {
+          ...data,
           id: idQuotation,
-          codeStatus: "Cerrada",
-          publishedAt: null,
+          codeStatus: codeStatus,
+          state: state,
           userId: session?.user.userId,
+          email: session?.user.email,
         },
       },
       token

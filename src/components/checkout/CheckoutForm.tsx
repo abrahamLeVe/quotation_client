@@ -109,9 +109,9 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
         description:
           "Cotización enviada con éxito, revise su correo para mas información, gracias por su preferencia.",
       });
-      router.push("/dashboard/order");
-      router.refresh();
-      cart();
+      // router.push("/dashboard/order");
+      // router.refresh();
+      // cart();
       setIsLoading(false);
     }
   }
@@ -162,10 +162,12 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
 
   if (session === null || products.length === 0) {
     return (
-      <EmptyCartMessage
-        title="Carrito vacío o no tiene una cuenta registrada"
-        description="Explore nuestros productos y/o registrese para controlar sus pedidos."
-      />
+      <div className="w-full flex-1">
+        <EmptyCartMessage
+          title="Gracias por su preferencia"
+          description="Revise su correo electrónico para mayor información."
+        />
+      </div>
     );
   } else {
     return (

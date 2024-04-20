@@ -5,6 +5,7 @@ import { postDataFromApi } from "@/lib/api";
 import MercadoPagoConfig, { Preference } from "mercadopago";
 import { Items } from "mercadopago/dist/clients/commonTypes";
 import { getServerSession } from "next-auth";
+import { CLIENT_URL } from "@/utilities/urls";
 
 import { z } from "zod";
 
@@ -35,6 +36,13 @@ export async function payMercadoPago(quotation: Quotation) {
         },
         userToken: session?.user.accessToken,
       },
+      back_urls: {
+        success: `${CLIENT_URL}/dashboard/order`,
+        failure: `${CLIENT_URL}/dashboard/order`,
+        pending: `${CLIENT_URL}/dashboard/order`,
+      },
+      auto_return: "approved",
+      statement_descriptor: "Consorcio A&C Eléctrica S.A.C",
     },
   });
 

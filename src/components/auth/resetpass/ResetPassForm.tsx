@@ -138,11 +138,6 @@ export default function ResetPassForm({
             Se ha enviado un correo electrónico de confirmación. Por favor,
             revise su bandeja de entrada y haga clic en el enlace de
             confirmación.
-            <Button className="flex flex-col gap-3">
-              <span className="underline">
-                <Link href={"/auth/signin"}>Ingresar</Link>
-              </span>
-            </Button>
           </AlertDescription>
         </Alert>
       )}

@@ -1,4 +1,5 @@
 "use client";
+import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import {
   Card,
   CardContent,
@@ -21,6 +22,18 @@ export default function SigninLayout({
         isLoading && "pointer-events-none"
       } `}
     >
+      <Breadcrumbs
+        segments={[
+          {
+            title: "Inicio",
+            href: "/",
+          },
+          {
+            title: "Restablecer contraseña",
+            href: "",
+          },
+        ]}
+      />
       <Card className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Restablecer la contraseña</CardTitle>

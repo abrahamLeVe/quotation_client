@@ -23,6 +23,13 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
     setTheme("light");
     return preferenceId;
   }
+  const customization = {
+    visual: {
+      buttonBackground: "black",
+      borderRadius: "16px",
+      with: "200px",
+    },
+  };
 
   return (
     <Wallet
@@ -30,7 +37,9 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
       initialization={{
         redirectMode: "modal",
       }}
-      customization={{}}
+      customization={{
+        visual: {},
+      }}
       onSubmit={onSubmit}
     />
   );
