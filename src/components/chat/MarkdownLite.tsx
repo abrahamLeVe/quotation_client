@@ -12,17 +12,21 @@ interface MarkdownLinkProps {
   children?: ReactNode;
 }
 
-const MarkdownLink: React.FC<MarkdownLinkProps> = ({ href, children }) => {
-  if (!href) return <>{children}</>; // Render children directly if no href
+const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
+  if (!children) return null;
+
+  if (!href) {
+    return <>{children}</>;
+  }
 
   return (
-    <Link href={href} passHref>
-      <a
-        rel="noopener noreferrer"
-        className="break-words underline underline-offset-2 text-blue-600"
-      >
-        {children}
-      </a>
+    <Link
+      href={href}
+      passHref
+      rel="noopener noreferrer"
+      className="break-words underline underline-offset-2 text-blue-600"
+    >
+      {children}
     </Link>
   );
 };

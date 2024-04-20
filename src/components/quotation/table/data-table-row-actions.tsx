@@ -95,11 +95,11 @@ export function DataTableRowActions<TData>({
 
   return (
     <DropdownMenu>
-      {quotation.codeStatus === "Completada" ? (
+      {quotation.codeStatus === "Completada" ?? (
         <div className="w-[346px] h-[103px]">
           <PaymentMP quotation={quotation} />
         </div>
-      ) : null}
+      )}
       {quotation.codeStatus === "En progreso" ? (
         <div className="flex flex-row justify-start w-40 ">
           <div className="flex h-8 w-8 p-0">
@@ -121,7 +121,7 @@ export function DataTableRowActions<TData>({
       )}
 
       <DropdownMenuContent align="end" className="max-w-[300px] w-full">
-        {quotation.codeStatus === "Completada" ? (
+        {quotation.codeStatus === "Completada" ?? (
           <>
             <DropdownMenuItem
               className="flex gap-1"
@@ -138,8 +138,8 @@ export function DataTableRowActions<TData>({
               Cancelar
             </DropdownMenuItem>
           </>
-        ) : null}
-        {quotation.codeStatus === "Cerrada" ? (
+        )}
+        {quotation.codeStatus === "Cerrada" ?? (
           <>
             {quotation.pago === null ? (
               <DropdownMenuItem
@@ -159,7 +159,7 @@ export function DataTableRowActions<TData>({
               </DropdownMenuItem>
             )}
           </>
-        ) : null}
+        )}
 
         {(quotation.codeStatus === "Vencida" ||
           quotation.codeStatus === "Cancelada") && (
