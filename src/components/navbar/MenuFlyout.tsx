@@ -10,6 +10,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { BrandsInterface } from "@/models/brand";
@@ -80,7 +81,13 @@ export default function FlyoutMenu({ categories, brands }: FlyoutMenuProps) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink>{/* <ContactForm /> */}</NavigationMenuLink>
+        <Link href="/nosotros" legacyBehavior passHref>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle() + " bg-inherit"}
+            >
+              Nosotros
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
