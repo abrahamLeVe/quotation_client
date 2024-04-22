@@ -1,158 +1,18 @@
-"use client";
-import { registerNewsletter } from "@/app/services/auth.service";
-import { emailSchema } from "@/lib/validations/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { z } from "zod";
-import { Icons } from "../Icons";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Button } from "../ui/button";
-import { toast } from "../ui/use-toast";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+const SuscriptionForm = dynamic(
+  () => import("../suscription/SuscriptionForm"),
+  {
+    ssr: false,
+  }
+);
+
+import dynamic from "next/dynamic";
 
 export default function Footer() {
-  const [errorFetch, setErrorFetch] = useState();
-  const [isPending, setIsPending] = useState(false);
-
-  type Inputs = z.infer<typeof emailSchema>;
-
-  const form = useForm<Inputs>({
-    resolver: zodResolver(emailSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
-
-  async function onSubmit(data: Inputs) {
-    setIsPending(true);
-
-    try {
-      console.log({ data });
-
-      const res = await registerNewsletter({ data });
-      console.log(res);
-
-      if (res.data === null) {
-        return toast({
-          variant: "default",
-          title: "Registro",
-          description: "Usted ya está suscrito",
-        });
-      } else {
-        return toast({
-          variant: "default",
-          title: "Registro",
-          description: "Gracias por su suscripción",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      return error;
-    } finally {
-      setIsPending(false);
-    }
-  }
-
-  const socialLinks = [
-    {
-      id: 1,
-      icon: <BsFacebook className={"w-6 h-6"} />,
-      label: "Facebook",
-      link: "https://www.facebook.com/",
-    },
-    {
-      id: 2,
-      icon: <FaSquareXTwitter className={"w-6 h-6"} />,
-      label: "Twitter",
-      link: "https://twitter.com/",
-    },
-    {
-      id: 3,
-      icon: <AiFillYoutube className={"w-6 h-6"} />,
-      label: "YouTube",
-      link: "https://www.youtube.com/",
-    },
-    {
-      id: 4,
-      icon: <AiFillInstagram className={"w-6 h-6"} />,
-      label: "Instagram",
-      link: "https://www.instagram.com/",
-    },
-  ];
-
-  const nosotros = [
-    {
-      id: 1,
-      label: "Nosotros",
-      link: "/nosotros",
-    },
-    {
-      id: 2,
-      label: "Políticas de privacidad",
-      link: "/politicas-de-privacidad",
-    },
-    {
-      id: 3,
-      label: "Políticas de cookies",
-      link: "/politicas-de-cookies",
-    },
-  ];
-
-  const servicios = [
-    {
-      id: 1,
-      label: "Política de envíos",
-      link: "/nosotros",
-    },
-    {
-      id: 2,
-      label: "Política de devoluciones",
-      link: "/politicas-de-privacidad",
-    },
-    {
-      id: 3,
-      label: "Preguntas frecuentes",
-      link: "/politicas-de-cookies",
-    },
-    {
-      id: 4,
-      label: "Guía de tallas",
-      link: "/politicas-de-cookies",
-    },
-  ];
-
-  const contacto = [
-    {
-      id: 1,
-      label: "Agenda tu cita",
-      link: "/nosotros",
-    },
-    {
-      id: 2,
-      label: "Tiendas / Ubicaciones",
-      link: "/politicas-de-privacidad",
-    },
-    {
-      id: 3,
-      label: "Email / Contacto",
-      link: "/politicas-de-cookies",
-    },
-  ];
   return (
     <footer className="bg-slate-200 dark:bg-gray-900">
       <div className=" md:container px-6 py-12 mx-auto">
@@ -163,51 +23,7 @@ export default function Footer() {
             </h1>
 
             <div className="flex flex-col mx-auto mt-6 space-y-3  gap-2">
-              <Form {...form}>
-                <form
-                  className="grid gap-4"
-                  onSubmit={(...args) =>
-                    void form.handleSubmit(onSubmit)(...args)
-                  }
-                >
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Correo electrónico</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="rodneymullen180@gmail.com"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button disabled={isPending}>
-                    {isPending && (
-                      <Icons.spinner
-                        className="mr-2 h-4 w-4 animate-spin"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Suscribirse
-                    <span className="sr-only">Suscribirse</span>
-                  </Button>
-                  {errorFetch ? (
-                    <Alert variant="destructive">
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertTitle>Error</AlertTitle>
-                      <AlertDescription>
-                        El correo electrónico y/o la contraseña son incorrectos.
-                      </AlertDescription>
-                    </Alert>
-                  ) : null}
-                </form>
-              </Form>
+              <SuscriptionForm />
             </div>
           </div>
 
@@ -301,3 +117,89 @@ export default function Footer() {
     </footer>
   );
 }
+
+const socialLinks = [
+  {
+    id: 1,
+    icon: <BsFacebook className={"w-6 h-6"} />,
+    label: "Facebook",
+    link: "https://www.facebook.com/",
+  },
+  {
+    id: 2,
+    icon: <FaSquareXTwitter className={"w-6 h-6"} />,
+    label: "Twitter",
+    link: "https://twitter.com/",
+  },
+  {
+    id: 3,
+    icon: <AiFillYoutube className={"w-6 h-6"} />,
+    label: "YouTube",
+    link: "https://www.youtube.com/",
+  },
+  {
+    id: 4,
+    icon: <AiFillInstagram className={"w-6 h-6"} />,
+    label: "Instagram",
+    link: "https://www.instagram.com/",
+  },
+];
+
+const nosotros = [
+  {
+    id: 1,
+    label: "Nosotros",
+    link: "/nosotros",
+  },
+  {
+    id: 2,
+    label: "Políticas de privacidad",
+    link: "/politicas-de-privacidad",
+  },
+  {
+    id: 3,
+    label: "Políticas de cookies",
+    link: "/politicas-de-cookies",
+  },
+];
+
+const servicios = [
+  {
+    id: 1,
+    label: "Política de envíos",
+    link: "/nosotros",
+  },
+  {
+    id: 2,
+    label: "Política de devoluciones",
+    link: "/politicas-de-privacidad",
+  },
+  {
+    id: 3,
+    label: "Preguntas frecuentes",
+    link: "/politicas-de-cookies",
+  },
+  {
+    id: 4,
+    label: "Guía de tallas",
+    link: "/politicas-de-cookies",
+  },
+];
+
+const contacto = [
+  {
+    id: 1,
+    label: "Agenda tu cita",
+    link: "/nosotros",
+  },
+  {
+    id: 2,
+    label: "Tiendas / Ubicaciones",
+    link: "/politicas-de-privacidad",
+  },
+  {
+    id: 3,
+    label: "Email / Contacto",
+    link: "/politicas-de-cookies",
+  },
+];

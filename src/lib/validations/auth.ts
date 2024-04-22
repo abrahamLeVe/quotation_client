@@ -35,9 +35,15 @@ export const loginSchema = z.object({
 });
 
 export const emailSchema = z.object({
-  email: z.string().email({
-    message: "Por favor, introduce una dirección de correo electrónico válida",
-  }),
+  email: z
+    .string()
+    .email({
+      message:
+        "Por favor, introduce una dirección de correo electrónico válida",
+    })
+    .max(50, {
+      message: "Ud pasó el límite de caracteres permitidos",
+    }),
 });
 
 export const verifyEmailSchema = z.object({

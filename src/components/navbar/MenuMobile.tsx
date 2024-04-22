@@ -36,7 +36,7 @@ export default function MenuMobile({ categories, brands }: MenuMobileProps) {
         <Button className="relative" title="Menú">
           <span className="absolute -inset-0.5" />
           <span className="sr-only">Open menu</span>
-          <HiBars3 className="h-6 w-6" aria-hidden="true" />
+          {/* <HiBars3 className="h-6 w-6" aria-hidden="true" /> */}
         </Button>
       </SheetTrigger>
       <SheetContent className="sm:max-w-md">

@@ -1,4 +1,6 @@
 "use client";
+
+import Link from "next/link";
 import { Button } from "../ui/button";
 
 export default function PromoSection() {
@@ -11,11 +13,15 @@ export default function PromoSection() {
               Los mejores productos los tenemos nosotros
             </h1>
 
-            <a href="/ruta-de-tu-categoria" className="mt-4">
-              <Button variant={"outline"} className="font-medium">
-                Contactanos
+            <div className="mt-4 ">
+              <Button
+                className="relative max-w-[250px] w-full "
+                variant={"outline"}
+              >
+                Contáctenos
+                <Link href={"/contact"} className="absolute inset-0"></Link>
               </Button>
-            </a>
+            </div>
           </div>
           <div>
             <div className="mt-10">

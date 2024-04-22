@@ -1,7 +1,5 @@
 import FilterIndex from "@/components/filter/FilterIndex";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
-import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
-import { Suspense } from "react";
 
 export default async function FilterProductPage({
   searchParams,
@@ -27,9 +25,7 @@ export default async function FilterProductPage({
           },
         ]}
       />
-      {/* <Suspense key={query} fallback={<ProductsTableSkeleton />}> */}
       <FilterIndex query={query} />
-      {/* </Suspense> */}
     </>
   );
 }

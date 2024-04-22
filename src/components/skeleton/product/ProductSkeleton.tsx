@@ -1,5 +1,5 @@
-
-export function ProductGallerySkeleton() {
+"use client";
+export default function ProductGallerySkeleton() {
   return (
     <div className="flex flex-col w-full lg:flex-row gap-5 p-6">
       {/* galery image*/}
@@ -9,7 +9,12 @@ export function ProductGallerySkeleton() {
           <div className="w-[75px] h-[68.81px] md:w-[92px] md:h-[84.42px] m-[4px] bg-gray-200"></div>
         </div>
         <div className="ml-[2px]">
-          <img src="/skeletonProduct.png" alt="skeleton" className="w-full" />
+          <img
+            src="/skeletonProduct.png"
+            alt="skeleton"
+            className="w-full"
+            loading="lazy"
+          />
         </div>
       </div>
 

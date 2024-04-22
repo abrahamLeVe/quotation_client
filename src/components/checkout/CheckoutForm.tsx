@@ -109,9 +109,9 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
         description:
           "Cotización enviada con éxito, revise su correo para mas información, gracias por su preferencia.",
       });
-      // router.push("/dashboard/order");
-      // router.refresh();
-      // cart();
+      router.push("/dashboard/order");
+      router.refresh();
+      cart();
       setIsLoading(false);
     }
   }

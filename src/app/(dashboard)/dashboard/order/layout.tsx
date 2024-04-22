@@ -1,7 +1,7 @@
 import NavBar from "@/components/navbar/NavBar";
-import background from "../../../../../public/logoAyC.png";
-import dynamic from "next/dynamic";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
+import dynamic from "next/dynamic";
+import background from "../../../../../public/logoAyC.png";
 
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,

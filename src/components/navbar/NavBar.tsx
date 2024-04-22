@@ -10,6 +10,7 @@ import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
 import { CategoriesInterface } from "@/models/category.model";
 import { BrandsInterface } from "@/models/brand";
+import { Session } from "next-auth";
 const MenuMobile = dynamic(() => import("./MenuMobile"), {
   ssr: false,
 });
@@ -20,6 +21,7 @@ interface NavBarProps {
   categories?: CategoriesInterface;
   brands?: BrandsInterface;
   isDashboard?: boolean;
+  session?: Session | null;
 }
 export default function NavBar({
   isCart = false,
@@ -27,6 +29,7 @@ export default function NavBar({
   background,
   categories,
   brands,
+  session,
 }: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
@@ -61,10 +64,10 @@ export default function NavBar({
               {/* Filter */}
               <FilterButton />
               {/* Cart */}
-              {isCart ? null : <CartSliderOver />}
+              {isCart ? <></> : <CartSliderOver />}
 
               <div className="ml-3">
-                <AuthMenu />
+                <AuthMenu session={session} />
               </div>
             </div>
 

@@ -74,3 +74,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+
+.star-rating-input {
+  display: none;
+}
+
+.star {
+  font-size: 25px;
+  cursor: pointer;
+  transition: color 200ms;
+}

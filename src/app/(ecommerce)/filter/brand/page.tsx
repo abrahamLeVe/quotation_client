@@ -1,7 +1,5 @@
 import BrandIndex from "@/components/brand/BrandIndex";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
-import { ProductsTableSkeleton } from "@/components/skeleton/product/ProductSkeleton";
-import { Suspense } from "react";
 
 export default async function BrandPage({
   searchParams,
@@ -31,9 +29,7 @@ export default async function BrandPage({
           },
         ]}
       />
-      {/* <Suspense key={query} fallback={<ProductsTableSkeleton />}> */}
       <BrandIndex query={query} name="Marca" />
-      {/* </Suspense> */}
     </>
   );
 }

@@ -7,7 +7,7 @@ let qs = require("qs");
 export const getDataSlugProducts = async (): Promise<ProductsInterface> => {
   const queryString = qs.stringify(
     {
-      sort: ["name:asc"],
+      sort: ["slug:asc"],
       fields: ["slug"],
       populate: ["thumbnail"],
     },

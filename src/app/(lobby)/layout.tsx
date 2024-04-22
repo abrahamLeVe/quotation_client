@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -40,10 +42,16 @@ export default async function LobbyLayout({
 }) {
   const categories = await getDataCategory();
   const brands = await getDataBrand();
+  const session = await getServerSession(options);
 
   return (
     <>
-      <NavBar background={background} categories={categories} brands={brands} />
+      <NavBar
+        background={background}
+        categories={categories}
+        brands={brands}
+        session={session}
+      />
       <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
         {children}
         <ProductCarousel />

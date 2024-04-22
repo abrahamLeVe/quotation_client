@@ -1,12 +1,11 @@
 "use client";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
-import { cartStore } from "@/store/cart.store";
 import background from "../../../../public/logoAyC.png";
 
 import { Card } from "@/components/ui/card";
+import { useCartContext } from "@/context/cart.context";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useCartContext } from "@/context/cart.context";
 const CartSummary = dynamic(
   () => import("@/components/cart/message/CartSummary"),
   {
@@ -19,7 +18,6 @@ export default function CheckoutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cart = cartStore((state) => state);
   const { isLoading } = useCartContext();
 
   return (

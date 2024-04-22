@@ -16,38 +16,42 @@ const client = new MercadoPagoConfig({
 });
 
 export async function payMercadoPago(quotation: Quotation) {
-  const session = await getServerSession(options);
-  const items: Items[] = quotation.products.map((product) => {
-    return {
-      id: product.id.toFixed(),
-      title: product.title,
-      quantity: product.quantity,
-      unit_price: product.value,
-      picture_url: product.picture_url,
-    };
-  });
+  // const session = await getServerSession(options);
+  try {
+    const items: Items[] = quotation.products.map((product) => {
+      return {
+        id: product.id.toFixed(),
+        title: product.title,
+        quantity: product.quantity,
+        unit_price: product.value,
+        picture_url: product.picture_url,
+      };
+    });
 
-  const preference = new Preference(client).create({
-    body: {
-      items,
-      metadata: {
-        cotizacion: {
-          id: quotation.id,
+    const preference = new Preference(client).create({
+      body: {
+        items,
+        metadata: {
+          cotizacion: {
+            id: quotation.id,
+          },
+          // userToken: session?.user.accessToken,
         },
-        userToken: session?.user.accessToken,
+        back_urls: {
+          success: `${CLIENT_URL}/dashboard/order`,
+          failure: `${CLIENT_URL}/dashboard/order`,
+          pending: `${CLIENT_URL}/dashboard/order`,
+        },
+        auto_return: "approved",
       },
-      back_urls: {
-        success: `${CLIENT_URL}/dashboard/order`,
-        failure: `${CLIENT_URL}/dashboard/order`,
-        pending: `${CLIENT_URL}/dashboard/order`,
-      },
-      auto_return: "approved",
-      statement_descriptor: "Consorcio A&C Eléctrica S.A.C",
-    },
-  });
+    });
 
-  const res = await preference;
-  return res.id;
+    const res = await preference;
+    console.log("respreference ", res);
+    return res.id;
+  } catch (error) {
+    console.log("Error in preferences Mercado pago ", error);
+  }
 }
 
 interface OrderProps {
@@ -57,16 +61,17 @@ interface OrderProps {
   cotizacion: {
     id: number;
   };
-  userToken: string;
+  // userToken: string;
 }
 
 export async function createOrder(order: OrderProps) {
+  const session = await getServerSession(options);
   const res = await postDataFromApi(
     "/api/payments",
     {
       data: order,
     },
-    order.userToken
+    session?.user.accessToken
   );
   return res;
 }

@@ -1,7 +1,6 @@
 import { filterProductsByCategory } from "@/app/services/category.service";
-import dynamic from "next/dynamic";
 
-const ProductTable = dynamic(() => import("../filter/FilterTable"));
+import ProductTable from "../filter/FilterTable";
 
 export default async function CategoryIndex({
   query,

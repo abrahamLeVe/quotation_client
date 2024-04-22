@@ -1,7 +1,8 @@
-import * as React from "react";
-import Link from "next/link";
-import { HiChevronRight } from "react-icons/hi2";
+"use client";
 import { cn, truncate } from "@/lib/utils";
+import Link from "next/link";
+import React from "react";
+import { FaAngleRight } from "react-icons/fa";
 
 interface BreadcrumbsProps extends React.ComponentPropsWithoutRef<"nav"> {
   segments: {
@@ -19,7 +20,9 @@ export function Breadcrumbs({
   className,
   ...props
 }: BreadcrumbsProps) {
-  const SeparatorIcon = separator ?? HiChevronRight;
+  const SeparatorIcon = separator ?? (
+    <FaAngleRight className="mx-2 h-4 w-4" aria-hidden="true" />
+  );
 
   return (
     <nav
@@ -47,9 +50,7 @@ export function Breadcrumbs({
                 ? truncate(segment.title, truncationLength)
                 : segment.title}
             </Link>
-            {!isLastSegment && (
-              <SeparatorIcon className="mx-2 h-4 w-4" aria-hidden="true" />
-            )}
+            {!isLastSegment && <>{SeparatorIcon}</>}
           </React.Fragment>
         );
       })}

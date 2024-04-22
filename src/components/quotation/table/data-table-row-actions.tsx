@@ -105,9 +105,9 @@ export function DataTableRowActions<TData>({
         <>
           {quotation.codeStatus === "Completada" ? (
             <div className="w-[280px] h-[103px] relative">
-              <Suspense>
-                <PaymentMP quotation={quotation} />
-              </Suspense>
+              {/* <Suspense> */}
+              <PaymentMP quotation={quotation} />
+              {/* </Suspense> */}
             </div>
           ) : (
             <></>

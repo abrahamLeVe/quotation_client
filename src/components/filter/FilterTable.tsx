@@ -2,7 +2,7 @@
 import { ProductInterface, ProductsInterface } from "@/models/products.model";
 import { Suspense, useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
-import ProductCard from "../product/ProductCard";
+
 import { Button } from "../ui/button";
 import { Slider } from "../ui/slider";
 
@@ -14,12 +14,27 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import EmptyCartMessage from "../cart/message/EmptyCartMessage";
-import { ProductsTableSkeleton } from "../skeleton/product/ProductSkeleton";
+
+import Search from "@/components/ui/search-filter";
+import { useProductContext } from "@/context/product.context";
+import dynamic from "next/dynamic";
 import { Card, CardContent } from "../ui/card";
 import { Separator } from "../ui/separator";
-import { useProductContext } from "@/context/product.context";
-import Search from "@/components/ui/search-filter";
+
+const ProductsTableSkeleton = dynamic(
+  () => import("../skeleton/product/ProductSkeleton")
+);
+
+const ProductCard = dynamic(() => import("../product/ProductCard"), {
+  ssr: false,
+});
+
+const EmptyCartMessage = dynamic(
+  () => import("../cart/message/EmptyCartMessage"),
+  {
+    ssr: false,
+  }
+);
 
 export default function ProductTable({
   products,
@@ -192,12 +207,10 @@ export default function ProductTable({
               </Pagination>
             </>
           ) : (
-            <>
-              <EmptyCartMessage
-                title="Sin resultados"
-                description="Buscar en todos nustros productos"
-              />
-            </>
+            <EmptyCartMessage
+              title="Sin resultados"
+              description="Buscar en todos nustros productos"
+            />
           )}
         </>
       )}

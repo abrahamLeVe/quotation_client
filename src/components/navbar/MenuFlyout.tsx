@@ -10,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { BrandsInterface } from "@/models/brand";
@@ -81,13 +80,7 @@ export default function FlyoutMenu({ categories, brands }: FlyoutMenuProps) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle() + " bg-inherit"}
-            >
-              Contáctanos
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink>{/* <ContactForm /> */}</NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
@@ -121,7 +114,7 @@ export const ListItem = ({
       )}
       {...props}
     >
-      <Link href={urlFilter} passHref>
+      <Link href={urlFilter} passHref prefetch={true}>
         <div className="flex gap-2">
           <div className="aspect-1 min-w-14 min-h-14 overflow-hidden ">
             <img

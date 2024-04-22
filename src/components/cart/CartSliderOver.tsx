@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { useCartContext } from "@/context/cart.context";
 import dynamic from "next/dynamic";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { FaShoppingCart } from "react-icons/fa";
 import { Icons } from "../Icons";
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
@@ -36,7 +36,7 @@ export default function CartSliderOver() {
           disabled={cartQuantity === 0 || isLoading}
           title="Carrito de compras"
         >
-          <HiOutlineShoppingBag className="h-[1.2rem] w-[1.2rem]" />
+          <FaShoppingCart className="h-[1.2rem] w-[1.2rem]" />
           {isLoading ? (
             <Icons.spinner
               className="border rounded-full h-[1.2rem] w-[1.2rem] absolute top-0 right-0 animate-spin"
