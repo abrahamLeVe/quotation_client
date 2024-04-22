@@ -2,148 +2,72 @@ import Link from "next/link";
 import { AiFillInstagram, AiFillYoutube } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { FaSquareXTwitter } from "react-icons/fa6";
-
-const SuscriptionForm = dynamic(
-  () => import("../suscription/SuscriptionForm"),
-  {
-    ssr: false,
-  }
-);
-
 import dynamic from "next/dynamic";
+
+const SuscriptionForm = dynamic(() => import("../suscription/SuscriptionForm"), {
+  ssr: false,
+});
 
 export default function Footer() {
   return (
     <footer className="bg-slate-200 dark:bg-gray-900">
-      <div className=" md:container px-6 py-12 mx-auto">
+      <div className="md:container px-3 py-3 mx-auto">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 md:grid-cols-5">
-          <div className="sm:col-span-2 sm:pr-5">
-            <h1 className="max-w-lg text-xl font-semibold tracking-tight text-gray-800 xl:text-2xl dark:text-white">
-              Suscríbase a nuestro boletín para recibir actualizaciones.
-            </h1>
-
-            <div className="flex flex-col mx-auto mt-6 space-y-3  gap-2">
-              <SuscriptionForm />
+          <div>
+            <p className="font-semibold text-gray-800 dark:text-white text-center">Nuestra Empresa</p>
+            <div className="flex flex-col items-start mt-5 space-y-2" >
+            <img
+                src="https://res.cloudinary.com/dmpmxzyrg/image/upload/v1713756779/office_building_4300058_5b04b3319f.png "
+                alt="Mapa de ubicación"
+                className="mx-auto mb-4 max-w-[25%]"
+              />
+              {nosotros.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.link}
+                  className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
+                >
+                  {item.label}
+                </Link>
+              ))}
+                           
             </div>
           </div>
-
           <div>
-            <p className="font-semibold text-gray-800 dark:text-white">
-              DSStore
-            </p>
+            <p className="font-semibold text-gray-800 dark:text-white text-center">Ubicación</p>
+            <div className="mt-5">
+            <img
+                src="https://res.cloudinary.com/dmpmxzyrg/image/upload/v1713756779/location_535239_32472138fa.png"
+                alt="Mapa de ubicación"
+                className="mx-auto mb-4 max-w-[25%]"
+              />
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Calle Jose Manuel Pereyra Nro. 536 Urb. Panamericana Norte Lima - Lima - Los Olivos
+              </p>
 
-            <div className="flex flex-col items-start mt-5 space-y-2">
-              {servicios ? (
-                <>
-                  {servicios.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={item.link}
-                      className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </>
-              ) : null}
             </div>
           </div>
-
           <div>
-            <p className="font-semibold text-gray-800 dark:text-white">
-              Contáctanos
-            </p>
-
-            <div className="flex flex-col items-start mt-5 space-y-2">
-              {contacto ? (
-                <>
-                  {contacto.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={item.link}
-                      className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </>
-              ) : null}
-            </div>
-          </div>
-
-          <div>
-            <p className="font-semibold text-gray-800 dark:text-white">Sobre</p>
-
-            <div className="flex flex-col items-start mt-5 space-y-2">
-              {nosotros ? (
-                <>
-                  {nosotros.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={item.link}
-                      className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </>
-              ) : null}
+            <p className="font-semibold text-gray-800 dark:text-white"></p>
+            <div className="mt-5">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.792513619382!2d-77.07090492536724!3d-11.988854140824358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105ce5a847ec743%3A0x6157879169edf82!2sJose%20Pereyra%20536%2C%20Los%20Olivos%2015301!5e0!3m2!1ses!2spe!4v1713756441437!5m2!1ses!2spe"
+                width="600"
+                height="200"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+              ></iframe>
             </div>
           </div>
         </div>
-
-        <hr className="my-6 border-gray-200 md:my-8 dark:border-gray-700" />
-
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <span>Consorcio A&C Eléctrica S.A.C</span>
-          <div className="flex -mx-2">
-            {socialLinks
-              ? socialLinks.map((item) => (
-                  <a
-                    key={item.id}
-                    href={item.link}
-                    className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
-                    aria-label={item.label}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <>{item.icon}</>
-                  </a>
-                ))
-              : null}
-          </div>
-        </div>
+      </div>
+      <div className="bg-gray-800 dark:bg-gray-900 text-gray-300 py-4 text-center">
+        Consorcio A&C Eléctrica SAC - Todos los derechos reservados.
       </div>
     </footer>
   );
 }
-
-const socialLinks = [
-  {
-    id: 1,
-    icon: <BsFacebook className={"w-6 h-6"} />,
-    label: "Facebook",
-    link: "https://www.facebook.com/",
-  },
-  {
-    id: 2,
-    icon: <FaSquareXTwitter className={"w-6 h-6"} />,
-    label: "Twitter",
-    link: "https://twitter.com/",
-  },
-  {
-    id: 3,
-    icon: <AiFillYoutube className={"w-6 h-6"} />,
-    label: "YouTube",
-    link: "https://www.youtube.com/",
-  },
-  {
-    id: 4,
-    icon: <AiFillInstagram className={"w-6 h-6"} />,
-    label: "Instagram",
-    link: "https://www.instagram.com/",
-  },
-];
 
 const nosotros = [
   {
@@ -153,53 +77,8 @@ const nosotros = [
   },
   {
     id: 2,
-    label: "Políticas de privacidad",
-    link: "/politicas-de-privacidad",
+    label: "Contáctanos",
+    link: "/contact",
   },
-  {
-    id: 3,
-    label: "Políticas de cookies",
-    link: "/politicas-de-cookies",
-  },
-];
-
-const servicios = [
-  {
-    id: 1,
-    label: "Política de envíos",
-    link: "/nosotros",
-  },
-  {
-    id: 2,
-    label: "Política de devoluciones",
-    link: "/politicas-de-privacidad",
-  },
-  {
-    id: 3,
-    label: "Preguntas frecuentes",
-    link: "/politicas-de-cookies",
-  },
-  {
-    id: 4,
-    label: "Guía de tallas",
-    link: "/politicas-de-cookies",
-  },
-];
-
-const contacto = [
-  {
-    id: 1,
-    label: "Agenda tu cita",
-    link: "/nosotros",
-  },
-  {
-    id: 2,
-    label: "Tiendas / Ubicaciones",
-    link: "/politicas-de-privacidad",
-  },
-  {
-    id: 3,
-    label: "Email / Contacto",
-    link: "/politicas-de-cookies",
-  },
+ 
 ];
