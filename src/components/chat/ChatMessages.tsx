@@ -60,12 +60,14 @@ export default function ChatMessages({
               })}
             >
               {!message.isUserMessage ? (
-                <img
-                  src="./botMessage.png"
-                  alt="chat bot"
-                  className="w-[30px] h-[30px]"
-                  loading="lazy"
-                />
+                <div className="rounded-full w-[33px] h-[33px] bg-white flex items-center justify-center overflow-visible">
+                  <img
+                    src="./botMessage.png"
+                    alt="chat bot"
+                    className="w-[25px] h-[25px] "
+                    loading="lazy"
+                  />
+                </div>
               ) : null}
 
               <MarkdownLite text={message.text} />

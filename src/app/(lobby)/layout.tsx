@@ -3,8 +3,7 @@ import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
-import { options } from "@/app/api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth";
+import { getContactData } from "../services/contact.service";
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -19,18 +18,25 @@ const BrandSlider = dynamic(() => import("@/components/brand/BrandSlider"), {
 const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
   ssr: false,
 });
-const Testimonials = dynamic(() => import("@/components/lobby/Testimonials"), {
-  ssr: false,
-});
+
+const Testimonials = dynamic(
+  () => import("@/components/lobby/testimonial/Testimonials"),
+  {
+    ssr: false,
+  }
+);
+
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
 });
+
 const WhatsappButoon = dynamic(
   () => import("@/components/floating/whatsapp-button"),
   {
     ssr: false,
   }
 );
+
 const Chat = dynamic(() => import("@/components/chat/Chat"), {
   ssr: false,
 });
@@ -42,23 +48,18 @@ export default async function LobbyLayout({
 }) {
   const categories = await getDataCategory();
   const brands = await getDataBrand();
-  const session = await getServerSession(options);
+  const contacts = await getContactData();
 
   return (
     <>
-      <NavBar
-        background={background}
-        categories={categories}
-        brands={brands}
-        session={session}
-      />
+      <NavBar background={background} categories={categories} brands={brands} />
       <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
         {children}
         <ProductCarousel />
         <Collection categories={categories} />
         <BrandSlider brands={brands} />
         <PromoSection />
-        <Testimonials />
+        <Testimonials contacts={contacts} />
         <div className="fixed right-8 bottom-28">
           <WhatsappButoon />
         </div>

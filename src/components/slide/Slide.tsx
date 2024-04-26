@@ -42,46 +42,44 @@ export default function Slide({ data }: CarouselPluginProps) {
     <Carousel
       setApi={setApi}
       plugins={[plugin.current]}
-      className="w-full aspect-[16/6]"
+      className="w-full "
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
       <CarouselContent>
         {data?.data.map((slide) => (
           <CarouselItem key={slide.id}>
-            <div className="p-1">
-              <Card className="transition-all duration-300 ease-in-out hover:bg-black dark:hover:bg-white hover:bg-opacity-10">
-                <CardContent className="p-0 lg:p-6 relative w-full h-full aspect-[16/6]">
-                  {slide.attributes.image.data?.attributes.mime.startsWith(
-                    "video/"
-                  ) ? (
-                    <video
-                      src={slide.attributes.image.data?.attributes.url}
-                      className="aspect-[16/6] w-full object-cover"
-                      controls
-                      aria-label={slide.attributes.name}
-                    />
-                  ) : (
-                    <img
-                      src={slide.attributes.image.data?.attributes.url}
-                      className="aspect-[16/6] w-full h-full object-cover"
-                      alt={slide.attributes.name}
-                      loading="eager"
-                    />
-                  )}
-                  <Button
-                    className="absolute left-1/2 bottom-8 max-w-48 w-full -ml-24"
-                    variant={"default"}
-                  >
-                    Ver productos
-                    <Link
-                      href={`/filter/category?query=${slide.attributes.category.data.attributes.name}`}
-                      className="absolute inset-0"
-                    />
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+            <Card>
+              <CardContent className="p-0 lg:p-6 relative aspect-[16/6]">
+                {slide.attributes.image.data?.attributes.mime.startsWith(
+                  "video/"
+                ) ? (
+                  <video
+                    src={slide.attributes.image.data?.attributes.url}
+                    className="w-full h-full object-cover"
+                    controls
+                    aria-label={slide.attributes.name}
+                  />
+                ) : (
+                  <img
+                    src={slide.attributes.image.data?.attributes.url}
+                    className="w-full h-full aspect-[16/6] object-cover"
+                    alt={slide.attributes.name}
+                    loading="eager"
+                  />
+                )}
+                <Button
+                  className="absolute left-1/2 bottom-8 max-w-48 w-full -ml-24"
+                  variant={"default"}
+                >
+                  Ver productos
+                  <Link
+                    href={`/filter/category?query=${slide.attributes.category.data.attributes.name}`}
+                    className="absolute inset-0"
+                  />
+                </Button>
+              </CardContent>
+            </Card>
           </CarouselItem>
         ))}
       </CarouselContent>

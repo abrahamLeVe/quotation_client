@@ -22,5 +22,9 @@ export default async function sitemap() {
     url: `${CLIENT_URL}/filter/brand?query=${brand.attributes.name} - imagen:${brand.attributes.image.data?.attributes.formats.thumbnail.url}`,
   }));
 
-  return [...products, ...categories, ...brands];
+  const routes = ["/nosotros", "/contact"].map((route) => ({
+    url: `${CLIENT_URL}${route}`,
+  }));
+
+  return [...products, ...categories, ...brands, ...routes];
 }

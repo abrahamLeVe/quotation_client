@@ -10,8 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { dashboardConfig } from "@/config/dashboard";
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { BsCreditCard } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
@@ -19,8 +18,8 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 
-export default function AuthMenu({ session }: { session?: Session | null }) {
-  // const { data: session, status } = useSession();
+export default function AuthMenu() {
+  const { data: session } = useSession();
   const initials = `${session?.user.name?.charAt(0).toUpperCase() ?? ""}`;
   return (
     <>

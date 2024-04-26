@@ -31,20 +31,13 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
   );
 };
 
-const MarkdownImage = ({
-  classOpt,
-  src,
-  alt,
-}: {
-  src?: string;
-  alt?: string;
-  classOpt?: string;
-}) => {
+const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
   return src ? (
     <img
       src={src}
       alt={alt || ""}
-      className={`${classOpt} rounded-lg overflow-hidden border`}
+      className={`rounded-lg overflow-hidden border `}
+      loading="eager"
     />
   ) : null;
 };

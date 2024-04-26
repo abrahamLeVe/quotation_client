@@ -1,23 +1,19 @@
-import { BrandsInterface } from "@/models/brand";
-import { capitalizeFirstLetter, truncate } from "@/utilities/utils";
-import { useRouter } from "next/navigation";
+"use client";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BrandsInterface } from "@/models/brand";
+import { capitalizeFirstLetter, truncate } from "@/utilities/utils";
+import Link from "next/link";
 
 interface BrandListProps {
   brands: BrandsInterface;
 }
 
 export default function BrandList({ brands }: BrandListProps) {
-  const router = useRouter();
-  const handleClick = (slug: string) => {
-    router.push(`/product/${slug}`);
-  };
-
   return (
     <div className="flex flex-col items-start text-sm">
       <Accordion
@@ -33,19 +29,21 @@ export default function BrandList({ brands }: BrandListProps) {
             <AccordionContent>
               {brand.attributes.products.data.map((product) => (
                 <div key={product.id}>
-                  <button
-                    onClick={() => handleClick(product.attributes.slug)}
+                  <span
                     className="relative hover:underline"
                     title={capitalizeFirstLetter(product.attributes.name)}
                   >
-                    <span>
-                      -{" "}
-                      {truncate(
-                        capitalizeFirstLetter(product.attributes.name),
-                        40
-                      )}
-                    </span>
-                  </button>
+                    <Link
+                      href={`/product/${product.attributes.slug}`}
+                      className="absolute inset-0"
+                      scroll={false}
+                    ></Link>
+                    -{" "}
+                    {truncate(
+                      capitalizeFirstLetter(product.attributes.name),
+                      40
+                    )}
+                  </span>
                 </div>
               ))}
             </AccordionContent>

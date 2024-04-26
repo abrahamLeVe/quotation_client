@@ -12,6 +12,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { postContactMessage } from "@/app/services/contact.service";
 import {
   Form,
   FormControl,
@@ -34,13 +35,12 @@ import {
   contactFormSchema,
 } from "@/lib/validations/formContact";
 import { ContactTypeInterface } from "@/models/contact.model";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Icons } from "../Icons";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { useState } from "react";
-import { postContactMessage } from "@/app/services/contact.service";
-import { Icons } from "../Icons";
 import StarRating from "./ContactStar";
-import { useRouter } from "next/navigation";
 
 interface ContactButtonProps {
   contacts: ContactTypeInterface[];
@@ -77,7 +77,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
         },
       };
 
-      const res = await postContactMessage({ dataContact: dataApi });
+      const res = await postContactMessage(dataApi);
 
       if (res.data === null && res.error) {
         toast({
@@ -157,11 +157,13 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nombre *</FormLabel>
+                    <FormLabel>Nombre y apellidos*</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>Nombre y apellido</FormDescription>
+                    <FormDescription>
+                      Primer nombre y apellidos *
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -266,7 +268,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                     />
                   </FormControl>
                   <FormDescription>
-                    Su valoración es muy importante.
+                    Su valoración para esta tienda virtual.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

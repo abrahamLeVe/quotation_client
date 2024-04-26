@@ -5,5 +5,7 @@ const ProductTable = dynamic(() => import("./FilterTable"));
 export default async function FilterIndex({ query }: { query?: string }) {
   const products = await filterProducts(query);
 
-  return <ProductTable key={query} products={products} name="Producto" />;
+  return (
+    <ProductTable products={products} name="Producto" isFilter query={query} />
+  );
 }

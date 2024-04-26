@@ -1,8 +1,8 @@
 import { fetchDataFromApi, postDataFromApi } from "@/lib/api";
 import {
   ContactMessageInterface,
+  ContactsDataInterface,
   ContactsInterface,
-  DataContactInterface,
 } from "@/models/contact.model";
 let qs = require("qs");
 
@@ -18,13 +18,29 @@ export const getContactTypes = async (): Promise<ContactsInterface> => {
   return res;
 };
 
-interface PostContactMessagePros {
-  dataContact: ContactMessageInterface;
-}
-
-export async function postContactMessage({
-  dataContact,
-}: PostContactMessagePros) {
-  const res = await postDataFromApi("/api/contacts", dataContact);
+export const postContactMessage = async (data: ContactMessageInterface) => {
+  const res = await postDataFromApi("/api/contacts", data);
   return res;
-}
+};
+
+export const getContactData = async (): Promise<ContactsDataInterface> => {
+  const queryString = qs.stringify(
+    {
+      populate: "*",
+      filters: {
+        contact_type: {
+          name: {
+            $eq: "Testimonio",
+          },
+        },
+      },
+      sort: ["name:asc"],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+
+  const res = await fetchDataFromApi(`/api/contacts?${queryString}`);
+  return res;
+};

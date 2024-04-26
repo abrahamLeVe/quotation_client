@@ -1,5 +1,4 @@
 "use client";
-import { useProductContext } from "@/context/product.context";
 import { Color2 } from "@/models/cart.model";
 import { FaCircle } from "react-icons/fa6";
 import {
@@ -9,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useCartContext } from "@/context/cart.context";
 
 interface SelectColorCartProps {
   colors: Color2[];
@@ -21,7 +21,7 @@ export default function SelectColorCart({
   handleColorChange,
   productId,
 }: SelectColorCartProps) {
-  const { getItemColorQuantity } = useProductContext();
+  const { getItemColorQuantity } = useCartContext();
   return (
     <Select
       onValueChange={handleColorChange}

@@ -19,8 +19,8 @@ import { BrandsInterface } from "@/models/brand";
 import { CategoriesInterface } from "@/models/category.model";
 import { SizesInterface } from "@/models/size.model";
 
+import { useCartContext } from "@/context/cart.context";
 import { ScrollArea } from "../ui/scroll-area";
-import { useProductContext } from "@/context/product.context";
 
 const IconSpider = (
   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
@@ -51,11 +51,11 @@ export default function FilterSlider({
   brands,
   sizes,
 }: FilterSliderProps) {
-  const { isOpen, setIsOpen } = useProductContext();
+  const { openMenu, setOpenMenu } = useCartContext();
 
   return (
     <>
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet open={openMenu} onOpenChange={setOpenMenu}>
         <SheetContent className="w-full sm:max-w-md">
           <ScrollArea className="h-full pr-3">
             <SheetHeader>

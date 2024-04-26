@@ -7,18 +7,13 @@ import {
 } from "@/components/ui/accordion";
 import { CategoriesInterface } from "@/models/category.model";
 import { capitalizeFirstLetter, truncate } from "@/utilities/utils";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface CategoryListProps {
   categories: CategoriesInterface;
 }
 
 export default function CategoryList({ categories }: CategoryListProps) {
-  const router = useRouter();
-  const handleClick = (slug: string) => {
-    router.push(`/product/${slug}`);
-  };
-
   return (
     <div className="flex flex-col items-start text-sm">
       <Accordion
@@ -37,19 +32,21 @@ export default function CategoryList({ categories }: CategoryListProps) {
             <AccordionContent>
               {category.attributes.products.data.map((product) => (
                 <div key={product.id}>
-                  <button
-                    onClick={() => handleClick(product.attributes.slug)}
+                  <span
                     className="relative hover:underline"
                     title={capitalizeFirstLetter(product.attributes.name)}
                   >
-                    <span>
-                      -{" "}
-                      {truncate(
-                        capitalizeFirstLetter(product.attributes.name),
-                        40
-                      )}
-                    </span>
-                  </button>
+                    -{" "}
+                    {truncate(
+                      capitalizeFirstLetter(product.attributes.name),
+                      40
+                    )}
+                    <Link
+                      href={`/product/${product.attributes.slug}`}
+                      className="absolute inset-0"
+                      scroll={false}
+                    ></Link>
+                  </span>
                 </div>
               ))}
             </AccordionContent>

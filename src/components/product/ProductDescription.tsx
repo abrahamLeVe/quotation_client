@@ -19,7 +19,7 @@ export default function ProductDescription({
       <AccordionItem value="item-1">
         <AccordionTrigger className="text-lg">Descripción</AccordionTrigger>
         <AccordionContent>
-          <article className="prose prose-base max-w-none dark:text-slate-50 ">
+          <article className="prose prose-invert max-w-none text-inherit">
             <Markdown>{description}</Markdown>
           </article>
         </AccordionContent>

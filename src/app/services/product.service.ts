@@ -1,7 +1,7 @@
 import { fetchDataFromApi } from "@/lib/api";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
-import { processQuery } from "@/utilities/validators/search.validator";
+import { processQuery } from "@/lib/validations/search.validator";
 let qs = require("qs");
 
 export const getDataProducts = async (): Promise<ProductsInterface> => {
@@ -9,12 +9,9 @@ export const getDataProducts = async (): Promise<ProductsInterface> => {
     { sort: ["name:asc"], populate },
     { encodeValuesOnly: true }
   );
-  const res = await fetchDataFromApi(`/api/products?${queryString}`);
-  return res;
-};
-
-export const getDataProductSlug = async (): Promise<ProductsInterface> => {
-  const res = await fetchDataFromApi(`/api/products`);
+  const res = await fetchDataFromApi(
+    `/api/products?${queryString}&pagination[page]=1&pagination[pageSize]=999`
+  );
   return res;
 };
 
@@ -36,15 +33,6 @@ export const getDataProductBySlug = async (
   return res;
 };
 
-export async function getDataProductById(
-  id: number
-): Promise<ProductsInterface> {
-  const res = fetchDataFromApi(
-    `/api/products?populate=*&filters[id][$eq]=${id}`
-  );
-  return res;
-}
-
 export async function filterProducts(
   query?: string
 ): Promise<ProductsInterface | undefined> {
@@ -52,6 +40,8 @@ export async function filterProducts(
     return;
   }
   const cleanedQuery = processQuery(query);
+  // const cleanedQuery = decodeURIComponent(query || "").trim();
+  // console.log("cleanedQuery ", cleanedQuery);
   if (cleanedQuery.length === 0) {
     return;
   }
@@ -82,15 +72,3 @@ export async function filterProducts(
     console.log("error in filterProducts", error);
   }
 }
-
-export const getDataProductsNSU = async (): Promise<ProductsInterface> => {
-  const fieldsToPopulate = {
-    populate: ["thumbnail"],
-  };
-
-  const queryString = qs.stringify(fieldsToPopulate, {
-    encodeValuesOnly: true,
-  });
-  const res = await fetchDataFromApi(`/api/products?${queryString}`);
-  return res;
-};

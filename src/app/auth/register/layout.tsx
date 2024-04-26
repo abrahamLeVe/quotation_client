@@ -47,7 +47,7 @@ export default function RegisterLayout({
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className="grid grid-cols-2 gap-6">
+          <div>
             <a href={`${API_URL}/api/connect/google`}>
               <Button>
                 <FaGoogle className="mr-2 h-4 w-4" />

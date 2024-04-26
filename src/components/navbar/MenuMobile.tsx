@@ -15,14 +15,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { HiBars3 } from "react-icons/hi2";
+import { TiThMenu } from "react-icons/ti";
+import { BrandsInterface } from "@/models/brand";
+import { CategoriesInterface } from "@/models/category.model";
+import Link from "next/link";
 import { SpeachButton } from "../filter/FilterButton";
 import { ModeToggle } from "../ui/mode-toggle";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
-import { CategoriesInterface } from "@/models/category.model";
-import { BrandsInterface } from "@/models/brand";
-import Link from "next/link";
 
 interface MenuMobileProps {
   categories?: CategoriesInterface;
@@ -36,7 +36,7 @@ export default function MenuMobile({ categories, brands }: MenuMobileProps) {
         <Button className="relative" title="Menú">
           <span className="absolute -inset-0.5" />
           <span className="sr-only">Open menu</span>
-          {/* <HiBars3 className="h-6 w-6" aria-hidden="true" /> */}
+          <TiThMenu className="h-6 w-6" aria-hidden="true" />
         </Button>
       </SheetTrigger>
       <SheetContent className="sm:max-w-md">
@@ -45,7 +45,7 @@ export default function MenuMobile({ categories, brands }: MenuMobileProps) {
             <SheetTitle>Menú</SheetTitle>
             <div>
               <ModeToggle />
-              <SpeachButton />
+              <SpeachButton className={""} />
             </div>
           </SheetHeader>
           <Separator className="my-4" />

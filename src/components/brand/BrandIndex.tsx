@@ -10,5 +10,5 @@ export default async function BrandIndex({
 }) {
   const products = await filterProductsByBrand(query);
 
-  return <ProductTable key={query} products={products} name={name} />;
+  return <ProductTable products={products} name={name} query={query} />;
 }

@@ -17,6 +17,10 @@ interface CartContext {
   >;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  getItemColorQuantity: (
+    priceId: number,
+    colorId: number
+  ) => number | undefined;
 }
 
 const CartContext = createContext({} as CartContext);
@@ -39,6 +43,14 @@ export function CartProvider({ children }: CartProviderProps) {
   const cartQuantity = mounted
     ? cart.reduce((quantity, item) => item.quantity + quantity, 0)
     : 0;
+
+  function getItemColorQuantity(priceId: number, colorId: number) {
+    return mounted
+      ? cart
+          .find((item) => item.id === priceId)
+          ?.colors?.find((color) => color.id === colorId)?.quantity
+      : 0;
+  }
   return (
     <CartContext.Provider
       value={{
@@ -50,6 +62,7 @@ export function CartProvider({ children }: CartProviderProps) {
         isLoading,
         products,
         setProducts,
+        getItemColorQuantity,
       }}
     >
       {children}

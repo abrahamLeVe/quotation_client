@@ -1,10 +1,11 @@
 "use client";
-import { useProductContext } from "@/context/product.context";
 import { useSpeechRecognition } from "@/hooks/useSpeech";
 import Link from "next/link";
 import { BsMic, BsSearch } from "react-icons/bs";
 import { Icons } from "../Icons";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { useCartContext } from "@/context/cart.context";
 
 export default function FilterButton() {
   return (
@@ -12,29 +13,45 @@ export default function FilterButton() {
       <span className="sr-only">Buscar</span>
       <BsSearch className="h-[1.2rem] w-[1.2rem]" />
       <Link
-        href={
-          "/filter/category?query=Materiales%20eléctricos%20para%20transformadores"
-        }
+        href={"/filter/category?query=Galería%20de%20productos"}
         className="absolute inset-0"
         aria-label="Filtar productos"
+        prefetch={true}
       ></Link>
     </Button>
   );
 }
 
-export function SpeachButton() {
-  const { isListening } = useProductContext();
+interface SpeachButtonProps {
+  className: string;
+  title?: string;
+  variant?: "ghost" | "outline";
+}
+
+export function SpeachButton({
+  className = "",
+  title = "",
+  variant = "ghost",
+}: SpeachButtonProps) {
   const { startListening } = useSpeechRecognition();
+  const { isLoading } = useCartContext();
+
+  const buttonClasses = cn("h-[1.2rem] w-[1.2rem] ", className);
+  const handleClick = () => {
+    startListening();
+  };
+
   return (
     <>
-      {isListening ? (
-        <Button variant={"ghost"}>
-          <Icons.bars className="h-[1.2rem] w-[1.2rem] text-red-500" />
+      {isLoading ? (
+        <Button variant={variant}>
+          <Icons.bars className={buttonClasses + " text-red-500"} />
         </Button>
       ) : (
-        <Button onClick={startListening} variant={"ghost"}>
+        <Button onClick={handleClick} variant={variant}>
           <span className="sr-only">Escuchar</span>
-          <BsMic className="h-[1.2rem] w-[1.2rem]" />
+          <BsMic className={buttonClasses} />{" "}
+          {title && <span className="text-base">{title}</span>}
         </Button>
       )}
     </>

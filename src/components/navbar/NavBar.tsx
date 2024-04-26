@@ -1,4 +1,6 @@
 "use client";
+import { BrandsInterface } from "@/models/brand";
+import { CategoriesInterface } from "@/models/category.model";
 import dynamic from "next/dynamic";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
@@ -8,9 +10,6 @@ import { Card } from "../ui/card";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
-import { CategoriesInterface } from "@/models/category.model";
-import { BrandsInterface } from "@/models/brand";
-import { Session } from "next-auth";
 const MenuMobile = dynamic(() => import("./MenuMobile"), {
   ssr: false,
 });
@@ -21,7 +20,6 @@ interface NavBarProps {
   categories?: CategoriesInterface;
   brands?: BrandsInterface;
   isDashboard?: boolean;
-  session?: Session | null;
 }
 export default function NavBar({
   isCart = false,
@@ -29,7 +27,6 @@ export default function NavBar({
   background,
   categories,
   brands,
-  session,
 }: NavBarProps) {
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
@@ -59,7 +56,7 @@ export default function NavBar({
             <div className="ml-auto flex items-center">
               <div className="hidden lg:flex">
                 <ModeToggle />
-                <SpeachButton />
+                <SpeachButton className={""} />
               </div>
               {/* Filter */}
               <FilterButton />
@@ -67,12 +64,16 @@ export default function NavBar({
               {isCart ? <></> : <CartSliderOver />}
 
               <div className="ml-3">
-                <AuthMenu session={session} />
+                <AuthMenu />
               </div>
             </div>
 
             <div className="flex lg:hidden">
-              <MenuMobile categories={categories} brands={brands} />
+              {!isDashboard ? (
+                <MenuMobile categories={categories} brands={brands} />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

@@ -34,7 +34,7 @@ export default function EmptyCartMessage({
       ) : (
         <div className="text-center py-8">
           <a
-            href="/filter/category?query=Materiales eléctricos para transformadores"
+            href="/filter/category?query=Galería%20de%20productos"
             className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Explorar Productos

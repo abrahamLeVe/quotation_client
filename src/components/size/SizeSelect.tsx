@@ -7,7 +7,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useProductContext } from "@/context/product.context";
 import { ProductPriceInterface } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useCartContext } from "@/context/cart.context";
 
 interface SizeSelectProps {
   selectedPrice: ProductPriceInterface;
@@ -40,7 +40,7 @@ export default function SizeSelect({
   handleSizeChange,
 }: SizeSelectProps) {
   const cart = cartStore((state) => state);
-  const { getItemQuantity } = useProductContext();
+  const { getItemQuantity } = useCartContext();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

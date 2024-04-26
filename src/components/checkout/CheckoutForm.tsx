@@ -30,19 +30,14 @@ import {
   dataQuotationFormSchema,
 } from "@/lib/validations/formDataQuotation";
 import { cartStore } from "@/store/cart.store";
+import { Terminal } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Icons } from "../Icons";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-
-const EmptyCartMessage = dynamic(
-  () => import("../cart/message/EmptyCartMessage"),
-  {
-    ssr: false,
-  }
-);
 
 interface CheckoutFormProps {
   session: Session | null;
@@ -107,7 +102,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
         variant: "default",
         title: "Éxito",
         description:
-          "Cotización enviada con éxito, revise su correo para mas información, gracias por su preferencia.",
+          "Cotización enviada con éxito, revise su correo electrónico para mas información, gracias por su preferencia.",
       });
       router.push("/dashboard/order");
       router.refresh();
@@ -162,19 +157,20 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
 
   if (session === null || products.length === 0) {
     return (
-      <div className="w-full flex-1">
-        <EmptyCartMessage
-          title="Gracias por su preferencia"
-          description="Revise su correo electrónico para mayor información."
-        />
-      </div>
+      <Alert>
+        <Terminal className="h-4 w-4" />
+        <AlertTitle>Cotización registrada con éxito.</AlertTitle>
+        <AlertDescription>
+          Gracias por su preferencia, revise su correo para mas detalles.
+        </AlertDescription>
+      </Alert>
     );
   } else {
     return (
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          // className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
+          className={`space-y-8 ${!isEnable && "pointer-events-none"}`}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1">

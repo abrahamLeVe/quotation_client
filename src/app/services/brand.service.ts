@@ -2,7 +2,6 @@ import { fetchDataFromApi } from "@/lib/api";
 import { BrandsInterface } from "@/models/brand";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
-import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
 export async function getDataBrand(): Promise<BrandsInterface> {
@@ -17,7 +16,7 @@ export async function filterProductsByBrand(
     return;
   }
 
-  const cleanedQuery = processQuery(query);
+  const cleanedQuery = decodeURIComponent(query || "").trim();
   if (cleanedQuery.length === 0) {
     return;
   }
@@ -26,7 +25,7 @@ export async function filterProductsByBrand(
     const filter = {
       brand: {
         name: {
-          $containsi: cleanedQuery,
+          $eq: cleanedQuery,
         },
       },
     };

@@ -2,7 +2,6 @@ import { fetchDataFromApi } from "@/lib/api";
 import { ColorsInterface } from "@/models/colors.model";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
-import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
 export async function getDataColor(): Promise<ColorsInterface> {
@@ -17,7 +16,7 @@ export async function filterProductsByColor(
     return;
   }
 
-  const cleanedQuery = processQuery(query);
+  const cleanedQuery = decodeURIComponent(query || "").trim();
   if (cleanedQuery.length === 0) {
     return;
   }

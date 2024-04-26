@@ -11,5 +11,5 @@ export default async function CategoryIndex({
 }) {
   const products = await filterProductsByCategory(query);
 
-  return <ProductTable key={query} products={products} name={name} />;
+  return <ProductTable products={products} name={name} query={query} />;
 }

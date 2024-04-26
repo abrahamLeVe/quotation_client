@@ -7,6 +7,7 @@ import {
   CrossCircledIcon,
   QuestionMarkCircledIcon,
   StopwatchIcon,
+  ClockIcon,
 } from "@radix-ui/react-icons";
 
 export const labels = [
@@ -49,5 +50,10 @@ export const statuses = [
     value: "Vencido",
     label: "Vencido",
     icon: StopwatchIcon,
+  },
+  {
+    value: "Pago pendiente",
+    label: "Pago pendiente",
+    icon: ClockIcon,
   },
 ];

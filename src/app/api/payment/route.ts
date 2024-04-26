@@ -15,15 +15,18 @@ export async function POST(request: NextRequest) {
   //   if (secret !== process.env.SECRET) return Response.json({ success: false });
 
   const payment = await new Payment(client).get({ id: body.data.id });
-  // console.log(JSON.stringify(payment, null, 2));
+  // console.log("payment ", JSON.stringify(payment, null, 2));
   if (payment) {
-    if (payment.status === "approved") {
+    if (payment.status === "approved" || payment.status === "in_process") {
       const order = {
         payment_id: payment.id,
         amount: payment.transaction_amount,
         status: payment.status,
         cotizacion: payment.metadata.cotizacion,
         userToken: payment.metadata.user_token,
+        user: {
+          id: payment.metadata.user.id,
+        },
       };
       await createOrder(order);
     }

@@ -7,18 +7,22 @@ import {
   updateQuotation,
 } from "@/app/services/quotation.service";
 import { Icons } from "@/components/Icons";
-import PaymentMP from "@/components/payment/PaymentMP";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { generatePdf } from "@/components/voucher/voucher";
 import { voucheMP } from "@/components/voucher/voucherMP";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { FaBoxArchive, FaDownload } from "react-icons/fa6";
 import { MdOutlineCancel } from "react-icons/md";
 import { z } from "zod";
 import { quotationSchema } from "./data/schema";
 import { ResumeQuotationTable } from "./resume-quotation";
+
+const PaymentMP = dynamic(() => import("@/components/payment/PaymentMP"), {
+  ssr: false,
+});
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -104,30 +108,10 @@ export function DataTableRowActions<TData>({
       ) : (
         <>
           {quotation.codeStatus === "Completada" ? (
-            <div className="w-[280px] h-[103px] relative">
-              {/* <Suspense> */}
-              <PaymentMP quotation={quotation} />
-              {/* </Suspense> */}
-            </div>
-          ) : (
-            <></>
-          )}
-
-          {quotation.codeStatus === "En progreso" ? (
-            <ResumeQuotationTable quotation={quotation} />
-          ) : (
-            <></>
-          )}
-
-          {quotation.codeStatus === "Completada" ? (
             <>
-              <Button
-                className="flex gap-1"
-                onClick={() => handleGeneratePdf(quotation)}
-              >
-                <FaDownload />
-                Descargar comprobante
-              </Button>
+              <div className="w-[280px] h-[100px] relative">
+                <PaymentMP quotation={quotation} />
+              </div>
               <Button
                 className="flex gap-1"
                 onClick={() =>
@@ -138,6 +122,27 @@ export function DataTableRowActions<TData>({
               >
                 <MdOutlineCancel />
                 Cancelar
+              </Button>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {quotation.codeStatus === "En progreso" ? (
+            <ResumeQuotationTable quotation={quotation} />
+          ) : (
+            <></>
+          )}
+
+          {quotation.codeStatus === "Completada" ||
+          quotation.codeStatus === "Pago pendiente" ? (
+            <>
+              <Button
+                className="flex gap-1"
+                onClick={() => handleGeneratePdf(quotation)}
+              >
+                <FaDownload />
+                Descargar comprobante
               </Button>
             </>
           ) : (

@@ -31,6 +31,7 @@ export function generatePdf(cotizacion: Quotation) {
       const numCotizacion = cotizacion.id;
 
       const dueDate = dateSpanish(new Date(cotizacion.dateLimit));
+      const startDate = dateSpanish(new Date(cotizacion.createdAt));
 
       const logoUrl =
         "https://res.cloudinary.com/dmpmxzyrg/image/upload/v1710720912/logo_app_e0c73ca462.png";
@@ -99,6 +100,7 @@ export function generatePdf(cotizacion: Quotation) {
             ["Tipo de Documento", clientDocType!.toLocaleUpperCase()],
             ["Número de Documento", clientDocNumber],
             ["Dirección", clientAddress],
+            ["Fecha de Creación", startDate],
             ["Fecha de Vencimiento", dueDate],
           ],
           tableLineWidth: 0.1,

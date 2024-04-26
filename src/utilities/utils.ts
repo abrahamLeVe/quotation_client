@@ -15,6 +15,11 @@ export function capitalizeFirstLetter(text: string): string {
   if (!text) return "";
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
+export function capitalizeWords(text: string) {
+  return text.toLowerCase().replace(/(?:^|\s)\S/g, function (a) {
+    return a.toUpperCase();
+  });
+}
 
 export function removeDiacritics(text: string): string {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

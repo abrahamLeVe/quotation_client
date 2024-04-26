@@ -66,38 +66,7 @@ export function FloatingWhatsApp({
   );
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const loops = useRef(0);
   const notificationInterval = useRef(0);
-
-  // const handleNotification = useCallback(() => {
-  //   if (!notification) return;
-
-  //   dispatch({ type: "notification" });
-  //   if (onNotification) onNotification();
-  //   if (notificationLoop > 0) {
-  //     loops.current += 1;
-
-  //     if (loops.current === notificationLoop) {
-  //       clearInterval(notificationInterval.current);
-  //       if (onLoopDone) onLoopDone();
-  //     }
-  //   }
-  // }, [notification, notificationLoop, onNotification, onLoopDone]);
-
-  // useEffect(() => {
-  //   const delayInSecond = notificationDelay * 1000;
-  //   if (delayInSecond < 10)
-  //     return console.error(
-  //       "notificationDelay prop value must be at least 10 seconds."
-  //     );
-
-  //   notificationInterval.current = window.setInterval(
-  //     handleNotification,
-  //     delayInSecond
-  //   );
-
-  //   return () => clearInterval(notificationInterval.current);
-  // }, [handleNotification, notificationDelay]);
 
   const handleOpen = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {

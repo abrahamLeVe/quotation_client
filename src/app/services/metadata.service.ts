@@ -13,7 +13,9 @@ export const getDataSlugProducts = async (): Promise<ProductsInterface> => {
     },
     { encodeValuesOnly: true }
   );
-  const res = await fetchDataFromApi(`/api/products?${queryString}`);
+  const res = await fetchDataFromApi(
+    `/api/products?${queryString}&pagination[page]=1&pagination[pageSize]=999`
+  );
   return res;
 };
 

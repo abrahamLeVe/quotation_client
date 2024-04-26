@@ -2,7 +2,6 @@ import { fetchDataFromApi } from "@/lib/api";
 import { CategoriesInterface } from "@/models/category.model";
 import { populate } from "@/models/filter.model";
 import { ProductsInterface } from "@/models/products.model";
-import { processQuery } from "@/utilities/validators/search.validator";
 let qs = require("qs");
 
 export async function getDataCategory(): Promise<CategoriesInterface> {
@@ -18,8 +17,7 @@ export async function filterProductsByCategory(
   if (!query) {
     return;
   }
-
-  const cleanedQuery = processQuery(query);
+  const cleanedQuery = decodeURIComponent(query || "").trim();
   if (cleanedQuery.length === 0) {
     return;
   }
@@ -28,7 +26,7 @@ export async function filterProductsByCategory(
     const filter = {
       categories: {
         name: {
-          $containsi: cleanedQuery,
+          $eq: cleanedQuery,
         },
       },
     };
@@ -39,7 +37,9 @@ export async function filterProductsByCategory(
         encodeValuesOnly: true,
       }
     );
-    const res = await fetchDataFromApi(`/api/products?${queryString}`);
+    const res = await fetchDataFromApi(
+      `/api/products?${queryString}&pagination[page]=1&pagination[pageSize]=999`
+    );
     return res;
   } catch (error) {
     console.log("error in filterProducts", error);

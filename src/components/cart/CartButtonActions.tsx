@@ -1,11 +1,11 @@
 "use client";
-import { useProductContext } from "@/context/product.context";
 import { ColorProduct } from "@/models/products.model";
 import { cartStore } from "@/store/cart.store";
 import { BsCartCheck, BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
+import { useCartContext } from "@/context/cart.context";
 
 interface CartButtonActionsProps {
   priceId: number;
@@ -35,7 +35,7 @@ export default function CartButtonActions({
   discount,
 }: CartButtonActionsProps) {
   const cart = cartStore((state) => state);
-  const { getItemQuantity, getItemColorQuantity } = useProductContext();
+  const { getItemQuantity, getItemColorQuantity } = useCartContext();
   const addToCart = () => {
     if (colors! > 0 && !idColor) {
       return toast({

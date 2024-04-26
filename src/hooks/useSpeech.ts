@@ -1,11 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMounted } from "./useMounted";
-import { useProductContext } from "@/context/product.context";
+import { useCartContext } from "@/context/cart.context";
 
 export function useSpeechRecognition() {
-  const { isListening, setIsListening } = useProductContext();
+  // const [isListening, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useCartContext();
   const router = useRouter();
 
   let recognition: any = null;
@@ -56,8 +57,8 @@ export function useSpeechRecognition() {
   });
 
   function startListening() {
-    if (isListening) return;
-    setIsListening(true);
+    if (isLoading) return;
+    setIsLoading(true);
     const randomMessage = getRandomMessage();
     readText(randomMessage);
 
@@ -67,7 +68,7 @@ export function useSpeechRecognition() {
   }
 
   function stopListening() {
-    setIsListening(false);
+    setIsLoading(false);
     recognition.stop();
   }
 
