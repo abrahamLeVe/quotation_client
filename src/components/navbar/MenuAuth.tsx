@@ -17,6 +17,9 @@ import { IoExitOutline } from "react-icons/io5";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+import { FaGoogle } from "react-icons/fa";
+import { API_URL } from "@/utilities/urls";
 
 export default function AuthMenu() {
   const { data: session } = useSession();
@@ -108,6 +111,14 @@ export default function AuthMenu() {
                   Registro
                   <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
                 </Link>
+              </DropdownMenuItem>
+              <Separator className="my-1" />
+
+              <DropdownMenuItem asChild>
+                <a href={`${API_URL}/api/connect/google`}>
+                  <FaGoogle className="mr-2 h-4 w-4" />
+                  Ingresar con Google
+                </a>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

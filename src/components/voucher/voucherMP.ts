@@ -127,6 +127,7 @@ export function voucheMP(boleta: Quotation) {
                 "Cantidad",
                 "Medidas",
                 "Colores",
+                "Precio Unitario",
                 "Subtotal",
               ],
             ],
@@ -136,6 +137,10 @@ export function voucheMP(boleta: Quotation) {
               product.quantity,
               product.measure,
               product.colors,
+              {
+                content: formatCurrency(product.subtotal / product.quantity),
+                styles: { halign: "right" },
+              },
               {
                 content: formatCurrency(product.subtotal),
                 styles: { halign: "right" },
