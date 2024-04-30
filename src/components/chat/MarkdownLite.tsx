@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import Link from "next/link";
 import { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
@@ -43,7 +43,7 @@ export default function MarkdownLite({ text }: MarkdownLiteProps) {
     <article className="prose prose-invert max-w-sm max-h-none text-inherit">
       <ReactMarkdown
         components={{
-          link: ({ node, ...props }) => <MarkdownLink {...props} />,
+          a: ({ node, ...props }) => <MarkdownLink {...props} />,
           img: MarkdownImage,
         }}
       >
