@@ -15,44 +15,24 @@ interface MarkdownLinkProps {
 const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
   if (!children || !href) return <>{children}</>;
 
-  // Make sure `Link` directly wraps an `<a>` tag
   return (
-    <Link href={href} passHref>
-      <a
-        rel="noopener noreferrer"
-        className="break-words underline underline-offset-2 text-blue-600"
-      >
-        {children}
-      </a>
+    <Link
+      href={href}
+      passHref
+      rel="noopener noreferrer"
+      className="break-words underline underline-offset-2 text-blue-600"
+    >
+      {children}
     </Link>
   );
 };
-
-// const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
-//   if (!children) return null;
-
-//   if (!href) {
-//     return <>{children}</>;
-//   }
-
-//   return (
-//     <Link
-//       href={href}
-//       passHref
-//       rel="noopener noreferrer"
-//       className="break-words underline underline-offset-2 text-blue-600"
-//     >
-//       {children}
-//     </Link>
-//   );
-// };
 
 const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
   return src ? (
     <img
       src={src}
       alt={alt || ""}
-      className={`rounded-lg overflow-hidden border `}
+      className="rounded-lg overflow-hidden border"
       loading="eager"
     />
   ) : null;
@@ -60,7 +40,7 @@ const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
 
 export default function MarkdownLite({ text }: MarkdownLiteProps) {
   return (
-    <article className="prose prose-invert max-w-none max-h-none text-inherit">
+    <article className="prose prose-invert max-w-sm max-h-none text-inherit">
       <ReactMarkdown
         components={{
           link: ({ node, ...props }) => <MarkdownLink {...props} />,
