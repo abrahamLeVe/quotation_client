@@ -27,7 +27,6 @@ const PaymentMP = dynamic(() => import("@/components/payment/PaymentMP"), {
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
-type Quotation = z.infer<typeof quotationSchema>;
 
 export function DataTableRowActions<TData>({
   row,
@@ -35,23 +34,6 @@ export function DataTableRowActions<TData>({
   const router = useRouter();
   const quotation = quotationSchema.parse(row.original);
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleGeneratePdf = (cotizacion: Quotation) => {
-    generatePdf(cotizacion);
-  };
-  const handleGeneratePdfMP = (cotizacion: Quotation) => {
-    voucheMP(cotizacion);
-  };
-  const isDateLimitPast = (quotation: Quotation) => {
-    try {
-      const today = new Date();
-      const dateLimit = new Date(quotation.dateLimit);
-
-      return dateLimit < today;
-    } catch (error) {
-      console.log("error isDateLimitPast quotation ", error);
-    }
-  };
 
   async function handleUpdateQuotation({
     idQuotation,
@@ -111,7 +93,6 @@ export function DataTableRowActions<TData>({
       )}
       {isDateLimitPast(quotation) ? (
         <Button
-          suppressHydrationWarning={true}
           onClick={() =>
             handleUpdateQuotation({
               idQuotation: quotation.id,
@@ -209,3 +190,18 @@ export function DataTableRowActions<TData>({
     </div>
   );
 }
+
+type Quotation = z.infer<typeof quotationSchema>;
+
+const handleGeneratePdf = (cotizacion: Quotation) => {
+  generatePdf(cotizacion);
+};
+const handleGeneratePdfMP = (cotizacion: Quotation) => {
+  voucheMP(cotizacion);
+};
+const isDateLimitPast = (quotation: Quotation) => {
+  const today = new Date();
+  const dateLimit = new Date(quotation.dateLimit);
+
+  return dateLimit < today;
+};
