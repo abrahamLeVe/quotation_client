@@ -62,7 +62,7 @@ export function voucheMP(boleta: Quotation) {
             body: [
               [
                 {
-                  content: "BOLETA ELECTRÓNICA",
+                  content: "BOLETA",
                   styles: { halign: "center", fontStyle: "bold" },
                 },
               ],

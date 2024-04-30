@@ -200,8 +200,12 @@ const handleGeneratePdfMP = (cotizacion: Quotation) => {
   voucheMP(cotizacion);
 };
 const isDateLimitPast = (quotation: Quotation) => {
-  const today = new Date();
-  const dateLimit = new Date(quotation.dateLimit);
+  try {
+    const today = new Date();
+    const dateLimit = new Date(quotation.dateLimit);
 
-  return dateLimit < today;
+    return dateLimit < today;
+  } catch (error) {
+    console.log("error isDateLimitPast quotation ", error);
+  }
 };
