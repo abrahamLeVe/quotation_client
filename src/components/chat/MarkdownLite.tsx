@@ -13,23 +13,39 @@ interface MarkdownLinkProps {
 }
 
 const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
-  if (!children) return null;
+  if (!children || !href) return <>{children}</>;
 
-  if (!href) {
-    return <>{children}</>;
-  }
-
+  // Make sure `Link` directly wraps an `<a>` tag
   return (
-    <Link
-      href={href}
-      passHref
-      rel="noopener noreferrer"
-      className="break-words underline underline-offset-2 text-blue-600"
-    >
-      {children}
+    <Link href={href} passHref>
+      <a
+        rel="noopener noreferrer"
+        className="break-words underline underline-offset-2 text-blue-600"
+      >
+        {children}
+      </a>
     </Link>
   );
 };
+
+// const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
+//   if (!children) return null;
+
+//   if (!href) {
+//     return <>{children}</>;
+//   }
+
+//   return (
+//     <Link
+//       href={href}
+//       passHref
+//       rel="noopener noreferrer"
+//       className="break-words underline underline-offset-2 text-blue-600"
+//     >
+//       {children}
+//     </Link>
+//   );
+// };
 
 const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
   return src ? (
