@@ -111,6 +111,7 @@ export function DataTableRowActions<TData>({
       )}
       {isDateLimitPast(quotation) ? (
         <Button
+          suppressHydrationWarning={true}
           onClick={() =>
             handleUpdateQuotation({
               idQuotation: quotation.id,
