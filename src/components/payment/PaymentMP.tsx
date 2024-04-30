@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { z } from "zod";
 import { quotationSchema } from "../quotation/table/data/schema";
+
 export type Quotation = z.infer<typeof quotationSchema>;
 
 interface PaymentMPProps {
@@ -12,29 +13,38 @@ interface PaymentMPProps {
 }
 
 export default function PaymentMP({ quotation }: PaymentMPProps) {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   useEffect(() => {
-    initMercadoPago(process.env.NEXT_PUBLIC_MP_KEY!, { locale: "es-PE" });
+    if (!process.env.NEXT_PUBLIC_MP_KEY) {
+      console.error("MercadoPago key is missing!");
+      return;
+    }
+    initMercadoPago(process.env.NEXT_PUBLIC_MP_KEY, { locale: "es-PE" });
   }, []);
 
   async function onSubmit() {
-    const preferenceId = await payMercadoPago(quotation);
-    setTheme("light");
-    return preferenceId;
+    try {
+      const preferenceId = await payMercadoPago(quotation);
+      if (theme === "dark") {
+        setTheme("light");
+      }
+      return preferenceId;
+    } catch (error) {
+      console.error("Payment submission error: ", error);
+      return null;
+    }
   }
 
   return (
-    <>
-      <Wallet
-        initialization={{
-          redirectMode: "modal",
-        }}
-        onError={(e) => {
-          // console.log("error ", e);
-        }}
-        onSubmit={onSubmit}
-      />
-    </>
+    <Wallet
+      initialization={{
+        redirectMode: "modal",
+      }}
+      onError={(e) => {
+        console.error("Payment error: ", e);
+      }}
+      onSubmit={onSubmit}
+    />
   );
 }

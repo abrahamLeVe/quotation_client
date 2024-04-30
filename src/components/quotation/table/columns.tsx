@@ -53,7 +53,7 @@ export const columns: ColumnDef<Quotation>[] = [
       <DataTableColumnHeader column={column} title="Creación" />
     ),
     cell: ({ row }) => (
-      <div suppressHydrationWarning={true} className="flex space-x-2">
+      <div className="flex space-x-2">
         <span className="max-w-[500px] truncate font-medium">
           {formatDate(row.getValue("createdAt"))}
         </span>
@@ -68,10 +68,7 @@ export const columns: ColumnDef<Quotation>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span
-            suppressHydrationWarning={true}
-            className="max-w-[500px] truncate font-medium"
-          >
+          <span className="max-w-[500px] truncate font-medium">
             {formatDate(row.getValue("dateLimit"))}
           </span>
         </div>
