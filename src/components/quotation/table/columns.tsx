@@ -1,12 +1,12 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-// import { formatDate } from "@/utilities/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { statuses } from "./data/data";
 import { Quotation } from "./data/schema";
+import { formatDate } from "@/utilities/utils";
 
 export const columns: ColumnDef<Quotation>[] = [
   {
@@ -54,8 +54,11 @@ export const columns: ColumnDef<Quotation>[] = [
     ),
     cell: ({ row }) => (
       <div className="flex space-x-2">
-        <span className="max-w-[500px] truncate font-medium">
-          {/* {formatDate(row.getValue("createdAt"))} */}
+        <span
+          suppressHydrationWarning={true}
+          className="max-w-[500px] truncate font-medium"
+        >
+          {formatDate(row.getValue("createdAt"))}
         </span>
       </div>
     ),
@@ -68,8 +71,11 @@ export const columns: ColumnDef<Quotation>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {/* {formatDate(row.getValue("dateLimit"))} */}
+          <span
+            suppressHydrationWarning={true}
+            className="max-w-[500px] truncate font-medium"
+          >
+            {formatDate(row.getValue("dateLimit"))}
           </span>
         </div>
       );
