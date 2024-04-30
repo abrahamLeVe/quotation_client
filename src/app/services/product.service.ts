@@ -40,8 +40,7 @@ export async function filterProducts(
     return;
   }
   const cleanedQuery = processQuery(query);
-  // const cleanedQuery = decodeURIComponent(query || "").trim();
-  // console.log("cleanedQuery ", cleanedQuery);
+
   if (cleanedQuery.length === 0) {
     return;
   }

@@ -2,6 +2,7 @@ import NavBar from "@/components/navbar/NavBar";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import dynamic from "next/dynamic";
 import background from "../../../../../public/logoAyC.png";
+import backgroundMovil from "../../../../../public/logoelectrica.jpg";
 
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
@@ -14,7 +15,11 @@ export default async function OrderLayout({
 }) {
   return (
     <>
-      <NavBar background={background} isDashboard={true} />
+      <NavBar
+        background={background}
+        isDashboard={true}
+        backgroundMovil={backgroundMovil}
+      />
       <main className="flex flex-col md:container m-auto relative min-h-screen">
         <Breadcrumbs
           segments={[

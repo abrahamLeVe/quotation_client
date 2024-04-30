@@ -5,6 +5,8 @@ import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 
 import { getServerSession } from "next-auth";
 import background from "../../../../public/logoAyC.png";
+import backgroundMovil from "../../../../public/logoelectrica.jpg";
+
 export default async function ContactLayout({
   children,
 }: {
@@ -14,7 +16,11 @@ export default async function ContactLayout({
 
   return (
     <>
-      <NavBar background={background} isDashboard />
+      <NavBar
+        background={background}
+        isDashboard
+        backgroundMovil={backgroundMovil}
+      />
       <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
         <Breadcrumbs
           segments={[

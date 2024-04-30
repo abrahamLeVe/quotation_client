@@ -12,9 +12,5 @@ export default async function ResetPassPage({
 }) {
   const session = await getServerSession(options);
 
-  return (
-    <>
-      <ResetPassForm session={session} searchParams={searchParams} />
-    </>
-  );
+  return <ResetPassForm session={session} searchParams={searchParams} />;
 }

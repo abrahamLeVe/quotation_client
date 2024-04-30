@@ -26,9 +26,7 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
   async function onSubmit() {
     try {
       const preferenceId = await payMercadoPago(quotation);
-      if (theme === "dark") {
-        setTheme("light");
-      }
+      setTheme("light");
       return preferenceId;
     } catch (error) {
       console.error("Payment submission error: ", error);

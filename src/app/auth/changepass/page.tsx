@@ -14,9 +14,5 @@ export default async function ChangePassPage({
   const session = await getServerSession(options);
   const code = searchParams.code;
 
-  return (
-    <>
-      <ChangePassForm session={session} code={code} />
-    </>
-  );
+  return <ChangePassForm session={session} code={code} />;
 }

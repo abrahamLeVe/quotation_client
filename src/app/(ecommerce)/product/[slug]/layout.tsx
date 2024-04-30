@@ -4,6 +4,7 @@ import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 import background from "../../../../../public/logoAyC.png";
+import backgroundMovil from "../../../../../public/logoelectrica.jpg";
 
 export default async function ProductLayout({
   children,
@@ -15,7 +16,12 @@ export default async function ProductLayout({
 
   return (
     <>
-      <NavBar background={background} brands={brands} categories={categories} />
+      <NavBar
+        background={background}
+        brands={brands}
+        categories={categories}
+        backgroundMovil={backgroundMovil}
+      />
       <Breadcrumbs
         segments={[
           {

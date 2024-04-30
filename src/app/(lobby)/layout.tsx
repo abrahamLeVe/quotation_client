@@ -1,9 +1,12 @@
 import NavBar from "@/components/navbar/NavBar";
 import dynamic from "next/dynamic";
 import background from "../../../public/logoAyC.png";
+import backgroundMovil from "../../../public/logoelectrica.jpg";
+
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
 import { getContactData } from "../services/contact.service";
+export const revalidate = 360;
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
@@ -52,7 +55,12 @@ export default async function LobbyLayout({
 
   return (
     <>
-      <NavBar background={background} categories={categories} brands={brands} />
+      <NavBar
+        background={background}
+        backgroundMovil={backgroundMovil}
+        categories={categories}
+        brands={brands}
+      />
       <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
         {children}
         <ProductCarousel />

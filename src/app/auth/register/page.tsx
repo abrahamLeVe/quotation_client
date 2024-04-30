@@ -16,9 +16,5 @@ export default async function Page({
   };
 }) {
   const session = await getServerSession(options);
-  return (
-    <>
-      <RegisterForm session={session} searchParams={searchParams} />
-    </>
-  );
+  return <RegisterForm session={session} searchParams={searchParams} />;
 }

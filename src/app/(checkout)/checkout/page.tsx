@@ -17,9 +17,5 @@ const getPeru = cache(async () => {
 export default async function CheckoutPage() {
   const session = await getServerSession(options);
   const peru = await getPeru();
-  return (
-    <>
-      <CheckoutForm session={session} peru={peru} />
-    </>
-  );
+  return <CheckoutForm session={session} peru={peru} />;
 }

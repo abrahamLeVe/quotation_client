@@ -5,7 +5,6 @@ import { useMounted } from "./useMounted";
 import { useCartContext } from "@/context/cart.context";
 
 export function useSpeechRecognition() {
-  // const [isListening, setIsLoading] = useState(false);
   const { isLoading, setIsLoading } = useCartContext();
   const router = useRouter();
 

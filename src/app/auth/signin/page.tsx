@@ -12,9 +12,5 @@ export default async function SigninPage({
 }) {
   const session = await getServerSession(options);
 
-  return (
-    <>
-      <SigninForm session={session} searchParams={searchParams} />
-    </>
-  );
+  return <SigninForm session={session} searchParams={searchParams} />;
 }

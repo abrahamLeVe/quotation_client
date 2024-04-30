@@ -4,6 +4,7 @@ import { getDataColor } from "@/app/services/color.service";
 import { getDataSizes } from "@/app/services/size.service";
 import NavBar from "@/components/navbar/NavBar";
 import background from "../../../../public/logoAyC.png";
+import backgroundMovil from "../../../../public/logoelectrica.jpg";
 
 import dynamic from "next/dynamic";
 const FilterSlider = dynamic(() => import("@/components/filter/FilterSlider"), {
@@ -26,7 +27,12 @@ export default async function FilterLayout({
 
   return (
     <>
-      <NavBar background={background} brands={brands} categories={categories} />
+      <NavBar
+        background={background}
+        brands={brands}
+        categories={categories}
+        backgroundMovil={backgroundMovil}
+      />
       <main className="flex overflow-hidden flex-row container mx-auto gap-5 relative p-3 md:p-5">
         <FilterSlider
           colors={colors}
