@@ -110,7 +110,7 @@ export function DataTableRowActions<TData>({
           {quotation.codeStatus === "Completada" ? (
             <>
               <div className="w-[280px] h-[100px] relative">
-                {/* <PaymentMP quotation={quotation} /> */}
+                <PaymentMP quotation={quotation} />
               </div>
               <Button
                 className="flex gap-1"

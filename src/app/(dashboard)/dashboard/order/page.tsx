@@ -6,7 +6,6 @@ import { getUserFromApi } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
 
 import { z } from "zod";
-// export const revalidate = 6;
 
 export default async function OrderPage() {
   const session = await getServerSession(options);

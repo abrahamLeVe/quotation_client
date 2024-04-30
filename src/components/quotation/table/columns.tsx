@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { formatDate } from "@/utilities/utils";
+// import { formatDate } from "@/utilities/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
@@ -55,7 +55,7 @@ export const columns: ColumnDef<Quotation>[] = [
     cell: ({ row }) => (
       <div className="flex space-x-2">
         <span className="max-w-[500px] truncate font-medium">
-          {formatDate(row.getValue("createdAt"))}
+          {/* {formatDate(row.getValue("createdAt"))} */}
         </span>
       </div>
     ),
@@ -69,7 +69,7 @@ export const columns: ColumnDef<Quotation>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[500px] truncate font-medium">
-            {formatDate(row.getValue("dateLimit"))}
+            {/* {formatDate(row.getValue("dateLimit"))} */}
           </span>
         </div>
       );
