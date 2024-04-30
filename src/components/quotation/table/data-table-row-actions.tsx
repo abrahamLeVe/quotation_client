@@ -91,7 +91,7 @@ export function DataTableRowActions<TData>({
           />
         </Button>
       )}
-      {/* {isDateLimitPast(quotation) ? (
+      {isDateLimitPast(quotation) ? (
         <Button
           onClick={() =>
             handleUpdateQuotation({
@@ -105,38 +105,37 @@ export function DataTableRowActions<TData>({
           <FaBoxArchive />
           Archivar por vecimiento
         </Button>
-      ) : ( */}
-      <>
-        {quotation.codeStatus === "Completada" ? (
-          <>
-            <div className="w-[280px] h-[100px] relative">
-              <PaymentMP quotation={quotation} />
-            </div>
-            <Button
-              className="flex gap-1"
-              onClick={() =>
-                handleUpdateQuotation({
-                  idQuotation: quotation.id,
-                })
-              }
-            >
-              <MdOutlineCancel />
-              Cancelar
-            </Button>
-          </>
-        ) : (
-          <></>
-        )}
+      ) : (
+        <>
+          {quotation.codeStatus === "Completada" ? (
+            <>
+              <div className="w-[280px] h-[100px] relative">
+                {/* <PaymentMP quotation={quotation} /> */}
+              </div>
+              <Button
+                className="flex gap-1"
+                onClick={() =>
+                  handleUpdateQuotation({
+                    idQuotation: quotation.id,
+                  })
+                }
+              >
+                <MdOutlineCancel />
+                Cancelar
+              </Button>
+            </>
+          ) : (
+            <></>
+          )}
 
-        {quotation.codeStatus === "En progreso" ? (
-          <ResumeQuotationTable quotation={quotation} />
-        ) : (
-          <></>
-        )}
+          {quotation.codeStatus === "En progreso" ? (
+            <ResumeQuotationTable quotation={quotation} />
+          ) : (
+            <></>
+          )}
 
-        {quotation.codeStatus === "Completada" ||
-        quotation.codeStatus === "Pago pendiente" ? (
-          <>
+          {quotation.codeStatus === "Completada" ||
+          quotation.codeStatus === "Pago pendiente" ? (
             <Button
               className="flex gap-1"
               onClick={() => handleGeneratePdf(quotation)}
@@ -144,49 +143,48 @@ export function DataTableRowActions<TData>({
               <FaDownload />
               Descargar comprobante
             </Button>
-          </>
-        ) : (
-          <></>
-        )}
-        {quotation.codeStatus === "Cerrada" ? (
-          <>
-            {quotation.pago === null ? (
-              <Button
-                onClick={() => handleGeneratePdf(quotation)}
-                className="flex gap-1"
-              >
-                <FaDownload />
-                Comprobante
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleGeneratePdfMP(quotation)}
-                className="flex gap-1"
-              >
-                <FaDownload />
-                Boleta de venta
-              </Button>
-            )}
-          </>
-        ) : null}
+          ) : (
+            <></>
+          )}
+          {quotation.codeStatus === "Cerrada" ? (
+            <>
+              {quotation.pago === null ? (
+                <Button
+                  onClick={() => handleGeneratePdf(quotation)}
+                  className="flex gap-1"
+                >
+                  <FaDownload />
+                  Comprobante
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => handleGeneratePdfMP(quotation)}
+                  className="flex gap-1"
+                >
+                  <FaDownload />
+                  Boleta de venta
+                </Button>
+              )}
+            </>
+          ) : null}
 
-        {(quotation.codeStatus === "Vencido" ||
-          quotation.codeStatus === "Cancelada") && (
-          <Button
-            onClick={() =>
-              handleUpdateQuotation({
-                idQuotation: quotation.id,
-                isArchived: true,
-              })
-            }
-            className="flex gap-1"
-          >
-            <FaBoxArchive />
-            Archivar
-          </Button>
-        )}
-      </>
-      {/* )} */}
+          {(quotation.codeStatus === "Vencido" ||
+            quotation.codeStatus === "Cancelada") && (
+            <Button
+              onClick={() =>
+                handleUpdateQuotation({
+                  idQuotation: quotation.id,
+                  isArchived: true,
+                })
+              }
+              className="flex gap-1"
+            >
+              <FaBoxArchive />
+              Archivar
+            </Button>
+          )}
+        </>
+      )}
     </div>
   );
 }
@@ -199,9 +197,9 @@ const handleGeneratePdf = (cotizacion: Quotation) => {
 const handleGeneratePdfMP = (cotizacion: Quotation) => {
   voucheMP(cotizacion);
 };
-// const isDateLimitPast = (quotation: Quotation) => {
-//   const today = new Date();
-//   const dateLimit = new Date(quotation.dateLimit);
+const isDateLimitPast = (quotation: Quotation) => {
+  const today = new Date();
+  const dateLimit = new Date(quotation.dateLimit);
 
-//   return dateLimit < today;
-// };
+  return dateLimit < today;
+};
