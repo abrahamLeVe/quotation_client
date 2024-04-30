@@ -29,6 +29,7 @@ export function generatePdf(cotizacion: Quotation) {
       const clientDocType = cotizacion.tipe_doc;
       const clientDocNumber = cotizacion.num_doc;
       const numCotizacion = cotizacion.id;
+      const quotationState = cotizacion.codeStatus;
 
       const dueDate = dateSpanish(new Date(cotizacion.dateLimit));
       const startDate = dateSpanish(new Date(cotizacion.createdAt));
@@ -102,6 +103,7 @@ export function generatePdf(cotizacion: Quotation) {
             ["Dirección", clientAddress],
             ["Fecha de Creación", startDate],
             ["Fecha de Vencimiento", dueDate],
+            ["Estado de cotización", quotationState],
           ],
           tableLineWidth: 0.1,
           startY: (doc as any).lastAutoTable.finalY + 5,
