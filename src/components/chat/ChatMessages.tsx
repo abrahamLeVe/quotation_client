@@ -1,7 +1,7 @@
 "use client";
 import { MessagesContext } from "@/context/messages.context";
 import { cn } from "@/lib/utils";
-import { HTMLAttributes, useContext } from "react";
+import { useContext } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import MarkdownLite from "./MarkdownLite";
 
@@ -26,7 +26,7 @@ export default function ChatMessages() {
         >
           <div
             className={cn("px-4 py-2 rounded-lg", {
-              "bg-blue-600 text-white dark:text-gray-900 dark:bg-white":
+              "bg-slate-100  dark:text-gray-900 dark:bg-white":
                 message.isUserMessage,
               "bg-gray-900 text-white ": !message.isUserMessage,
             })}

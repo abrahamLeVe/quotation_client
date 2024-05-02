@@ -16,8 +16,7 @@ const companyData = {
 export async function generateChatbotPrompt(): Promise<string> {
   const sitemapURL = `${CLIENT_URL}/sitemap.xml`;
   const sitemapData = await readSitemapFromURL(sitemapURL);
-  const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en:
-   [here]${sitemapData}, solo muestro hasta 5 items con su img, si quiere ver mas [here]${sitemapData} galería o catálogo`;
+  const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en:[Galería de productos]${sitemapData} o [Papel Nomex][img]:${sitemapData}, solo muestro hasta 4 items con su img`;
 
   const companyInfo = `
     Nombre: ${companyData.nombre}
@@ -30,7 +29,7 @@ export async function generateChatbotPrompt(): Promise<string> {
   `;
 
   return `
-    Eres un útil chatbot de atención al cliente integrado este sitio web: ${CLIENT_URL}.
+    Eres un útil chatbot de atención al cliente integrado este sitio web: ${CLIENT_URL} y tu nombre es Bit Buddy.
     Datos de la empresa:${companyInfo}
     También eres un eficiente buscador de productos.
     Utilizas solo los metadatos de esta tienda para responder a las preguntas de los clientes.

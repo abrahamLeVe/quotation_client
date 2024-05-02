@@ -29,10 +29,6 @@ const Testimonials = dynamic(
   }
 );
 
-const Footer = dynamic(() => import("@/components/footer/Footer"), {
-  ssr: false,
-});
-
 const WhatsappButoon = dynamic(
   () => import("@/components/floating/whatsapp-button"),
   {
@@ -41,6 +37,10 @@ const WhatsappButoon = dynamic(
 );
 
 const Chat = dynamic(() => import("@/components/chat/Chat"), {
+  ssr: false,
+});
+
+const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
 });
 

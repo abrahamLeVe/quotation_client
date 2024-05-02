@@ -46,8 +46,8 @@ export default function Chat() {
             </Button>
           </PopoverTrigger>
           <PopoverContent
-            sideOffset={-75}
-            className="p-0 border-none relative h-[600px] w-80 xs:w-[450px] bg-white/75 dark:bg-black/75 backdrop-blur-md"
+            sideOffset={-95}
+            className="p-0 border-none relative h-[620px] w-80 xs:w-[450px] bg-white/75 dark:bg-black/75 backdrop-blur-md"
           >
             <Card className="flex flex-col h-full bg-transparent justify-between">
               <div>
@@ -68,7 +68,7 @@ export default function Chat() {
                 </CardContent>
               </div>
               <CardFooter>
-                <ChatInput className="px-4" />
+                <ChatInput />
               </CardFooter>
             </Card>
           </PopoverContent>

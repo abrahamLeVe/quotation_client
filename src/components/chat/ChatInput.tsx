@@ -3,12 +3,11 @@ import SendMessageMutation from "@/lib/send-message";
 import { Message } from "@/lib/validations/message";
 import { CornerDownLeft, Loader2 } from "lucide-react";
 import { nanoid } from "nanoid";
-import { HTMLAttributes, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
-interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {}
-
-export default function ChatInput({ className, ...props }: ChatInputProps) {
+export default function ChatInput() {
   const [input, setInput] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { sendMessage, isPending, error } = SendMessageMutation();
@@ -29,33 +28,54 @@ export default function ChatInput({ className, ...props }: ChatInputProps) {
     }
   };
 
+  const handleEmojiClick = (emoji: string) => {
+    setInput(input + emoji);
+    textareaRef.current?.focus();
+  };
+
   return (
     <div className="w-full relative">
       {error && (
-        <div className="text-red-500 text-xs absolute -inset-5 z-50">
+        <div className="text-red-500 text-xs absolute -top-5 z-50">
           {error.message}
         </div>
       )}
-      <div className="relative  flex-1 ">
-        <Textarea
-          ref={textareaRef}
-          onKeyDown={handleKeyDown}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          maxLength={100}
-          autoFocus
-          placeholder="Escribe un mensaje..."
-          className="min-h-[40px] pr-10"
-        />
+      <div className="relative flex-1">
+        <div className="mb-1">
+          {["👍", "❤️", "😍", "😂", "👏", "😊", "🥇", "🌹"].map((emoji) => (
+            <span
+              key={emoji}
+              onClick={() => handleEmojiClick(emoji)}
+              style={{ cursor: "pointer", margin: "0 5px" }}
+            >
+              {emoji}
+            </span>
+          ))}
+        </div>
+        <div className="relative">
+          <Textarea
+            ref={textareaRef}
+            onKeyDown={handleKeyDown}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            maxLength={100}
+            autoFocus
+            placeholder="Escribe un mensaje..."
+            className="min-h-[40px] pr-10"
+          />
 
-        <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
-          <kbd className="inline-flex items-center rounded bg-white border-gray-200 px-1 font-sans text-xs text-gray-400">
-            {isPending ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <CornerDownLeft className="w-4 h-4" />
-            )}
-          </kbd>
+          <div className="absolute inset-y-0 right-0 flex  ">
+            <Button
+              variant={"ghost"}
+              className="inline-flex items-center pointer-events-none h-full text-gray-500"
+            >
+              {isPending ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <CornerDownLeft className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

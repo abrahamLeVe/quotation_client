@@ -18,9 +18,10 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
   return (
     <Link
       href={href}
-      passHref
+      // passHref
       rel="noopener noreferrer"
       className="break-words underline underline-offset-2 text-blue-600"
+      scroll={false}
     >
       {children}
     </Link>
@@ -29,14 +30,12 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
 
 const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
   return src ? (
-    <div className="w-[158px] h-[158px]">
-      <img
-        src={src}
-        alt={alt || ""}
-        className="rounded-lg overflow-hidden border "
-        loading="eager"
-      />
-    </div>
+    <img
+      src={src}
+      alt={alt || ""}
+      className="w-[158px] h-[158px] rounded-lg overflow-hidden border "
+      loading="eager"
+    />
   ) : null;
 };
 

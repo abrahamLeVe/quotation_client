@@ -66,7 +66,15 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 }
 
 function transformText(text: string): string {
-  const regex = /\[(.*?)\]\((.*?)\)/g;
-  const transformedText = text.replace(regex, '<a href="$2">$1</a>');
+  let transformedText = text.replace(
+    /\[(.*?)\]\((http.*?)\)/g,
+    (match, text, url) => {
+      if (/\.(jpeg|jpg|gif|png|svg|webp)$/.test(url)) {
+        return `<img src="${url}" alt="${text}">`;
+      } else {
+        return `<a href="${url}">${text}</a>`;
+      }
+    }
+  );
   return transformedText;
 }
