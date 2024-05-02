@@ -1,26 +1,11 @@
 "use client";
 import { MessagesContext } from "@/context/messages.context";
 import { cn } from "@/lib/utils";
-// import dynamic from "next/dynamic";
 import { HTMLAttributes, useContext } from "react";
-// import { Icons } from "../Icons";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import MarkdownLite from "./MarkdownLite";
 
-// const MarkdownLite = dynamic(() => import("./MarkdownLite"), {
-//   ssr: false,
-//   loading: () => (
-//     <div className="w-[200px]  flex justify-center items-center">
-//       <div className="w-[20px] h-[20px]">
-//         <Icons.spinner />
-//       </div>
-//     </div>
-//   ),
-// });
-
-interface ChatMessagesProps extends HTMLAttributes<HTMLDivElement> {}
-
-export default function ChatMessages({}: ChatMessagesProps) {
+export default function ChatMessages() {
   const { messages } = useContext(MessagesContext);
   const inverseMessages = [...messages].reverse();
 
