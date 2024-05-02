@@ -36,6 +36,7 @@ export default function RegisterForm({
   session,
   searchParams,
 }: RegisterFormProps) {
+  console.log("ression de form ", session);
   if (session) {
     signOut({ redirect: false });
   }
@@ -59,6 +60,7 @@ export default function RegisterForm({
     try {
       const res = await registerUser(data);
       if (res.user) {
+        console.log("res de regites", res);
         toast({
           variant: "default",
           title: "Cuenta creada correctamente",
@@ -94,7 +96,7 @@ export default function RegisterForm({
         });
       }
     } catch (error) {
-      console.log("error RegisterForm.tsx ", error);
+      console.log("error RegisterForm ", error);
     } finally {
       setIsLoading(false);
     }

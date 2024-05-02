@@ -1,9 +1,7 @@
 "use client";
-import { Separator } from "../ui/separator";
-import ChatHeader from "./ChatHeader";
+import { useSession } from "next-auth/react";
 import ChatInput from "./ChatInput";
 import ChatMessages from "./ChatMessages";
-import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +10,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { SpeachButton } from "../filter/FilterButton";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 export default function Chat() {
   const { data: session } = useSession();
@@ -41,16 +47,30 @@ export default function Chat() {
           </PopoverTrigger>
           <PopoverContent
             sideOffset={-75}
-            className="h-[600px] max-w-sm w-full bg-white/75 dark:bg-black/75 backdrop-blur-md dark:border-zinc-200 relative"
+            className="p-0 border-none relative h-[600px] w-80 xs:w-[450px] bg-white/75 dark:bg-black/75 backdrop-blur-md"
           >
-            <div className="flex flex-col h-full">
-              <ChatHeader />
-              <Separator className="border-t border-zinc-300" />
-              <div className="flex flex-col h-full max-h-[450px]">
-                <ChatMessages className="px-2 py-3 flex-1" />
+            <Card className="flex flex-col h-full bg-transparent justify-between">
+              <div>
+                <CardHeader className="flex flex-row items-center gap-3">
+                  <img
+                    src="./botProfile.png"
+                    alt="chat bot"
+                    className="w-[40px] h-[40px]"
+                    loading="lazy"
+                  />
+                  <div>
+                    <CardTitle>Bit Buddy</CardTitle>
+                    <CardDescription>Soporte y búsqueda</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ChatMessages />
+                </CardContent>
               </div>
-              <ChatInput className="px-4" />
-            </div>
+              <CardFooter>
+                <ChatInput className="px-4" />
+              </CardFooter>
+            </Card>
           </PopoverContent>
         </Popover>
       )}

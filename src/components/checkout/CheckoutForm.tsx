@@ -31,7 +31,6 @@ import {
 } from "@/lib/validations/formDataQuotation";
 import { cartStore } from "@/store/cart.store";
 import { Terminal } from "lucide-react";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Icons } from "../Icons";
@@ -295,10 +294,6 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                         type="number"
                       />
                     </FormControl>
-                    {/* <FormDescription>
-                      Nombre de persona natural favor de indicarnos su número de
-                      DNI.
-                    </FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
