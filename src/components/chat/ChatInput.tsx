@@ -32,7 +32,7 @@ export default function ChatInput({ className, ...props }: ChatInputProps) {
   return (
     <div className="w-full relative">
       {error && (
-        <div className="text-red-500 text-sm absolute inset-0 z-50">
+        <div className="text-red-500 text-xs absolute -inset-5 z-50">
           {error.message}
         </div>
       )}

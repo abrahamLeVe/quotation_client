@@ -29,12 +29,14 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
 
 const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
   return src ? (
-    <img
-      src={src}
-      alt={alt || ""}
-      className="rounded-lg overflow-hidden border"
-      loading="eager"
-    />
+    <div className="w-[158px] h-[158px]">
+      <img
+        src={src}
+        alt={alt || ""}
+        className="rounded-lg overflow-hidden border "
+        loading="eager"
+      />
+    </div>
   ) : null;
 };
 
