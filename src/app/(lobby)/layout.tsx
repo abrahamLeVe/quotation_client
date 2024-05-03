@@ -6,6 +6,7 @@ import backgroundMovil from "../../../public/logoelectrica.jpg";
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
 import { getContactData } from "../services/contact.service";
+import Chat from "@/components/chat/Chat";
 export const revalidate = 360;
 
 const ProductCarousel = dynamic(
@@ -36,9 +37,9 @@ const WhatsappButoon = dynamic(
   }
 );
 
-const Chat = dynamic(() => import("@/components/chat/Chat"), {
-  ssr: false,
-});
+// const Chat = dynamic(() => import("@/components/chat/Chat"), {
+//   ssr: false,
+// });
 
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
