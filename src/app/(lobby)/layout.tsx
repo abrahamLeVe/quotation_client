@@ -6,13 +6,13 @@ import backgroundMovil from "../../../public/logoelectrica.jpg";
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
 import { getContactData } from "../services/contact.service";
-import Chat from "@/components/chat/Chat";
-export const revalidate = 360;
 
 const ProductCarousel = dynamic(
   () => import("@/components/product/ProductCarousel")
 );
-
+const Chat = dynamic(() => import("@/components/chat/Chat"), {
+  ssr: false,
+});
 const Collection = dynamic(() => import("@/components/lobby/Collection"), {
   ssr: false,
 });
@@ -22,25 +22,14 @@ const BrandSlider = dynamic(() => import("@/components/brand/BrandSlider"), {
 const PromoSection = dynamic(() => import("@/components/lobby/PromoSection"), {
   ssr: false,
 });
-
 const Testimonials = dynamic(
   () => import("@/components/lobby/testimonial/Testimonials"),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
-
 const WhatsappButoon = dynamic(
   () => import("@/components/floating/whatsapp-button"),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
-
-// const Chat = dynamic(() => import("@/components/chat/Chat"), {
-//   ssr: false,
-// });
-
 const Footer = dynamic(() => import("@/components/footer/Footer"), {
   ssr: false,
 });
