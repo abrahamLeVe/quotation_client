@@ -9,7 +9,7 @@ export default function ProductRating({ rating }: ProductRatingProps) {
   const starIcons = [];
   for (let i = 1; i <= 5; i++) {
     if (rating >= i) {
-      starIcons.push(<BsStarFill key={i} />);
+      starIcons.push(<BsStarFill key={i} className="text-amber-300" />);
     } else if (rating >= i - 0.5) {
       starIcons.push(<BsStarHalf key={i} />);
     } else {

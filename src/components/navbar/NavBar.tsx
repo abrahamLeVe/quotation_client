@@ -32,61 +32,59 @@ export default function NavBar({
   return (
     <header className="sticky top-0 z-20 backdrop-blur-md my-2 bg-white/90 dark:bg-slate-950/90">
       <nav aria-label="Top" className="mx-auto  container px-4 sm:px-6 lg:px-8">
-        <div className="border-b border-gray-200">
-          <div className="flex h-16 items-center gap-2">
-            {/* Logo */}
-            <div className="relative max-w-[150px] rounded-lg  xs:flex items-center dark:bg-slate-50">
-              <Image
-                src={background}
-                alt="DSStore"
-                priority={true}
-                className="hidden xs:flex"
-              />
-              <Image
-                src={backgroundMovil}
-                alt="DSStore"
-                priority={true}
-                className="block xs:hidden max-h-16 w-10"
-              />
-              <Link
-                href={"/"}
-                className="absolute inset-0"
-                aria-label="DSStore"
-              ></Link>
-            </div>
+        <div className="flex h-16 items-center gap-2 border-b border-gray-200">
+          {/* Logo */}
+          <div className="relative max-w-[150px] rounded-lg  xs:flex items-center dark:bg-slate-50">
+            <Image
+              src={background}
+              alt="DSStore"
+              priority={true}
+              className="hidden xs:flex"
+            />
+            <Image
+              src={backgroundMovil}
+              alt="DSStore"
+              priority={true}
+              className="block xs:hidden max-h-16 w-10"
+            />
+            <Link
+              href={"/"}
+              className="absolute inset-0"
+              aria-label="DSStore"
+            ></Link>
+          </div>
 
-            {/* Flyout menus */}
+          {/* Flyout menus */}
 
+          <div className="hidden lg:flex">
+            {!isDashboard ? (
+              <FlyoutMenu categories={categories} brands={brands} />
+            ) : (
+              <></>
+            )}
+          </div>
+
+          <div className="ml-auto flex items-center">
             <div className="hidden lg:flex">
-              {!isDashboard ? (
-                <FlyoutMenu categories={categories} brands={brands} />
-              ) : (
-                <></>
-              )}
+              <ModeToggle />
+              <SpeachButton className={""} />
             </div>
+            {/* Filter */}
+            <FilterButton />
+            {/* Cart */}
+            {isCart ? <></> : <CartSliderOver />}
 
-            <div className="ml-auto flex items-center">
-              <div className="hidden lg:flex">
-                <ModeToggle />
-                <SpeachButton className={""} />
-              </div>
-              {/* Filter */}
-              <FilterButton />
-              {/* Cart */}
-              {isCart ? <></> : <CartSliderOver />}
-
-              <div className="ml-3">
-                <AuthMenu />
-              </div>
+            <div className="ml-3">
+              <AuthMenu />
             </div>
+          </div>
 
-            <div className="flex lg:hidden">
-              {!isDashboard ? (
-                <MenuMobile categories={categories} brands={brands} />
-              ) : (
-                <></>
-              )}
-            </div>
+          <div className="flex lg:hidden">
+            {!isDashboard ? (
+              <MenuMobile categories={categories} brands={brands} />
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </nav>

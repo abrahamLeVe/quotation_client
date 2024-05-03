@@ -13,7 +13,7 @@ interface PaymentMPProps {
 }
 
 export default function PaymentMP({ quotation }: PaymentMPProps) {
-  const { setTheme, theme } = useTheme();
+  const { setTheme } = useTheme();
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_MP_KEY) {

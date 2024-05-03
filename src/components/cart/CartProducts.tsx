@@ -17,7 +17,7 @@ export default function CartProducts({ isPage }: CartProductsProps) {
   return (
     <div className={`mt-8 w-full pb-0 ${isPage && " lg:pb-20"}`}>
       <div className="flow-root">
-        <div className="-my-6 divide-y divide-gray-200 w-full">
+        <div className="-my-6  w-full">
           {cart?.length > 0 ? (
             <>
               <div className="text-lg font-medium ">Productos a cotizar</div>

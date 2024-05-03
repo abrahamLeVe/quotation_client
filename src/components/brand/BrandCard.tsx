@@ -2,7 +2,7 @@
 import { BrandInterface } from "@/models/brand";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent, CardFooter } from "../ui/card";
 import { BsEye } from "react-icons/bs";
 
 export default function BrandCard({ brand }: { brand?: BrandInterface }) {
@@ -24,17 +24,18 @@ export default function BrandCard({ brand }: { brand?: BrandInterface }) {
           <BsEye className="h-[1.2rem] w-[1.2rem]" />
           Explorar marca
           <Link
+            prefetch={true}
             href={`/filter/brand?query=${brand?.attributes.name}`}
             className="absolute inset-0"
           ></Link>
         </Button>
-        <div className="flex flex-col h-full p-2 gap-1">
-          <div className="text-lg font-medium">{brand?.attributes.name}</div>
-          <p className="text-sm leading-tight text-muted-foreground">
-            {brand?.attributes.description}
-          </p>
-        </div>
       </CardContent>
+      <CardFooter className="flex flex-col h-full p-2 gap-1">
+        <div className="text-lg font-medium">{brand?.attributes.name}</div>
+        <p className="text-sm leading-tight text-muted-foreground">
+          {brand?.attributes.description}
+        </p>
+      </CardFooter>
     </Card>
   );
 }

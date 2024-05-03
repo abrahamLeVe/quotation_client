@@ -32,26 +32,23 @@ export default function FlyoutMenu({ categories, brands }: FlyoutMenuProps) {
           <NavigationMenuContent>
             <ScrollArea>
               <ul className="grid md:w-[500px] lg:grid-cols-1 h-full max-h-96">
-                {categories?.data.map(
-                  (category) => (
-                    <li className="row-span-3" key={category.id}>
-                      <ListItem
-                        urlFilter={`/filter/category?query=${category.attributes.name}`}
-                        title={
-                          category.attributes.name +
-                          ` - ${category.attributes.products.data.length} productos`
-                        }
-                        urlImg={
-                          category.attributes.image.data?.attributes.formats
-                            .thumbnail.url!
-                        }
-                        description={category.attributes.description!}
-                        className="border-b border-dashed"
-                      />
-                    </li>
-                  )
-                  // )
-                )}
+                {categories?.data.map((category) => (
+                  <li className="row-span-3" key={category.id}>
+                    <ListItem
+                      urlFilter={`/filter/category?query=${category.attributes.name}`}
+                      title={
+                        category.attributes.name +
+                        ` - ${category.attributes.products.data.length} productos`
+                      }
+                      urlImg={
+                        category.attributes.image.data?.attributes.formats
+                          .thumbnail.url!
+                      }
+                      description={category.attributes.description!}
+                      className="border-b border-dashed"
+                    />
+                  </li>
+                ))}
               </ul>
             </ScrollArea>
           </NavigationMenuContent>
@@ -81,7 +78,7 @@ export default function FlyoutMenu({ categories, brands }: FlyoutMenuProps) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-        <Link href="/nosotros" legacyBehavior passHref>
+          <Link href="/nosotros" legacyBehavior passHref>
             <NavigationMenuLink
               className={navigationMenuTriggerStyle() + " bg-inherit"}
             >

@@ -86,105 +86,103 @@ export default function ProductDetail({
   const image = product.attributes.thumbnail.data.attributes.url;
 
   return (
-    <>
-      <div className="flex flex-col gap-4">
-        <h3 className="relative text-xl" title={product.attributes.name}>
-          {!isPage ? (
-            <>
-              <ScrollToTop />
-              {truncate(product.attributes.name, 50)}
-            </>
-          ) : (
-            <>{product.attributes.name}</>
-          )}
-        </h3>
-
-        <ProductRating rating={product.attributes.rating} />
-
-        {product.attributes.brand?.data ? (
-          <div className="flex flex-wrap gap-2">
-            <span>Marca: </span>
-            <Link
-              href={`/filter/brand?query=${product.attributes.brand.data?.attributes.name}`}
-              className="hover:opacity-95 underline "
-            >
-              {product.attributes.brand.data?.attributes.name}
-            </Link>
-          </div>
-        ) : null}
-
-        {!product.attributes.prices.data[0].attributes.size?.data ? null : (
-          <SizeSelect
-            selectedPrice={selectedPrice}
-            productPrices={product.attributes.prices.data}
-            handleSizeChange={handleSizeChange}
-          />
-        )}
-
-        {colors.length > 0 ? (
-          <ColorSelect
-            colors={colors}
-            handleColorChange={handleColorChange}
-            priceId={selectedPrice.id}
-            key={selectedPrice.id}
-          />
-        ) : null}
-
-        {isPage ? (
+    <div className="flex flex-col w-full gap-4">
+      <h3 className="relative text-xl" title={product.attributes.name}>
+        {!isPage ? (
           <>
-            {product.attributes.categories.data.length > 0 ? (
-              <div className="flex flex-wrap gap-2 relative">
-                <span>Categorías:</span>
-                {product.attributes.categories.data.map((category) => (
-                  <Link
-                    href={`/filter/category?query=${category.attributes.name}`}
-                    className="hover:opacity-95 underline "
-                    key={category.id}
-                  >
-                    {category.attributes.name}
-                  </Link>
-                ))}
-              </div>
-            ) : null}
-
-            {product.attributes.documents.data.length > 0 ? (
-              <ul className="list-disc">
-                {product.attributes.documents.data.map((item) => (
-                  <li key={item.id} className="flex items-center gap-2">
-                    <span>{item.attributes.name}</span>
-                    <FaFilePdf />
-                    <a
-                      href={item.attributes.file.data.attributes.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
-                    >
-                      Descargar
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+            <ScrollToTop />
+            {truncate(product.attributes.name, 50)}
           </>
-        ) : null}
+        ) : (
+          <>{product.attributes.name}</>
+        )}
+      </h3>
 
-        <div className="flex flex-col items-end gap-3 relative">
-          <CartButtonActions
-            picture_url={image}
-            priceId={selectedPrice.id}
-            idColor={idColor!}
-            colors={colors.length}
-            color={color}
-            isPage={isPage}
-            size={sizeName}
-            title={product.attributes.name}
-            slug={product.attributes.slug}
-            value={value}
-            discount={discount}
-          />
-          {isPage ? null : <ProductModal product={product} />}
+      <ProductRating rating={product.attributes.rating} />
+
+      {product.attributes.brand?.data ? (
+        <div className="flex flex-wrap gap-2">
+          <span>Marca: </span>
+          <Link
+            href={`/filter/brand?query=${product.attributes.brand.data?.attributes.name}`}
+            className="hover:opacity-95 underline "
+          >
+            {product.attributes.brand.data?.attributes.name}
+          </Link>
         </div>
+      ) : null}
+
+      {!product.attributes.prices.data[0].attributes.size?.data ? null : (
+        <SizeSelect
+          selectedPrice={selectedPrice}
+          productPrices={product.attributes.prices.data}
+          handleSizeChange={handleSizeChange}
+        />
+      )}
+
+      {colors.length > 0 ? (
+        <ColorSelect
+          colors={colors}
+          handleColorChange={handleColorChange}
+          priceId={selectedPrice.id}
+          key={selectedPrice.id}
+        />
+      ) : null}
+
+      {isPage ? (
+        <>
+          {product.attributes.categories.data.length > 0 ? (
+            <div className="flex flex-wrap gap-2 relative">
+              <span>Categorías:</span>
+              {product.attributes.categories.data.map((category) => (
+                <Link
+                  href={`/filter/category?query=${category.attributes.name}`}
+                  className="hover:opacity-95 underline "
+                  key={category.id}
+                >
+                  {category.attributes.name}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+
+          {product.attributes.documents.data.length > 0 ? (
+            <ul className="list-disc">
+              {product.attributes.documents.data.map((item) => (
+                <li key={item.id} className="flex items-center gap-2">
+                  <span>{item.attributes.name}</span>
+                  <FaFilePdf />
+                  <a
+                    href={item.attributes.file.data.attributes.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Descargar
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </>
+      ) : null}
+
+      <div className="flex flex-col items-end gap-3 relative">
+        <CartButtonActions
+          picture_url={image}
+          priceId={selectedPrice.id}
+          idColor={idColor!}
+          colors={colors.length}
+          color={color}
+          isPage={isPage}
+          size={sizeName}
+          title={product.attributes.name}
+          slug={product.attributes.slug}
+          value={value}
+          discount={discount}
+        />
+        {isPage ? null : <ProductModal product={product} />}
       </div>
-    </>
+    </div>
   );
 }

@@ -42,15 +42,17 @@ export default function ChatInput() {
       )}
       <div className="relative flex-1">
         <div className="mb-1">
-          {["👍", "❤️", "😍", "😂", "👏", "😊", "🥇", "🌹"].map((emoji) => (
-            <span
-              key={emoji}
-              onClick={() => handleEmojiClick(emoji)}
-              style={{ cursor: "pointer", margin: "0 5px" }}
-            >
-              {emoji}
-            </span>
-          ))}
+          {["👋", "👍", "❤️", "😍", "😂", "👏", "😊", "🥇", "🌹"].map(
+            (emoji) => (
+              <span
+                key={emoji}
+                onClick={() => handleEmojiClick(emoji)}
+                style={{ cursor: "pointer", margin: "0 5px" }}
+              >
+                {emoji}
+              </span>
+            )
+          )}
         </div>
         <div className="relative">
           <Textarea

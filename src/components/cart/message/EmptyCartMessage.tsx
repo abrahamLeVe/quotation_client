@@ -1,7 +1,9 @@
 "use client";
 import ProductSlider from "@/components/product/ProductSlider";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ProductsInterface } from "@/models/products.model";
+import Link from "next/link";
 
 interface EmptyCartMessageProps {
   score?: number;
@@ -33,12 +35,13 @@ export default function EmptyCartMessage({
         <ProductSlider data={offers || []} isPage={isPage} />
       ) : (
         <div className="text-center py-8">
-          <a
-            href="/filter/category?query=Galería%20de%20productos"
-            className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
+          <Button variant={"link"}>
             Explorar Productos
-          </a>
+            <Link
+              href="/filter/category?query=Galería%20de%20productos"
+              className="absolute inset-0"
+            ></Link>
+          </Button>
         </div>
       )}
     </div>
