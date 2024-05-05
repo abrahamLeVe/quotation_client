@@ -1,5 +1,5 @@
 "use client";
-import ScrollToTop from "@/hooks/useScrollTop";
+// import ScrollToTop from "@/hooks/useScrollTop";
 import {
   ColorProduct,
   ProductInterface,
@@ -27,7 +27,6 @@ export default function ProductDetail({
   const [selectedPrice, setPrice] = useState<ProductPriceInterface>(
     product.attributes.prices.data[0]
   );
-
   const [sizeName, SetSizeName] = useState<string | null>(
     selectedPrice.attributes.size.data
       ? selectedPrice.attributes.size.data?.attributes.name
@@ -90,7 +89,7 @@ export default function ProductDetail({
       <h3 className="relative text-xl" title={product.attributes.name}>
         {!isPage ? (
           <>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             {truncate(product.attributes.name, 50)}
           </>
         ) : (
@@ -98,7 +97,10 @@ export default function ProductDetail({
         )}
       </h3>
 
-      <ProductRating rating={product.attributes.rating} />
+      <ProductRating
+        rating={product.attributes.rating}
+        rating_count={Number(product.attributes.rating_count)}
+      />
 
       {product.attributes.brand?.data ? (
         <div className="flex flex-wrap gap-2">

@@ -10,7 +10,7 @@ export default function ProductCard({
   product: ProductInterface;
 }) {
   return (
-    <Card className="h-full ">
+    <Card className="h-full overflow-hidden">
       <CardContent className="aspect-1 p-0 cursor-none">
         <ImageGalleryIndex product={product} />
       </CardContent>

@@ -1,15 +1,16 @@
 import { User } from "@/models/auth.model";
 import { API_TOKEN, API_URL } from "../utilities/urls";
-let qs = require("qs");
 
-export async function fetchDataFromApi(endpoint: string): Promise<any> {
+export async function fetchDataFromApi(
+  endpoint: string,
+  token?: string
+): Promise<any> {
   try {
     const options = {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + API_TOKEN,
+        Authorization: "Bearer " + (token || API_TOKEN),
       },
-      next: { revalidate: 3600 },
     };
 
     const res = await fetch(`${API_URL}${endpoint}`, options);

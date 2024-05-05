@@ -11,7 +11,7 @@ export default function ChatMessages() {
 
   return (
     <div
-      className="flex flex-col-reverse gap-4 overflow-y-auto max-h-[400px] pr-3"
+      className="flex flex-col-reverse gap-4 overflow-y-auto max-h-[380px] pr-3"
       style={{
         scrollbarWidth: "thin",
         scrollbarColor: "#3b82f6 #e0f2fe",
@@ -25,7 +25,7 @@ export default function ChatMessages() {
           })}
         >
           <div
-            className={cn("px-4 py-2 rounded-lg", {
+            className={cn("relative px-4 py-2 rounded-lg", {
               "bg-slate-100  dark:text-gray-900 dark:bg-white":
                 message.isUserMessage,
               "bg-gray-900 text-white ": !message.isUserMessage,

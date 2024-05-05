@@ -6,9 +6,15 @@ import backgroundMovil from "../../../public/logoelectrica.jpg";
 import { getDataBrand } from "../services/brand.service";
 import { getDataCategory } from "../services/category.service";
 import { getContactData } from "../services/contact.service";
+// import ProductCarousel from "@/components/product/ProductCarousel";
+import { getDataProducts } from "../services/product.service";
+// import ProductSlider from "@/components/product/ProductSlider";
 
-const ProductCarousel = dynamic(
-  () => import("@/components/product/ProductCarousel")
+const ProductSlider = dynamic(
+  () => import("@/components/product/ProductSlider"),
+  {
+    ssr: false,
+  }
 );
 const Chat = dynamic(() => import("@/components/chat/Chat"), {
   ssr: false,
@@ -42,6 +48,7 @@ export default async function LobbyLayout({
   const categories = await getDataCategory();
   const brands = await getDataBrand();
   const contacts = await getContactData();
+  const products = await getDataProducts();
 
   return (
     <>
@@ -51,9 +58,15 @@ export default async function LobbyLayout({
         categories={categories}
         brands={brands}
       />
-      <main className="flex flex-col md:container mx-auto items-center gap-8 relative">
+      <main className="flex flex-col lg:container mx-auto items-center gap-8 relative">
         {children}
-        <ProductCarousel />
+        {/* <ProductCarousel products={products} /> */}
+        <div className="flex flex-col w-full px-4 justify-center relative">
+          <h2 className="text-2xl font-bold tracking-tight pb-5">
+            Recién llegados
+          </h2>
+          <ProductSlider data={products.data} isPage />
+        </div>
         <Collection categories={categories} />
         <BrandSlider brands={brands} />
         <PromoSection />

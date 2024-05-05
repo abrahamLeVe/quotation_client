@@ -1,4 +1,4 @@
-import { type SidebarNavItem } from "@/models/navigation.model";
+import { SidebarNavItem } from "@/models/navigation.mode";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 export interface DashboardConfig {

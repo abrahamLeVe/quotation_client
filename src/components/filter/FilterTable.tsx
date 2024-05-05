@@ -55,11 +55,10 @@ export default function ProductTable({
   const [filteredProducts, setFilteredProducts] = useState<ProductInterface[]>(
     []
   );
-  const [ratingRange, setRatingRange] = useState<[number, number]>([1, 5]);
+  const [ratingRange, setRatingRange] = useState<[number, number]>([0, 5]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
   const [sortOrder, setSortOrder] = useState("");
-
   useEffect(() => {
     if (products) {
       let filtered = products.data.filter((product) => {
@@ -150,7 +149,7 @@ export default function ProductTable({
             <div className="w-full md:w-[40%] flex flex-col gap-3">
               <label>Filtrar por popularidad 1 - 5</label>
               <Slider
-                min={1}
+                min={0}
                 max={5}
                 step={1}
                 value={ratingRange}

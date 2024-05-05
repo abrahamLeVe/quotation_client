@@ -31,7 +31,10 @@ export default function TestimonialCard(contact: TestimonialCarrouselProps) {
         <CardDescription>
           {formatDate(contact.contact.attributes.createdAt)}
         </CardDescription>
-        <ProductRating rating={contact.contact.attributes.rating} />
+        <ProductRating
+          rating={contact.contact.attributes.rating}
+          rating_count={0}
+        />
       </CardHeader>
       <CardContent>{contact.contact.attributes.message} </CardContent>
       <CardFooter>

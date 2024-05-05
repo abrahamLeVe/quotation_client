@@ -34,6 +34,7 @@ interface Attributes7 {
   product_colors: Productcolors;
   prices: ProductPricesInterface;
   documents: Documents;
+  rating_count: number;
 }
 
 export interface ProductPricesInterface {
