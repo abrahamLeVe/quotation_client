@@ -1,10 +1,12 @@
 import { getDataSlugProducts } from "@/app/services/metadata.service";
 import { getDataProductBySlug } from "@/app/services/product.service";
+import { getDataProductReviews } from "@/app/services/review.service";
 import ProductDetail from "@/components/product/ProductDetail";
+import ProductReview from "@/components/product/ProductReview";
 import ImageGalleryModal from "@/components/ui/ImageGallery";
 
 import dynamic from "next/dynamic";
-
+export const revalidate = 5;
 const ProductDescription = dynamic(
   () => import("@/components/product/ProductDescription")
 );
@@ -33,12 +35,13 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { data } = await getDataProductBySlug(params.slug);
+  const reviews = await getDataProductReviews(params.slug);
 
   return (
     <main className="flex flex-col md:container mx-auto gap-5 relative p-3 md:p-5">
       {data[0] ? (
         <>
-          <div className="flex flex-col h-full w-full lg:flex-row gap-5 md:p-6 relative">
+          <div className="flex flex-col h-full w-full lg:flex-row gap-5  relative">
             <div className="h-full lg:w-[50%] lg:sticky top-20">
               <ImageGalleryModal
                 attributes={data[0].attributes}
@@ -54,6 +57,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <ProductDescription
                   description={data[0].attributes.description}
                 />
+              </div>
+              <div>
+                <ProductReview reviews={reviews} productId={data[0].id} />
               </div>
             </div>
           </div>

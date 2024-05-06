@@ -20,7 +20,7 @@ export function TestimonialCarrousel({ contacts }: TestimonialCarrouselProps) {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="w-full aspect-[16/5] px-4 py-14 h-full  relative"
+      className="w-full aspect-[16/5]  py-14 h-full  relative"
     >
       <CarouselContent className="-ml-1 ">
         {contacts?.data.map((contact) => (

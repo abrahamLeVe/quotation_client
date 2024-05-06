@@ -27,7 +27,7 @@ export default function ProductDetail({
   const [selectedPrice, setPrice] = useState<ProductPriceInterface>(
     product.attributes.prices.data[0]
   );
-  const [sizeName, SetSizeName] = useState<string | null>(
+  const [sizeName, setSizeName] = useState<string | null>(
     selectedPrice.attributes.size.data
       ? selectedPrice.attributes.size.data?.attributes.name
       : null
@@ -58,7 +58,7 @@ export default function ProductDetail({
     const priceSelected = product.attributes.prices.data.find(
       (price) => price.id === sizeId
     );
-    SetSizeName(priceSelected!.attributes.size.data?.attributes.name || null);
+    setSizeName(priceSelected!.attributes.size.data?.attributes.name || null);
     setColors(priceSelected!.attributes.product_colors.data!);
     setValue(priceSelected?.attributes.value!);
     setDiscount(priceSelected?.attributes.discount!);
@@ -99,7 +99,7 @@ export default function ProductDetail({
 
       <ProductRating
         rating={product.attributes.rating}
-        rating_count={Number(product.attributes.rating_count)}
+        rating_count={product.attributes.rating_count}
       />
 
       {product.attributes.brand?.data ? (

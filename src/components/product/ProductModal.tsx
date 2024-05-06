@@ -32,10 +32,10 @@ export default function ProductModal({
               ? "absolute bg-white/20 bg-opacity-80 backdrop-filter backdrop-blur-md text-gray-900 "
               : ""
           }
-          title="Ver mas detalles"
+          title="Mas detalles"
         >
           <BsEye className="h-[1.2rem] w-[1.2rem] hidden xs:flex" />
-          {isCart ? "" : "Ver mas detalles"}
+          {isCart ? "" : "Mas detalles"}
         </Button>
       </DialogTrigger>
       <DialogContent className="lg:max-w-6xl h-full max-h-[600px]">

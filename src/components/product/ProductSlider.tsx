@@ -28,7 +28,6 @@ export default function ProductSlider({
   useEffect(() => {
     if (!api) return;
 
-    // Actualiza el conteo al montar y cuando cambia api
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
@@ -36,15 +35,12 @@ export default function ProductSlider({
       setCurrent(api.selectedScrollSnap() + 1);
     };
 
-    // Suscribir al evento 'select'
     api.on("select", onSelect);
 
-    // Función de limpieza que desuscribe al evento
     return () => {
       api.off("select", onSelect);
     };
-  }, [api]); // Dependencias del useEffect
-  // Asegurarte de incluir api en las dependencias aquí
+  }, [api]);
 
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
 

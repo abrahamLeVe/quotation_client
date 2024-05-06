@@ -12,8 +12,8 @@ interface TestimonialProps {
 export default function Testimonials({ contacts }: TestimonialProps) {
   return (
     <div className="w-full py-14">
-      <div className="flex flex-col gap-10 max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto  lg:mx-0">
+      <div className="flex flex-col gap-10">
+        <div className="mx-auto px-4  lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Testimonios
           </h2>

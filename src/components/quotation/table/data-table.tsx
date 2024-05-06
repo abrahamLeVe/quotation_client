@@ -124,34 +124,30 @@ export function DataTable<TData, TValue>({
                   {!error ? (
                     <>
                       {data.length === 0 ? (
-                        <>
-                          <EmptyCartMessage
-                            title="Sin cotizaciones"
-                            description=""
-                          />
-                        </>
+                        <EmptyCartMessage
+                          title="Sin cotizaciones"
+                          description=""
+                        />
                       ) : (
                         <>Sin resultados.</>
                       )}
                     </>
                   ) : (
-                    <>
-                      <Alert variant="destructive">
-                        <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>Error de credenciales</AlertTitle>
-                        <AlertDescription>
-                          {" "}
-                          <div className="flex flex-col gap-3">
-                            <span>{handleErrorMessage(error)}</span>
-                            <span className="underline">
-                              <Link href={"/auth/signin"}>
-                                Ingresar click Aquí
-                              </Link>
-                            </span>
-                          </div>
-                        </AlertDescription>
-                      </Alert>
-                    </>
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertTitle>Error de credenciales</AlertTitle>
+                      <AlertDescription>
+                        {" "}
+                        <div className="flex flex-col gap-3">
+                          <span>{handleErrorMessage(error)}</span>
+                          <span className="underline">
+                            <Link href={"/auth/signin"}>
+                              Ingresar click Aquí
+                            </Link>
+                          </span>
+                        </div>
+                      </AlertDescription>
+                    </Alert>
                   )}
                 </TableCell>
               </TableRow>

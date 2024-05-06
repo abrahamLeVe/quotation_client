@@ -23,6 +23,8 @@ interface Attributes3 {
   rating: number;
   message: string;
   createdAt: string;
+  stateReview: boolean;
+
   updatedAt: string;
   publishedAt: string;
   product: Product;
@@ -67,4 +69,19 @@ interface Attributes {
   updatedAt: string;
   publishedAt: string;
   rating_count: string;
+}
+
+export interface PostReviewProductInterface {
+  data: DataPost;
+}
+
+export interface DataPost {
+  rating: number;
+  message: string;
+  product: ProductPost;
+  user: ProductPost;
+}
+
+interface ProductPost {
+  id: number | undefined;
 }

@@ -13,9 +13,9 @@ export default async function CategoryProducts({
   const data = await filterProductsByCategory(category);
   const products = await getDataProducts();
   return (
-    <div className="flex flex-col w-full px-4 py-5 justify-center relative">
+    <div className="flex flex-col w-full py-5 justify-center relative">
       {!data?.data || data.data.length < 2 ? (
-        <div className="flex flex-col w-full px-4 justify-center relative">
+        <div className="flex flex-col w-full justify-center relative">
           <h2 className="text-2xl font-bold tracking-tight pb-5">
             Recién llegados
           </h2>
