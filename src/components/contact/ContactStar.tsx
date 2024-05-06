@@ -15,7 +15,7 @@ const StarRating: React.FC<StarRatingProps> = ({
   const [hover, setHover] = useState<number>(0);
 
   return (
-    <div className="star-rating">
+    <div className="flex flex-row justify-center">
       {[...Array(totalStars)].map((_, index) => {
         const ratingValue = index + 1;
         return (
@@ -29,7 +29,7 @@ const StarRating: React.FC<StarRatingProps> = ({
               className="star-rating-input"
             />
             <span
-              className="star"
+              className="text-2xl cursor-pointer transition-all"
               style={{
                 color: ratingValue <= (hover || value) ? "#ffc107" : "#e4e5e9",
               }}

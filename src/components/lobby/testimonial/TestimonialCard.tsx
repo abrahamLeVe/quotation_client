@@ -1,11 +1,11 @@
 "use client";
+import ProductSimpleRating from "@/components/product/ProductSingleRting";
 import { ContacDataInterface } from "@/models/contact.model";
 import {
   capitalizeFirstLetter,
   capitalizeWords,
   formatDate,
 } from "@/utilities/utils";
-import ProductRating from "../../product/ProductRating";
 import { Badge } from "../../ui/badge";
 import {
   Card,
@@ -31,10 +31,7 @@ export default function TestimonialCard(contact: TestimonialCarrouselProps) {
         <CardDescription>
           {formatDate(contact.contact.attributes.createdAt)}
         </CardDescription>
-        <ProductRating
-          rating={contact.contact.attributes.rating}
-          rating_count={0}
-        />
+        <ProductSimpleRating rating={contact.contact.attributes.rating} />
       </CardHeader>
       <CardContent>{contact.contact.attributes.message} </CardContent>
       <CardFooter>

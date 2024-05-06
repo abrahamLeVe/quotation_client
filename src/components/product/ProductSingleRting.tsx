@@ -1,4 +1,4 @@
-// ProductSimpleRating.js
+"use client";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 
 interface ProductSimpleRatingProps {

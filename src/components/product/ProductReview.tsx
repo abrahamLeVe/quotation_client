@@ -27,7 +27,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../ui/card";
@@ -52,6 +51,7 @@ export default function ProductReview({
   productId,
 }: ProductReviesProps) {
   const [isPending, setIsPending] = useState(false);
+  const [isReview, setIsReview] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
   const userHasReviewed = reviews.data.some(
@@ -92,18 +92,14 @@ export default function ProductReview({
           title: "Error",
           description: res.error.message,
         });
-        setIsPending(false);
       } else {
+        setIsReview(true);
         router.refresh();
-        toast({
-          variant: "default",
-          title: "Éxito",
-          description:
-            "Su mensaje fue enviado con éxito, revise su correo electrónico para mas información.",
-        });
       }
     } catch (error) {
       console.log("error contact form ", error);
+    } finally {
+      setIsPending(false);
     }
   }
   return (
@@ -111,81 +107,95 @@ export default function ProductReview({
       <AccordionItem value="item-1">
         <AccordionTrigger className="text-lg">Reseñas</AccordionTrigger>
         <AccordionContent>
-          {session && !userHasReviewed ? (
-            <Card className="mb-5">
-              <CardHeader>
-                <CardTitle>Valore este producto</CardTitle>
-                {/* <CardDescription>
-                Deploy your new project in one-click.
-              </CardDescription> */}
-              </CardHeader>
-              <CardContent>
-                <div>
-                  <Form {...form}>
-                    <form
-                      className="grid gap-4"
-                      onSubmit={(...args) =>
-                        void form.handleSubmit(onSubmit)(...args)
-                      }
-                    >
-                      {/* message */}
-                      <FormField
-                        control={form.control}
-                        name="message"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Mensaje *</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="Escribe tu mensaje aquí."
-                                {...field}
-                                className="resize-none"
-                              />
-                            </FormControl>
-                            {/* <FormDescription>
-                              Su mensaje para este producto.
-                            </FormDescription> */}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      {/* rating */}
-                      <FormField
-                        control={form.control}
-                        name="rating"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Valoración *</FormLabel>
-                            <FormControl>
-                              <StarRating
-                                totalStars={5}
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <Button disabled={isPending}>
-                        {isPending && (
-                          <Icons.spinner
-                            className="mr-2 h-4 w-4 animate-spin"
-                            aria-hidden="true"
-                          />
-                        )}
-                        Valorar
-                        <span className="sr-only">Valorar</span>
-                      </Button>
-                    </form>
-                  </Form>
-                </div>
-              </CardContent>
-            </Card>
+          {isReview ? (
+            <Alert variant="default" className="mb-5">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Valoración registrada</AlertTitle>
+              <AlertDescription>
+                {session?.user.name} su voto está en proceso de publicación.
+                Gracias por votar.
+              </AlertDescription>
+            </Alert>
           ) : (
-            <></>
+            <>
+              {session && !userHasReviewed ? (
+                <Card className="mb-5">
+                  <CardHeader>
+                    <CardTitle>Valore este producto</CardTitle>
+                    {/* <CardDescription>
+                  Deploy your new project in one-click.
+                </CardDescription> */}
+                  </CardHeader>
+                  <CardContent>
+                    <div>
+                      <Form {...form}>
+                        <form
+                          className="grid gap-4"
+                          onSubmit={(...args) =>
+                            void form.handleSubmit(onSubmit)(...args)
+                          }
+                        >
+                          {/* message */}
+                          <FormField
+                            control={form.control}
+                            name="message"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Mensaje *</FormLabel>
+                                <FormControl>
+                                  <Textarea
+                                    placeholder="Escribe tu mensaje aquí."
+                                    {...field}
+                                    className="resize-none"
+                                  />
+                                </FormControl>
+                                {/* <FormDescription>
+                                Su mensaje para este producto.
+                              </FormDescription> */}
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          {/* rating */}
+                          <FormField
+                            control={form.control}
+                            name="rating"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Valoración *</FormLabel>
+                                <FormControl>
+                                  <StarRating
+                                    totalStars={5}
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <Button disabled={isPending}>
+                            {isPending && (
+                              <Icons.spinner
+                                className="mr-2 h-4 w-4 animate-spin"
+                                aria-hidden="true"
+                              />
+                            )}
+                            Valorar
+                            <span className="sr-only">Valorar</span>
+                          </Button>
+                        </form>
+                      </Form>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <></>
+              )}
+            </>
           )}
+
           {reviews.data.length > 0 ? (
             <>
               {reviews.data.map((review) => (

@@ -26,6 +26,9 @@ export const getDataProductReviews = async (
             $eq: productSlug, // Asegúrate de que el slug sea exactamente igual al que buscas
           },
         },
+        stateReview: {
+          $eq: true, // Filtrar solo las revisiones donde stateReview es true
+        },
       },
     },
     {
@@ -41,11 +44,11 @@ export const getDataProductReviews = async (
 
   return res;
 };
+
 interface postReviewProductProps {
   data: DataPost;
 }
 export const postReviewProduct = async ({ data }: postReviewProductProps) => {
   const res = await postDataFromApi("/api/reviews", { data: data });
-  console.log("res de postreviews ", res);
   return res;
 };
