@@ -180,7 +180,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Razón Social *</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} autoComplete="name" />
                     </FormControl>
                     <FormDescription>
                       Razón Social de su representada; en caso de ser a nombre
@@ -192,6 +192,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                 )}
               />
             </div>
+
             <div className="col-span-1">
               <FormField
                 control={form.control}
@@ -200,8 +201,10 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Correo electrónico *</FormLabel>
                     <Select
+                      name="email"
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      autoComplete="email"
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -219,6 +222,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                 )}
               />
             </div>
+
             <div className="col-span-1">
               <FormField
                 control={form.control}
@@ -227,6 +231,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Tipo de documento *</FormLabel>
                     <Select
+                      name="tipe_doc"
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
@@ -269,7 +274,12 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Número de documento *</FormLabel>
                     <FormControl>
-                      <Input placeholder="DNI o RUC" {...field} type="number" />
+                      <Input
+                        placeholder="DNI o RUC"
+                        {...field}
+                        type="number"
+                        autoComplete="cc-number"
+                      />
                     </FormControl>
                     <FormDescription>
                       Nombre de persona natural favor de indicarnos su número de
@@ -292,6 +302,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                         placeholder="Número telefónico"
                         {...field}
                         type="number"
+                        autoComplete="billing mobile tel"
                       />
                     </FormControl>
                     <FormMessage />
@@ -310,6 +321,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Departamento *</FormLabel>
                     <Select
+                      name="departamento"
                       onValueChange={(value) => {
                         field.onChange(value);
                         handleDepartamentoChange(value);
@@ -348,6 +360,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Provincia *</FormLabel>
                     <Select
+                      name="provincia"
                       onValueChange={(value) => {
                         field.onChange(value);
                         handleProvinciaChange(value);
@@ -387,6 +400,7 @@ export function CheckoutForm({ peru, session }: CheckoutFormProps) {
                   <FormItem>
                     <FormLabel>Distrito *</FormLabel>
                     <Select
+                      name="distrito"
                       onValueChange={(value) => {
                         field.onChange(value);
                         handleDistritoChange(value);

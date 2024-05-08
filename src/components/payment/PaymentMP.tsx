@@ -1,8 +1,8 @@
 "use client";
 import { payMercadoPago } from "@/app/services/payment.service";
+import { useCartContext } from "@/context/cart.context";
 import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
 import { useTheme } from "next-themes";
-import { useEffect } from "react";
 import { z } from "zod";
 import { quotationSchema } from "../quotation/table/data/schema";
 
@@ -14,14 +14,13 @@ interface PaymentMPProps {
 
 export default function PaymentMP({ quotation }: PaymentMPProps) {
   const { setTheme } = useTheme();
+  const { setOpenMenu } = useCartContext();
 
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_MP_KEY) {
-      console.error("MercadoPago key is missing!");
-      return;
-    }
-    initMercadoPago(process.env.NEXT_PUBLIC_MP_KEY, { locale: "es-PE" });
-  }, []);
+  if (!process.env.NEXT_PUBLIC_MP_KEY) {
+    console.error("MercadoPago key is missing!");
+    return;
+  }
+  initMercadoPago(process.env.NEXT_PUBLIC_MP_KEY, { locale: "es-PE" });
 
   async function onSubmit() {
     try {
@@ -31,6 +30,8 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
     } catch (error) {
       console.error("Payment submission error: ", error);
       return null;
+    } finally {
+      setOpenMenu(false);
     }
   }
 
@@ -40,7 +41,7 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
         redirectMode: "modal",
       }}
       onError={(e) => {
-        console.error("Payment error: ", e);
+        // console.error("Payment error: ", e);
       }}
       onSubmit={onSubmit}
     />

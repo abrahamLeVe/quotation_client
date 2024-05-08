@@ -8,12 +8,20 @@ import {
 } from "@/app/services/quotation.service";
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { toast } from "@/components/ui/use-toast";
 import { generatePdf } from "@/components/voucher/voucher";
 import { voucheMP } from "@/components/voucher/voucherMP";
+import { useCartContext } from "@/context/cart.context";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FaCcMastercard, FaCcVisa } from "react-icons/fa";
 import { FaBoxArchive, FaDownload } from "react-icons/fa6";
 import { MdOutlineCancel } from "react-icons/md";
 import { z } from "zod";
@@ -33,7 +41,7 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const router = useRouter();
   const quotation = quotationSchema.parse(row.original);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, setIsLoading, openMenu, setOpenMenu } = useCartContext();
 
   async function handleUpdateQuotation({
     idQuotation,
@@ -42,7 +50,7 @@ export function DataTableRowActions<TData>({
     state,
   }: UpdateQuotationProps) {
     try {
-      setIsLoading(false);
+      setIsLoading(true);
 
       const res = await updateQuotation({
         idQuotation,
@@ -73,17 +81,17 @@ export function DataTableRowActions<TData>({
     } catch (error) {
       console.log("Error in table actions ", error);
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   }
 
   return (
     <div
       className={`flex flex-col max-w-[280px] justify-end w-full gap-1 relative ${
-        !isLoading && "pointer-events-none"
+        isLoading && "pointer-events-none"
       }`}
     >
-      {!isLoading && (
+      {isLoading && (
         <Button className="w-full h-full justify-center bg-white/5 backdrop-blur-sm absolute inset-0">
           <Icons.spinner
             className="mr-2 h-4 w-4 animate-spin"
@@ -109,9 +117,6 @@ export function DataTableRowActions<TData>({
         <>
           {quotation.codeStatus === "Completada" ? (
             <>
-              <div className="w-[280px] h-[100px] relative">
-                <PaymentMP quotation={quotation} />
-              </div>
               <Button
                 className="flex gap-1"
                 onClick={() =>
@@ -123,6 +128,25 @@ export function DataTableRowActions<TData>({
                 <MdOutlineCancel />
                 Cancelar
               </Button>
+              <Dialog open={openMenu} onOpenChange={setOpenMenu}>
+                <Button onClick={() => setOpenMenu(true)}>
+                  Pagar
+                  <FaCcVisa className="h-7 w-7" />
+                  <FaCcMastercard className="h-7 w-7" />
+                </Button>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Pasarela de pagos</DialogTitle>
+                    <DialogDescription>
+                      Seleccione su método de pago favoríto:
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="w-[374.79px] h-[102.95px] relative ">
+                    <PaymentMP quotation={quotation} />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </>
           ) : (
             <></>

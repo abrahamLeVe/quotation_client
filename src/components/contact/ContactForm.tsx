@@ -121,7 +121,6 @@ export function ContactForm({ contacts }: ContactButtonProps) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="w-full space-y-6"
           >
-            {/* type select */}
             <FormField
               control={form.control}
               name="typeContact"
@@ -151,7 +150,6 @@ export function ContactForm({ contacts }: ContactButtonProps) {
               )}
             />
 
-            {/* name */}
             <div className="col-span-1">
               <FormField
                 control={form.control}
@@ -171,7 +169,6 @@ export function ContactForm({ contacts }: ContactButtonProps) {
               />
             </div>
 
-            {/* email */}
             <div className="col-span-1">
               <FormField
                 control={form.control}
@@ -193,7 +190,6 @@ export function ContactForm({ contacts }: ContactButtonProps) {
               />
             </div>
 
-            {/* phone */}
             <div className="col-span-1">
               <FormField
                 control={form.control}
@@ -218,7 +214,6 @@ export function ContactForm({ contacts }: ContactButtonProps) {
               />
             </div>
 
-            {/* title */}
             <div className="col-span-1">
               <FormField
                 control={form.control}
@@ -237,7 +232,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                 )}
               />
             </div>
-            {/* message */}
+
             <FormField
               control={form.control}
               name="message"
@@ -258,7 +253,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                 </FormItem>
               )}
             />
-            {/* rating */}
+
             <FormField
               control={form.control}
               name="rating"
