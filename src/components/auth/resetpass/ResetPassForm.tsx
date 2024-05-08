@@ -99,7 +99,11 @@ export default function ResetPassForm({
                 <FormItem>
                   <FormLabel>Correo electrónico</FormLabel>
                   <FormControl>
-                    <Input placeholder="rodneymullen180@gmail.com" {...field} />
+                    <Input
+                      placeholder="rodneymullen180@gmail.com"
+                      {...field}
+                      autoComplete="email"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

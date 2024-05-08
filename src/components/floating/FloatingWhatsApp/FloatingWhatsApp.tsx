@@ -212,7 +212,12 @@ export function FloatingWhatsApp({
 
         <footer className={styles.chatFooter}>
           <form onSubmit={handleSubmit}>
+            <label htmlFor="invisible-input" className="sr-only">
+              Label Invisible
+            </label>
             <input
+              id="invisible-input"
+              name="invisible-input"
               disabled={!isOpen || !disponible}
               className={styles.input}
               placeholder={placeholder}

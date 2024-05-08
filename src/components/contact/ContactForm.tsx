@@ -129,6 +129,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                 <FormItem>
                   <FormLabel>Motivo *</FormLabel>
                   <Select
+                    name="typeContact"
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
@@ -145,11 +146,11 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                       ))}
                     </SelectContent>
                   </Select>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             {/* name */}
             <div className="col-span-1">
               <FormField
@@ -159,7 +160,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                   <FormItem>
                     <FormLabel>Nombre y apellidos*</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} autoComplete="name" />
                     </FormControl>
                     <FormDescription>
                       Primer nombre y apellidos *
@@ -169,6 +170,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                 )}
               />
             </div>
+
             {/* email */}
             <div className="col-span-1">
               <FormField
@@ -182,6 +184,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                         placeholder="Ingrese su correo electrónico"
                         value={field.value || ""}
                         onChange={field.onChange}
+                        autoComplete="email"
                       />
                     </FormControl>
                     <FormMessage />
@@ -189,6 +192,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                 )}
               />
             </div>
+
             {/* phone */}
             <div className="col-span-1">
               <FormField
@@ -202,6 +206,7 @@ export function ContactForm({ contacts }: ContactButtonProps) {
                         placeholder="666 666 666"
                         {...field}
                         type="number"
+                        autoComplete="tel"
                       />
                     </FormControl>
                     <FormDescription>
@@ -259,9 +264,12 @@ export function ContactForm({ contacts }: ContactButtonProps) {
               name="rating"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Valoración (opcional)</FormLabel>
+                  <FormLabel htmlFor={`${field.name}-1`}>
+                    Valoración (opcional)
+                  </FormLabel>
                   <FormControl>
                     <StarRating
+                      idPrefix={field.name}
                       totalStars={5}
                       value={Number(field.value)}
                       onChange={(value) => field.onChange(value.toString())}

@@ -1,9 +1,7 @@
-import { options } from "@/app/api/auth/[...nextauth]/options";
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/NavBar";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
 
-import { getServerSession } from "next-auth";
 import background from "../../../../public/logoAyC.png";
 import backgroundMovil from "../../../../public/logoelectrica.jpg";
 
@@ -12,8 +10,6 @@ export default async function ContactLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(options);
-
   return (
     <>
       <NavBar

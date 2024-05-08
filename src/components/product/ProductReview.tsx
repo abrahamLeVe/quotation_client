@@ -162,12 +162,13 @@ export default function ProductReview({
                             name="rating"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Valoración *</FormLabel>
+                                <span>Valoración *</span>
                                 <FormControl>
                                   <StarRating
                                     totalStars={5}
                                     value={field.value}
                                     onChange={(value) => field.onChange(value)}
+                                    idPrefix={`rating-${productId}`}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -201,7 +202,7 @@ export default function ProductReview({
               {reviews.data.map((review) => (
                 <Card key={review.id} className="mb-5">
                   <CardHeader>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 justify-start">
                       <Avatar className="h-8 w-8">
                         <AvatarFallback>
                           {review.attributes.user.data.attributes.username
@@ -209,14 +210,20 @@ export default function ProductReview({
                             .toUpperCase() ?? ""}
                         </AvatarFallback>
                       </Avatar>
-                      <CardTitle>
-                        {review.attributes.user.data.attributes.username}
-                      </CardTitle>
-                      <ProductSimpleRating rating={review.attributes.rating} />
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-1">
+                          <CardTitle>
+                            {review.attributes.user.data.attributes.username}
+                          </CardTitle>
+                          <ProductSimpleRating
+                            rating={review.attributes.rating}
+                          />
+                        </div>
+                        <CardDescription>
+                          {review.attributes.message}
+                        </CardDescription>
+                      </div>
                     </div>
-                    <CardDescription>
-                      {review.attributes.message}
-                    </CardDescription>
                   </CardHeader>
                 </Card>
               ))}
