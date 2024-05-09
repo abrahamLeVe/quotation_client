@@ -1,2 +1,1 @@
-export { FloatingWhatsApp } from './FloatingWhatsApp'
-export { reducer } from './reducer'
+export { FloatingWhatsApp } from "./FloatingWhatsApp";
