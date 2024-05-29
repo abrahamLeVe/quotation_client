@@ -18,17 +18,16 @@ export function TestimonialCarrousel({ contacts }: TestimonialCarrouselProps) {
   );
 
   return (
-    <Carousel
-      plugins={[plugin.current]}
-      className="w-full aspect-[16/5]  py-14 h-full  relative"
-    >
-      <CarouselContent className="-ml-1 ">
+    <Carousel plugins={[plugin.current]} className="w-full py-14 h-full">
+      <CarouselContent>
         {contacts?.data.map((contact) => (
           <CarouselItem
             key={contact.id}
-            className={`relative pl-3 xs:basis-1/2 md:basis-1/3 lg:basis-1/4`}
+            className={`xs:basis-1/2 md:basis-1/3 lg:basis-1/4`}
           >
-            <TestimonialCard contact={contact} />
+            <div className="p-1 h-full">
+              <TestimonialCard contact={contact} />
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>

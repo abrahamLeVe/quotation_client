@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import EmojiPopup from "./EmojiPopup";
 
 export default function ChatInput() {
   const [input, setInput] = useState<string>("");
@@ -36,26 +37,17 @@ export default function ChatInput() {
   return (
     <div className="w-full relative">
       {error && (
-        <div className="text-red-500 text-xs absolute -top-5 z-50">
+        <div className="text-red-500 bg-white text-xs absolute -top-5 z-50 px-1">
           {error.message}
         </div>
       )}
       <div className="relative flex-1">
         <div className="mb-1">
-          {["👋", "👍", "❤️", "😍", "😂", "👏", "😊", "🥇", "🌹"].map(
-            (emoji) => (
-              <span
-                key={emoji}
-                onClick={() => handleEmojiClick(emoji)}
-                style={{ cursor: "pointer", margin: "0 5px" }}
-              >
-                {emoji}
-              </span>
-            )
-          )}
+          <EmojiPopup onSelectEmoji={handleEmojiClick} />
         </div>
         <div className="relative">
           <Textarea
+            id="message"
             ref={textareaRef}
             onKeyDown={handleKeyDown}
             value={input}

@@ -1,3 +1,4 @@
+"use client";
 import { MessagesContext } from "@/context/messages.context";
 import { useMutation } from "@tanstack/react-query";
 import { nanoid } from "nanoid";

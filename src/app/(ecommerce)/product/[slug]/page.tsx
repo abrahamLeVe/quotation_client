@@ -2,13 +2,15 @@ import { getDataSlugProducts } from "@/app/services/metadata.service";
 import { getDataProductBySlug } from "@/app/services/product.service";
 import { getDataProductReviews } from "@/app/services/review.service";
 import ProductDetail from "@/components/product/ProductDetail";
-import ProductReview from "@/components/product/ProductReview";
 import ImageGalleryModal from "@/components/ui/ImageGallery";
 
 import dynamic from "next/dynamic";
 export const revalidate = 5;
 const ProductDescription = dynamic(
   () => import("@/components/product/ProductDescription")
+);
+const ProductReview = dynamic(
+  () => import("@/components/product/ProductReview")
 );
 const CategoryProducts = dynamic(
   () => import("@/components/category/CategoryProducts"),

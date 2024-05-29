@@ -11,7 +11,7 @@ export default function ChatMessages() {
 
   return (
     <div
-      className="flex flex-col-reverse gap-4 overflow-y-auto max-h-[380px] pr-3"
+      className="flex flex-col-reverse gap-4 overflow-y-auto max-h-[400px] pr-3"
       style={{
         scrollbarWidth: "thin",
         scrollbarColor: "#3b82f6 #e0f2fe",

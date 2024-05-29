@@ -12,6 +12,11 @@ interface MarkdownLinkProps {
   children?: ReactNode;
 }
 
+interface MarkdownImgProps {
+  src?: string;
+  alt?: string;
+}
+
 const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
   if (!children || !href) return <>{children}</>;
 
@@ -19,7 +24,6 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
     <Link
       href={href}
       passHref
-      rel="noopener noreferrer"
       className="break-words underline underline-offset-2 text-blue-600"
       scroll={false}
     >
@@ -28,12 +32,12 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
   );
 };
 
-const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
+const MarkdownImage = ({ src, alt }: MarkdownImgProps) => {
   return src ? (
     <img
       src={src}
       alt={alt || ""}
-      className="w-[158px] h-[158px] rounded-lg overflow-hidden border "
+      className="w-[158px] h-[158px] rounded-lg overflow-hidden border bg-slate-200"
       loading="eager"
     />
   ) : null;

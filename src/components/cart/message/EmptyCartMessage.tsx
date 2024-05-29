@@ -25,7 +25,9 @@ export default function EmptyCartMessage({
   );
 
   return (
-    <div className={`flex flex-col gap-4 ${isPage ? "pb-20" : "py-0"}`}>
+    <div
+      className={`flex flex-col gap-4 ${isPage ? "pb-20" : "py-0"} relative`}
+    >
       <Separator />
       <h2 className="text-lg font-semibold text-yellow-900 dark:text-white">
         {title || "Tu carrito está vacío."}

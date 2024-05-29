@@ -1,5 +1,12 @@
-import CategoryIndex from "@/components/category/CategoryIndex";
+import { filterProductsByCategory } from "@/app/services/category.service";
+// import ProductTable from "@/components/filter/FilterTable";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
+
+import dynamic from "next/dynamic";
+
+const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
+  ssr: false,
+});
 
 export default async function CategoryPage({
   searchParams,
@@ -10,7 +17,7 @@ export default async function CategoryPage({
   };
 }) {
   const query = searchParams?.query;
-
+  const products = await filterProductsByCategory(searchParams?.query);
   return (
     <>
       <Breadcrumbs
@@ -29,7 +36,7 @@ export default async function CategoryPage({
           },
         ]}
       />
-      <CategoryIndex query={query} name="Categoría" />
+      <ProductTable products={products} name="Categoría" query={query} />
     </>
   );
 }

@@ -1,5 +1,12 @@
-import FilterIndex from "@/components/filter/FilterIndex";
+import { filterProducts } from "@/app/services/product.service";
+// import ProductTable from "@/components/filter/FilterTable";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
+
+import dynamic from "next/dynamic";
+
+const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
+  ssr: false,
+});
 
 export default async function FilterProductPage({
   searchParams,
@@ -10,7 +17,7 @@ export default async function FilterProductPage({
   };
 }) {
   const query = searchParams?.query;
-
+  const products = await filterProducts(query);
   return (
     <>
       <Breadcrumbs
@@ -25,7 +32,12 @@ export default async function FilterProductPage({
           },
         ]}
       />
-      <FilterIndex query={query} />
+      <ProductTable
+        products={products}
+        name="Producto"
+        isFilter
+        query={query}
+      />
     </>
   );
 }

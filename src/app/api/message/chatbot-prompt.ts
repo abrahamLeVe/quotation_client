@@ -16,6 +16,7 @@ const companyData = {
 export async function generateChatbotPrompt(): Promise<string> {
   const sitemapURL = `${CLIENT_URL}/sitemap.xml`;
   const sitemapData = await readSitemapFromURL(sitemapURL);
+  console.log(sitemapData);
   const additionalInfo = `En nuestra tienda mostramos materiales eléctricos para transformadores, como aisladores de porcelana, termómetros, interruptores termomagnéticos, niveles de aceite, entre otros. Puedes encontrar todos nuestros productos en:[Galería de productos]${sitemapData} o [Papel Nomex][img]:${sitemapData}, solo muestro hasta 4 items con su img`;
 
   const companyInfo = `

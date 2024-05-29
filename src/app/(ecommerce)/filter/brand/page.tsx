@@ -1,5 +1,11 @@
-import BrandIndex from "@/components/brand/BrandIndex";
+import { filterProductsByBrand } from "@/app/services/brand.service";
+// import ProductTable from "@/components/filter/FilterTable";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
+import dynamic from "next/dynamic";
+
+const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
+  ssr: false,
+});
 
 export default async function BrandPage({
   searchParams,
@@ -10,7 +16,7 @@ export default async function BrandPage({
   };
 }) {
   const query = searchParams?.query;
-
+  const products = await filterProductsByBrand(query);
   return (
     <>
       <Breadcrumbs
@@ -29,7 +35,7 @@ export default async function BrandPage({
           },
         ]}
       />
-      <BrandIndex query={query} name="Marca" />
+      <ProductTable products={products} name="Marca" query={query} />
     </>
   );
 }

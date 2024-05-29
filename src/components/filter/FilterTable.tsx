@@ -7,6 +7,15 @@ import { Button } from "../ui/button";
 import { Slider } from "../ui/slider";
 
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -22,18 +31,22 @@ import { Separator } from "../ui/separator";
 import { useCartContext } from "@/context/cart.context";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import Search from "../ui/search-filter";
 
-const FilterTableSkeleton = dynamic(
-  () => import("../skeleton/filter/FilterSkeleton")
-);
+const Search = dynamic(() => import("../ui/search-filter"));
 
-const ProductCard = dynamic(() => import("../product/ProductCard"), {
+const CardTable = dynamic(() => import("./CardTable"), {
   ssr: false,
 });
 
 const EmptyCartMessage = dynamic(
   () => import("../cart/message/EmptyCartMessage"),
+  {
+    ssr: false,
+  }
+);
+
+const FilterTableSkeleton = dynamic(
+  () => import("../skeleton/filter/FilterSkeleton"),
   {
     ssr: false,
   }
@@ -88,18 +101,6 @@ export default function ProductTable({
     }
   }, [products, ratingRange, sortOrder, searchTerm]);
 
-  const renderSortSelector = () => (
-    <select
-      value={sortOrder}
-      onChange={(e) => setSortOrder(e.target.value)}
-      className="sort-selector dark:text-black"
-    >
-      <option value="">Sin orden</option>
-      <option value="asc">Alfabético Ascendente</option>
-      <option value="desc">Alfabético Descendente</option>
-    </select>
-  );
-
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(
@@ -145,7 +146,7 @@ export default function ProductTable({
           )}
         </>
         <Card className="flex flex-col w-full items-center justify-center md:w-3/4 ">
-          <CardContent className="flex flex-row flex-wrap w-full justify-between  gap-6 p-4">
+          <CardContent className="flex flex-row flex-wrap w-full justify-between gap-6 p-4">
             <div className="w-full md:w-[40%] flex flex-col gap-3">
               <label>Filtrar por popularidad 1 - 5</label>
               <Slider
@@ -158,9 +159,17 @@ export default function ProductTable({
                 }
               />
             </div>
-            <div className="flex justify-between items-center">
-              {renderSortSelector()}
-            </div>
+            <Select onValueChange={setSortOrder}>
+              <SelectTrigger className="w-[220px]">
+                <SelectValue placeholder="Seleccione" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="asc">Alfabético Ascendente</SelectItem>
+                  <SelectItem value="desc">Alfabético Descendente</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <Button onClick={() => setOpenMenu(true)} title="Filtro">
               <IoFilterSharp className="h-6 w-6" /> Filtro
             </Button>
@@ -180,16 +189,17 @@ export default function ProductTable({
                   Página {currentPage} de{" "}
                   {Math.ceil(filteredProducts.length / productsPerPage)}
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-                  {currentProducts.map((product) => (
-                    <div
-                      key={product.id}
-                      className="flex flex-col justify-between relative text-sm"
-                    >
-                      <ProductCard product={product} />
-                    </div>
-                  ))}
-                </div>
+
+                <>
+                  {currentProducts.length === 0 ? (
+                    <EmptyCartMessage
+                      title="Sin resultados"
+                      description="Buscar en todos nustros productos"
+                    />
+                  ) : (
+                    <CardTable currentProducts={currentProducts} />
+                  )}
+                </>
               </div>
               <Pagination>
                 <PaginationContent>

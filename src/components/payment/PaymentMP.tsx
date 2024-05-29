@@ -41,7 +41,7 @@ export default function PaymentMP({ quotation }: PaymentMPProps) {
         redirectMode: "modal",
       }}
       onError={(e) => {
-        // console.error("Payment error: ", e);
+        console.error("Payment error: ", e);
       }}
       onSubmit={onSubmit}
     />

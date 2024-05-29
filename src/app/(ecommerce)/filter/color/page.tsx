@@ -1,5 +1,12 @@
-import ColorIndex from "@/components/color/ColorIndex";
+import { filterProductsByColor } from "@/app/services/color.service";
+// import ProductTable from "@/components/filter/FilterTable";
 import { Breadcrumbs } from "@/components/pagers/breadcrumbs";
+
+import dynamic from "next/dynamic";
+
+const ProductTable = dynamic(() => import("@/components/filter/FilterTable"), {
+  ssr: false,
+});
 
 export default async function ColorPage({
   searchParams,
@@ -10,6 +17,7 @@ export default async function ColorPage({
   };
 }) {
   const query = searchParams?.query;
+  const products = await filterProductsByColor(query);
 
   return (
     <>
@@ -29,7 +37,7 @@ export default async function ColorPage({
           },
         ]}
       />
-      <ColorIndex query={query} />
+      <ProductTable products={products} name="Color" query={query} />
     </>
   );
 }

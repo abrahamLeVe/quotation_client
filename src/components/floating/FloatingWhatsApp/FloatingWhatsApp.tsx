@@ -27,7 +27,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { FloatingWhatsAppProps } from "../../../models/floatingWa.model";
+import { FloatingWhatsAppProps } from "@/models/floatingWa.model";
 
 import { Textarea } from "@/components/ui/textarea";
 import { SendSVG, WhatsappSVG } from "@/components/Icons";
@@ -46,6 +46,7 @@ export function FloatingWhatsApp({
   placeholder,
 }: FloatingWhatsAppProps) {
   const [isDelay, setIsDelay] = useState(true);
+  const [isMessageLoaded, setIsMessageLoaded] = useState(false);
 
   const timeNow = useMemo(
     () =>
@@ -54,9 +55,14 @@ export function FloatingWhatsApp({
   );
 
   const handleOpen = useCallback(() => {
-    setIsDelay(true);
-    setTimeout(() => setIsDelay(false), messageDelay * 1000);
-  }, [messageDelay]);
+    if (!isMessageLoaded) {
+      setIsDelay(true);
+      setTimeout(() => {
+        setIsDelay(false);
+        setIsMessageLoaded(true);
+      }, messageDelay * 1000);
+    }
+  }, [isMessageLoaded, messageDelay]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -81,7 +87,7 @@ export function FloatingWhatsApp({
           <div className="rounded-full h-16 w-16  absolute  bg-[#25d366] animate-ping -z-10"></div>
         </div>
       </PopoverTrigger>
-      <PopoverContent sideOffset={-160} className="w-96 p-0 mr-4">
+      <PopoverContent sideOffset={-160} className="xs:w-96 p-0 mr-4">
         <Card className="bg-[#008069] dark:bg-[#1f2c34]">
           <CardHeader className="flex flex-row items-center gap-2 p-4">
             <div className="relative w-10 h-10">
@@ -89,11 +95,11 @@ export function FloatingWhatsApp({
                 <AvatarImage src={avatar} alt="Gerente General" />
                 <AvatarFallback>PG</AvatarFallback>
               </Avatar>
-              {!disponible ? (
-                <span className="absolute z-50 bottom-0 right-0 w-3 h-3 bg-gray-500 rounded-full border-2 border-white"></span>
-              ) : (
-                <span className="absolute z-50 bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
-              )}
+              <span
+                className={`absolute z-50 bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
+                  disponible ? "bg-green-500" : "bg-gray-500"
+                }`}
+              ></span>
             </div>
             <div className="text-white">
               <CardTitle>{accountName}</CardTitle>
@@ -117,8 +123,8 @@ export function FloatingWhatsApp({
                     <div className="bg-[#146945b3] rounded-[50%] h-2 w-2 inline-block mr-1 animate-bounce delay-500" />
                   </div>
                 ) : (
-                  <div className="bg-white  px-3 py-2 relative rounded-bl-md rounded-r-md">
-                    <div className="absolute top-0 -left-3 w-0 h-0   border-solid border-t-0 border-r-[20px] border-b-[20px] border-l-0  border-b-transparent border-white border-t-transparent border-l-transparent"></div>
+                  <div className="bg-white px-3 py-2 relative rounded-bl-md rounded-r-md">
+                    <div className="absolute top-0 -left-3 w-0 h-0 border-solid border-t-0 border-r-[20px] border-b-[20px] border-l-0  border-b-transparent border-white border-t-transparent border-l-transparent"></div>
                     <span className="text-slate-500">{accountName}</span>
                     <p className="mt-1 text-black leading-5">
                       {initialMessageByServer}
@@ -142,14 +148,13 @@ export function FloatingWhatsApp({
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel></FormLabel>
                       <FormControl>
                         <Textarea
                           disabled={!disponible}
                           maxLength={100}
                           autoFocus
                           placeholder={placeholder}
-                          className="resize-none min-h-[40px] w-[300px] pr-10"
+                          className="resize-none min-h-[40px] xs:w-[300px] pr-10 mt-0"
                           {...field}
                           onKeyDown={(e) => {
                             if (e.key === "Enter" && !e.shiftKey) {

@@ -1,5 +1,4 @@
 "use client";
-// import ScrollToTop from "@/hooks/useScrollTop";
 import {
   ColorProduct,
   ProductInterface,
@@ -14,6 +13,7 @@ import ColorSelect from "../select/SelectColorProduct";
 import SizeSelect from "../size/SizeSelect";
 import ProductModal from "./ProductModal";
 import ProductRating from "./ProductRating";
+import ScrollToTop from "@/hooks/useScrollTop";
 
 interface ProductDetailProps {
   product: ProductInterface;
@@ -89,7 +89,7 @@ export default function ProductDetail({
       <h3 className="relative text-xl" title={product.attributes.name}>
         {!isPage ? (
           <>
-            {/* <ScrollToTop /> */}
+            <ScrollToTop />
             {truncate(product.attributes.name, 50)}
           </>
         ) : (
