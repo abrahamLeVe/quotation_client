@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
   //   if (secret !== process.env.SECRET) return Response.json({ success: false });
 
   const payment = await new Payment(client).get({ id: body.data.id });
-  // console.log(JSON.stringify(payment, null, 2));
   if (payment) {
     if (payment.status === "approved" || payment.status === "in_process") {
       const order = {

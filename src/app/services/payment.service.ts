@@ -52,7 +52,7 @@ export async function payMercadoPago(quotation: Quotation) {
     const res = await preference;
     return res.id;
   } catch (error) {
-    console.log("Error in preferences Mercado pago ", error);
+    console.log("Error in payMercadoPago", error);
   }
 }
 

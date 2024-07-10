@@ -40,6 +40,6 @@ export async function filterProductsByColor(
     const res = await fetchDataFromApi(`/api/products?${queryString}`);
     return res;
   } catch (error) {
-    console.log("error in filterProducts", error);
+    console.log("error in filterProductsByColor", error);
   }
 }

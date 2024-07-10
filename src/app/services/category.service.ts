@@ -42,6 +42,6 @@ export async function filterProductsByCategory(
     );
     return res;
   } catch (error) {
-    console.log("error in filterProducts", error);
+    console.log("error in filterProductsByCategory", error);
   }
 }

@@ -40,6 +40,6 @@ export async function filterProductsByBrand(
     const res = await fetchDataFromApi(`/api/products?${queryString}`);
     return res;
   } catch (error) {
-    console.log("error in filterProducts", error);
+    console.log("error in filterProductsByBrand", error);
   }
 }

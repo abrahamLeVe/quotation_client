@@ -71,6 +71,6 @@ export async function updateQuotation({
     );
     return res;
   } catch (error) {
-    console.log("error in archiveQuotation", error);
+    console.log("error in updateQuotation", error);
   }
 }
