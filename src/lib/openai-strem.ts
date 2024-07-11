@@ -1,24 +1,10 @@
 import { openaiRequest } from "@/app/services/message.service";
+import { OpenAIStreamPayload } from "@/models/message.model";
 import {
   ParsedEvent,
   ReconnectInterval,
   createParser,
 } from "eventsource-parser";
-
-export type ChatGPTAgent = "user" | "system";
-
-export interface ChatGPTMessage {
-  role: ChatGPTAgent;
-  content: string;
-}
-
-export interface OpenAIStreamPayload {
-  model: string;
-  messages: ChatGPTMessage[];
-  temperature: number;
-  max_tokens: number;
-  stream: boolean;
-}
 
 export async function OpenAIStream(payload: OpenAIStreamPayload) {
   const encoder = new TextEncoder();

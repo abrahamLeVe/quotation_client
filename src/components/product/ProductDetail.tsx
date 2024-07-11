@@ -173,7 +173,7 @@ export default function ProductDetail({
         <CartButtonActions
           picture_url={image}
           priceId={selectedPrice.id}
-          idColor={idColor!}
+          colorId={idColor!}
           colors={colors.length}
           color={color}
           isPage={isPage}

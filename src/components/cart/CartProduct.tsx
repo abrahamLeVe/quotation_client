@@ -110,7 +110,7 @@ export default function CartProduct({ product, isPage }: CartProductProps) {
                   >
                     <CartButtonActions
                       priceId={product.id}
-                      idColor={
+                      colorId={
                         product.colors?.length! === 1
                           ? product.colors![0].color?.id!
                           : color?.id!

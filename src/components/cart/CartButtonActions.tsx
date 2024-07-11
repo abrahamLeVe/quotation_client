@@ -1,29 +1,15 @@
 "use client";
-import { ColorProduct } from "@/models/products.model";
+import { useCartContext } from "@/context/cart.context";
+import { CartButtonActionsProps } from "@/models/cart.model";
 import { cartStore } from "@/store/cart.store";
 import { BsCartCheck, BsCartDash, BsCartPlus } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
-import { useCartContext } from "@/context/cart.context";
-
-interface CartButtonActionsProps {
-  priceId: number;
-  idColor?: number;
-  isPage?: boolean;
-  colors?: number;
-  color?: ColorProduct;
-  size?: string | null;
-  picture_url?: string;
-  title?: string;
-  slug?: string;
-  value?: number;
-  discount?: number;
-}
 
 export default function CartButtonActions({
   priceId,
-  idColor,
+  colorId,
   isPage = false,
   colors,
   color,
@@ -37,36 +23,36 @@ export default function CartButtonActions({
   const cart = cartStore((state) => state);
   const { getItemQuantity, getItemColorQuantity } = useCartContext();
   const addToCart = () => {
-    if (colors! > 0 && !idColor) {
+    if (colors! > 0 && !colorId) {
       return toast({
         variant: "destructive",
         title: "Color",
         description: "Por favor seleccione un color.",
       });
     } else {
-      cart.increaseCartQuantity(
+      cart.increaseCartQuantity({
         priceId,
-        idColor!,
+        colorId,
         color,
         size,
         picture_url,
         title,
         slug,
         value,
-        discount
-      );
+        discount,
+      });
     }
   };
 
   const decreaseToCart = () => {
-    if (!getItemColorQuantity(priceId, idColor!) && colors! > 0) {
+    if (!getItemColorQuantity(priceId, colorId!) && colors! > 0) {
       return toast({
         variant: "destructive",
         title: "Color",
         description: "Por favor seleccione un color que esté en el carrito.",
       });
     } else {
-      cart.decreaseCartQuantity(priceId, idColor!);
+      cart.decreaseCartQuantity(priceId, colorId!);
     }
   };
 

@@ -2,6 +2,7 @@ import {
   CartStateProps,
   Color,
   CustomPersistStorage,
+  IncreaseCartQuantityProps,
   ProductCart,
 } from "@/models/cart.model";
 import { decryptCartState, encryptCartState } from "@/utilities/crypted";
@@ -29,25 +30,25 @@ export const cartStore = create<CartStateProps>()(
   persist(
     (set) => ({
       cartItemState: [],
-      increaseCartQuantity: (
-        id: number,
-        colorId: number,
-        color?: Color,
-        size?: string | null,
-        picture_url?: string,
-        title?: string,
-        slug?: string,
-        value?: number,
-        discount?: number
-      ) => {
+      increaseCartQuantity: ({
+        priceId,
+        colorId,
+        color,
+        size,
+        picture_url,
+        title,
+        slug,
+        value,
+        discount,
+      }: IncreaseCartQuantityProps) => {
         set((state: CartStateProps) => {
           const existingItem = state.cartItemState.find(
-            (item) => item.id === id
+            (item) => item.id === priceId
           );
           if (existingItem) {
             return {
               cartItemState: state.cartItemState.map((item) => {
-                if (item.id === id) {
+                if (item.id === priceId) {
                   let updatedColors = item.colors || [];
 
                   if (!colorId) {
@@ -85,7 +86,7 @@ export const cartStore = create<CartStateProps>()(
             };
           } else {
             const newItem: ProductCart = {
-              id,
+              id: priceId,
               quantity: 1,
               colors:
                 colorId !== undefined

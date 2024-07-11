@@ -1,4 +1,4 @@
-import { OpenAIStreamPayload } from "@/lib/openai-strem";
+import { OpenAIStreamPayload } from "@/models/message.model";
 
 export const openaiRequest = async (payload: OpenAIStreamPayload) => {
   const res = await fetch(`${process.env.OPENIA_URL}`, {

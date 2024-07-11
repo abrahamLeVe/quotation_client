@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { PersistStorage, StorageValue } from "zustand/middleware";
+import { ColorProduct } from "./products.model";
 
 export type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -8,17 +9,17 @@ export type ShoppingCartProviderProps = {
 export interface CartStateProps {
   cartItemState: ProductCart[];
 
-  increaseCartQuantity: (
-    id: number,
-    colorId: number,
-    color?: Color,
-    size?: string | null,
-    picture_url?: string,
-    title?: string,
-    slug?: string,
-    value?: number,
-    discount?: number
-  ) => void;
+  increaseCartQuantity: ({
+    priceId,
+    colorId,
+    color,
+    size,
+    picture_url,
+    title,
+    slug,
+    value,
+    discount,
+  }: IncreaseCartQuantityProps) => void;
   decreaseCartQuantity: (id: number, colorId: number) => void;
   removeCartItem: (id: number) => void;
   clearCart: () => void;
@@ -61,4 +62,30 @@ interface Attributes {
   updatedAt: string;
   description: string;
   publishedAt: string;
+}
+
+export interface CartButtonActionsProps {
+  priceId: number;
+  colorId?: number;
+  isPage?: boolean;
+  colors?: number;
+  color?: ColorProduct;
+  size?: string | null;
+  picture_url?: string;
+  title?: string;
+  slug?: string;
+  value?: number;
+  discount?: number;
+}
+
+export interface IncreaseCartQuantityProps {
+  priceId: number;
+  colorId?: number;
+  color?: Color;
+  size?: string | null;
+  picture_url?: string;
+  title?: string;
+  slug?: string;
+  value?: number;
+  discount?: number;
 }
