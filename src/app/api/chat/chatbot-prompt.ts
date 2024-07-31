@@ -1,6 +1,7 @@
 import { CLIENT_URL } from "@/utilities/urls";
 import { readSitemapFromURL } from "./downloadSitemap";
 
+
 const companyData = {
   nombre: "Consorcio A&C eléctrica S.A.C",
   celular: `+${process.env.NEXT_PUBLIC_CLIENT_PHONE}`,
