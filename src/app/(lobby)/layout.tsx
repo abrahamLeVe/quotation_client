@@ -14,9 +14,12 @@ const ProductSlider = dynamic(
     ssr: false,
   }
 );
-const Chat = dynamic(() => import("@/components/chat/Chat"), {
-  ssr: false,
-});
+const ChatSliderOver = dynamic(
+  () => import("@/components/chat/ChatSliderOver"),
+  {
+    ssr: false,
+  }
+);
 const Collection = dynamic(() => import("@/components/lobby/Collection"), {
   ssr: false,
 });
@@ -72,7 +75,7 @@ export default async function LobbyLayout({
           <WhatsappButoon />
         </div>
         <div className="fixed right-5 bottom-5">
-          <Chat />
+          <ChatSliderOver />
         </div>
       </main>
       <Footer />

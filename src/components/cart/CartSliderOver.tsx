@@ -4,6 +4,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -53,6 +54,9 @@ export default function CartSliderOver() {
         <ScrollArea className="h-full pr-3">
           <SheetHeader>
             <SheetTitle>Carrito</SheetTitle>
+            <SheetDescription className="text-gray-100">
+              productos a cotizar
+            </SheetDescription>
           </SheetHeader>
           {!cartQuantity ? (
             <EmptyCartMessage score={3} isPage={false} />

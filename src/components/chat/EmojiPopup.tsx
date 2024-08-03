@@ -12,7 +12,7 @@ interface EmojiPopupProps {
 const EmojiPopup: React.FC<EmojiPopupProps> = ({ onSelectEmoji }) => {
   return (
     <Popover>
-      <PopoverTrigger>😊</PopoverTrigger>
+      <PopoverTrigger className="mr-1 border p-2">😊</PopoverTrigger>
       <PopoverContent className="backdrop-blur-md">
         {["👋", "👍", "❤️", "😍", "😂", "👏", "😊", "🥇", "🌹", "💝", "🙏"].map(
           (emoji) => (

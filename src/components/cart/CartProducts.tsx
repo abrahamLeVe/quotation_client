@@ -20,7 +20,6 @@ export default function CartProducts({ isPage }: CartProductsProps) {
         <div className="-my-6  w-full">
           {cart?.length > 0 ? (
             <>
-              <div className="text-lg font-medium ">Productos a cotizar</div>
               {cart.map((product) => {
                 return (
                   <div key={product.id}>

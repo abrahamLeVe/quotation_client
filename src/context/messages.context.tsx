@@ -1,28 +1,34 @@
 "use client";
 import { getRandomMessage } from "@/hooks/useSpeech";
-import { Message } from "@/lib/validations/message";
 import { nanoid } from "nanoid";
 import { ReactNode, createContext, useState } from "react";
+import { Messages } from "@/lib/validations/message";
 
-const defaultValue = [
+const defaultValue: Messages[] = [
   {
     id: nanoid(),
-    text: getRandomMessage(),
-    isUserMessage: false,
+    role: "assistant",
+    content: getRandomMessage(),
+    createdAt: new Date().toISOString(),
   },
 ];
 
 export const MessagesContext = createContext<{
-  messages: Message[];
+  messages: Messages[];
   isMessageUpdating: boolean;
-  addMessage: (message: Message) => void;
+  addMessage: (message: Messages) => void;
+  addAssistantMessage: (content: string) => void;
   removeMessage: (id: string) => void;
-  updateMessage: (id: string, updateFn: (prevText: string) => string) => void;
+  updateMessage: (
+    id: string,
+    updateFn: (prevContent: string) => string
+  ) => void;
   setIsMessageUpdating: (isUpdating: boolean) => void;
 }>({
   messages: [],
   isMessageUpdating: false,
   addMessage: () => {},
+  addAssistantMessage: () => {},
   removeMessage: () => {},
   updateMessage: () => {},
   setIsMessageUpdating: () => {},
@@ -30,9 +36,19 @@ export const MessagesContext = createContext<{
 
 export function MessagesProvider({ children }: { children: ReactNode }) {
   const [isMessageUpdating, setIsMessageUpdating] = useState<boolean>(false);
-  const [messages, setMessages] = useState(defaultValue);
+  const [messages, setMessages] = useState<Messages[]>(defaultValue);
 
-  const addMessage = (message: Message) => {
+  const addMessage = (message: Messages) => {
+    setMessages((prev) => [...prev, message]);
+  };
+
+  const addAssistantMessage = (content: string) => {
+    const message: Messages = {
+      id: nanoid(),
+      role: "assistant",
+      content: content,
+      createdAt: new Date().toISOString(),
+    };
     setMessages((prev) => [...prev, message]);
   };
 
@@ -42,12 +58,12 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
 
   const updateMessage = (
     id: string,
-    updateFn: (prevText: string) => string
+    updateFn: (prevContent: string) => string
   ) => {
     setMessages((prev) =>
       prev.map((message) => {
         if (message.id === id) {
-          return { ...message, text: updateFn(message.text) };
+          return { ...message, content: updateFn(message.content) };
         }
 
         return message;
@@ -61,6 +77,7 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
         messages,
         isMessageUpdating,
         addMessage,
+        addAssistantMessage,
         removeMessage,
         updateMessage,
         setIsMessageUpdating,

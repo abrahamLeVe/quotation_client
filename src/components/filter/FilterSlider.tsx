@@ -8,6 +8,7 @@ import {
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -54,48 +55,45 @@ export default function FilterSlider({
   const { openMenu, setOpenMenu } = useCartContext();
 
   return (
-    <>
-      <Sheet open={openMenu} onOpenChange={setOpenMenu}>
-        <SheetContent className="w-full sm:max-w-md">
-          <ScrollArea className="h-full pr-3">
-            <SheetHeader>
-              <SheetTitle>Filtro</SheetTitle>
-            </SheetHeader>
-            <Accordion
-              type="single"
-              collapsible
-              className="w-[350px] bg-white h-full p-4 dark:bg-slate-950  max-h-[550px]"
-            >
-              <ScrollArea className="  pr-3">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>Categorías</AccordionTrigger>
-                  <AccordionContent>
-                    <CategoryList categories={categories} />
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                  <AccordionTrigger>Marcas</AccordionTrigger>
-                  <AccordionContent>
-                    <BrandList brands={brands} />
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3">
-                  <AccordionTrigger>Colores</AccordionTrigger>
-                  <AccordionContent>
-                    <ColorList colors={colors} />
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-4">
-                  <AccordionTrigger>Medidas</AccordionTrigger>
-                  <AccordionContent>
-                    <SizeList sizes={sizes} />
-                  </AccordionContent>
-                </AccordionItem>
-              </ScrollArea>
-            </Accordion>
-          </ScrollArea>
-        </SheetContent>
-      </Sheet>
-    </>
+    <Sheet open={openMenu} onOpenChange={setOpenMenu}>
+      <SheetContent className="w-full sm:max-w-md">
+        <SheetHeader className="pb-3">
+          <SheetTitle>Filtrar</SheetTitle>
+          <SheetDescription>en toda la tienda</SheetDescription>
+        </SheetHeader>
+        <ScrollArea className="h-full pr-2">
+          <Accordion
+            type="single"
+            collapsible
+            className="bg-white p-2 dark:bg-slate-950  "
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Categorías</AccordionTrigger>
+              <AccordionContent>
+                <CategoryList categories={categories} />
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Marcas</AccordionTrigger>
+              <AccordionContent>
+                <BrandList brands={brands} />
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Colores</AccordionTrigger>
+              <AccordionContent>
+                <ColorList colors={colors} />
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>Medidas</AccordionTrigger>
+              <AccordionContent>
+                <SizeList sizes={sizes} />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </ScrollArea>
+      </SheetContent>
+    </Sheet>
   );
 }

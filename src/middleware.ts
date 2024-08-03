@@ -21,5 +21,5 @@ export async function middleware(req: any) {
 }
 
 export const config = {
-  matcher: ["/api/message/:path*"],
+  matcher: ["/api/chat/:path*"],
 };
