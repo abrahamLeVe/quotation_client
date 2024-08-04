@@ -68,9 +68,8 @@ export default function NavBar({
           <div className="ml-auto flex items-center">
             <div className="hidden lg:flex">
               <ModeToggle />
-              <div title="Por favor, mencione el producto que desea buscar después del mensaje del bot. Por ejemplo: cartón, cinta, llave, aceite, aislador, etc.">
-                <SpeachButton className={"border-none"} variant={"ghost"} />
-              </div>
+
+              <SpeachButton className={"border-none"} variant={"ghost"} />
             </div>
             {/* Filter */}
             <FilterButton />

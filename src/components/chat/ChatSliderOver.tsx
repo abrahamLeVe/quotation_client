@@ -88,24 +88,11 @@ export default function ChatSliderOver() {
   return (
     <>
       {!session ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <SpeachButton
-                className="p-3 rounded-full w-full h-full shadow-lg"
-                title={"Busqueda por voz"}
-                variant={"outline"}
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>
-                Por favor, mencione el producto que desea buscar después del
-                mensaje del bot. Por ejemplo: cartón, cinta, llave, aceite,
-                aislador, etc.
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <SpeachButton
+          className="p-3 rounded-full w-full h-full shadow-lg"
+          title={"Busqueda por voz"}
+          variant={"outline"}
+        />
       ) : (
         <Sheet>
           <SheetTrigger asChild className="z-40">

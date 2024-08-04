@@ -34,7 +34,7 @@ export default function SpeachButton({
   };
 
   return (
-    <>
+    <div title="Por favor, mencione el producto que desea buscar después del mensaje del bot. Por ejemplo: cartón, cinta, llave, aceite, aislador, etc.">
       {isLoading ? (
         <Button variant={variant}>
           <Icons.bars className={buttonClasses + " text-red-500"} />
@@ -50,6 +50,6 @@ export default function SpeachButton({
           {title && <span className="text-base font-semibold">{title}</span>}
         </Button>
       )}
-    </>
+    </div>
   );
 }
