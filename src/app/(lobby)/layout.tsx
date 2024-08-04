@@ -33,7 +33,7 @@ const Testimonials = dynamic(
   () => import("@/components/lobby/testimonial/Testimonials"),
   { ssr: false }
 );
-const WhatsappButoon = dynamic(
+const WhatsappButton = dynamic(
   () => import("@/components/floating/whatsapp-button"),
   { ssr: false }
 );
@@ -72,7 +72,7 @@ export default async function LobbyLayout({
         <PromoSection />
         <Testimonials contacts={contacts} />
         <div className="fixed right-8 bottom-28">
-          <WhatsappButoon />
+          <WhatsappButton />
         </div>
         <div className="fixed right-5 bottom-5">
           <ChatSliderOver />

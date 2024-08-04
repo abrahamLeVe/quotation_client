@@ -1,7 +1,6 @@
 import { CLIENT_URL } from "@/utilities/urls";
 import { readSitemapFromURL } from "./downloadSitemap";
 
-
 const companyData = {
   nombre: "Consorcio A&C eléctrica S.A.C",
   celular: `+${process.env.NEXT_PUBLIC_CLIENT_PHONE}`,
@@ -10,7 +9,7 @@ const companyData = {
   horario_atención:
     "Nuestro horario de atención es de Lunes a Sábado de 8:00 a 12:00 y de 14:00 a 19:00.",
   direccion:
-    "C. José Manuel Pereyra 536 Urb.: Panamericana Norte Lima, Lima - Los Olivos",
+    "C. José Manuel Pereyra 536 Urb.: Panamericana Norte Lima, Lima - Los Olivos - Perú",
   ruc: `${process.env.NEXT_PUBLIC_CLIENT_RUC}`,
 };
 

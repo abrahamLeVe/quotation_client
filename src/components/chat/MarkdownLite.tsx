@@ -24,7 +24,7 @@ const MarkdownLink = ({ href, children }: MarkdownLinkProps) => {
     <Link
       href={href}
       passHref
-      className="break-words underline underline-offset-2 text-blue-600"
+      className="underline underline-offset-2 text-blue-600"
       scroll={false}
     >
       {children}

@@ -15,11 +15,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { TiThMenu } from "react-icons/ti";
 import { BrandsInterface } from "@/models/brand";
 import { CategoriesInterface } from "@/models/category.model";
 import Link from "next/link";
-import { SpeachButton } from "../filter/FilterButton";
+import { TiThMenu } from "react-icons/ti";
+import SpeachButton from "../filter/SpeachButton";
 import { ModeToggle } from "../ui/mode-toggle";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";

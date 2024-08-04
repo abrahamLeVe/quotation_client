@@ -5,7 +5,8 @@ import dynamic from "next/dynamic";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import CartSliderOver from "../cart/CartSliderOver";
-import FilterButton, { SpeachButton } from "../filter/FilterButton";
+import FilterButton from "../filter/FilterButton";
+import SpeachButton from "../filter/SpeachButton";
 import { ModeToggle } from "../ui/mode-toggle";
 import AuthMenu from "./MenuAuth";
 import FlyoutMenu from "./MenuFlyout";
@@ -67,7 +68,9 @@ export default function NavBar({
           <div className="ml-auto flex items-center">
             <div className="hidden lg:flex">
               <ModeToggle />
-              <SpeachButton className={""} />
+              <div title="Por favor, mencione el producto que desea buscar después del mensaje del bot. Por ejemplo: cartón, cinta, llave, aceite, aislador, etc.">
+                <SpeachButton className={"border-none"} variant={"ghost"} />
+              </div>
             </div>
             {/* Filter */}
             <FilterButton />

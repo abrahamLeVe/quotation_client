@@ -1,11 +1,7 @@
 "use client";
-import { useSpeechRecognition } from "@/hooks/useSpeech";
-import Link from "next/link";
-import { BsMic, BsSearch } from "react-icons/bs";
-import { Icons } from "../Icons";
+import { BsSearch } from "react-icons/bs";
 import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { useCartContext } from "@/context/cart.context";
+import Link from "next/link";
 
 export default function FilterButton() {
   return (
@@ -19,41 +15,5 @@ export default function FilterButton() {
         prefetch={true}
       ></Link>
     </Button>
-  );
-}
-
-interface SpeachButtonProps {
-  className: string;
-  title?: string;
-  variant?: "ghost" | "outline";
-}
-
-export function SpeachButton({
-  className = "",
-  title = "",
-  variant = "ghost",
-}: SpeachButtonProps) {
-  const { startListening } = useSpeechRecognition();
-  const { isLoading } = useCartContext();
-
-  const buttonClasses = cn("h-[1.2rem] w-[1.2rem] ", className);
-  const handleClick = () => {
-    startListening();
-  };
-
-  return (
-    <>
-      {isLoading ? (
-        <Button variant={variant}>
-          <Icons.bars className={buttonClasses + " text-red-500"} />
-        </Button>
-      ) : (
-        <Button onClick={handleClick} variant={variant}>
-          <span className="sr-only">Escuchar</span>
-          <BsMic className={buttonClasses} />{" "}
-          {title && <span className="text-base">{title}</span>}
-        </Button>
-      )}
-    </>
   );
 }
