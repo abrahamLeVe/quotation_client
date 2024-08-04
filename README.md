@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# Funcionalidades del Proyecto
+
+Este proyecto permite:
+
+- **Seleccionar productos** y agregarlos al carrito de compras.
+- **Visualizar y hacer seguimiento** de tus cotizaciones.
+- **Descargar comprobantes** de cotización.
+- **Realizar pagos** a través de Mercado Pago.
+- **Buscar productos** por nombre usando la voz.
+- **Aplicar filtros en las búsquedas**.
+- Utilizar un **asistente con inteligencia artificial**, que actúa como un eficiente buscador de productos y chatbot de atención al cliente. Para usarlo, debes estar registrado o ingresar con tu cuenta de Gmail. El asistente aparece en la página de inicio, abajo a la derecha.
+
+## Instrucciones para usar el asistente con inteligencia artificial:
+
+1. **Registrarse**:
+   ![cap1 (1)](https://github.com/user-attachments/assets/2a42f7c6-a7a2-4e27-8dec-a1a6dd88e84f)
+2. **Chatear con el asistente**:
+   ![cap2](https://github.com/user-attachments/assets/642f43a0-f2c1-41a9-a4a4-b865882f5f96)
+   ![cap2 (1)](https://github.com/user-attachments/assets/6643bd1f-ff06-4411-9b1a-59c9dce2e986)
